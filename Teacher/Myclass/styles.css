@@ -27,6 +27,8 @@ h1 {
   font-size: 4rem; /* Large heading */
   font-weight: bold;
   margin: 0 20px; /* Adjust margins for spacing */
+  color: #030457;
+
 }
 
 /* Card styles */
@@ -39,6 +41,8 @@ h1 {
   overflow: hidden;
   background-color: #ffffff; /* Card background color */
   transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
+  color: #030457;
+
 }
 
 .card:hover {
