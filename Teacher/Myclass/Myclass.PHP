@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="./Mystyles.css"> <!-- Link your CSS file -->
 </head>
 <body>
 <div class="header-container">
