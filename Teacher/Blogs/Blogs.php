@@ -12,8 +12,8 @@
     <img src="./blogs1.png" alt="Class Image" class="class-image">
 </div>
 
-    <!-- <button class="create-blog-button" onclick="createBlog()">Create a Blog</button>
-    <button class="refresh-button">Refresh</button> -->
+    <button class="create-blog-button" onclick="createBlog()">Create a Blog</button>
+    <!-- <button class="refresh-button">Refresh</button> -->
 
 <div class="container" id="class-container">
     <!-- Blog cards will be appended here by JavaScript -->
