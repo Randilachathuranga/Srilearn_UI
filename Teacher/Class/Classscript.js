@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("getClasses.php") // Replace with your PHP script that fetches classes
+  fetch("getallClasses.php") // Replace with your PHP script that fetches classes
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
