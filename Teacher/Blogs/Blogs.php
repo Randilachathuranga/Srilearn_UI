@@ -19,6 +19,8 @@
     <!-- Blog cards will be appended here by JavaScript -->
 </div>
 
+
+
 <script src="./Blogscript.js"></script>
 </body>
 </html>

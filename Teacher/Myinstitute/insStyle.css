@@ -81,7 +81,7 @@ h1 {
 }
 
 .card-button {
-  background-color: #28a745;
+  background-color: #030457;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -93,7 +93,7 @@ h1 {
 
 
 .card-button:hover {
-  background-color: #218838;
+  background-color: #0a0db1;
 }
 
 /* Media Query for Tablets */
