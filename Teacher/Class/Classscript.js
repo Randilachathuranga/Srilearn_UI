@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-                    <img src="${classItem.image}" alt="${classItem.title}">
+                    <img src="${classItem.image}" alt="${classItem.title}" class='card-image'>
                     <div class="card-content">
                         <h3>${classItem.title}</h3>
                         <p>Subject: ${classItem.subject}</p>

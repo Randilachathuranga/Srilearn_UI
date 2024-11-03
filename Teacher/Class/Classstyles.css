@@ -44,6 +44,14 @@ body {
     color: #030457;
   
   }
+
+  .card img {
+    width: 100%;
+    height: auto; /* Adjust height automatically */
+    max-height: 180px; /* Limit max height */
+    object-fit: contain; /* Ensure the whole image fits within */
+    background-color: #f0f0f0; /* Add background color for padding */
+  }
   
   .card:hover {
     transform: translateY(-5px); /* Lift effect on hover */
