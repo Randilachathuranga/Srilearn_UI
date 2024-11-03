@@ -7,36 +7,36 @@ $classes = [
         'title' => 'Math',
         'subject' => 'Mathematics',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/Maths.png'
     ],
     [
         'title' => 'Science',
         'subject' => 'Physics',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/science.png'
     ],
     [
         'title' => 'History',
         'subject' => 'World History',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/History.png'
     ],
     [
         'title' => 'English',
         'subject' => 'English Literature',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/English.png'
     ], [
         'title' => 'History',
         'subject' => 'World History',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/It.png'
     ],
     [
         'title' => 'English',
         'subject' => 'English Literature',
         'institute' => 'UCSC',
-        'image' => './Maths.png'
+        'image' => './Class_images/English.png'
     ],
 ];
 
