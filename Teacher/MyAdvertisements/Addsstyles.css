@@ -1,0 +1,187 @@
+/* General Page Styles */
+body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping of flex items to the next line */
+    justify-content: center; /* Center the cards horizontally */
+    padding: 20px;
+    max-width: 1500px; /* Max width for larger screens */
+    margin: 0 auto;
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+.header-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #030457;
+    margin: 0 20px;
+}
+
+.icon {
+    width: 24px;  /* Increased icon size */
+    height: 24px; /* Increased icon size */
+    margin-right: 5px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.create-blog-button, .refresh-button, .edit-button {
+    background-color: #1a237e; /* Dark blue background */
+    color: #ffffff;
+    padding: 10px 15px; /* Adjusted padding */
+    border: none;
+    border-radius: 5px;
+    margin-left: 230px;
+    font-size: 0.9rem; /* Slightly smaller font size */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-blog-button:hover, 
+.refresh-button:hover, 
+.edit-button:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+}
+
+/* Card Styles */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px; /* Updated border radius for a softer look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    margin: 10px; /* Adjusted margin for better spacing */
+    padding: 10px; /* Reduced padding for better content spacing */
+    transition: transform 0.2s, box-shadow 0.2s; /* Added box shadow transition */
+    display: flex; /* Use flex to align image and content */
+    flex-direction: column; /* Stack title and content vertically */
+    width: calc(70% - 20px); /* Two cards per row */
+    max-width: 400px; /* Optional: Set a maximum width for larger screens */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+}
+
+.card-content {
+    display: flex; /* Use flex for image and text alignment */
+    flex-direction: row; /* Arrange image and description in a row */
+    align-items: flex-start; /* Align items at the start */
+}
+
+.card-image {
+    width: 130px; /* Minimized width for the image */
+    border-radius: 5px;
+    margin-right: 10px; /* Adjusted spacing */
+    margin-top: 5px; /* Reduced top margin */
+}
+
+.card-details {
+    flex-grow: 1; /* Allow details to grow */
+}
+
+.card-title {
+    font-size: 1.4rem; /* Reduced font size for title */
+    color: #030457;
+    font-weight: bold; /* Bold title for emphasis */
+}
+
+.card-description {
+    font-size: 1rem; /* Reduced font size for description */
+    color: #333333;
+    margin: 0; /* Remove margin for better control */
+    line-height: 1.4; /* Better line height for readability */
+    flex-grow: 1; /* Allow description to grow */
+    max-height: 100px; /* Limit the height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.button-container .button {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    margin-top: 15px;
+}
+  
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .header-title {
+        font-size: 3.5rem;
+        margin: 20px 0;
+    }
+
+    .card {
+        width: 90%; /* More width on smaller screens */
+        flex-direction: column; /* Stack image and content vertically */
+    }
+
+    .card-content {
+        flex-direction: column; /* Stack image above description on smaller screens */
+        align-items: center; /* Center align */
+    }
+
+    .card-image {
+        margin: 0 0 15px 0; /* Adjust margin for stacked layout */
+        width: 100%; /* Full width for the image in stacked layout */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .header-title {
+        font-size: 2rem;
+        margin: 20px 0;
+    }
+    
+    .card {
+        width: 100%; /* Full width on very small screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .card {
+        width: calc(50% - 20px); /* Two cards per row */
+    }
+}
