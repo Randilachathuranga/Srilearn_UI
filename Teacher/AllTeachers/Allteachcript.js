@@ -1,0 +1,38 @@
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("./getallteachers.php") // Replace with your PHP script URL if different
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
+    })
+    .then((data) => {
+      const container = document.getElementById("class-container");
+      data.forEach((teacher) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${teacher.ImageURL}" alt="${teacher.Name}" class="card-image">
+          <div class="card-content">
+            <h3>${teacher.Name}</h3>
+            <p>Subject: ${teacher.Subject}</p>
+            <p>Phone: ${teacher['Phone number']}</p>
+            <p>Email: ${teacher.email || 'N/A'}</p>
+            <button class="card-button" onclick="ViewTeachers('${teacher.Name}')">View</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+});
+
+// Function to show teacher details when the button is clicked
+function ViewTeachers(name) {
+  alert("More details about " + name);
+}
+
+// Function for searching (if needed)
+function search(city) {
+  alert("Searching for " + city);
+}
