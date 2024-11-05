@@ -12,6 +12,9 @@
     <img src="./class1.png" alt="Class Image" class="class-image">
 </div>
 
+<button class="create-blog-button" onclick="createClassShcedule()">Create class schedule</button>
+<!-- <button class="refresh-button">Refresh</button> -->
+
     <div class="container" id="class-container">
         <!-- Cards will be appended here -->
     </div>
