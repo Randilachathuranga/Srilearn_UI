@@ -31,6 +31,22 @@ h1 {
 
 }
 
+.create-blog-button, .refresh-button {
+  background-color: #1a237e; /* Dark blue background */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 150px;  
+}
+
+.create-blog-button:hover, .refresh-button:hover {
+  background-color: #0056b3; /* Slightly darker blue on hover */
+}
+
 /* Card styles */
 .card {
   width: 300px; /* Fixed width for larger screens */

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Function to show class details when button is clicked
-  function showDetails(title) {
+  function createClassShcedule(title) {
     alert("More details about " + title + " class.");
   }
   
