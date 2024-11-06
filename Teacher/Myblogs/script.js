@@ -14,15 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="card-header">
                   <h3 class="card-title">${blogs.title}</h3>
                   <div class="button-container">
-                      <button class="button" onclick="editBlog('${blogs.id}')">
-                          <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
-                      </button>
                       <button class="button" onclick="likeBlog('${blogs.id}')">
                           <img src="./icon/heart.png" alt="Like" class="icon"> 459
                       </button>
                       <button class="button" onclick="showDetails('${blogs.title}')">
                          <img src="./icon/chevron.png" alt="down" class="icon">See more
                         </button>
+                        <button class="button" onclick="editBlog('${blogs.id}')">
+                          <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
+                      </button>
                   </div>
               </div>
               <p class="card-creator">Creator: ${blogs.creator}</p>
@@ -40,14 +40,12 @@ function showDetails(title) {
   alert("More details about the blog titled: " + title);
 }
 
+// when i clicked edit button pupup edit form will be displayed
 function editBlog(blogId) {
-  alert("Edit blog with ID: " + blogId);
+  document.getElementById("popupEditForm").style.display = "flex";
+
 }
 
 function likeBlog(blogId) {
   alert("Liked blog with ID: " + blogId);
-}
-
-function createBlog() {
-  alert("Create a new blog");
 }
