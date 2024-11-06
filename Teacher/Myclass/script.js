@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>Subject: ${classItem.subject}</p>
                         <p>Institute: ${classItem.institute}</p>
                         <button class="card-button" onclick="showDetails('${classItem.title}')">More Details</button>
-                        <button class="button" onclick="editBlog()">
+                        <button class="button" onclick="editshcedule()">
                           <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
                       </button>
                     </div>
@@ -30,14 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Function to show class details when button is clicked
-  function createClassShcedule(title) {
-    alert("More details about " + title + " class.");
-  }
   
   function showDetails(){
     alert("view");
   }
 
-  function editBlog(){
-    alert("edit")
+  function editshcedule(){
+    document.getElementById("popupEditForm").style.display = "flex";
   }
+
