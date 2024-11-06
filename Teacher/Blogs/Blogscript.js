@@ -45,6 +45,3 @@ function likeBlog(blogId) {
   alert("Liked blog with ID: " + blogId);
 }
 
-function createBlog() {
-  alert("Create a new blog");
-}
