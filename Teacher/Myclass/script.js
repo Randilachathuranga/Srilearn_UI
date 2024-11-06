@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>Subject: ${classItem.subject}</p>
                         <p>Institute: ${classItem.institute}</p>
                         <button class="card-button" onclick="showDetails('${classItem.title}')">More Details</button>
+                        <button class="button" onclick="editBlog()">
+                          <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
+                      </button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -31,3 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     alert("More details about " + title + " class.");
   }
   
+  function showDetails(){
+    alert("view");
+  }
+
+  function editBlog(){
+    alert("edit")
+  }
