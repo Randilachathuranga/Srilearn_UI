@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("More details about the ad titled: " + title + "\n\n" + description);
   }
   
-  function editAd(title) {
-    alert("Edit ad titled: " + title);
-  }
+  function editAd(adsid) {
+    document.getElementById("popupEditForm").style.display = "flex";
   
+  }
   function likeAd(title) {
     alert("Liked ad titled: " + title);
   }

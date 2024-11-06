@@ -6,6 +6,7 @@
     <title>My Blogs</title>
     <link rel="stylesheet" href="./Adsstyles.css">
     <link rel="stylesheet" href="./CreateAds/CreateAds.css">
+    <link rel="stylesheet" href="./EditAds/EditAds.css">
 </head>
 <body>
 <div class="header-container">
@@ -39,7 +40,30 @@
     </div>
 </div>
 
+<!-- Popup Form for Editing a Blog -->
+<div id="popupEditForm" class="popup-form" style="display: none;">
+  <div class="form-container">
+    <form id="blogForm">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" >
+      
+      <label for="image" class="custom-file-upload">Choose Image</label>
+        <input type="file" id="image" name="image" required>
+
+        <br><br>
+      <label for="description">Description</label>
+      <textarea id="description" name="description" ></textarea>
+
+      <button type="button" class="submit-button" onclick="UpdateAdds()">Update</button>
+      <button type="button" class="delete-button" onclick="deleteAdds()">Delete</button>
+      <button class="close-button" onclick="closeeditPopup()">Close</button>
+
+    </form>
+  </div>
+</div>
+
 <script src="./Adsscripts.js"></script>
 <script src="./CreateAds/CreateAds.js"></script>
+<script src="./EditAds/EditAds.js"></script>
 </body>
 </html>
