@@ -43,6 +43,4 @@ function likeAd(title) {
   alert("Liked ad titled: " + title);
 }
 
-function createAd() {
-  alert("Create a new advertisement");
-}
+
