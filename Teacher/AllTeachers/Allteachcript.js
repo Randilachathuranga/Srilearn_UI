@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Subject: ${teacher.Subject}</p>
             <p>Phone: ${teacher['Phone number']}</p>
             <p>Email: ${teacher.email || 'N/A'}</p>
-            <button class="card-button" onclick="ViewTeachers('${teacher.Name}')">View</button>
+            <button class="card-button" onclick="Viewteacher()">View</button>
           </div>
         `;
         container.appendChild(card);
@@ -27,12 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Function to show teacher details when the button is clicked
-function ViewTeachers(name) {
-  alert("More details about " + name);
-}
-
 // Function for searching (if needed)
 function search(city) {
   alert("Searching for " + city);
 }
+
+// Show the popup form
+function Viewteacher() {
+  document.getElementById("popupForm").style.display = "flex";  
+}
+
+
