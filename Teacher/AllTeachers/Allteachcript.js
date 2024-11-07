@@ -33,7 +33,7 @@ function search(city) {
 }
 
 // Show the popup form
-function Viewteacher() {
+function Viewteacher(teacher) {
   document.getElementById("popupForm").style.display = "flex";  
 }
 

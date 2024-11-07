@@ -32,7 +32,6 @@
 </div>
 
 
-<!-- Popup Form for Editing a Blog -->
 <div id="popupForm" class="popup-form" style="display: none;">
   <div class="form-container">
     <form id="blogForm">

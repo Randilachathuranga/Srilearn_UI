@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Phone: ${institute['Phone number']}</p>
             <p>District: ${institute.District}</p>
             <p>City: ${institute.City}</p>
+            <button class="card-button" onclick="ViewInstitute('${institute.Name}')">View</button>
             <button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>
           </div>
         `;
@@ -28,8 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Function to show institute details when the button is clicked
-function Applyinstitute(name) {
-  alert("More details about " + name);
+function Applyinstitute(institute) {
+  alert("More details about " + institute);
+}
+
+function ViewInstitute(institute) {
+  document.getElementById("popupForm").style.display = "flex";  
 }
 
 function serach(city){
