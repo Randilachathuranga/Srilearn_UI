@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function to show institute details when the button is clicked
 function Applyinstitute(institute) {
-  alert("More details about " + institute);
+  document.getElementById("popupApply").style.display = "flex";
 }
 
 function ViewInstitute(institute) {
