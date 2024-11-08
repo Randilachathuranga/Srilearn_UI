@@ -1,8 +1,15 @@
 // Toggle the mobile overlay menu
 function toggleMenu() {
     const navOverlay = document.getElementById("navOverlay");
-    navOverlay.classList.toggle("show"); // Toggle the 'show' class to display the sidebar
+    const navBackground = document.getElementById("navBackground");
+    
+    // Toggle 'show' class for the sidebar
+    navOverlay.classList.toggle("show");
+
+    // Toggle 'active' class for background overlay
+    navBackground.classList.toggle("show");
 }
+
 
 
 // Toggle the dropdown menu for Search Hub
