@@ -91,6 +91,61 @@ body {
   .card-button:hover {
     background-color: #0f12b8; /* Darker button on hover */
   }
+ 
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    max-width: 300px;
+    margin-left: 280px;
+  }
+  
+  /* Label styling */
+  .dropdown-label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  /* Wrapper for dropdown and button to align them horizontally */
+  .dropdown-button-wrapper {
+    display: flex;
+    gap: 10px; /* Space between dropdown and button */
+  }
+  
+  /* Dropdown styling */
+  .dropdown {
+    flex: 1; /* Takes up remaining space */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    appearance: none;
+    cursor: pointer;
+  }
+  
+  /* Style for dropdown placeholder option */
+  .dropdown option[disabled] {
+    color: #888;
+  }
+  
+  /* Search button styling */
+  .search-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #030457;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .search-button:hover {
+    background-color: #060883;
+  }
+  
   
   /* Media Query for Tablets */
   @media (max-width: 768px) {

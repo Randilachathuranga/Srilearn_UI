@@ -30,3 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function showDetails(title) {
   alert("More details about " + title + " class.");
 }
+
+function serach(city){
+  alert("searching");
+}
