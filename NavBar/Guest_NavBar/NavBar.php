@@ -29,30 +29,27 @@
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
 </div>
 
-<!-- Menu Icon -->
-
+<!-- Background Overlay for Sidebar -->
 <!-- Right-side Sidebar Overlay -->
 <div class="nav-overlay" id="navOverlay">
-    <!-- Close Button -->
-
     <div class="arrow-key">
     <button class="close-btn" onclick="toggleMenu()">←</button>
     </div>
-    <!-- Nav Links and Auth Buttons -->
     <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">By Teacher</a>
-        <a href="#">By Institute</a>
-        <a href="#">Advertisements</a>
-        <a href="#">Blogs</a>
-        <a href="#">Contact Us</a>
+        <a href="#"><img src="./icon/Home.png">Home</a>
+        <a href="#"><img src="./icon/teacher.png">By Teacher</a>
+        <a href="#"><img src="./icon/school.png">By Institute</a>
+        <a href="#"><img src="./icon/ads.png">Advertisements</a>
+        <a href="#"><img src="./icon/blogs.png">Blogs</a>
+        <a href="#"><img src="./icon/contact-mail.png">Contact Us</a>
     </div>
     <div class="auth-buttons">
-        <a href="#" class="signup-btn"  onclick="singup()">Sign Up</a>
-        <a href="#" class="login-btn" onclick="Login()">Login</a>
+        <a href="#" class="signup-btn"  onclick="singup()"><img src="./icon/singup.png">Sign Up</a>
+        <a href="#" class="login-btn" onclick="Login()"><img src="./icon/enter.png">Login</a>
     </div>
 </div>
 
+<div class="nav-background" id="navBackground" onclick="toggleMenu()"></div>
 
 
 <script src="./NavBar.js"></script>
