@@ -1,0 +1,207 @@
+/* General Styles */
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; /* Ensure the global font is set */
+}
+
+/* Container for cards */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header styling */
+.header-container {
+  display: flex;
+  margin: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px; /* Adds space between the title and the image */
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0;
+  color: #030457;
+}
+
+/* Card Styles */
+.card {
+  width: 300px;
+  margin: 15px; /* Increase space between cards */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #030457;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Center Image in Card */
+.card img {
+  width: 100%;
+  height: auto; /* Adjust height automatically */
+  max-height: 180px; /* Limit max height */
+  object-fit: contain; /* Ensure the whole image fits within */
+  background-color: #f0f0f0; /* Add background color for padding */
+}
+
+/* Card Content Styling */
+.card-content {
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.card-info {
+  margin-bottom: 10px;
+}
+
+/* Label styling */
+.dropdown-label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Wrapper for dropdown and button to align them horizontally */
+.dropdown-button-wrapper {
+  display: flex;
+  gap: 10px; /* Space between dropdown and button */
+  align-items: center; /* Align items vertically */
+}
+
+/* Dropdown styling */
+.dropdown {
+  flex: 1; /* Takes up remaining space */
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Style for dropdown placeholder option */
+.dropdown option[disabled] {
+  color: #888;
+}
+
+/* Media Query for Tablets */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0; /* Reduce margin for smaller screens */
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+  }
+
+  /* Adjust card size and padding */
+  .card {
+    width: 250px; /* Slightly smaller cards */
+    margin: 10px; /* Reduce margin between cards */
+  }
+
+  /* Adjust class image size on tablets */
+  .class-image {
+    max-width: 500px; /* Slightly smaller image on tablets */
+    margin-top: 15px;
+  }
+}
+
+/* Media Query for Phones */
+@media (max-width: 480px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin: 20px 0;
+  }
+
+  /* Reduce card size for phones */
+  .card {
+    width: 200px; /* Even smaller cards */
+    margin: 8px; /* Less margin between cards */
+  }
+
+  /* Adjust class image size on mobile */
+  .class-image {
+    max-width: 100%; /* Make the image take up full width on mobile */
+    margin-top: 10px;
+  }
+
+  /* Optional: Reduce padding for smaller screens */
+  .card-content {
+    padding: 10px;
+  }
+}
+
+/* New Styles for class-image */
+
+/* Styling for the class image */
+.class-image {
+  width: 100%; /* Ensure the image takes up full width */
+  max-width: 600px; /* Limit the maximum width of the image */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the space and is cropped if necessary */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  margin-top: 20px; /* Space between the header and the image */
+  transition: transform 0.3s ease-in-out; /* Add smooth hover effect */
+}
+
+/* Hover effect for class image */
+.class-image:hover {
+  transform: scale(1.05); /* Slightly enlarge the image on hover */
+}
+
+/* Media Query for Tablets */
+@media (max-width: 768px) {
+  .class-image {
+    max-width: 500px; /* Slightly smaller image on tablets */
+    margin-top: 15px;
+  }
+}
+
+/* Media Query for Phones */
+@media (max-width: 480px) {
+  .class-image {
+    max-width: 100%; /* Make the image take up full width on mobile */
+    margin-top: 10px;
+  }
+}
