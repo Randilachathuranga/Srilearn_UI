@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blogs</title>
+    <title>Blogs</title>
     <link rel="stylesheet" href="./Blogstyles.css">
     <link rel="stylesheet" href="./CreateBlogs/CreateBlogs.css">
 
