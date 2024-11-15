@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./Mystyles.css"> <!-- Link your CSS file -->
     <link rel="stylesheet" href="./Scheduleclass/Scheduleclasses.css">
     <link rel="stylesheet" href="./EditShedule/EditShedule.css">
+    <link rel="stylesheet" href="./More_details/More_details.css">
 </head>
 <body>
 <div class="header-container">
@@ -106,9 +107,31 @@
 </div>
 
 
+<!-- Modal for showing class details -->
+<div class="modal-background" id="modalBackground">
+    <div class="modal-content">
+        <span class="close_button" onclick="closeModal()">×</span>
+        <img id="classImage" src="" alt="Class Image" width="100" />
+        <h2 id="classTitle">Class Title</h2>
+        <p><strong>Subject:</strong> <span id="classSubject"></span></p>
+        <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
+        <p><strong>Grade:</strong> <span id="classGrade"></span></p>
+        <p><strong>Fee:</strong> <span id="classFee"></span></p>
+        <p><strong>Time:</strong> <span id="classTime"></span></p>
+        <button class="button">Upload Learning materials</button>
+        <button class="button">Upload Assignments marks</button>
+        <button class="button">View Institute</button>
+        <button class="button">View Class schedule</button>
+        <button class="button">Issue free cards</button>
+        <button class="button">Request payrolls</button>
+    </div>
+</div>
+
+
+
+
     <script src="scripts.js"></script> <!-- Link your JavaScript file -->
     <script src="Scheduleclass/Scheduleclass.js"></script>
     <script src="EditShedule/EditShedules.js"></script>
-    <script src="./More_details/More_details.js"></script>
 </body>
 </html>

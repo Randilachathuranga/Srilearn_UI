@@ -1,3 +1,0 @@
-function showDetails(){
-    alert("view");
-  }

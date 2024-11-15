@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3>${classItem.title}</h3>
                         <p>Subject: ${classItem.subject}</p>
                         <p>Institute: ${classItem.institute}</p>
-                        <button class="card-button" onclick="showDetails('${classItem.title}')">More Details</button>
-                        <button class="button" onclick="editshcedule()">
-                          <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
-                      </button>
+                        <button class="card-button" onclick="showDetails(${classItem.id})">More Details</button>
+                        <button class="button" onclick="editSchedule()">
+                            <img src="./icon/pencil.png" alt="Edit" class="icon"> Edit
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -27,13 +27,33 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
-  });
-  
-  // Function to show class details when button is clicked
-  
-  
+});
 
-  function editshcedule(){
+// Function to show class details when "More Details" button is clicked
+function showDetails(id) {
+    fetch(`./More_details/more.php`) // Pass the class ID to PHP for fetching details
+        .then(response => response.json())
+        .then(details => {
+            document.getElementById('classImage').src = details.image;
+            document.getElementById('classTitle').textContent = details.title;
+            document.getElementById('classSubject').textContent = details.subject;
+            document.getElementById('classInstitute').textContent = details.institute;
+            document.getElementById('classGrade').textContent = details.grade;
+            document.getElementById('classFee').textContent = details.fee;
+            document.getElementById('classTime').textContent = `${details.start_time} - ${details.end_time}`;
+
+            // Show modal
+            document.getElementById('modalBackground').style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('modalBackground').style.display = 'none';
+}
+
+// Function to show the edit schedule popup form
+function editSchedule() {
     document.getElementById("popupEditForm").style.display = "flex";
-  }
-
+}
