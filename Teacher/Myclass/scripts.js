@@ -31,9 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Function to show class details when button is clicked
   
-  function showDetails(){
-    alert("view");
-  }
+  
 
   function editshcedule(){
     document.getElementById("popupEditForm").style.display = "flex";

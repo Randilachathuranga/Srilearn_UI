@@ -106,8 +106,9 @@
 </div>
 
 
-    <script src="script.js"></script> <!-- Link your JavaScript file -->
+    <script src="scripts.js"></script> <!-- Link your JavaScript file -->
     <script src="Scheduleclass/Scheduleclass.js"></script>
     <script src="EditShedule/EditShedules.js"></script>
+    <script src="./More_details/More_details.js"></script>
 </body>
 </html>
