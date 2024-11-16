@@ -5,7 +5,6 @@ class Signup extends Controller {
     public function index() {
     
         
-    
         $User=new Usermodel;
         if($_SERVER['REQUEST_METHOD']=="POST"){
         if($User->validate($_POST) || !($User->get_email($_POST['Email']))){

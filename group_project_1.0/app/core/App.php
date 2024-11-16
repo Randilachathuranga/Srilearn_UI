@@ -6,7 +6,7 @@ class App {
     private $params = [];
 
     private function splitURL() {
-        $URL = $_GET['url'] ?? 'home';
+        $URL = $_GET['url'] ?? 'Home';
         $URL = explode("/", trim($URL,"/"));
         return $URL;
     }
