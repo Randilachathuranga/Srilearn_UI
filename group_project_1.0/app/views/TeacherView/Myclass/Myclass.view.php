@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Mystyles.css"> <!-- Link your CSS file -->
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclasses.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/More_details/More_details.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/More_details/Moredetailss.css">
 </head>
 <body>
 <div class="header-container">
@@ -108,22 +108,26 @@
 
 
 <!-- Modal for showing class details -->
-<div class="modal-background" id="modalBackground">
+<div class="modal-background" id="modalBackground" style="display: none;">
     <div class="modal-content">
-        <span class="close_button" onclick="closeModal()">×</span>
-        <img id="classImage" src="" alt="Class Image" width="100" />
-        <h2 id="classTitle">Class Title</h2>
-        <p><strong>Subject:</strong> <span id="classSubject"></span></p>
-        <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
-        <p><strong>Grade:</strong> <span id="classGrade"></span></p>
-        <p><strong>Fee:</strong> <span id="classFee"></span></p>
-        <p><strong>Time:</strong> <span id="classTime"></span></p>
-        <button class="button">Upload Learning materials</button>
-        <button class="button">Upload Assignments marks</button>
-        <button class="button">View Institute</button>
-        <button class="button">View Class schedule</button>
-        <button class="button">Issue free cards</button>
-        <button class="button">Request payrolls</button>
+        <span class="closebutton" onclick="closeModal()">×</span>
+        <h1> <span id="classSubject"></span><strong> Class</strong></h1>
+        <img id="classImage" src="" alt="Class Image" />
+            <div class="class-details">
+            <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
+            <p><strong>Type:</strong> <span id="classType"></span></p>
+            <p><strong>Grade:</strong> <span id="classGrade"></span></p>
+            <p><strong>Fee:</strong> <span id="classFee"></span></p>
+            <p><strong>Time:</strong> <span id="classTime"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="view()" class="buttons">Upload Learning materials</button>
+                <button onclick="view()" class="buttons">Upload Assignments marks</button>
+                <button onclick="view()" class="buttons">View Institute</button>
+                <button onclick="view()" class="buttons">View Class schedule</button>
+                <button onclick="view()" class="buttons">Issue free cards</button>
+                <button onclick="view()" class="buttons">Request payrolls</button>
+            </div>
     </div>
 </div>
 

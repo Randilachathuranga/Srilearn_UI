@@ -20,9 +20,8 @@
     width: 600px;
     max-width: 90%;
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
     flex-wrap: wrap;
+    gap: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -37,61 +36,53 @@
 
 /* Class Image */
 #classImage {
-    width: 150px;
-    height: auto;
+    width: 350px;
+    height: 150px;
     border-radius: 10px;
+    align-self: center;
+    margin: 0 auto;
 }
 
-/* Content Layout */
-.modal-content h2 {
-    font-size: 24px;
-    color: #2E2E2E;
+/* Right-Side Details */
+.class-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.modal-content p {
+/* Paragraph Styling */
+.class-details p {
     font-size: 16px;
     color: #2E2E2E;
     margin: 4px 0;
 }
 
-.modal-content .button {
-    display: inline-block;
-    padding: 10px 15px;
+/* Buttons Layout */
+.button-container {
+    display: flex; /* Use flex for better alignment */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center; /* Center buttons horizontally */
+    gap: 15px; /* Space between buttons */
+    margin-top: 16px;
+}
+
+.buttons {
+    flex: 1 1 calc(50% - 10px); /* Each button takes up 50% width minus gaps */
+    padding: 12px 18px;
     font-size: 14px;
+    font-weight: bold;
     color: #2E2E2E;
     background-color: #D9EAF1;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin: 5px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.modal-content .button:hover {
-    background-color: #B0D6E4;
-}
-
-/* Left Side Details */
-.modal-content img, .modal-content .class-details {
-    flex: 1;
-}
-
-.class-details {
-    flex: 2;
-    margin-left: 20px;
-}
-
-/* About Section */
-.about-section {
-    margin-top: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #2E2E2E;
-}
-
-/* Center Align Buttons */
-.button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+.buttons:hover {
+    background-color: #9fccdb;
+    transform: scale(1.05); /* Add slight scaling effect on hover */
 }
