@@ -17,6 +17,7 @@ class Ind_Myclass extends TeacherController{
         $this->Teacherview('Myclass'); 
     }
 
+    //view my classes
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
 
@@ -41,6 +42,46 @@ class Ind_Myclass extends TeacherController{
 
         header('Content-Type: application/json');
         echo json_encode($class, JSON_PRETTY_PRINT);
+    }
+
+    //view More details
+    public function MoredetailsApi($Class_id) {
+        $model = new Myclassmodel();
+
+        $t1 = $model->table1;
+        $t2 = $model->table2;
+        $joinCondition = $model->joinCondition;
+        
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
+
+        if (empty($class)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($class, JSON_PRETTY_PRINT);
+    }
+
+    //delete my classes
+    public function DeleteclassApi($Class_id) {
+        $model = new Myclassmodel();
+
+        $t1 = $model->table1;
+        $t2 = $model->table2;
+        $joinCondition = $model->joinCondition;
+        
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
+
+        if (empty($class)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
+
+        $model->delete($Class_id);
+        echo json_encode(['message' => 'Class deleted successfully.']);
     }
 
 }
