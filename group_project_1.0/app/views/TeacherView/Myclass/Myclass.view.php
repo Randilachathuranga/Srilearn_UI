@@ -98,10 +98,13 @@
             <!-- Add more options as needed -->
         </select>
 
-    <button type="button" class="submit-button" onclick="Updateschedule()">Update</button>
-      <button type="button" class="delete-button" onclick="deleteschedule()">Delete</button>
-      <button class="close-button" onclick="closeedit()">Close</button>
+        <!-- Displaying the Class ID -->
+        <!-- <p id="classIdDisplay">Class IDaaa: </p> -->
 
+        <!-- Buttons -->
+        <button type="button" class="submit-button" onclick="Updateschedule()">Update</button>
+        <button type="button" class="delete-button" onclick="deleteschedule(currentClassId)">Delete</button>
+        <button type="button" class="close-button" onclick="closeedit()">Close</button>
     </form>
   </div>
 </div>
@@ -118,6 +121,7 @@
             <p><strong>Type:</strong> <span id="classType"></span></p>
             <p><strong>Grade:</strong> <span id="classGrade"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
+            <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>Time:</strong> <span id="classTime"></span></p>
             </div>
             <div class="button-container">
@@ -136,6 +140,6 @@
 
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/script.js"></script> <!-- Link your JavaScript file -->
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.js"></script>
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.js"></script>
+    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/Edit_Shedules.js"></script>
 </body>
 </html>
