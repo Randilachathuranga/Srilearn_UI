@@ -68,20 +68,18 @@ class Ind_Myclass extends TeacherController{
     public function DeleteclassApi($Class_id) {
         $model = new Myclassmodel();
 
-        $t1 = $model->table1;
-        $t2 = $model->table2;
-        $joinCondition = $model->joinCondition;
-        
-        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
-
-        if (empty($class)) {
-            http_response_code(404); // Not Found
-            echo json_encode(['error' => 'No classes found for the given P_id.']);
-            return;
+        try {
+            if ($model->deleteclass($Class_id)) {  // Use $userId here, as it's passed from the route
+                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
+                redirect('Ind_Myclass');
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
+            }
+             
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            
         }
-
-        $model->delete($Class_id);
-        echo json_encode(['message' => 'Class deleted successfully.']);
-    }
+     }
 
 }

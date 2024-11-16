@@ -12,6 +12,7 @@ private function connect() {
         die("Connection failed: ".$e->getMessage()) ;
     }
 }
+
 public function query($query, $data = []) {
     $con = $this->connect();
     $stm = $con->prepare($query);
@@ -22,6 +23,7 @@ public function query($query, $data = []) {
     }
     return false; // Return false if the execution failed
 }
+
 public function getrow($query, $data = []) {
     $con = $this->connect();
     $stm = $con->prepare($query);

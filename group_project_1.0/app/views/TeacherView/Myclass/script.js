@@ -76,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Function to show class details when "More Details" button is clicked
+
+//More Details
 function showDetails(Class_id) {
   fetch(`Ind_Myclass/MoredetailsApi/${Class_id}`) // Pass the correct Class_id to PHP for fetching details
     .then((response) => {
@@ -120,6 +121,8 @@ function showDetails(Class_id) {
         }
         document.getElementById("classGrade").textContent = classDetail.Grade;
         document.getElementById("classFee").textContent = classDetail.fee;
+        document.getElementById("maxstu").textContent =
+          classDetail.Max_std;
         document.getElementById(
           "classTime"
         ).textContent = `${classDetail.Start_Time} - ${classDetail.End_time}`;
@@ -147,7 +150,10 @@ function closeModal() {
 }
 
 // Function to show the edit schedule popup form
-function editSchedule() {
+function editSchedule(class_id) {
+  currentClassId = class_id;  
+  console.log(`Editing schedule for Class ID: ${class_id}`);
+//   document.getElementById("classIdDisplay").textContent = `Class ID: ${class_id}`;
   document.getElementById("popupEditForm").style.display = "flex";
 }
 

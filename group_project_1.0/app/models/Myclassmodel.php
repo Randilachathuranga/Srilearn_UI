@@ -28,6 +28,20 @@ class Myclassmodel{
         $result = $this->query($query, $params);
         return !empty($result);
     }
+
+    //delete model
+    public function deleteclass($id,$id_column='Class_id'){
+        try{
+        $data[$id_column]=$id;
+        $query="delete from $this->table1 where $id_column = :$id_column ";
+        $this->query($query,$data);
+        return true;
+        }
+       catch (Exception $e){
+        return false;
+    
+      }  
+    }
     
 
 }
