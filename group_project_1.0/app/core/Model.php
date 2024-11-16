@@ -28,6 +28,22 @@ Trait Model {
         return $this->query($query,$data);
         
     }
+    // added by randila
+    public function InnerJoinwhere($table1, $table2, $joinCondition, $data, $data_not = []){
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "select * from $table1 INNER JOIN $table2 ON $joinCondition where ";
+       foreach($keys as $key){
+                $query.=$key."=:".$key." && ";
+        }
+        foreach($keys_not as $key){
+            $query.=$key."!=:".$key." && ";
+        }
+        $query = trim($query, " && ");
+        $query .= " limit $this->limit offset $this->offset";
+        $data = array_merge($data, $data_not);
+        return $this->query($query, $data);
+    } //added by randila
 
     public function findall(){
        
@@ -116,4 +132,5 @@ Trait Model {
       }   
 
     }
+
 }
