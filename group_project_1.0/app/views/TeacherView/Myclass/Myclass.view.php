@@ -137,9 +137,13 @@
 
 
 
-
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Myscript.js"></script> <!-- Link your JavaScript file -->
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.js"></script>
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/Editshedule.js"></script>
 </body>
 </html>
+
+
+<?php
+require_once __DIR__ . '/../../../../../group_project_1.0/app/views/Footer/footer.php';
+?>
