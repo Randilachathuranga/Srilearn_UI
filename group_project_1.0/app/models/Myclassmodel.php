@@ -42,6 +42,19 @@ class Myclassmodel{
     
       }  
     }
+
+    //update model
+    public function Updateclass($id,$id_column='Class_id'){
+        try{
+            $data[$id_column]=$id;
+            
+            return true;
+            }
+           catch (Exception $e){
+            return false;
+        
+          } 
+    }
     
 
 }
