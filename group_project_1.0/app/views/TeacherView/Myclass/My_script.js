@@ -113,13 +113,13 @@ function showDetails(Class_id) {
 
         // Update modal content
         document.getElementById("classImage").src = imageUrl; // Corrected to set the src of the image element
-        document.getElementById("classSubject").textContent =
-          classDetail.Subject;
+        document.getElementById("moreSubject").textContent =classDetail.Subject;
         document.getElementById("classType").textContent = classDetail.Type;
+        document.getElementById("locat").textContent = classDetail.Location;
         if (classDetail.Type == "individual") {
           document.getElementById("classInstitute").textContent = "None";
         }
-        document.getElementById("classGrade").textContent = classDetail.Grade;
+        document.getElementById("moreGrade").textContent = classDetail.Grade;
         document.getElementById("classFee").textContent = classDetail.fee;
         document.getElementById("maxstu").textContent =
           classDetail.Max_std;
@@ -127,6 +127,7 @@ function showDetails(Class_id) {
           "classTime"
         ).textContent = `${classDetail.Start_Time} - ${classDetail.End_time}`;
 
+        console.log("Class Details:", classDetail);
         // If there’s an image URL, set it
         if (classDetail.image) {
           document.getElementById("classImage").src = classDetail.image;
@@ -151,11 +152,57 @@ function closeModal() {
 
 // Function to show the edit schedule popup form
 function editSchedule(class_id) {
-  currentClassId = class_id;  
+  currentClassId = class_id;
   console.log(`Editing schedule for Class ID: ${class_id}`);
-//   document.getElementById("classIdDisplay").textContent = `Class ID: ${class_id}`;
+
+  // Fetch class details
+  fetch(`Ind_Myclass/MoredetailsApi/${class_id}`)
+      .then((response) => {
+          console.log("API Response Status:", response.status); // Log the status
+          if (!response.ok) {
+              throw new Error("Failed to fetch class details");
+          }
+          return response.json();
+      })
+      .then((details) => {
+          console.log("Fetched Details:", details); // Log the fetched data
+
+          if (details && details.length > 0) {
+              const classDetail = details[0]; // Assume the first object is needed
+              console.log("Class Detail Object:", classDetail);
+
+              // Populate all fields (Ensure field names match exactly with the response keys)
+              document.getElementById("classSubject").value = classDetail.Subject;
+              document.getElementById("classGrade").value = classDetail.Grade;
+              document.getElementById("classfee").value = classDetail.fee;
+              document.getElementById("classMax_std").value = classDetail.Max_std;
+              document.getElementById("classStart_Time").value = classDetail.Start_Time;
+              document.getElementById("classEnd_time").value = classDetail.End_time;
+              document.getElementById("classLocation").value = classDetail.Location;
+
+              // Log each field to verify the values are being set
+              console.log("Subject:", document.getElementById("classSubject").value);
+              console.log("Grade:", document.getElementById("classGrade").value);
+              console.log("Fee:", document.getElementById("classfee").value);
+              console.log("Max_std:", document.getElementById("classMax_std").value);
+              console.log("Start-time:", document.getElementById("classStart_Time").value);
+              console.log("End-time:", document.getElementById("classEnd_time").value);
+              console.log("Location:", document.getElementById("classLocation").value);
+          } else {
+              console.error("No class details available.");
+              alert("No class details found for the selected ID.");
+          }
+      })
+      .catch((error) => {
+          console.error("Error fetching class details:", error);
+          alert("Failed to load class details. Please try again.");
+      });
+
+  // Show the popup form
   document.getElementById("popupEditForm").style.display = "flex";
 }
+
+
 
 function view(){
     alert("Not implemented")

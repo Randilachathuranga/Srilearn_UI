@@ -17,7 +17,7 @@ class Ind_Myclass extends TeacherController{
         $this->Teacherview('Myclass'); 
     }
 
-    //view my classes
+    //view my all classes
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
 
@@ -44,7 +44,7 @@ class Ind_Myclass extends TeacherController{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //view More details
+    //More details about single class
     public function MoredetailsApi($Class_id) {
         $model = new Myclassmodel();
 
@@ -64,12 +64,30 @@ class Ind_Myclass extends TeacherController{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //delete my classes
+    //delete a classe
     public function DeleteclassApi($Class_id) {
         $model = new Myclassmodel();
 
         try {
             if ($model->deleteclass($Class_id)) {  // Use $userId here, as it's passed from the route
+                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
+                redirect('Ind_Myclass');
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
+            }
+             
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            
+        }
+     }
+
+     //update a class
+     public function UpdateclassApi($Class_id){
+        $model = new Myclassmodel();
+
+        try {
+            if ($model->Updateclass($Class_id)) {  // Use $userId here, as it's passed from the route
                 echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
                 redirect('Ind_Myclass');
             } else {
