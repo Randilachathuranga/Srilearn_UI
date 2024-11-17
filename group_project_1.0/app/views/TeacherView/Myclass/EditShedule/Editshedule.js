@@ -56,7 +56,6 @@ function Updateschedule() {
 
 // Function to delete a schedule
 function deleteschedule(Class_id) {
-    // Show confirmation alert
     if (window.confirm('Are you sure you want to delete this schedule?')) {
         fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {
             method: 'DELETE',
@@ -65,23 +64,20 @@ function deleteschedule(Class_id) {
             }
         })
         .then(response => {
-            // Check if the response is OK
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            // Log the response body
-            return response.text(); // Get the response as plain text
+            return response.text(); // Fetch response as text
         })
         .then(text => {
             console.log('Server response:', text);
-            // Try to parse the response as JSON if possible
             try {
                 const data = JSON.parse(text);
                 console.log('Schedule deleted successfully:', data);
-                // Redirect the user after successful deletion
-                window.location.href = '/group_project_1.0/public/Ind_Myclass';  // Adjust the path if needed
+                window.location.href = 'http://localhost/group_project_1.0/public/Ind_Myclass';
             } catch (e) {
-                console.error('Error parsing JSON:', e);
+                console.error('Error parsing JSON, redirecting anyway:', e);
+                window.location.href = 'http://localhost/group_project_1.0/public/Ind_Myclass';
             }
         })
         .catch(error => {
@@ -91,5 +87,6 @@ function deleteschedule(Class_id) {
         console.log('Schedule deletion canceled.');
     }
 }
+
 
 

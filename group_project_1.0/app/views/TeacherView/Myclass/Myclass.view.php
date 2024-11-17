@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Cards</title>
+    <title>My Class</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Mystyles.css"> <!-- Link your CSS file -->
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclasses.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.css">
@@ -138,8 +138,8 @@
 
 
 
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/script.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Myscript.js"></script> <!-- Link your JavaScript file -->
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.js"></script>
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/Edit_Shedules.js"></script>
+    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/Editshedule.js"></script>
 </body>
 </html>
