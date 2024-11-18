@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Class</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclasses.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/More_details/Moredetailss.css">
 </head>
@@ -66,24 +66,21 @@
 <!-- Popup Form for Editing a Schedule -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
-    <form id="blogForm">
+    <form id="editScheduleForm" onsubmit="Updateschedule(event, currentClassId)">
       <label for="classSubject">Subject</label>
       <input type="text" id="classSubject" name="classSubject" required />
-
       <label for="classGrade">Grade</label>
       <input type="text" id="classGrade" name="classGrade" required />
-
-      <div class="time-row">
+      <div class="fm-row ">
         <div>
           <label for="classfee">Fee</label>
-          <input type="text" id="classfee" name="classfee" required />
+          <input type="number" id="classfee" name="classfee" required />
         </div>
         <div>
           <label for="classMax_std">Max Students</label>
-          <input type="text" id="classMax_std" name="classMax_std" required />
+          <input type="number" id="classMax_std" name="classMax_std" required />
         </div>
       </div>
-
       <div class="time-row">
         <div>
           <label for="classStart_Time">Start Time</label>
@@ -94,16 +91,16 @@
           <input type="time" id="classEnd_time" name="classEnd_time" required />
         </div>
       </div>
-
       <label for="classLocation">Location</label>
       <input type="text" id="classLocation" name="classLocation" required />
-
-      <button type="button" class="submit-button" onclick="Updateschedule()">Update</button>
+      <button type="submit" class="submit-button">Update</button>
       <button type="button" class="delete-button" onclick="deleteschedule(currentClassId)">Delete</button>
       <button type="button" class="close-button" onclick="closeedit()">Close</button>
     </form>
   </div>
 </div>
+
+
 
 
 
@@ -137,7 +134,7 @@
 
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.js"></script>
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/Editshedule.js"></script>
+    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>
 

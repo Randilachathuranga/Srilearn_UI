@@ -83,21 +83,48 @@ class Ind_Myclass extends TeacherController{
      }
 
      //update a class
-     public function UpdateclassApi($Class_id){
+     public function UpdateclassApi($Class_id) {
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
+            return;
+        }
+        if (!isset($data['table1']) || !isset($data['table2'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing table1 or table2 data']);
+            return;
+        }
+        $table1_data = [
+            'Subject' => $data['table1']['Subject'] ?? null,
+            'Grade' => $data['table1']['Grade'] ?? null,
+            'Max_std' => $data['table1']['Max_std'] ?? null,
+            'fee' => $data['table1']['fee'] ?? null,
+        ];
+        $table2_data = [
+            'Location' => $data['table2']['Location'] ?? null,
+            'Start_Time' => $data['table2']['Start_Time'] ?? null,
+            'End_time' => $data['table2']['End_time'] ?? null,
+        ];
+        if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table2']);
+            return;
+        }
+        error_log("Prepared table1 data: " . print_r($table1_data, true));
+        error_log("Prepared table2 data: " . print_r($table2_data, true));
         $model = new Myclassmodel();
 
-        try {
-            if ($model->Updateclass($Class_id)) {  // Use $userId here, as it's passed from the route
-                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
-                redirect('Ind_Myclass');
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
-            }
-             
-        } catch (Exception $e) {
-            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        $result1 = $model->updateclass($Class_id, $table1_data, 'Class_id', $model->table1, $model->allowedColumns1);
+        $result2 = $model->updateclass($Class_id, $table2_data, 'IndClass_id', $model->table2, $model->allowedColumns2);
             
-        }
-     }
-
-}
+            // Only return success if both updates were successful
+            if ($result1 || $result2) {
+                echo json_encode(['status' => 'success', 'message' => 'Class updated successfully']);
+            } else {
+                $errorMessages = [];
+                if (!$result1) $errorMessages[] = 'Failed to update table1';
+                if (!$result2) $errorMessages[] = 'Failed to update table2';
+                echo json_encode(['status' => 'error', 'message' => implode('. ', $errorMessages)]);
+            }
+        } 
+        
+    }

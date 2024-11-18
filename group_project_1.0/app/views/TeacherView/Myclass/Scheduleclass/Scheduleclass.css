@@ -39,7 +39,8 @@
 /* Form input styling */
 .form-container input[type="text"],
 .form-container select,
-.form-container input[type="time"] {
+.form-container input[type="time"],
+.form-container input[type="number"] {
     width: 100%;
     padding: 12px;
     margin: 12px 0;
@@ -57,6 +58,16 @@
 }
 
 .time-row div {
+    width: 50%;
+}
+
+.fm-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.fm-row div {
     width: 50%;
 }
 
