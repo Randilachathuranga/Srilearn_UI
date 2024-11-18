@@ -181,13 +181,13 @@ function editSchedule(class_id) {
               document.getElementById("classLocation").value = classDetail.Location;
 
               // Log each field to verify the values are being set
-              console.log("Subject:", document.getElementById("classSubject").value);
-              console.log("Grade:", document.getElementById("classGrade").value);
-              console.log("Fee:", document.getElementById("classfee").value);
-              console.log("Max_std:", document.getElementById("classMax_std").value);
-              console.log("Start-time:", document.getElementById("classStart_Time").value);
-              console.log("End-time:", document.getElementById("classEnd_time").value);
-              console.log("Location:", document.getElementById("classLocation").value);
+              // console.log("Subject:", document.getElementById("classSubject").value);
+              // console.log("Grade:", document.getElementById("classGrade").value);
+              // console.log("Fee:", document.getElementById("classfee").value);
+              // console.log("Max_std:", document.getElementById("classMax_std").value);
+              // console.log("Start-time:", document.getElementById("classStart_Time").value);
+              // console.log("End-time:", document.getElementById("classEnd_time").value);
+              // console.log("Location:", document.getElementById("classLocation").value);
           } else {
               console.error("No class details available.");
               alert("No class details found for the selected ID.");
