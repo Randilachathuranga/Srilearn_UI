@@ -18,6 +18,9 @@ class Myclassmodel{
     public $allowedColumns2=[
         'Location','Start_Time','End_time'
     ];
+    protected $ColumnsforT2 = [
+        'IndClass_id', 'P_id', 'Location', 'Start_Time', 'End_time'
+    ];
 
     public $joinCondition = "class.class_id = individual_class.IndClass_id";
 
@@ -83,34 +86,63 @@ class Myclassmodel{
         }
     }
 
+    //get class id
+    public function getid($data,$data_not=[]){
+        $keys=array_keys($data);
+        $keys_not=array_keys($data_not);
+        $query="select * from $this->table1 where ";
+        foreach($keys as $key){
+                $query.=$key."=:".$key." && ";
+        }
+        foreach($keys_not as $key){
+            $query.=$key."!=:".$key." && ";
+        }
+        $query=trim($query," && ");
+        $query.=" limit $this->limit offset $this->offset";
+        $data=array_merge($data,$data_not);
+        return $this->query($query,$data);
+    }
+
     //insert model for two tables
-    public function insertclass($data1,$data2){
+    public function insertclass($data1, $data2, $P_id) {
         $filteredData1 = [];
-        $filteredData2 = [];
         if (!empty($this->allowedColumns1)) {
             foreach ($data1 as $key => $value) {
                 if (in_array($key, $this->allowedColumns1)) {
-                    $filteredData1[$key] = $value; // Keep only allowed columns
+                    $filteredData1[$key] = $value;
                 }
             }
         }
-        if (!empty($this->allowedColumns2)) {
-            foreach ($data2 as $key => $value) {
-                if (in_array($key, $this->allowedColumns2)) {
-                    $filteredData2[$key] = $value; // Keep only allowed columns
-                }
-            }
-        }
-        if (empty($filteredData1) || empty($filteredData2)) {
-            error_log("No valid data to insert for tables: class or individual_class");
+        if (empty($filteredData1)) {
+            error_log("No valid data to insert for table: class");
             return false;
         }
         $keys1 = array_keys($filteredData1);
-        $keys2 = array_keys($filteredData2);
         $query1 = "INSERT INTO class (" . implode(", ", $keys1) . ") VALUES (:" . implode(", :", $keys1) . ")";
-        $query2 = "INSERT INTO individual_class (" . implode(", ", $keys2) . ") VALUES (:" . implode(", :", $keys2) . ")";
         try {
             $this->duiquery($query1, $filteredData1);
+            $class_id_result = $this->getid($filteredData1);
+            if (empty($class_id_result) || !isset($class_id_result[0]['Class_id'])) {
+                error_log("Failed to retrieve class_id after inserting into class");
+                return false;
+            }
+            $class_id = $class_id_result[0]['Class_id']; 
+            $filteredData2 = [];
+            if (!empty($this->ColumnsforT2)) {
+                foreach ($data2 as $key => $value) {
+                    if (in_array($key, $this->ColumnsforT2)) {
+                        $filteredData2[$key] = $value;
+                    }
+                }
+            }
+            if (empty($filteredData2)) {
+                error_log("No valid data to insert for table: individual_class");
+                return false;
+            }
+            $filteredData2['Class_id'] = $class_id;
+            $filteredData2['P_id'] = $P_id;
+            $keys2 = array_keys($filteredData2);
+            $query2 = "INSERT INTO individual_class (" . implode(", ", $keys2) . ") VALUES (:" . implode(", :", $keys2) . ")";
             $this->duiquery($query2, $filteredData2);
             return true;
         } catch (Exception $e) {
@@ -118,5 +150,6 @@ class Myclassmodel{
             return false;
         }
     }
+    
         
 }

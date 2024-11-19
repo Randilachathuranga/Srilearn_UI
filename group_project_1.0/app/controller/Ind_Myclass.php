@@ -159,16 +159,12 @@ class Ind_Myclass extends TeacherController{
             error_log("Prepared table2 data: " . print_r($table2_data, true));
             $model = new Myclassmodel();
     
-            $result1 = $model->insert($model->table1, $table1_data, $model->allowedColumns1);
-            $result2 = $model->insert($model->table2, $table2_data, $model->allowedColumns2);
-                
-                // Only return success if both updates were successful
-                if ($result1 || $result2) {
+            $result = $model->insertclass($this->$table1_data, $this->$table2_data,$P_id);
+                if ($result) {
                     echo json_encode(['status' => 'success', 'message' => 'Class created successfully']);
                 } else {
                     $errorMessages = [];
-                    if (!$result1) $errorMessages[] = 'Failed to create table1';
-                    if (!$result2) $errorMessages[] = 'Failed to create table2';
+                    if (!$result) $errorMessages[] = 'Failed to create table1';
                 }
             }
 
