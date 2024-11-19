@@ -128,3 +128,34 @@
         padding: 10px;
     }
 }
+
+.create-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px; /* Adds spacing between rows */
+    gap: 16px; /* Adds spacing between the two fields in the row */
+}
+
+.create-row label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block; /* Ensures the label stays above the input/select field */
+}
+
+.create-row input,
+.create-row select {
+    width: calc(50% - 8px); /* Ensures both fields share the row equally with some spacing */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Includes padding and border in width calculation */
+}
+
+.create-row div {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stacks label and input/select vertically */
+}
+
