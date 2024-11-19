@@ -127,4 +127,51 @@ class Ind_Myclass extends TeacherController{
             }
         } 
         
+        //create a class
+        public function CreateclassApi($P_id) {
+            $jsonData = file_get_contents('php://input');
+            $data = json_decode($jsonData, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
+                return;
+            }
+            if (!isset($data['table1']) || !isset($data['table2'])) {
+                echo json_encode(['status' => 'error', 'message' => 'Missing table1 or table2 data']);
+                return;
+            }
+            $table1_data = [
+                'Subject' => $data['table1']['Subject'] ?? null,
+                'Grade' => $data['table1']['Grade'] ?? null,
+                'Max_std' => $data['table1']['Max_std'] ?? null,
+                'fee' => $data['table1']['fee'] ?? null,
+                'P_id' => $P_id,
+            ];
+            $table2_data = [
+                'Location' => $data['table2']['Location'] ?? null,
+                'Start_Time' => $data['table2']['Start_Time'] ?? null,
+                'End_time' => $data['table2']['End_time'] ?? null,
+            ];
+            if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table2']);
+                return;
+            }
+            error_log("Prepared table1 data: " . print_r($table1_data, true));
+            error_log("Prepared table2 data: " . print_r($table2_data, true));
+            $model = new Myclassmodel();
+    
+            $result1 = $model->insert($model->table1, $table1_data, $model->allowedColumns1);
+            $result2 = $model->insert($model->table2, $table2_data, $model->allowedColumns2);
+                
+                // Only return success if both updates were successful
+                if ($result1 || $result2) {
+                    echo json_encode(['status' => 'success', 'message' => 'Class created successfully']);
+                } else {
+                    $errorMessages = [];
+                    if (!$result1) $errorMessages[] = 'Failed to create table1';
+                    if (!$result2) $errorMessages[] = 'Failed to create table2';
+                }
+            }
+
+
+
     }
