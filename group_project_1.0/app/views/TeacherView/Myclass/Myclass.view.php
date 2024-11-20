@@ -15,7 +15,7 @@
     <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
 </div>
 
-<button class="create-blog-button" onclick="ScheduleClass()">Create class schedule</button>
+<button class="create-blog-button" onclick="ScheduleClass()">Create a class</button>
 
 <!-- my class details will be displayed -->
     <div class="container" id="class-container">
@@ -24,7 +24,7 @@
 <!-- Popup Form for Creating a Schedule -->
 <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
-        <h2>Create Class Schedule</h2>
+        <h2>Create a class</h2>
         <form id="editScheduleForm">
             <label for="Subject">Subject</label>
             <input type="text" id="Subject" name="Subject" required>
@@ -50,12 +50,12 @@
             </div>
             <div class="create-row">
                 <div>
-                    <label for="Start_Time">Start Time</label>
-                    <input type="time" id="Start_Time" name="Start_Time" required>
+                    <label for="Start_date">Start Date</label>
+                    <input type="date" id="Start_date" name="Start_date" required>
                 </div>
                 <div>
-                    <label for="End_Time">End Time</label>
-                    <input type="time" id="End_Time" name="End_Time" required>
+                    <label for="End_date">End date</label>
+                    <input type="date" id="End_date" name="End_date" required>
                 </div>
             </div>
             <div class="create-row">
@@ -104,12 +104,12 @@
       </div>
       <div class="time-row">
         <div>
-          <label for="classStart_Time">Start Time</label>
-          <input type="time" id="classStart_Time" name="classStart_Time" required />
+          <label for="classStart_date">Start date</label>
+          <input type="date" id="classStart_date" name="classStart_date" required />
         </div>
         <div>
-          <label for="classEnd_time">End Time</label>
-          <input type="time" id="classEnd_time" name="classEnd_time" required />
+          <label for="classEnd_date">End date</label>
+          <input type="date" id="classEnd_date" name="classEnd_date" required />
         </div>
       </div>
       <label for="classLocation">Location</label>
@@ -138,7 +138,7 @@
             <p><strong>Grade:</strong> <span id="moreGrade"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
-            <p><strong>Time:</strong> <span id="classTime"></span></p>
+            <p><strong>date:</strong> <span id="classdate"></span></p>
             </div>
             <div class="button-container">
                 <button onclick="view()" class="buttons">Upload Learning materials</button>
