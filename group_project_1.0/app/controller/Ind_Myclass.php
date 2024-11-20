@@ -129,8 +129,10 @@ class Ind_Myclass extends TeacherController{
         
         //create a class
         public function CreateclassApi($P_id) {
+
             $jsonData = file_get_contents('php://input');
             $data = json_decode($jsonData, true);
+
             if (json_last_error() !== JSON_ERROR_NONE) {
                 echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
                 return;
@@ -140,13 +142,14 @@ class Ind_Myclass extends TeacherController{
                 return;
             }
             $table1_data = [
+                'Type' => $data['table1']['Type'] ?? null,
                 'Subject' => $data['table1']['Subject'] ?? null,
                 'Grade' => $data['table1']['Grade'] ?? null,
                 'Max_std' => $data['table1']['Max_std'] ?? null,
                 'fee' => $data['table1']['fee'] ?? null,
-                'P_id' => $P_id,
             ];
             $table2_data = [
+                'P_id' => $P_id,
                 'Location' => $data['table2']['Location'] ?? null,
                 'Start_Time' => $data['table2']['Start_Time'] ?? null,
                 'End_time' => $data['table2']['End_time'] ?? null,
