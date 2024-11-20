@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         <img src="${imageUrl}" alt="${classItem.title}">
                         <h3>${classItem.Subject} - ${classItem.Grade}</h3>
                         <p>Location: ${classItem.Location}</p>
-                        <p>Start Time: ${classItem.Start_Time}</p>
-                        <p>End Time: ${classItem.End_time}</p>
+                        <p>Start date: ${classItem.Start_date}</p>
+                        <p>End date: ${classItem.End_date}</p>
                         <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
                         <button class="button" onclick="editSchedule(${classItem.Class_id})">
                             <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
@@ -125,8 +125,8 @@ function showDetails(Class_id) {
         document.getElementById("maxstu").textContent =
           classDetail.Max_std;
         document.getElementById(
-          "classTime"
-        ).textContent = `${classDetail.Start_Time} - ${classDetail.End_time}`;
+          "classdate"
+        ).textContent = `${classDetail.Start_date} - ${classDetail.End_date}`;
 
         console.log("Class Details:", classDetail);
         // If there’s an image URL, set it
@@ -177,8 +177,8 @@ function editSchedule(class_id) {
               document.getElementById("classGrade").value = classDetail.Grade;
               document.getElementById("classfee").value = classDetail.fee;
               document.getElementById("classMax_std").value = classDetail.Max_std;
-              document.getElementById("classStart_Time").value = classDetail.Start_Time;
-              document.getElementById("classEnd_time").value = classDetail.End_time;
+              document.getElementById("classStart_date").value = classDetail.Start_date;
+              document.getElementById("classEnd_date").value = classDetail.End_date;
               document.getElementById("classLocation").value = classDetail.Location;
 
               // Log each field to verify the values are being set
@@ -234,13 +234,13 @@ async function createSchedule(event, P_id) {
       Subject: formData.get("Subject"),
         Grade: formData.get("Grade"),
         Max_std: parseInt(formData.get("Max_std"), 10),
-        Fee: parseFloat(formData.get("Fee"))
+        fee: parseFloat(formData.get("Fee"))
   };
   const table2 = {
     P_id: P_id,
     Location: formData.get("Location"),
-    Start_Time: formData.get("Start_Time"),
-    End_Time: formData.get("End_Time")
+    Start_date: formData.get("Start_date"),
+    End_date: formData.get("End_date")
   };
 
   
@@ -263,7 +263,7 @@ async function createSchedule(event, P_id) {
   }
   if (!contentType || !contentType.includes("application/json")) {
       const text = await response.text();
-      // console.warn("Unexpected response format:", text);
+      console.warn("Unexpected response format:", text);
       return { message: text }; // Return text for unexpected formats
   }
   return response.json();

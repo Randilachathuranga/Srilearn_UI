@@ -18,8 +18,8 @@
     };
     const table2 = {
         Location: formData.get("classLocation"),
-        Start_Time: formData.get("classStart_Time"),
-        End_time: formData.get("classEnd_time"),
+        Start_date: formData.get("classStart_date"),
+        End_date: formData.get("classEnd_date"),
     };
     const data = { table1, table2 };
     console.log("ClassData being sent:", data);
