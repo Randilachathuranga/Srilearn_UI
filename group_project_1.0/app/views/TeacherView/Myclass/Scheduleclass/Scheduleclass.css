@@ -138,10 +138,10 @@
 }
 
 .create-row label {
-    font-weight: bold;
     margin-bottom: 8px;
     display: block; /* Ensures the label stays above the input/select field */
 }
+
 
 .create-row input,
 .create-row select {
@@ -157,5 +157,21 @@
     flex: 1;
     display: flex;
     flex-direction: column; /* Stacks label and input/select vertically */
+}
+
+.create-row > div {
+    width: calc(50% - 8px); /* Ensures both fields share the row equally with some spacing */
+    display: inline-block; /* Aligns divs horizontally */
+    vertical-align: top;
+}
+
+.create-row input,
+.create-row select {
+    width: 100%; /* Fill the parent container (half the row due to div width) */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Includes padding and border in width calculation */
 }
 

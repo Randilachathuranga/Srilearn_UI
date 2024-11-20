@@ -1,5 +1,6 @@
+const P_id = 6; /* Your logic to get P_id, e.g., from localStorage or query params */
+
 document.addEventListener("DOMContentLoaded", () => {
-  const P_id = 6; /* Your logic to get P_id, e.g., from localStorage or query params */
 
   fetch(`Ind_Myclass/MyclassApi/${P_id}`)
     .then((response) => {
@@ -208,67 +209,84 @@ function view(){
     alert("Not implemented")
 }
 
-// Show the popup form
-function ScheduleClass() {
+function ScheduleClass(){
   document.getElementById("popupForm").style.display = "flex";
+  console.log("p_ID " , P_id);
 }
 
-// Close the popup form
-function closePopup() {
+function closePopup(){
   document.getElementById("popupForm").style.display = "none";
 }
 
-// Submit the blog and redirect to the main blog page
-function createSchedule(event, P_id) {
-  event.preventDefault(); // Prevent form submission and page reload
-  
-  const form = event.target; // Reference to the form
-  const formData = new FormData(form); // Gather all form data
-  
-  // Construct the schedule data from the form fields
-  const scheduleData = {
-      Subject: formData.get("Subject"),
+// Show the popup form
+document.getElementById("editScheduleForm").addEventListener("submit", (event) => createSchedule(event, P_id));
+
+async function createSchedule(event, P_id) {
+    console.log("createSchedule called with P_id:", P_id);
+    event.preventDefault(); // Prevent form submission and page reload
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+// Institute_Name: formData.get("Institute_name")
+    const table1 = {
       Type: formData.get("Type"),
-      Fee: parseFloat(formData.get("Fee")), // Parse fee as a float number
-      Grade: formData.get("Grade"),
-      Max_std: parseInt(formData.get("Max_std"), 10), // Parse Max_std as an integer
-      Start_Time: formData.get("Start_Time"),
-      End_Time: formData.get("End-time"),
-      Institute_Name: formData.get("Institute-name"),
-      Location: formData.get("Location"),
-      P_id: P_id // Include the parent ID
+      Subject: formData.get("Subject"),
+        Grade: formData.get("Grade"),
+        Max_std: parseInt(formData.get("Max_std"), 10),
+        Fee: parseFloat(formData.get("Fee"))
   };
+  const table2 = {
+    P_id: P_id,
+    Location: formData.get("Location"),
+    Start_Time: formData.get("Start_Time"),
+    End_Time: formData.get("End_Time")
+  };
+
   
-  console.log("Schedule Data being sent:", scheduleData); // Debug log
-  
-  // Use fetch to send the data to the server
+  const data = { table1, table2 };
+  console.log("ClassData being sent:", data);
+    
   fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`, {
-      method: 'POST', // HTTP method
-      headers: {
-          'Content-Type': 'application/json' // Tell the server you're sending JSON data
-      },
-      body: JSON.stringify(scheduleData) // Convert the JavaScript object into a JSON string
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json(); // Parse the JSON response from the server
-  })
-  .then(data => {
-      console.log('Schedule submitted successfully:', data);
-      if (data.status === "success") {
-          alert("Schedule created successfully!");
-          // Redirect after successful submission
-          window.location.href = "../../../../Srilearn_UI/Teacher/Myblogs/Myblogs.php";
-      } else {
-          alert(`Failed to create schedule: ${data.message}`);
-      }
-  })
-  .catch(error => {
-      console.error('Error submitting schedule:', error);
-      alert("There was an error submitting the schedule. Please try again.");
-  });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(async response => {
+  const contentType = response.headers.get("content-type");
+  if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Server response:", errorText);
+      throw new Error(`HTTP error! Status: ${response.status}, Body: ${errorText}`);
+  }
+  if (!contentType || !contentType.includes("application/json")) {
+      const text = await response.text();
+      // console.warn("Unexpected response format:", text);
+      return { message: text }; // Return text for unexpected formats
+  }
+  return response.json();
+})
+
+.then(data => {
+    console.log('Schedule submitted successfully:', data);
+    if (data.status === "success") {
+        alert("Schedule created successfully!");
+        window.location.href = 'http://localhost/group_project_1.0/public/Ind_Myclass';
+    } else {
+        alert(`Failed to create schedule: ${data.message}`);
+    }
+})
+.catch(error => {
+    console.error('Error submitting schedule:', error);
+    alert("There was an error submitting the schedule. Please try again.");
+});
+
 }
+
+
+
+
 
 
