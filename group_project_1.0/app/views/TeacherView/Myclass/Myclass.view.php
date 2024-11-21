@@ -147,6 +147,8 @@
                 <button onclick="view()" class="buttons">View Class schedule</button>
                 <button onclick="view()" class="buttons">Issue free cards</button>
                 <button onclick="view()" class="buttons">Request payrolls</button>
+                <button onclick="view()" class="buttons">Create schedule</button>
+
             </div>
     </div>
 </div>

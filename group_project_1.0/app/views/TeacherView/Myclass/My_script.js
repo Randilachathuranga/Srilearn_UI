@@ -271,12 +271,8 @@ async function createSchedule(event, P_id) {
 
 .then(data => {
     console.log('Schedule submitted successfully:', data);
-    if (data.status === "success") {
         alert("Schedule created successfully!");
         window.location.href = 'http://localhost/group_project_1.0/public/Ind_Myclass';
-    } else {
-        alert(`Failed to create schedule: ${data.message}`);
-    }
 })
 .catch(error => {
     console.error('Error submitting schedule:', error);

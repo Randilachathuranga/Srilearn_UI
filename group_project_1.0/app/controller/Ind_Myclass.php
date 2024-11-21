@@ -164,7 +164,7 @@ class Ind_Myclass extends TeacherController{
     
             $result = $model->insertclass($table1_data,$table2_data);
                 if ($result) {
-                    echo json_encode(['status' => 'success', 'message' => 'Class created successfully']);
+                    echo json_encode(['status' => 'Success', 'message' => 'Class created successfully']);
                 } else {
                     $errorMessages = [];
                     if (!$result) $errorMessages[] = 'Failed to create table1';
