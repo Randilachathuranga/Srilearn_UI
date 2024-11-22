@@ -1,6 +1,6 @@
 <?php
 
-class Ind_Myclass extends TeacherController{
+class Ind_Myclass extends Controller{
 
     // function checkAccess($requiredRole) {
     //     if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
@@ -14,7 +14,7 @@ class Ind_Myclass extends TeacherController{
     
         $model = new Myclassmodel();
         // echo $_SESSION['Role'];
-        $this->Teacherview('Myclass'); 
+        $this->View('TeacherView/Myclass/Myclass'); 
     }
 
     //view my all classes

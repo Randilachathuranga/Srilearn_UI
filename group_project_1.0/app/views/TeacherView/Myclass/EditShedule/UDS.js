@@ -1,11 +1,9 @@
-// Show the popup form
-
-  // Close the popup form
+  // Close the edit schedule form
   function closeedit() {
     document.getElementById("popupEditForm").style.display = "none";
   }
   
-  // Function to update the schedule
+  // Function to update the Class
   async function Updateschedule(event, Class_id) {
     event.preventDefault();
     const form = event.target;
@@ -53,7 +51,8 @@
     } 
 }
 
-// Function to delete a schedule
+
+// Function to delete a Class
 function deleteschedule(Class_id) {
     if (window.confirm('Are you sure you want to delete this schedule?')) {
         fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {
@@ -66,7 +65,7 @@ function deleteschedule(Class_id) {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.text(); // Fetch response as text
+            return response.text(); 
         })
         .then(text => {
             console.log('Server response:', text);
