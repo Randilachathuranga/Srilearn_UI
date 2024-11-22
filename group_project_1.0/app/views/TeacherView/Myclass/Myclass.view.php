@@ -34,7 +34,7 @@
                     <input type="text" id="Fee" name="Fee" required>
                 </div>
                 <div>
-                    <label for="Location">Location</label>
+                    <label for="Location">Address</label>
                     <input type="text" id="Location" name="Location" required>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 </div>
 
 
-<!-- Popup Form for Editing a Schedule -->
+<!-- Popup Form for Editing a class -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
     <form id="editScheduleForm" onsubmit="Updateschedule(event, currentClassId)">
@@ -112,7 +112,7 @@
           <input type="date" id="classEnd_date" name="classEnd_date" required />
         </div>
       </div>
-      <label for="classLocation">Location</label>
+      <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
       <button type="submit" class="submit-button">Update</button>
       <button type="button" class="delete-button" onclick="deleteschedule(currentClassId)">Delete</button>
@@ -134,7 +134,7 @@
             <div class="class-details">
             <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
             <p><strong>Type:</strong> <span id="classType"></span></p>
-            <p><strong>Location:</strong> <span id="locat"></span></p>
+            <p><strong>Address:</strong> <span id="locat"></span></p>
             <p><strong>Grade:</strong> <span id="moreGrade"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
@@ -147,6 +147,8 @@
                 <button onclick="view()" class="buttons">View Class schedule</button>
                 <button onclick="view()" class="buttons">Issue free cards</button>
                 <button onclick="view()" class="buttons">Request payrolls</button>
+                <button onclick="view()" class="buttons">Create schedule</button>
+
             </div>
     </div>
 </div>

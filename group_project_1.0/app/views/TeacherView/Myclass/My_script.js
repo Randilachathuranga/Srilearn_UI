@@ -1,7 +1,8 @@
-const P_id = 6; /* Your logic to get P_id, e.g., from localStorage or query params */
+
+
+const P_id = 6; 
 
 document.addEventListener("DOMContentLoaded", () => {
-
   fetch(`Ind_Myclass/MyclassApi/${P_id}`)
     .then((response) => {
       if (!response.ok) {
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error("An unexpected error occurred.");
         }
       }
-      return response.json(); // Parse the response JSON
+      return response.json(); 
     })
     .then((data) => {
       const container = document.getElementById("class-container");
@@ -21,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Container element with ID 'class-container' not found.");
         return;
       }
-
-      container.innerHTML = ""; // Clear any existing content
+      container.innerHTML = ""; 
       if (!data || data.length === 0) {
         container.innerHTML = "<p>No classes found for this teacher.</p>";
         return;
@@ -32,31 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
         card.className = "card";
 
         const subjectImages = {
-          Physics:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          Mathematics:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
-          English:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
-          Chemistry:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          History:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
+          Physics:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+          Mathematics: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
+          English:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
+          Chemistry:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+          History:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
           IT: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/It.png",
-          Biology:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
-
-          // Add more subjects and their images as needed
+          Biology:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
         };
         const imageUrl =
-          subjectImages[classItem.Subject] ||
-          "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
-
+          subjectImages[classItem.Subject] || "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
         card.innerHTML = `
                     <div class="card-content">
                         <img src="${imageUrl}" alt="${classItem.title}">
                         <h3>${classItem.Subject} - ${classItem.Grade}</h3>
-                        <p>Location: ${classItem.Location}</p>
+                        <p>Address: ${classItem.Location}</p>
                         <p>Start date: ${classItem.Start_date}</p>
                         <p>End date: ${classItem.End_date}</p>
                         <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
@@ -80,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //More Details
 function showDetails(Class_id) {
-  fetch(`Ind_Myclass/MoredetailsApi/${Class_id}`) // Pass the correct Class_id to PHP for fetching details
+  fetch(`Ind_Myclass/MoredetailsApi/${Class_id}`) 
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch class details");
@@ -88,31 +78,18 @@ function showDetails(Class_id) {
       return response.json();
     })
     .then((details) => {
-      // Ensure details contain the data before accessing properties
       if (details && details.length > 0) {
         const classDetail = details[0]; // Assuming a single class detail is returned
-
         const subjectImages = {
-          Physics:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          Mathematics:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
-          English:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
-          Chemistry:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          History:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
+          Physics:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+          Mathematics:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
+          English:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
+          Chemistry:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+          History:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
           IT: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/It.png",
-          Biology:
-            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
-          // Add more subjects and their images as needed
+          Biology:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
         };
-        const imageUrl =
-          subjectImages[classDetail.Subject] ||
-          "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
-
-        // Update modal content
+        const imageUrl =subjectImages[classDetail.Subject] || "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
         document.getElementById("classImage").src = imageUrl; // Corrected to set the src of the image element
         document.getElementById("moreSubject").textContent =classDetail.Subject;
         document.getElementById("classType").textContent = classDetail.Type;
@@ -127,14 +104,10 @@ function showDetails(Class_id) {
         document.getElementById(
           "classdate"
         ).textContent = `${classDetail.Start_date} - ${classDetail.End_date}`;
-
         console.log("Class Details:", classDetail);
-        // If there’s an image URL, set it
         if (classDetail.image) {
           document.getElementById("classImage").src = classDetail.image;
         }
-
-        // Show modal
         document.getElementById("modalBackground").style.display = "block";
       } else {
         console.error("No class details available.");
@@ -151,12 +124,11 @@ function closeModal() {
   document.getElementById("modalBackground").style.display = "none";
 }
 
-// Function to show the edit schedule popup form
+
+// Function to show the edit Class popup form
 function editSchedule(class_id) {
   currentClassId = class_id;
   console.log(`Editing schedule for Class ID: ${class_id}`);
-
-  // Fetch class details
   fetch(`Ind_Myclass/MoredetailsApi/${class_id}`)
       .then((response) => {
           console.log("API Response Status:", response.status); // Log the status
@@ -171,8 +143,6 @@ function editSchedule(class_id) {
           if (details && details.length > 0) {
               const classDetail = details[0]; // Assume the first object is needed
               console.log("Class Detail Object:", classDetail);
-
-              // Populate all fields (Ensure field names match exactly with the response keys)
               document.getElementById("classSubject").value = classDetail.Subject;
               document.getElementById("classGrade").value = classDetail.Grade;
               document.getElementById("classfee").value = classDetail.fee;
@@ -180,16 +150,7 @@ function editSchedule(class_id) {
               document.getElementById("classStart_date").value = classDetail.Start_date;
               document.getElementById("classEnd_date").value = classDetail.End_date;
               document.getElementById("classLocation").value = classDetail.Location;
-
-              // Log each field to verify the values are being set
-              // console.log("Subject:", document.getElementById("classSubject").value);
-              // console.log("Grade:", document.getElementById("classGrade").value);
-              // console.log("Fee:", document.getElementById("classfee").value);
-              console.log("Max_std:", document.getElementById("classMax_std").value);
-              // console.log("Start-time:", document.getElementById("classStart_Time").value);
-              // console.log("End-time:", document.getElementById("classEnd_time").value);
-              // console.log("Location:", document.getElementById("classLocation").value);
-          } else {
+           } else {
               console.error("No class details available.");
               alert("No class details found for the selected ID.");
           }
@@ -202,8 +163,6 @@ function editSchedule(class_id) {
   // Show the popup form
   document.getElementById("popupEditForm").style.display = "flex";
 }
-
-
 
 function view(){
     alert("Not implemented")
@@ -228,7 +187,6 @@ async function createSchedule(event, P_id) {
     const form = event.target;
     const formData = new FormData(form);
 
-// Institute_Name: formData.get("Institute_name")
     const table1 = {
       Type: formData.get("Type"),
       Subject: formData.get("Subject"),
@@ -243,6 +201,8 @@ async function createSchedule(event, P_id) {
     End_date: formData.get("End_date")
   };
 
+  const institute = formData.get("Institute_name");
+  if (institute == 'None' && table1.Type == 'Individual') {
   
   const data = { table1, table2 };
   console.log("ClassData being sent:", data);
@@ -268,20 +228,18 @@ async function createSchedule(event, P_id) {
   }
   return response.json();
 })
-
 .then(data => {
     console.log('Schedule submitted successfully:', data);
-    if (data.status === "success") {
         alert("Schedule created successfully!");
         window.location.href = 'http://localhost/group_project_1.0/public/Ind_Myclass';
-    } else {
-        alert(`Failed to create schedule: ${data.message}`);
-    }
 })
 .catch(error => {
     console.error('Error submitting schedule:', error);
     alert("There was an error submitting the schedule. Please try again.");
 });
+  } else {
+    alert("Institute name should be 'None' for Individual classes.");
+  }
 
 }
 

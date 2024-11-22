@@ -93,22 +93,22 @@ class Myclassmodel{
     }
 
     // Get the Class_id
-    public function getLastInsertId($data,$data_not=[]){
-        $keys=array_keys($data);
-        $keys_not=array_keys($data_not);
-        $query="select Class_id from class where ";
-        foreach($keys as $key){
-                $query.=$key."=:".$key." && ";
+    public function getLastInsertId($data, $data_not = []) {
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "SELECT Class_id FROM class WHERE ";
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " AND ";
         }
-        foreach($keys_not as $key){
-            $query.=$key."!=:".$key." && ";
+        foreach ($keys_not as $key) {
+            $query .= $key . "!=:" . $key . " AND ";
         }
-        $query=trim($query," && ");
-        $query.=" limit $this->limit offset $this->offset";
-        $data=array_merge($data,$data_not);
-        $result= $this->query($query,$data);
-        if($result){
-        return $result[0];
+        $query = rtrim($query, " AND ");
+        $query .= " LIMIT $this->limit OFFSET $this->offset";
+        $data = array_merge($data, $data_not);
+        $result = $this->query($query, $data);
+        if ($result && isset($result[0]->Class_id)) {
+            return $result[0]->Class_id;
         }
         return false;
     }
@@ -144,16 +144,18 @@ public function insertclass($data1, $data2) {
     }
 
     // Get the `class_id` of the newly inserted record using MySQL's LAST_INSERT_ID()
-    $class_id = $this->getLastInsertId($filteredData1);  // Method to fetch last inserted ID
 
-    if (!$class_id) {
+    $data_not1 = [];
+    $class_id = $this->getLastInsertId($filteredData1,$data_not1);  // Method to fetch last inserted ID
+    $class_ID = (int)$class_id;
+    if (!$class_ID) {
         error_log("Error retrieving `class_id` after insert");
         return false;
     }
 
     // Prepare data for the `individual_class` table
     $filteredData2 = [
-        'IndClass_id' => $class_id,
+        'IndClass_id' => $class_ID,
     ];
 
     if (!empty($this->ColumnsforT2)) {
