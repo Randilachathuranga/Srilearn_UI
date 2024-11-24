@@ -44,11 +44,12 @@
         <label for="Subject">Subject</label>
 <select id="Subject" name="Subject" required>
     <option value="" disabled selected>Select a subject</option>
-    <option value=" Mathematics"> Mathematics</option>
+    <option value=" Mathematics">Mathematics</option>
     <option value="Science">Science</option>
     <option value="History">History</option>
     <option value="English">English</option>
     <option value="Physics">Physics</option>
+    <option value="Biology">Biology</option>
     <!-- Add more options as needed -->
 </select>
             <div class="create-row">
@@ -116,10 +117,13 @@
 <select id="classSubject" name="classSubject" required>
     <option value="" disabled selected>Select a subject</option>
     <option value="Mathematics">Mathematics</option>
+    <option value="Physics">Physics</option>
     <option value="Science">Science</option>
     <option value="History">History</option>
     <option value="English">English</option>
-    <option value="Geography">Geography</option>
+    <option value="It">It</option>
+    <option value="Biology">Biology</option>
+
 </select>
 
     
@@ -172,13 +176,12 @@
             <p><strong>date:</strong> <span id="classdate"></span></p>
             </div>
             <div class="button-container">
-                <button onclick="view()" class="buttons">Upload Learning materials</button>
-                <button onclick="view()" class="buttons">Upload Assignments marks</button>
+                <button onclick="UploadMat()" class="buttons">Upload Learning materials</button>
+                <button onclick="UploadASS()" class="buttons">Upload Assignments marks</button>
                 <button onclick="view()" class="buttons">View Institute</button>
-                <button onclick="view()" class="buttons">View Class schedule</button>
-                <button onclick="view()" class="buttons">Issue free cards</button>
-                <button onclick="view()" class="buttons">Request payrolls</button>
-                <button onclick="view()" class="buttons">Create schedule</button>
+                <button onclick="viewschedule()" class="buttons">View Class schedule</button>
+                <button onclick="freeCard()" class="buttons">Issue free cards</button>
+                <button onclick="reqPay()" class="buttons">Request payrolls</button>
 
             </div>
     </div>
