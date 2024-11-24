@@ -2,84 +2,108 @@
 
 const P_id = 6; 
 
-
 document.addEventListener("DOMContentLoaded", () => {
-
   const formElement = document.getElementById("filter");
   const selectElement = formElement.querySelector("#filter-type");
-  const container = document.getElementById("class-container");
 
-  // Ensure the essential elements exist
-  if (!formElement || !selectElement || !container) {
+  if (!formElement || !selectElement) {
     console.error("Required DOM elements not found.");
     return;
   }
 
-  console.log("item : ",container)
-  
-  fetch(`Ind_Myclass/MyclassApi/${P_id}`)
-    .then((response) => {
-      if (!response.ok) {
-        if (response.status === 403) {
-          throw new Error("Access denied. Not a premium teacher.");
-        } else if (response.status === 404) {
-          throw new Error("No classes found for the given teacher.");
-        } else {
-          throw new Error("An unexpected error occurred.");
+  const fetchAndRenderClasses = (filterType) => {
+    fetch(`Ind_Myclass/MyclassApi/${P_id}`)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 403) {
+            throw new Error("Access denied. Not a premium teacher.");
+          } else if (response.status === 404) {
+            throw new Error("No classes found for the given teacher.");
+          } else {
+            throw new Error("An unexpected error occurred.");
+          }
         }
-      }
-      return response.json(); 
-    })
-    .then((data) => {
-      const container = document.getElementById("class-container");
-      if (!container) {
-        console.error("Container element with ID 'class-container' not found.");
-        return;
-      }
-      container.innerHTML = ""; 
-      if (!data || data.length === 0) {
-        container.innerHTML = "<p>No classes found for this teacher.</p>";
-        return;
-      }
-      data.forEach((classItem) => {
-        const card = document.createElement("div");
-        card.className = "card";
+        return response.json();
+      })
+      .then((data) => {
+        const container = document.getElementById("class-container");
+        if (!container) {
+          console.error("Container element with ID 'class-container' not found.");
+          return;
+        }
+        container.innerHTML = ""; // Clear previous cards
 
-        const subjectImages = {
-          Physics:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          Mathematics: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
-          English:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
-          Chemistry:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
-          History:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
-          IT: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/It.png",
-          Biology:"../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
-        };
-        const imageUrl =
-          subjectImages[classItem.Subject] || "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
-        card.innerHTML = `
-                    <div class="card-content">
-                        <img src="${imageUrl}" alt="${classItem.title}">
-                        <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
-                        <p>Address: ${classItem.Location}</p>
-                        <p>Start date: ${classItem.Start_date}</p>
-                        <p>End date: ${classItem.End_date}</p>
-                        <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
-                        <button class="button" onclick="editSchedule(${classItem.Class_id})">
-                            <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
-                        </button>
-                    </div>
-                `;
-        container.appendChild(card);
+        if (!data || data.length === 0) {
+          container.innerHTML = "<p>No classes found for this teacher.</p>";
+          return;
+        }
+
+        // Filter data based on the selected filter type
+        const filteredData = filterType === "All"
+          ? data // Show all classes if "All" is selected
+          : data.filter((classItem) => classItem.Type === filterType);
+
+        if (filteredData.length === 0) {
+          container.innerHTML = `<p>No ${filterType.toLowerCase()} classes found.</p>`;
+          return;
+        }
+
+        // Render filtered cards
+        filteredData.forEach((classItem) => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const subjectImages = {
+            Physics: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+            Mathematics: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Maths.png",
+            English: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/English.png",
+            Chemistry: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/science.png",
+            History: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/History.png",
+            IT: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/It.png",
+            Biology: "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/Bio.png",
+          };
+
+          const imageUrl =
+            subjectImages[classItem.Subject] ||
+            "../../../../../group_project_1.0/app/views/TeacherView/Myclass/Class_images/defult.jpg";
+
+          card.innerHTML = `
+            <div class="card-content">
+              <img src="${imageUrl}" alt="${classItem.title}">
+              <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
+              <p>Address: ${classItem.Location}</p>
+              <p>Start date: ${classItem.Start_date}</p>
+              <p>End date: ${classItem.End_date}</p>
+              <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
+              <button class="button" onclick="editSchedule(${classItem.Class_id})">
+                <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
+              </button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch((error) => {
+        const container = document.getElementById("class-container");
+        if (container) {
+          container.innerHTML = `<p class="error">${error.message}</p>`;
+        }
+        console.error("There was a problem with the fetch operation:", error);
       });
-    })
-    .catch((error) => {
-      const container = document.getElementById("class-container");
-      if (container) {
-        container.innerHTML = `<p class="error">${error.message}</p>`;
-      }
-      console.error("There was a problem with the fetch operation:", error);
-    });
+  };
+
+  // Fetch and render classes on dropdown selection change
+  selectElement.addEventListener("change", () => {
+    const selectedType = selectElement.value;
+    console.log("Selected item: ", selectedType); // Log selected value
+    fetchAndRenderClasses(selectedType);
+  });
+
+  // Initial fetch with default dropdown value
+  fetchAndRenderClasses(selectElement.value);
 });
+
+
 
 
 //More Details
