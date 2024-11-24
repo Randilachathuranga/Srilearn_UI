@@ -2,7 +2,21 @@
 
 const P_id = 6; 
 
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  const formElement = document.getElementById("filter");
+  const selectElement = formElement.querySelector("#filter-type");
+  const container = document.getElementById("class-container");
+
+  // Ensure the essential elements exist
+  if (!formElement || !selectElement || !container) {
+    console.error("Required DOM elements not found.");
+    return;
+  }
+
+  console.log("item : ",container)
+  
   fetch(`Ind_Myclass/MyclassApi/${P_id}`)
     .then((response) => {
       if (!response.ok) {
@@ -45,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
                     <div class="card-content">
                         <img src="${imageUrl}" alt="${classItem.title}">
-                        <h3>${classItem.Subject} - ${classItem.Grade}</h3>
+                        <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
                         <p>Address: ${classItem.Location}</p>
                         <p>Start date: ${classItem.Start_date}</p>
                         <p>End date: ${classItem.End_date}</p>
@@ -202,7 +216,8 @@ async function createSchedule(event, P_id) {
   };
 
   const institute = formData.get("Institute_name");
-  if (institute == 'None' && table1.Type == 'Individual') {
+  
+  if (institute == 'None' && table1.Type == 'Individual' && (table2.Start_date < table2.End_date)) {
   
   const data = { table1, table2 };
   console.log("ClassData being sent:", data);
@@ -238,7 +253,7 @@ async function createSchedule(event, P_id) {
     alert("There was an error submitting the schedule. Please try again.");
 });
   } else {
-    alert("Institute name should be 'None' for Individual classes.");
+    alert("Institute name should be 'None' for individual classes, or the start date should be earlier than the end date.");
   }
 
 }

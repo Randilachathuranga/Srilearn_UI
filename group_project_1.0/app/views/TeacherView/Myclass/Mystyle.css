@@ -183,3 +183,57 @@ h1 {
     font-size: 1.3rem;
   }
 }
+
+/* Form container styling */
+#filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Button goes to the right */
+    gap: 15px; /* Optional spacing between elements */
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for form */
+    border-radius: 8px;
+    max-width: 600px; /* Optional: limit form width */
+    margin: 0 auto; /* Center align the form */
+}
+
+/* Form group (label and select) styling */
+.filter {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1; /* Makes it take available space */
+}
+
+/* Label styling */
+.filter label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Select (dropdown) styling */
+.form-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+/* Add hover and focus effects for select */
+.form-select:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none;
+}
+
+.filterhead {
+  display: flex;
+  align-items: center; /* Align form and button vertically */
+  gap: 15px; /* Spacing between form and button */
+  padding: 20px;
+  width: 100%;
+  max-width: 600px; /* Limit width for responsiveness */
+  margin-left: 200px;
+}

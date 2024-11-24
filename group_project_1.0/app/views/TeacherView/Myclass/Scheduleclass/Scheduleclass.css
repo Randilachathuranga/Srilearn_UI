@@ -57,6 +57,21 @@
     margin-top: 12px;
 }
 
+input[type="date"] {
+    width: 100%; /* Make inputs span the width of their container */
+    padding: 8px; /* Add padding inside the input */
+    font-size: 16px; /* Set a readable font size */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+  }
+  
+  input[type="date"]:focus {
+    outline: none; /* Remove the default outline */
+    border-color: #007BFF; /* Highlight with a blue border */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle glow effect */
+  }
+
 .time-row div {
     width: 50%;
 }
