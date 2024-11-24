@@ -132,7 +132,7 @@ function showDetails(Class_id) {
         document.getElementById("moreSubject").textContent =classDetail.Subject;
         document.getElementById("classType").textContent = classDetail.Type;
         document.getElementById("locat").textContent = classDetail.Location;
-        if (classDetail.Type == "individual") {
+        if (classDetail.Type == "Individual") {
           document.getElementById("classInstitute").textContent = "None";
         }
         document.getElementById("moreGrade").textContent = classDetail.Grade;
