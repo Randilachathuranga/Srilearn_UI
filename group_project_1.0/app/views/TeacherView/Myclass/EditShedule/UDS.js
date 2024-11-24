@@ -22,6 +22,8 @@
     const data = { table1, table2 };
     console.log("ClassData being sent:", data);
     console.log("Class ID:", Class_id);
+    
+    if (table2.Start_date < table2.End_date) {
     try {
         const response = await fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/UpdateclassApi/${Class_id}`, {
             method: "PUT",
@@ -49,6 +51,9 @@
         console.error("Error updating schedule:", error);
         alert("An error occurred while updating the schedule. Please try again later.");
     } 
+} else{
+    alert("Start date should be early earlier than the end date.")
+}
 }
 
 

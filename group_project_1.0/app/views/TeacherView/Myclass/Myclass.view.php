@@ -15,7 +15,22 @@
     <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
 </div>
 
-<button class="create-blog-button" onclick="ScheduleClass()">Create a class</button>
+<div class="filterhead">
+<form id="filter" class="filter">
+    <div class="form-group">
+        <label for="filter-type">Filter by Type</label>
+        <select id="filter-type" name="filter-type" class="form-select" required>
+            <option value="All">All</option>
+            <option value="Individual">Individual</option>
+            <option value="Institute">Institute</option>
+        </select>
+    </div>
+
+</form>
+<button id="create-class-btn" class="create-blog-button" onclick="ScheduleClass()">Create a class</button>
+
+</div>
+
 
 <!-- my class details will be displayed -->
     <div class="container" id="class-container">
@@ -24,14 +39,22 @@
 <!-- Popup Form for Creating a Schedule -->
 <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
-        <h2>Create a class</h2>
+        <h2>Create a classs</h2>
         <form id="editScheduleForm">
-            <label for="Subject">Subject</label>
-            <input type="text" id="Subject" name="Subject" required>
+        <label for="Subject">Subject</label>
+<select id="Subject" name="Subject" required>
+    <option value="" disabled selected>Select a subject</option>
+    <option value=" Mathematics"> Mathematics</option>
+    <option value="Science">Science</option>
+    <option value="History">History</option>
+    <option value="English">English</option>
+    <option value="Physics">Physics</option>
+    <!-- Add more options as needed -->
+</select>
             <div class="create-row">
                 <div>
                     <label for="Fee">Fee</label>
-                    <input type="text" id="Fee" name="Fee" required>
+                    <input type="number" id="Fee" name="Fee" required>
                 </div>
                 <div>
                     <label for="Location">Address</label>
@@ -41,7 +64,7 @@
             <div class="create-row">
                 <div>
                     <label for="Grade">Grade</label>
-                    <input type="text" id="Grade" name="Grade" required>
+                    <input type="number" id="Grade" name="Grade" required>
                 </div>
                 <div>
                     <label for="Max_std">Max Students</label>
@@ -88,10 +111,20 @@
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
     <form id="editScheduleForm" onsubmit="Updateschedule(event, currentClassId)">
-      <label for="classSubject">Subject</label>
-      <input type="text" id="classSubject" name="classSubject" required />
-      <label for="classGrade">Grade</label>
-      <input type="text" id="classGrade" name="classGrade" required />
+    
+    <label for="classSubject">Subject</label>
+<select id="classSubject" name="classSubject" required>
+    <option value="" disabled selected>Select a subject</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Science">Science</option>
+    <option value="History">History</option>
+    <option value="English">English</option>
+    <option value="Geography">Geography</option>
+</select>
+
+    
+    <label for="classGrade">Grade</label>
+      <input type="number" id="classGrade" name="classGrade" required />
       <div class="fm-row ">
         <div>
           <label for="classfee">Fee</label>
@@ -123,8 +156,6 @@
 
 
 
-
-
 <!-- Modal for showing class details -->
 <div class="modal-background" id="modalBackground" style="display: none;">
     <div class="modal-content">
@@ -135,7 +166,7 @@
             <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
             <p><strong>Type:</strong> <span id="classType"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
-            <p><strong>Grade:</strong> <span id="moreGrade"></span></p>
+            <p><strong>Grade:</strong> Grade <span id="moreGrade"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>date:</strong> <span id="classdate"></span></p>
@@ -159,8 +190,3 @@
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>
-
-
-<?php
-require_once __DIR__ . '/../../../../../group_project_1.0/app/views/Footer/footer.php';
-?>
