@@ -100,7 +100,7 @@ class Teacher {
             <th>Email</th>
             <th>Phone</th>
             <th>Subject</th>
-            <th>Actions</th>
+            
         </tr>
     </thead>
     <tbody>
