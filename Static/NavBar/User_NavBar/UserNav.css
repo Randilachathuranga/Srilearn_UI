@@ -1,0 +1,472 @@
+/* General styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #000033, #000080);  /* You can adjust the colors */
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;  /* Ensure it sticks to the top */
+    z-index: 1000;  /* Ensures the navbar is above other elements */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Optional: Adds subtle shadow for better visibility */
+}
+
+
+.logo {
+    height: 70px;
+}
+
+.nav-links , .profile-links {
+    display: flex;
+    align-items: center;
+}
+
+
+.nav-links a, .profile-links a, .dropdown-toggle {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.nav-links a:hover {
+    cursor: pointer;
+    text-decoration: underline; /* Underline effect */
+    letter-spacing: 1px; /* Increase spacing between letters */
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown container */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute; /* Positioned relative to parent container */
+    background-color: white; /* Background color of dropdown */
+    min-width: 160px; /* Minimum width of dropdown */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    border-radius: 4px; /* Smooth edges */
+    z-index: 1000; /* Ensure dropdown is above other elements */
+    top: 100%; /* Align directly below the parent */
+    left: 0; /* Align to the left */
+    padding: 8px 0; /* Add padding inside the dropdown */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black; /* Default link color */
+    padding: 12px 16px; /* Space around the link text */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Block display for clickable area */
+    font-size: 14px; /* Adjust font size */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for links */
+.dropdown-content a:hover {
+    background-color: #f1f1f1; /* Light grey background on hover */
+    color: #007bff; /* Change text color on hover */
+    border-radius: 4px; /* Match the dropdown container edges */
+}
+
+
+/* Auth buttons styling */
+.auth-buttons{
+    color: rgb(255, 255, 255);
+    padding: 8px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.auth-buttons {
+    color: white;
+    padding: 8px 15px;
+    /* border: 1px solid white; */
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.auth-buttons a:hover {
+    opacity: 0.8;
+}
+
+.auth-buttons img {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+
+.nav-overlay{
+    display: none;
+}
+
+.nav-background , .profile-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 999; /* Layer below nav-overlay */
+    display: none; /* Hidden by default */
+}
+
+/* Desktop (min-width: 992px) */
+@media screen and (min-width: 992px) {
+    .nav-links {
+        display: flex;
+    }
+    .menu-icon {
+        display: none;
+    }
+    
+}
+
+/* Tablet and Mobile (max-width: 991px) */
+@media screen and (max-width: 991px){
+    .nav-links {
+        display: none;
+    }
+  
+    .menu-icon {
+        display: block;
+        color: rgb(255, 255, 255);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .auth-buttons {
+        display: none;
+    }
+    .profile-buttons{
+        display: none;
+        margin-left: 10px;
+    }
+
+    /* Right-side Sidebar Overlay */
+    .nav-overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background: white; /* Changed to white background */
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+        justify-content: flex-start;
+        padding-top: 20px;
+        z-index: 1000;
+        transform: translateX(100%); /* Hidden by default */
+        transition: transform 0.3s ease;
+        box-shadow: -2px 0px 5px rgba(34, 92, 252, 0.2); /* Add shadow for better visibility */
+        overflow-x: scroll;
+    }
+
+    .nav-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+        z-index: 999; /* Layer below nav-overlay */
+        display: none; /* Hidden by default */
+    }
+    
+    .nav-background.show {
+        display: block; /* Show background overlay when 'active' */
+    }
+    
+    /* Show the sidebar when toggleMenu is clicked */
+    .nav-overlay.show {
+        transform: translateX(0); /* Slide in from the right */
+    }
+
+    .nav-overlay .nav-links {
+        display: flex;
+        flex-direction: column; /* Stack links vertically */
+        width: 100%; /* Full width of overlay */
+        align-items: center;
+    }
+
+    .nav-overlay .nav-links a {
+        color: #333; /* Dark text color */
+        font-size: 1.2rem;
+        text-decoration: none;
+        padding: 10px 20px;
+        width: 100%;
+        margin: 5px 0;
+        background: #f4f4f4; /* Light background for links */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-overlay .nav-links a:hover {
+        background: #c0bebe; /* Darker on hover */
+    }
+
+
+    .nav-overlay .auth-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        margin-top: 150px;
+    }
+
+    .nav-overlay .auth-buttons a {
+        font-size: 1.2rem;
+        color: black;
+        padding: 10px 20px;
+        margin: 5px 0;
+        background-color: #f4f4f4; /* Light background */
+        border-radius: 5px;
+        width: 100%;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-overlay .auth-buttons a:hover {
+        background-color: #c0bebe; /* Darker on hover */
+    }
+
+    .close-btn:hover {
+        color: #777; /* Slightly lighter color on hover */
+    }
+
+    .arrow-key{
+        background-color: rgb(255, 255, 255);
+        margin-left: 20px;
+    }
+    
+   /* General styles for sidebar images */
+.nav-overlay img {
+    width: 20px;  /* Adjust size as needed */
+    height: 20px;  /* Keep height consistent */
+    margin-right: 8px;  /* Spacing between icon and text */
+    vertical-align: middle;  /* Align icon with text */
+}
+
+.menu-icon img{
+    /* filter: brightness(0) invert(1); */
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Adjust link appearance in sidebar */
+.nav-links a, .auth-buttons a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;  /* Adjust color as needed */
+    font-size: 16px;  /* Font size for readability */
+}
+
+.nav-links a:hover, .auth-buttons a:hover {
+    background-color: #f0f0f0;  /* Hover effect */
+    color: #000;  /* Optional hover color */
+}
+
+/* Style for the close button */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+    
+}
+
+/* Mobile (max-width: 468px) */
+@media screen and (max-width: 468px) {
+    .navbar {
+        background: linear-gradient(90deg, #030457, #0608BD); /* Lighter background for mobile */
+    }
+}
+
+
+.profile-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: white; /* Changed to white background */
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    justify-content: flex-start;
+    padding-top: 20px;
+    z-index: 1000;
+    transform: translateX(100%); /* Hidden by default */
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0px 5px rgba(34, 92, 252, 0.2); /* Add shadow for better visibility */
+    overflow-x: scroll;
+}
+
+.profile-overlay.show {
+    transform: translateX(0); /* Show on-screen */
+}
+
+.profile-background {
+    background: rgba(0, 0, 0, 0.5); /* Dim background */
+    z-index: 999;
+}
+
+.profile-background.show {
+    display: block; /* Show background when active */
+}
+
+.auth-buttons .Profile {
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.auth-buttons img {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+}
+
+.profile-buttons img{
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    filter: brightness(0) invert(1);
+
+}
+
+.profile-overlay .profile-links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    width: 100%; /* Full width of overlay */
+    align-items: center;
+}
+
+.profile-overlay .profile-links a {
+    color: #333; /* Dark text color */
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding: 10px 20px;
+    width: 100%;
+    margin: 5px 0;
+    background: #f4f4f4; /* Light background for links */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-overlay .profile-links a:hover {
+    background: #c0bebe; /* Darker on hover */
+}
+.arrow-key{
+    background-color: rgb(255, 255, 255);
+    margin-left: 20px;
+}
+
+.profile-overlay img {
+    width: 20px;  /* Adjust size as needed */
+    height: 20px;  /* Keep height consistent */
+}
+
+.menu-icon img{
+    filter: brightness(0) invert(1);
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.profile-overlay .auth-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 150px;
+}
+
+.profile-overlay .auth-buttons a {
+    font-size: 1.2rem;
+    color: black;
+    padding: 10px 20px;
+    margin: 5px 0;
+    background-color: #f4f4f4; /* Light background */
+    border-radius: 5px;
+    width: 100%;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.profile-overlay .auth-buttons a:hover {
+    background-color: #c0bebe; /* Darker on hover */
+}
+.profile-overlay img {
+    width: 20px;  /* Adjust size as needed */
+    height: 20px;  /* Keep height consistent */
+    margin-right: 8px;  /* Spacing between icon and text */
+    vertical-align: middle;  /* Align icon with text */
+}
+
+.profile-overlay .profile-links a:hover {
+    background-color: #c0bebe;
+}
+
+
+/* Notification Bell */
+.notification-bell {
+    position: relative;
+    display: inline-block;
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    line-height: 1;
+    display: none; /* Hidden by default */
+}
+
+/* Show the Badge When Notifications Exist */
+.notification-bell.active .notification-badge {
+    display: inline;
+}

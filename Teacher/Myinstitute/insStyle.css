@@ -1,0 +1,161 @@
+/* General Styles */
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for cards */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header styling */
+.header-container {
+  display: flex;
+  margin: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0 20px;
+  color: #030457;
+}
+
+/* Card Styles */
+.card {
+  width: 300px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #030457;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Center Image in Card */
+.card img {
+  width: 100%;
+  height: auto; /* Adjust height automatically */
+  max-height: 180px; /* Limit max height */
+  object-fit: contain; /* Ensure the whole image fits within */
+  background-color: #f0f0f0; /* Add background color for padding */
+}
+
+.card-content {
+  padding: 15px;
+  width: 100%;
+  text-align: center; /* Center align text */
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.card-info {
+  margin-bottom: 10px;
+}
+
+.card-button {
+  background-color: #030457;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
+.card-button:hover {
+  background-color: #0a0db1;
+}
+
+/* Media Query for Tablets */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+  }
+  
+  .card {
+    width: 80%;
+    margin: 10px 0;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .card-button {
+    padding: 6px 14px;
+  }
+}
+
+/* Media Query for Phones */
+@media (max-width: 480px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin: 20px 0;
+  }
+  
+  .card {
+    width: 90%;
+    margin: 10px 0;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+  
+  .card-button {
+    padding: 6px 12px;
+  }
+}
+
+/* Media Query for Desktops */
+@media (min-width: 1024px) {
+  .card {
+    width: 20%;
+    margin: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+  }
+}
