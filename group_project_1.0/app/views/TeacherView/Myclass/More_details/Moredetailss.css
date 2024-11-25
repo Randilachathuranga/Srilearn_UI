@@ -15,9 +15,9 @@
     position: relative;
     margin: 5% auto;
     padding: 20px;
-    background-color: #EAF8FA;
+    background-color: #f5f8f9;
     border-radius: 15px;
-    width: 700px;
+    width: 750px;
     max-width: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -42,6 +42,7 @@
     align-self: center;
     margin: 0 auto;
 }
+
 
 /* Right-Side Details */
 .class-details {
@@ -73,12 +74,11 @@
     font-size: 14px;
     font-weight: bold;
     color: #2E2E2E;
-    background-color: #D9EAF1;
+    background-color: #c7d6dc;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
