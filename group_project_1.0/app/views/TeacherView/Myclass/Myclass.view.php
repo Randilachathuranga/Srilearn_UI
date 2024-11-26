@@ -164,28 +164,30 @@
 <div class="modal-background" id="modalBackground" style="display: none;">
     <div class="modal-content">
         <span class="closebutton" onclick="closeModal()">×</span>
-        <h1> <span id="moreSubject">  </span><strong> Class</strong></h1>
+        <h1>
+            <span id="moreSubject"></span><strong></strong> : Grade <span id="moreGrade"></span>
+        </h1>
+        
         <img id="classImage" src="" alt="Class Image" />
-            <div class="class-details">
+        <div class="class-details">
+            <p><strong>Date:</strong> <span id="classdate"></span></p>
             <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
             <p><strong>Type:</strong> <span id="classType"></span></p>
-            <p><strong>Address:</strong> <span id="locat"></span></p>
-            <p><strong>Grade:</strong> Grade <span id="moreGrade"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
-            <p><strong>date:</strong> <span id="classdate"></span></p>
-            </div>
-            <div class="button-container">
-                <button onclick="UploadMat()" class="buttons">Upload Learning materials</button>
-                <button onclick="UploadASS()" class="buttons">Upload Assignments marks</button>
-                <button onclick="view()" class="buttons">View Institute</button>
-                <button onclick="viewschedule()" class="buttons">View Class schedule</button>
-                <button onclick="freeCard()" class="buttons">Issue free cards</button>
-                <button onclick="reqPay()" class="buttons">Request payrolls</button>
-
-            </div>
+            <p><strong>Address:</strong> <span id="locat"></span></p>
+        </div>
+        <div class="button-container">
+            <button onclick="UploadMat()" class="buttons">Upload Learning materials</button>
+            <button onclick="UploadASS()" class="buttons">Upload Assignments marks</button>
+            <button onclick="view()" class="buttons">View Institute</button>
+            <button onclick="viewschedule()" class="buttons">View Class schedule</button>
+            <button onclick="freeCard()" class="buttons">Issue free cards</button>
+            <button onclick="reqPay()" class="buttons">Request payrolls</button>
+        </div>
     </div>
 </div>
+
 
 
 

@@ -19,7 +19,8 @@ body {
     width: 100%;
     top: 0;  /* Ensure it sticks to the top */
     z-index: 1000;  /* Ensures the navbar is above other elements */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Optional: Adds subtle shadow for better visibility */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    height: 100px;
 }
 
 

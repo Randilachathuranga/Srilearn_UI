@@ -64,10 +64,11 @@ function updateNotifications(count) {
 // Example usage: Updating notifications dynamically
 // Simulate fetching notification count
 setTimeout(() => {
-    updateNotifications(3); // Replace '3' with the actual notification count
+    updateNotifications(1); // Replace '3' with the actual notification count
 }); // Updates after 2 seconds
 
 // Optionally clear notifications on click
 notificationBell.addEventListener('click', () => {
     updateNotifications(0); // Clears notifications
+    alert("Not implemented")
 });
