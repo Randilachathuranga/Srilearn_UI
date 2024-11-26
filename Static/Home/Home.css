@@ -1,8 +1,11 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+
   }
+
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
   html, body {
     overflow-x: hidden;  /* This hides horizontal overflow */
     margin: 0;            /* Remove default margin */
@@ -12,9 +15,9 @@ body {
   .header-container {
     display: flex;
     width: 100%; /* Full viewport width */
-    height: 635px; /* Full viewport height */
-    background: url('./images//head.jpg') no-repeat center center; /* Center the image */
-    background-size: cover; /* Ensure it covers the full width and height */
+    height: 650px; /* Full viewport height */
+    background: url('./images/back.png') no-repeat center center; 
+        background-size: cover; /* Ensure it covers the full width and height */
     position: relative;
   }
   
@@ -32,8 +35,7 @@ body {
   
   .left-section {
     text-align: left;
-    margin-left: 150px;
-
+    margin-left: 80px;
   }
   
   .right-section {
@@ -45,12 +47,46 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     color: #030457;
+  font-family: "Poppins";
   }
+
+  .left-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.2;
+    overflow: hidden; /* Ensures smooth animation */
+  }
+  
+  .left-section h1 span {
+    display: inline-block;
+    opacity: 0; /* Hidden initially */
+    transform: translateY(20px); /* Positioned slightly below */
+    animation: fadeInUp 0.8s ease-in-out forwards; /* Animation applied to each span */
+  }
+  
+  /* Apply unique delays to each line */
+  .left-section h1 span:nth-child() {
+    animation-delay: 0.4s; /* First line delay */
+  }
+
+  
+ 
+  
+  /* Keyframes for fade-in and upward movement */
+  @keyframes fadeInUp {
+    to {
+      opacity: 1; /* Fully visible */
+      transform: translateY(0); /* Moves to original position */
+    }
+  }
+  
   
   .left-section p {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 20px;
+    font-family: "Poppins";
+
   }
   
   .highlight {
@@ -70,12 +106,16 @@ body {
   }
   
   .join-button:hover {
-    background: #003366;
+    background: #0210aa;
     color: #fff;
   }
   
   .right-section img {
-    max-width: 80%;
+    max-width: 70%;
+  }
+
+  .right-section{
+    margin-top: 50px;
   }
   
   .blogbar {
@@ -85,12 +125,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, #212358, #abc3f1); /* Gradient background */
+    background: linear-gradient(to right, #4a4ec3, #abc3f1); /* Gradient background */
     color: #04092C;
     font-size: 1.2rem;
     border-radius: 30px; /* Optional for rounded edges */
     z-index: 2;
-    margin-top: 100px;
+    margin-top: 40px;
+    font-family: "Poppins";
+
   }
   
 
@@ -120,10 +162,11 @@ body {
   justify-content: center;
   gap: 30px;
   margin-bottom: 80px;
+  font-family: "Poppins";
 }
 
 .feature {
-  background-color: #030457;
+  background-color: #040677;
   margin-top: 50px;
   color: #ffffff;
   border-radius: 25px;
@@ -163,15 +206,18 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 3.5s ease; /* Smooth transition for all properties */
+  font-family: "Poppins";
+
 }
 
 /* Hover effect for .benefit */
 .benefit:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-  transform: translateY(-8px) scale(1.05); /* Moves up and scales up the card */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 6px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px) scale(1.08); /* Slightly increased lift and scale for a "buttery" effect */
+  background-color: rgba(255, 255, 255, 0.9); /* Optional: Adds a subtle shine */
+  border-radius: 8px; /* Optional: Smooth rounded edges */
 }
 
-/* Add subtle animation for .benefit on page load */
 .benefit {
   opacity: 0; /* Initially hidden */
   transform: translateY(20px); /* Initial position is below */
@@ -188,6 +234,11 @@ body {
 .benefit img {
   max-width: 100%;
   height: auto;
+  transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+}
+
+.benefit img:hover {
+  transform: scale(1.1); /* Slightly enlarge the image */
 }
 
 .benefit h3 {
@@ -198,7 +249,7 @@ body {
 }
 
 .benefit p {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: #000000;
   align-items: center;
   text-align: justify; 
@@ -222,6 +273,7 @@ body {
   margin: 20px 0;
   font-weight: bold;
   line-height: 1.2;
+  font-family: 'poppins';
 }
 
 .container img {
@@ -308,8 +360,9 @@ body {
 
 /* About Section Styles */
 .about-section {
-  background-color: #f9f9f9;
-  background-image: url('./images/abt.jpeg');
+  background-color: rgba(150, 79, 79, 0.9); /* Semi-transparent overlay color */
+  background-image: linear-gradient(rgba(249, 249, 249, 0.7), rgba(249, 249, 249, 50)), 
+                    url('./images/1.jpg'); /* Combine overlay with the background image */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover; /* Ensures the image covers the entire section */
@@ -317,6 +370,7 @@ body {
   text-align: center;
   margin-bottom: 50px;
 }
+
 
 
 .about-container {
@@ -329,12 +383,13 @@ body {
   font-size: 36px;
   margin-bottom: 20px;
   color: #030457;
+  font-family: 'fantasy';
 }
 
 .about-container p {
   font-size: 18px;
   line-height: 1.6;
-  color: #080b9c;
+  color: #000000;
   margin-bottom: 20px;
 }
 
