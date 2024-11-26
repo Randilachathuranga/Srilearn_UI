@@ -2,13 +2,13 @@
 
 class Ind_Myclass extends Controller{
 
-    // function checkAccess($requiredRole) {
-    //     if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
-    //        echo "123";
-    //        redirect('Error404');
-    //        exit();
-    //     }
-    // }
+     function checkAccess($requiredRole) {
+        if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
+            echo "123";
+           redirect('Error404');
+            exit();
+    }
+     }
 
     public function index() {
     
