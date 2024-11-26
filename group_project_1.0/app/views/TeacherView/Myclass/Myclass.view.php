@@ -16,28 +16,34 @@
 </div>
 
 <button class="create-blog-button" onclick="ScheduleClass()">Create class schedule</button>
-<!-- <button class="refresh-button">Refresh</button> -->
 
+<!-- my class details will be displayed -->
     <div class="container" id="class-container">
-        <!-- Cards will be appended here -->
     </div>
 
-    <!-- Popup Form for Creating a Schedule -->
     <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
-        <h2>Create Schedule</h2>
-        
+        <h2>Create class Schedule</h2>
+        <form id="editScheduleForm" onsubmit="createSchedule(event, P_id)">
         <label for="Subject">Subject</label>
         <input type="text" id="Subject" name="Subject" required>
-
-        <label for="Grade">Grade</label>
-        <input type="text" id="Grade" name="Grade" required>
-
+        <div class="create-row">
+        <label for="Type">Type</label>
+        <select id="Type" name="Type" required>
+            <option value="" disabled selected>Select Type</option>
+            <option value="Type1">Individual</option>
+            <option value="Type2">Institute</option>
+        </select>
         <label for="Fee">Fee</label>
         <input type="text" id="Fee" name="Fee" required>
-
-        <!-- Single row for Start and End Time -->
-        <div class="time-row">
+        </div>
+        <div class="create-row">
+        <label for="Grade">Grade</label>
+        <input type="text" id="Grade" name="Grade" required>
+        <label for="Max_std">Max Students</label>
+        <input type="number" id="Max_std" name="Max_std" required />
+        </div>
+        <div class="create-row">
             <div>
                 <label for="Start_Time">Start Time</label>
                 <input type="time" id="Start_Time" name="Start_Time" required>
@@ -47,19 +53,20 @@
                 <input type="time" id="End-time" name="End-time" required>
             </div>
         </div>
-
-        <!-- Dropdown for Institute -->
+        <div class="create-row">
         <label for="Institute-name">Institute Name</label>
         <select id="Institute-name" name="Institute-name" required>
             <option value="" disabled selected>Select Institute</option>
             <option value="Institute1">None</option>
             <option value="Institute1">Institute 1</option>
             <option value="Institute2">Institute 2</option>
-            <!-- Add more options as needed -->
         </select>
-
-        <button onclick="submit()" class="submit-button">Submit</button>
+        <label for="Location">Location</label>
+        <input type="text" id="Location" name="Location" required>
+        </div>
+        <button type="submit" class="submit-button">Submit</button>
         <button onclick="closePopup()" class="close-button">Close</button>
+        </form>
     </div>
 </div>
 

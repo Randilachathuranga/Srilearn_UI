@@ -9,3 +9,5 @@
     require 'Controller.php';
     require 'App.php';
     require 'TeacherController.php';
+    require 'StudentController.php';
+   

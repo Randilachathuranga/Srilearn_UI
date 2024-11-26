@@ -184,7 +184,7 @@ function editSchedule(class_id) {
               // console.log("Subject:", document.getElementById("classSubject").value);
               // console.log("Grade:", document.getElementById("classGrade").value);
               // console.log("Fee:", document.getElementById("classfee").value);
-              // console.log("Max_std:", document.getElementById("classMax_std").value);
+              console.log("Max_std:", document.getElementById("classMax_std").value);
               // console.log("Start-time:", document.getElementById("classStart_Time").value);
               // console.log("End-time:", document.getElementById("classEnd_time").value);
               // console.log("Location:", document.getElementById("classLocation").value);
@@ -207,3 +207,68 @@ function editSchedule(class_id) {
 function view(){
     alert("Not implemented")
 }
+
+// Show the popup form
+function ScheduleClass() {
+  document.getElementById("popupForm").style.display = "flex";
+}
+
+// Close the popup form
+function closePopup() {
+  document.getElementById("popupForm").style.display = "none";
+}
+
+// Submit the blog and redirect to the main blog page
+function createSchedule(event, P_id) {
+  event.preventDefault(); // Prevent form submission and page reload
+  
+  const form = event.target; // Reference to the form
+  const formData = new FormData(form); // Gather all form data
+  
+  // Construct the schedule data from the form fields
+  const scheduleData = {
+      Subject: formData.get("Subject"),
+      Type: formData.get("Type"),
+      Fee: parseFloat(formData.get("Fee")), // Parse fee as a float number
+      Grade: formData.get("Grade"),
+      Max_std: parseInt(formData.get("Max_std"), 10), // Parse Max_std as an integer
+      Start_Time: formData.get("Start_Time"),
+      End_Time: formData.get("End-time"),
+      Institute_Name: formData.get("Institute-name"),
+      Location: formData.get("Location"),
+      P_id: P_id // Include the parent ID
+  };
+  
+  console.log("Schedule Data being sent:", scheduleData); // Debug log
+  
+  // Use fetch to send the data to the server
+  fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`, {
+      method: 'POST', // HTTP method
+      headers: {
+          'Content-Type': 'application/json' // Tell the server you're sending JSON data
+      },
+      body: JSON.stringify(scheduleData) // Convert the JavaScript object into a JSON string
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json(); // Parse the JSON response from the server
+  })
+  .then(data => {
+      console.log('Schedule submitted successfully:', data);
+      if (data.status === "success") {
+          alert("Schedule created successfully!");
+          // Redirect after successful submission
+          window.location.href = "../../../../Srilearn_UI/Teacher/Myblogs/Myblogs.php";
+      } else {
+          alert(`Failed to create schedule: ${data.message}`);
+      }
+  })
+  .catch(error => {
+      console.error('Error submitting schedule:', error);
+      alert("There was an error submitting the schedule. Please try again.");
+  });
+}
+
+
