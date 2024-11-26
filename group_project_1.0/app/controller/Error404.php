@@ -7,3 +7,6 @@ class Error404 extends Controller{
         $this->view('Error');
     }
 }
+
+
+ 

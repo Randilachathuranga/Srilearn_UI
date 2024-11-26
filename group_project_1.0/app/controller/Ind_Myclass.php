@@ -13,8 +13,11 @@ class Ind_Myclass extends Controller{
     public function index() {
     
         $model = new Myclassmodel();
+        checkAccess('teacher');
         // echo $_SESSION['Role'];
         $this->View('TeacherView/Myclass/Myclass'); 
+                checkAccess('teacher');
+
     }
 
     //view my all classes
