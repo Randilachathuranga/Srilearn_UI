@@ -1,8 +1,13 @@
 
-
-const P_id = 6; 
-
 document.addEventListener("DOMContentLoaded", () => {
+  const userDataElement = document.getElementById("user-data");
+  if (!userDataElement) {
+    console.error("User data element not found.");
+    return;
+  }
+
+  // Get the user ID from the data attribute
+  const P_id = userDataElement.dataset.userId;
   const formElement = document.getElementById("filter");
   const selectElement = formElement.querySelector("#filter-type");
 
