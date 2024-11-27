@@ -43,6 +43,7 @@ body::before {
     animation: fadeIn 1s ease-in-out;
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
 }
 
 /* Page Title */

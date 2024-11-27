@@ -12,19 +12,19 @@
 <div class="navbar">
     <img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/logo.png" alt="Logo" class="logo">
     <div class="nav-links">
-    <a href="<?php echo htmlspecialchars($_SESSION['Role']); ?>">Home</a>
+    <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>">Home</a>
 
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
-                <a href="GeneralController/loadteacher">By Teachers</a>
-                <a href="GeneralController/loadinstitute">By Institutes</a>
-                <a href="Student/classes">Classes</a>
+                <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher">By Teachers</a>
+                <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute">By Institutes</a>
+                <a href="http://localhost/group_project_1.0/public/Student/classes">Classes</a>
             </div>
         </div>
-        <a href="Advertisements">Advertisements</a>
-        <a href="Blog">Blogs</a>
-        <a href="GeneralController/Contactform">Contact Us</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements">Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Blog">Blogs</a>
+        <a href="http://localhost/group_project_1.0/public/ContactUS">Contact Us</a>
     </div>
     
 
@@ -51,22 +51,22 @@
     <button class="close-btn" onclick="toggleProfile()">←</button>
     </div>
     <div class="profile-links">
-        <a href="Profile"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
-        <a href="Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
-        <a href="My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
-        <a href="Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
-        <a href="Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
+        <a href="http://localhost/group_project_1.0/public/Profile"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
+        <a href="http://localhost/group_project_1.0/public/Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
+        <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
 
         <?php if ($_SESSION['Role'] == "institute") { ?>
-            <a href="Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
+            <a href="http://localhost/group_project_1.0/public/Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
         <?php } ?>   
-        <a href="Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
+        <a href="http://localhost/group_project_1.0/public/Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
 
     </div>
     <br>    <br>    <br><br>
         <br><br>
     <div class="auth-buttons">
-        <a href="Signout" ><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/logout.png">Log out</a>
+        <a href="http://localhost/group_project_1.0/public/Signout" ><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/logout.png">Log out</a>
     </div>
 </div>
 
@@ -79,24 +79,24 @@
     <button class="close-btn" onclick="toggleMenu()">←</button>
     </div>
     <div class="nav-links">
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/Home.png">Home</a>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">By Institute</a>
-        <a href="Student/classes"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">classes</a>
-        <a href="Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar /icon/ads.png">Advertisements</a>
-        <a href="Blog"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
+        <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/Home.png">Home</a>
+        <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
+        <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">By Institute</a>
+        <a href="http://localhost/group_project_1.0/public/Student/classes"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">classes</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar /icon/ads.png">Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Blog"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
+        <a href="http://localhost/group_project_1.0/public/ContactUS"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
         <br><br><br>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
-        <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
-        <a href=""><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
-        <a href="Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
-        <a href="Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
-        <a href="Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
+        <a href="http://localhost/group_project_1.0/public/Profile"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
+        <a href="http://localhost/group_project_1.0/public/Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
+        <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
+        <a href="http://localhost/group_project_1.0/public/Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
+        <a href="http://localhost/group_project_1.0/public/Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
     </div>
     <div class="auth-buttons">
-        <a href="Signout" onclick="Logout()"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/logout.png">Log out</a>
+        <a href="http://localhost/group_project_1.0/public/Signout" onclick="Logout()"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/logout.png">Log out</a>
     </div>
 </div>
 

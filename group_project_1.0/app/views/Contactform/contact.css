@@ -39,6 +39,7 @@ body {
   overflow: hidden;
   max-width: 900px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 50px;
 }
 
 .contact-container:hover {

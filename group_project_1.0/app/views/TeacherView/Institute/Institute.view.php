@@ -1,17 +1,22 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="./insstyle.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="./ViewInstitute/ViewInstitute.css">
-    <link rel="stylesheet" href="./ApplyInstitute/ApplyInstitute.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0//app//views//TeacherView//Institute/insstyle.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0//app//views//TeacherView//Institute/ViewInstitute/ViewInstitute.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0//app//views//TeacherView//Institute/ApplyInstitute//ApplyInstitute.css">
 </head>
 <body>
 <div class="header-container">
     <h1 class="header-title">Institute<br>Details</h1>
-    <img src="./institute 1.png" alt="Class Image" class="class-image">
+    <img src="../../../../../group_project_1.0//app//views//TeacherView//Institute/institute 1.png" alt="Class Image" class="class-image">
 </div>
 
 <div class="search-container">
@@ -116,8 +121,12 @@
 
 
 
-    <script src="./insscript.js"></script> <!-- Link your JavaScript file -->
-    <script src="./ViewInstitute/ViewInstitute.js"></script>
-    <script src="./ApplyInstitute/ApplyInstitute.js"></script>
+    <script src="../../../../../group_project_1.0//app//views//TeacherView//Institute/insscript.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0//app//views//TeacherView//Institute/ViewInstitute/ViewInstitute.js"></script>
+    <script src="../../../../../group_project_1.0//app//views//TeacherView//Institute/ApplyInstitute/ApplyInstitute.js"></script>
 </body>
 </html>
+
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
+ ?>

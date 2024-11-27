@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("getInstitute.php") // Replace with your PHP script URL
+  fetch("../../../../../group_project_1.0//app//views//TeacherView/Myinstitute/getInstitute.php") // Replace with your PHP script URL
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
