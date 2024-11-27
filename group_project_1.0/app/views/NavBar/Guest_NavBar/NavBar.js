@@ -45,9 +45,7 @@ window.onclick = function(event) {
 };
 
 function Login(){
-    alert("login")
 }
 
 function singup(){
-    alert("signup")
 }

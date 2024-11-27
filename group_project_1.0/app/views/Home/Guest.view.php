@@ -12,10 +12,14 @@
 </head>
 <body>
 
-  <div class="header-container">
+<div class="header-container">
     <!-- Left Section: Text Content -->
     <div class="left-section">
-      <h1>CONNECT<br>LEARN<br>AND GROW</h1>
+    <h1>
+    <span>CONNECT</span><br>
+    <span>LEARN</span><br>
+    <span>AND GROW</span>
+  </h1>
       <p>
         Welcome to <span class="highlight">SriLearn</span>, where students and teachers connect<br>
         to unlock new possibilities in education. Our platform creates a seamless link<br>
@@ -23,6 +27,7 @@
       </p>
       <button class="join-button">Join with SriLearn</button>
     </div>
+
 
     <!-- Right Section: Logo -->
     <div class="right-section">
@@ -67,25 +72,21 @@
     <img src="../../../../group_project_1.0/app/views/Home/images/student.png" alt="Student Focused">
     <h3>STUDENT FOCUSED</h3>
     <p>Our platform puts students at the center of the learning experience. With easy access to a wide variety of resources, personalized learning paths, and secure interactions, students are empowered to learn at their own pace, ensuring a more tailored education experience.</p>
-    <p>By focusing on the individual needs of each student, we create a flexible, student-centered environment where learners can thrive both academically and personally. The platform’s seamless interface and intuitive navigation ensure that students can easily find the materials they need when they need them.</p>
   </div>
   <div class="benefit">
     <img src="../../../../group_project_1.0/app/views/Home/images/learning.png" alt="Learning Enhanced">
     <h3>LEARNING ENHANCED</h3>
     <p>Our platform is designed to enhance the learning process by providing a dynamic, engaging environment for students and educators alike. Through collaborative features such as real-time discussions, shared resources, and peer feedback, students can deepen their understanding and actively participate in their own learning journey.</p>
-    <p>With tools that facilitate collaboration, students can work together on projects, exchange ideas, and support each other, while teachers can offer guidance and personalized feedback, fostering a truly interactive and immersive learning experience.</p>
   </div>
   <div class="benefit">
     <img src="../../../../group_project_1.0/app/views/Home/images/teacher.png" alt="Teacher Empowered">
     <h3>TEACHER EMPOWERED</h3>
     <p>We believe that teachers are the heart of the educational experience. Our platform provides educators with the tools they need to easily create, manage, and deliver dynamic lessons to students, saving valuable time and allowing them to focus on what matters most—teaching.</p>
-    <p>Teachers can quickly assess student progress, track performance, and adapt their teaching strategies, ensuring that every student is supported and challenged appropriately. With integrated analytics and assessment tools, teachers are empowered to enhance their instructional methods and drive better outcomes for their students.</p>
   </div>
   <div class="benefit">
     <img src="../../../../group_project_1.0/app/views/Home/images/ins.png" alt="Institute Optimized">
     <h3>INSTITUTE OPTIMIZED</h3>
     <p>Our platform streamlines administrative tasks for educational institutions, providing comprehensive tools for managing student data, scheduling, communication, and more. With a central hub for all administrative functions, institutes can focus on enhancing the educational experience while leaving the logistics to the system.</p>
-    <p>From monitoring attendance and grades to communicating with students and teachers, our platform ensures that administrative processes run smoothly and efficiently, allowing educators and staff to spend less time on paperwork and more time supporting students. Integrated reporting tools give administrators insight into institutional performance, ensuring data-driven decisions for continuous improvement.</p>
   </div>
 </div>
   </section>
@@ -172,7 +173,7 @@
   </body>
 </html>
 <?php
- require_once "../Footer/Footer.php"
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
  ?>
 
 

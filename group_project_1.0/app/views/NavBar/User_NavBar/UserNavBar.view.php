@@ -24,7 +24,7 @@
         </div>
         <a href="Advertisements">Advertisements</a>
         <a href="Blog">Blogs</a>
-        <a href="#">Contact Us</a>
+        <a href="GeneralController/Contactform">Contact Us</a>
     </div>
     
 
