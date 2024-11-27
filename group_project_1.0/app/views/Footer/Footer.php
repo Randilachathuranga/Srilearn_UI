@@ -10,7 +10,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="../Footer/logo.png" alt="Logo">
+                <img src="../../../../../group_project_1.0/app/views/Footer/logo.png" alt="Logo">
             </div>
             <div class="quick-links">
                 <h3>Quick Links</h3>

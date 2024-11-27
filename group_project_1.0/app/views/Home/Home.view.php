@@ -173,7 +173,7 @@
   </body>
 </html>
 <?php
- require_once "../Footer/Footer.php"
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
  ?>
 
 

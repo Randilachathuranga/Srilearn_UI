@@ -1,7 +1,7 @@
 <?php 
 class Institute extends Controller{
     public function index(){
-        checkAccess('Institute');
+        checkAccess('institute');
         $this->view("Home/Home");
     }
 }

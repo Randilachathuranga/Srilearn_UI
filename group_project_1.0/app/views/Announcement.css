@@ -1,0 +1,173 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #ffffff, #e8f4ff); /* Soft gradient background */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    color: #003d99; /* Dark Blue Text Color */
+    overflow-y: scroll; /* Enable scrolling */
+    padding: 0 20px;
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+/* Header Styling */
+.header {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(to right, #4a90e2, #003d99); /* Gradient for header */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Container for Announcements */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Individual Announcement Card */
+.record {
+    background-color: #f0f8ff; /* Light Blue for the card */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.record:hover {
+    transform: translateY(-10px); /* Hover effect for the card */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.record h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #003d99; /* Dark Blue for the title */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.record p {
+    font-size: 1.1rem;
+    color: #003d99; /* Dark Blue for text */
+    margin-bottom: 10px;
+}
+
+.record h5 {
+    font-size: 1rem;
+    color: #003d99; /* Dark Blue for date */
+    margin-bottom: 20px;
+}
+
+/* Button Styles for Sysadmin */
+button {
+    background: linear-gradient(to right, #4a90e2, #003d99); /* Gradient button */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+button:hover {
+    background: #003d99; /* Solid Dark Blue on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+button:active {
+    transform: scale(0.98); /* Shrink slightly on click */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .record h3 {
+        font-size: 1.5rem;
+    }
+
+    .record p, .record h5 {
+        font-size: 1rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dynamic Background Animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #e8f4ff, #4a90e2, #003d99);
+    z-index: -1;
+    animation: backgroundMove 20s linear infinite;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@keyframes backgroundMove {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}

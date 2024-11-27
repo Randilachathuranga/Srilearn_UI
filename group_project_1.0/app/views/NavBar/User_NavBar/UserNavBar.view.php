@@ -10,7 +10,7 @@
 <div class="navbar">
     <img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/logo.png" alt="Logo" class="logo">
     <div class="nav-links">
-        <a href="Teacher">Home</a>
+        <a href="">Home</a>
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
@@ -53,6 +53,10 @@
         <a href="My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <a href="Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <a href="Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
+
+        <?php if ($_SESSION['Role'] == "institute") { ?>
+            <a href="Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
+        <?php } ?>   
         <a href="Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
 
     </div>
@@ -85,6 +89,7 @@
         <a href="#"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <a href=""><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <a href="Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
+        <a href="Institute_teacher"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">My Teachers</a>
         <a href="Subscriptions/Subscriptions"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
     </div>
     <div class="auth-buttons">

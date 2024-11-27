@@ -4,36 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="stylesheet" href="signin.css"> <!-- Link to your CSS file if needed -->
+    <link rel="stylesheet" href="../../../group_project_1.0/app/views/signin.css"> <!-- Link to the CSS file -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Sign In</h1>
-        
-        <form action="#" method="POST"> <!-- Action should point to your server-side script -->
-            <?php if (!empty($data['errors'])): ?>
-                <div class="error-messages">
-                    <?php 
-                        // Display each error from the array
-                        foreach ($data['errors'] as $error) {
-                            echo "<p>$error</p>";
-                        }
-                    ?>
-                </div>
-            <?php endif; ?>     
+        <div class="form-wrapper">
+            <h1>SIGN IN</h1>
+            <form action="#" method="POST">
+                <?php if (!empty($data['errors'])): ?>
+                    <div class="error-messages">
+                        <?php 
+                            foreach ($data['errors'] as $error) {
+                                echo "<p>$error</p>";
+                            }
+                        ?>
+                    </div>
+                <?php endif; ?>
 
-            <div class="form-group">
-                <label for="User_id">User-ID:</label>
-                <input type="text" id="User_id" name="User_id" required>
-            </div>
-            <div class="form-group">
-                <label for="Password">Password:</label>
-                <input type="password" id="Password" name="Password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Sign In</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label for="User_id">Email:</label>
+                    <input type="text" id="Email" name="Email" placeholder="Enter your Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password:</label>
+                    <input type="password" id="Password" name="Password" placeholder="Enter your Password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn">Sign In</button>
+                    <p>Don't have an account? <a href="signup">Sign Up</a></p>
+                    <div class="guest"><a  href="guest">Log in as a Guest</a></div>
+                 </div>
+                </div>
+            </form>
+        </div>
     </div>
+<script>
+    window.onunload = function () {
+    if (performance.navigation.type === 2) {
+        window.location.href = '/Signin'; // Redirect to prevent back action
+    }
+};
+</script>
+
+   
 </body>
 </html>
+
