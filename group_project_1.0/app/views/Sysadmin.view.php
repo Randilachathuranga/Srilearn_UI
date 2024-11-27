@@ -217,22 +217,36 @@
         function handleInstitutes() {
             fetchData('sysadmin/instituteapi', 'institute-table');
         }
-
         function handleDelete(userId, tableId) {
-            fetch(`sysadmin/deleteapi/${userId}`, { method: 'DELETE' })
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to delete');
-                    return response.json();
-                })
-                .then(() => {
-                    console.log(`Record with ID ${userId} deleted.`);
-                    getcount();
-                    if (tableId === 'student-table') handleStudents();
-                    else if (tableId === 'teacher-table') handleTeachers();
-                    else if (tableId === 'institute-table') handleInstitutes();
-                })
-                .catch(error => console.error('Error deleting record:', error));
-        }
+    // Confirm deletion to prevent accidental actions
+    
+
+    // Call the delete API
+    fetch(`sysadmin/deleteapi/${userId}`, { 
+        method: 'POST', // Ensure the method matches your API's expectation
+        headers: { 'Content-Type': 'application/json' } 
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete');
+            return response.json();
+        })
+        .then(result => {
+            // Check API response status
+            if (result.status === 'success') {
+                alert(result.message);
+                // Refresh counts and reload the appropriate table
+                getcount();
+                if (tableId === 'student-table') handleStudents();
+                else if (tableId === 'teacher-table') handleTeachers();
+                else if (tableId === 'institute-table') handleInstitutes();
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        })
+        .catch(error => console.error('Error deleting record:', error));
+}
+
+
 
         function goToUpdateForm(userId) {
             window.location.href = `Sysadmin/update/${userId}`;
