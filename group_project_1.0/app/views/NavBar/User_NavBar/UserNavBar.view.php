@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/UserNav.css">
 </head>
 <body>
+
+    
 <div class="navbar">
     <img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/logo.png" alt="Logo" class="logo">
     <div class="nav-links">
-        <a href="">Home</a>
+    <a href="<?php echo htmlspecialchars($_SESSION['Role']); ?>">Home</a>
+
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
-                <a href="">By Teachers</a>
-                <a href="#">By Institutes</a>
+                <a href="GeneralController/loadteacher">By Teachers</a>
+                <a href="GeneralController/loadinstitute">By Institutes</a>
                 <a href="Student/classes">Classes</a>
             </div>
         </div>
