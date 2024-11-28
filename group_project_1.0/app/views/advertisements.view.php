@@ -28,7 +28,7 @@
                 <option value="grd6-9">Grade 6-9</option>
             </select>
             <?php 
-if (isset($_SESSION['User_id'])) {
+if (($_SESSION['Role']=='teacher'|| $_SESSION['Role']=='institute') && isset( $_SESSION['User_id'])) {
     echo '<div class="create-button"><button onclick="handleclick()">Create Your Own Advertisement</button></div>';
 }
 ?>

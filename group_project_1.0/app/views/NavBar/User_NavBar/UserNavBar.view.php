@@ -22,9 +22,9 @@
                 <a href="Student/classes">Classes</a>
             </div>
         </div>
-        <a href="Advertisements">Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements">Advertisements</a>
         <a href="Blog">Blogs</a>
-        <a href="GeneralController/Contactform">Contact Us</a>
+        <a href="Contactus">Contact Us</a>
     </div>
     
 

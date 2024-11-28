@@ -3,6 +3,7 @@ class Announcement extends Controller {
      
     
     public function index() {
+
         $Ann = new Announcementmodel;
 
         // Check if form is submitted
@@ -36,6 +37,7 @@ class Announcement extends Controller {
     }
 
     public function deleteapi($id){
+        if(checkAccess('sysadmin')){
         $model= new Announcementmodel;
         
 
@@ -55,12 +57,13 @@ class Announcement extends Controller {
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
             
         }
+    }
          
     }
 
     
     public function updateapi($id) {
-        
+        if(checkAccess('sysadmin')){
         $model = new Announcementmodel();
         $user = $model->first(['annid' => $id]);
     
@@ -80,6 +83,7 @@ class Announcement extends Controller {
         
         $this->view('Announcementupdateform', ['ann' => $user]);
     }
+}
          
 }
 

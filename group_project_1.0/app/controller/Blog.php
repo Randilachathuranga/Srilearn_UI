@@ -22,6 +22,7 @@ Class Blog extends Controller{
         echo json_encode($blogs);
     }
     public function myapi($id) {
+        if(checkloginstatus()){
         
         $model = new Blogmodel();
 
@@ -43,9 +44,10 @@ Class Blog extends Controller{
             echo json_encode(['error' => 'An error occurred while fetching blogs.', 'details' => $e->getMessage()]);
         }
     }
+}
 
     public function mydeleteapi($id) {
-        
+        if(checkloginstatus()){
         $model = new Blogmodel();
         header('Content-Type: application/json');
     
@@ -65,8 +67,10 @@ Class Blog extends Controller{
             echo json_encode(['error' => 'An error occurred while fetching blogs.', 'details' => $e->getMessage()]);
         }
     }
+}
     public function myupdateapi($id) {
         // Get JSON input from the request body
+        if(checkloginstatus()){
         $jsonData = file_get_contents("php://input");
         $data = json_decode($jsonData, true);
     
@@ -86,10 +90,12 @@ Class Blog extends Controller{
             echo json_encode(['error' => 'Failed to update blog']);
         }
     }
+}
     
     
     
     public function post() {
+        if(checkloginstatus()){
         $model = new Blogmodel();
         header('Content-Type: application/json');
         
@@ -118,6 +124,7 @@ Class Blog extends Controller{
             echo json_encode(['error' => 'Missing required fields: Title, Content, or Post_date']);
         }
     }
+}
     
 
     public function myblogs(){

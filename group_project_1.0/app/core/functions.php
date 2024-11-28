@@ -16,12 +16,18 @@
            redirect('Error404');
            exit();
         }
+        else{
+        return true;
+        }
     }
 
     function checkloginstatus(){
         if(!isset($_SESSION['User_id'])){
             redirect('Error404');
             exit();
+        }
+        else{
+            return true;
         }
 
     }

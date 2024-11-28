@@ -8,9 +8,7 @@ Class GeneralController extends Controller {
     $this->view('TeacherView/AllTeachers/AllTeachers');
    }
 
-   public function Contactform(){
-      $this->view('Contactform/Contactform');
-   }
+  
    
 }
 

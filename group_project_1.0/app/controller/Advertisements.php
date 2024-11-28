@@ -7,6 +7,8 @@
     }
 
     public function form(){
+        if(checkAccess('teacher')||checkAccess('institute')){
         $this->view('adform');
+        }
     }
  }

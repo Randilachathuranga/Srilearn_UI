@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../../../group_project_1.0/app/views/class.css">
 </head>
 <body>
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
     <div class="filter-container">
         <h1>Class Filter</h1>
         <div class="dropdown-container">
