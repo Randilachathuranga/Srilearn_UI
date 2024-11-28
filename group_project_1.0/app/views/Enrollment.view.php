@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Enrollments</title>
+    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/enrollmentview.css">
 </head>
 <body>
-    <h1>My Classes</h1>
-    <div class="classes-container" id="classes-container">
-        <!-- Classes will be dynamically rendered here -->
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-container">
+            <h1 class="header-title">My Enrollments</h1>
+        </div>
+
+        <!-- Banner Section -->
+        <div class="banner-container">
+            <img src="../../../../../group_project_1.0/app/views/teacherclass.jpg" alt="Teacher Class" class="banner-image">
+        </div>
+
+        <!-- Classes Display Section -->
+        <div class="classes-container" id="classes-container">
+            <!-- Enrolled classes will be dynamically rendered here -->
+        </div>
     </div>
 
     <script>
-        // Fetch all classes initially and render them
+        // Fetch all enrolled classes initially
         document.addEventListener('DOMContentLoaded', fetchAllClasses);
-        // Fetch all classes and render
+
         function fetchAllClasses() {
             fetch('http://localhost/group_project_1.0/public/Enrollment/api/')
                 .then(response => response.ok ? response.json() : Promise.reject('Failed to load'))
@@ -22,18 +35,15 @@
                 .catch(error => console.error('Error fetching all classes:', error));
         }
 
-            // Render classes dynamically
-            function renderClasses(classes) {
+        function renderClasses(classes) {
             const container = document.getElementById('classes-container');
             container.innerHTML = ""; // Clear existing content
 
-            // Handle empty or null data
             if (!classes || classes.length === 0) {
-                container.innerHTML = "<p>No classes available for the selected filters.</p>";
+                container.innerHTML = "<p>No enrollments found.</p>";
                 return;
             }
 
-            // Render each class record
             classes.forEach(record => {
                 const rec = document.createElement('div');
                 rec.className = 'record';
@@ -48,7 +58,7 @@
             });
         }
 
-         function deleteEnrollment(id){
+        function deleteEnrollment(id) {
             fetch(`http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -56,12 +66,12 @@
                 }
             })
             .then(() => {
-                location.reload(); // Reload the page to reflect deletion
+                location.reload(); // Reload the page to reflect the deletion
             })
             .catch(error => {
                 console.error('Error deleting record:', error);
             });
-         }
+        }
     </script>
 </body>
 </html>
