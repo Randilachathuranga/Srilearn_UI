@@ -1,86 +1,105 @@
+/* General Page Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    color: #333;
-  }
-  
-  #class-container {
-    display: flex;
-    flex-direction: column; /* Cards stack vertically */
-    gap: 20px; /* Space between cards */
-    margin: 0 auto; /* Center the container */
-    max-width: 800px; /* Limit the width for better readability */
-    margin-top: 130px;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
 
-  }
-  
-  .card {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .card-details {
-    flex: 1;
-  }
-  
-  .card-details p {
-    margin: 8px 0;
-    font-size: 16px;
-  }
-  
-  .card-details p strong {
-    color: #555;
-  }
-  
-  .remove-btn {
-    background-color: #f71616;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  .remove-btn:hover {
-    background-color: #f3742b;
-    transform: scale(1.05);
-  }
-  
-  .error {
-    color: #e74c3c;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  @media (max-width: 600px) {
-    .card {
-      flex-direction: column; /* Stack card content vertically for smaller screens */
-      text-align: center;
-    }
-  
-    .remove-btn {
-      align-self: center;
-      margin-top: 10px;
-    }
-  }
-  
+/* Page Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+/* Header Section */
+.header-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #030457;
+  margin-bottom: 20px;
+}
+
+/* Banner Section */
+.banner-container {
+  width: 80%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.banner-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Teachers List */
+.teachers-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 20px; /* Space between cards */
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Teacher Card */
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e8f0f1;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Details */
+.card-details {
+  flex: 1;
+}
+
+.card-details p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Remove Button */
+.remove-btn {
+  padding: 10px 20px;
+  background-color: #e74c3c; /* Light red */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b; /* Dark red */
+  transform: scale(1.05);
+}
+
+.remove-btn:active {
+  background-color: #a93226; /* Darker red */
+}

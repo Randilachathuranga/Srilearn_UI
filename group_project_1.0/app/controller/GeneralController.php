@@ -8,8 +8,11 @@ Class GeneralController extends Controller {
     $this->view('TeacherView/AllTeachers/AllTeachers');
    }
 
+<<<<<<< HEAD
   
    
+=======
+>>>>>>> 08eece7dbd07bf4e48335c590e16cf922257ae6a
 }
 
 

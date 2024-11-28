@@ -1,3 +1,8 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@
     <link rel="stylesheet" href="../../../group_project_1.0/app/views/class.css">
 </head>
 <body>
+<<<<<<< HEAD
 <?php 
  include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
 
@@ -22,21 +28,53 @@
                 <option value="English">English</option>
                 <option value="Physics">Physics</option>
             </select>
+=======
+>>>>>>> 08eece7dbd07bf4e48335c590e16cf922257ae6a
 
-            <label for="grade">Select Grade:</label>
-            <select id="grade">
-                <option value=6>Grade 6</option>
-                <option value=7>Grade 7</option>
-                <option value=11>Grade 11</option>
-                <option value=12>Grade 12</option>
-            </select>
+
+
+    <!-- Page Content Container -->
+    <div class="container">
+        <!-- Title Section -->
+        <div class="header-container">
+            <h1 class="header-title">Classes</h1>
+        </div>
+
+        <!-- Banner Image -->
+        <div class="banner-container">
+            <img src="../../../group_project_1.0/app/views/teacher.jpg" alt="Teacher Image">
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <h2>Filter Classes</h2>
+            <div class="dropdown-container">
+                <label for="subject">Select Subject:</label>
+                <select id="subject">
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Biology">Science</option>
+                    <option value="History">History</option>
+                    <option value="English">English</option>
+                    <option value="Physics">Physics</option>
+                </select>
+
+                <label for="grade">Select Grade:</label>
+                <select id="grade">
+                    <option value=6>Grade 6</option>
+                    <option value=7>Grade 7</option>
+                    <option value=11>Grade 11</option>
+                    <option value=12>Grade 12</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Classes Display Section -->
+        <div class="classes-container" id="classes-container">
+            <!-- Classes will be dynamically rendered here -->
         </div>
     </div>
 
-    <div class="classes-container" id="classes-container">
-        <!-- Classes will be dynamically rendered here -->
-    </div>
-
+    <!-- Script Section -->
     <script>
         // Fetch all classes initially and render them
         document.addEventListener('DOMContentLoaded', fetchAllClasses);
@@ -85,41 +123,45 @@
                     <h3>Grade: ${record.Grade}</h3>
                     <p>Type: ${record.Type}</p>
                     <h5>Fee: ${record.fee}</h5>
-                    <button onclick="handleEnrollment(${record.Class_id})">Enroll</button>
+                    <button onclick="handleEnrollment(${record.Class_id})">Join Class</button>
                 `;
                 container.appendChild(rec);
             });
         }
 
-    function handleEnrollment(classId) {
-    fetch(`http://localhost/group_project_1.0/public/Enrollment/post/${classId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.error) {
-                alert(data.error); // Show error message
-            } else if (data.message) {
-                alert(data.message); // Show success message
-            }
-            // Optionally reload classes
-            window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
-        
-        })
-        .catch(error => {
-            console.error('Error during enrollment:', error);
-            alert('Could not complete enrollment. Please try again later.');
-        });
-}
-
+        function handleEnrollment(classId) {
+            fetch(`http://localhost/group_project_1.0/public/Enrollment/post/${classId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    alert(data.error); // Show error message
+                } else if (data.message) {
+                    alert(data.message); // Show success message
+                }
+                // Optionally reload classes
+                window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
+            
+            })
+            .catch(error => {
+                console.error('Error during enrollment:', error);
+                alert('Could not complete enrollment. Please try again later.');
+            });
+        }
     </script>
 </body>
 </html>
+
+
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
+ ?>

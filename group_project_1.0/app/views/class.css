@@ -1,125 +1,131 @@
-/* General Page Styling */
+/* General Page Styles */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
 }
 
-h1 {
-    text-align: center;
-    color: #444;
+/* Page Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
-/* Filter Container */
+/* Header Section */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0 20px 0; /* Adjust margin for visibility */
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #030457;
+  margin-bottom: 20px;
+}
+
+/* Banner Image Section */
+.banner-container {
+  width: 80%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.banner-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Filter Section */
 .filter-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.filter-container h2 {
+  font-size: 1.5rem;
+  color: #1a237e;
+  margin-bottom: 10px;
 }
 
 .dropdown-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-label {
-    font-weight: bold;
+.dropdown-container label {
+  font-size: 1rem;
+  margin: 5px 0;
 }
 
-select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    outline: none;
+.dropdown-container select {
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-select:hover {
-    border-color: #888;
-}
-
-/* Classes Container */
+/* Classes Display Section */
 .classes-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Display two containers per row */
+  gap: 20px;
 }
 
 .record {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    padding: 15px;
-    background-color: #f5f5f5;
-    transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #e8f0f1;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .record:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.record h2 {
-    font-size: 1.5rem;
-    color: #333;
-    margin: 0;
+.record h2, .record h3, .record p, .record h5 {
+  margin: 5px 0;
 }
 
-.record h3 {
-    font-size: 1.2rem;
-    color: #555;
-    margin: 5px 0;
+.record button {
+  padding: 10px 20px;
+  background-color: #1a237e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.record p, .record h5 {
-    font-size: 1rem;
-    color: #666;
-    margin: 5px 0;
+.record button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .dropdown-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    select {
-        width: 100%;
-    }
-
-    .record {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .record h2 {
-        font-size: 1.2rem;
-    }
-
-    .record h3 {
-        font-size: 1rem;
-    }
-
-    .record p, .record h5 {
-        font-size: 0.9rem;
-    }
+.record button:active {
+  background-color: #004094;
 }
