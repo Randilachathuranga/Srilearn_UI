@@ -1,3 +1,8 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
