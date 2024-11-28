@@ -1,53 +1,62 @@
 <?php
 
+class UserModel
+{
+    use Model; // Includes the Model trait
 
-class Usermodel{
-    
-    use Model;
-
-    protected $table='user';
-    protected $allowedColumns=[
-        'User_id','F_name','L_name','Email','District','Role',
-        'Phone_number','Address'
+    protected $table = 'user'; // Define the database table
+    protected $allowedColumns = [
+        'F_name',
+        'L_name',
+        'Email',
+        'District',
+        'Phone_number',
+        'Address',
+        'Password', // Add password for updating it
     ];
 
-    function get_email($data){
-        if($this->first(['Email'=>$data['Email']])){
-            return false;
-        }
-    }
+    public $errors = [];
 
-    public function validate($data){
-        $this->errors=[];
- 
-        if(empty($data['F_name'])){
-            $this->errors['name']="AT least one name is required";
+    // Validation logic for profile updates
+    public function validate($data)
+    {
+        $this->errors = []; // Clear previous errors
+
+        // Validate first name
+        if (empty($data['F_name']) || strlen($data['F_name']) < 2) {
+            $this->errors['F_name'] = 'First name must be at least 2 characters long.';
         }
-        if(empty($data['Email'])){
-            $this->errors['email']=" email is required";
+
+        // Validate last name
+        if (empty($data['L_name']) || strlen($data['L_name']) < 2) {
+            $this->errors['L_name'] = 'Last name must be at least 2 characters long.';
         }
-        if(!filter_var($data['Email'],FILTER_VALIDATE_EMAIL)){
-            $this->errors['email']= 'enter a valid emai;';
+
+        // Validate email
+        if (empty($data['Email']) || !filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['Email'] = 'Invalid email format.';
         }
-        if(empty($data['District'])){
-            $this->errors['district']="District required";
+
+        // Validate phone number
+        if (empty($data['Phone_number']) || !preg_match('/^\d{10}$/', $data['Phone_number'])) {
+            $this->errors['Phone_number'] = 'Phone number must be 10 digits.';
         }
-        if(empty($data['Role'])){
-            $this->errors['role']="role is required";
+
+        // Validate district
+        if (empty($data['District'])) {
+            $this->errors['District'] = 'District is required.';
         }
-        if(empty($data['Address'])){
-            $this->errors['address']="address is required";
+
+        // Validate address
+        if (empty($data['Address'])) {
+            $this->errors['Address'] = 'Address is required.';
         }
-        if(empty($data['Phone_number'])){
-            $this->errors['pn']="phone number is required";
+
+        // Validate password (optional)
+        if (!empty($data['Password']) && strlen($data['Password']) < 8) {
+            $this->errors['Password'] = 'Password must be at least 8 characters long.';
         }
-        if(empty($data['Password'])){
-            $this->errors['pwd']="password is required";
-        }
-        if(empty($this->errors)){
-            return true;
-        }
-        return false;
+
+        return empty($this->errors); // Return true if no errors
     }
-    
 }

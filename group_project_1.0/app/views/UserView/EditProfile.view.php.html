@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - SRI LEARN</title>
+    <link rel="stylesheet" href="ViewProfile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="header">
+            <h2>My Profile</h2>
+            <div class="actions">
+                <img src="bell.png" alt="Notification Bell" class="icon">
+                <img src="mail.png" alt="Mail Icon" class="icon">
+                <button id="edit-btn">Edit Profile</button>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <!-- User Info Section -->
+            <div class="user-info-section">
+                <h3>USER INFORMATION</h3>
+                <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+
+                <label>First Name</label>
+                <input type="text" value="<?= htmlspecialchars($user['first_name']) ?>" readonly>
+
+                <label>Last Name</label>
+                <input type="text" value="<?= htmlspecialchars($user['last_name']) ?>" readonly>
+
+                <label>Date of Birth</label>
+                <input type="text" value="<?= htmlspecialchars($user['date_of_birth']) ?>" readonly>
+
+                <label>Gender</label>
+                <select disabled>
+                    <option <?= $user['gender'] == 'Male' ? 'selected' : '' ?>>Male</option>
+                    <option <?= $user['gender'] == 'Female' ? 'selected' : '' ?>>Female</option>
+                </select>
+
+                <label>Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" value="********" readonly>
+                    <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+                </div>
+            </div>
+
+            <!-- Contact Info Section -->
+            <div class="contact-info-section">
+                <h3>CONTACT INFORMATION</h3>
+
+                <label>Email</label>
+                <input type="email" value="<?= htmlspecialchars($user['email']) ?>" disabled>
+
+                <label>Phone Number</label>
+                <input type="text" value="<?= htmlspecialchars($user['phone_number']) ?>" disabled>
+
+                <label>District</label>
+                <input type="text" value="<?= htmlspecialchars($user['district']) ?>" disabled>
+
+                <label>Address</label>
+                <input type="text" value="<?= htmlspecialchars($user['address']) ?>" disabled>
+
+                <button type="button" id="save-btn" style="display: none;">Save</button>
+                <button type="button" id="cancel-btn" style="display: none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="ViewProfile.js"></script>
+
+<script>
+    
+    function fetchUserData(userid) {
+        // Construct the URL to fetch the user data from the API
+        const apiUrl = `http://yourwebsite.com/api/fetchUser/${userid}`;
+    
+        // Use the fetch API to send a GET request to the server
+        fetch(apiUrl)
+            .then(response => {
+                // Check if the response is OK (status 200)
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                // Return the response as JSON
+                return response.json();
+            })
+            .then(data => {
+                // Store the fetched data in a JavaScript object
+                // You can use the data to display the user's information
+                let user = data; // data contains the user information returned from the API
+                
+                // Example: logging the user object to the console
+                console.log(user);
+                
+                // You can now access user data as an object, for example:
+                // console.log(user.firstName);
+                // console.log(user.email);
+                // And so on...
+            })
+            .catch(error => {
+                // Handle any errors that occur during the fetch operation
+                console.error('Error fetching data:', error);
+            });
+    }
+</script>    
+    <script>
+        const editBtn = document.getElementById('edit-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const formElements = document.querySelectorAll('.contact-info-section input');
+
+        editBtn.addEventListener('click', function(){
+            formElements.forEach(element =>{
+                element.disabled = false;
+            });
+
+            saveBtn.style.display = 'inline-block';
+            cancelBtn.style.display = 'inline-block';
+            editBtn.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', function(){
+            formElements.forEach(element =>{
+                element.disabled = true;
+            });
+
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            editBtn.style.display = 'inline-block';
+        });
+
+        saveBtn.addEventListener('click', function() {
+            document.getElementById('form').submit();
+        })
+
+    </script>
+</body>
+</html>

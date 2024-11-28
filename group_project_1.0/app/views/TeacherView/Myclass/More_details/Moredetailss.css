@@ -15,9 +15,9 @@
     position: relative;
     margin: 5% auto;
     padding: 20px;
-    background-color: #f5f8f9;
+    background-color: #EAF8FA;
     border-radius: 15px;
-    width: 750px;
+    width: 600px;
     max-width: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -43,7 +43,6 @@
     margin: 0 auto;
 }
 
-
 /* Right-Side Details */
 .class-details {
     flex: 1;
@@ -55,7 +54,7 @@
 /* Paragraph Styling */
 .class-details p {
     font-size: 16px;
-    color: #000000;
+    color: #2E2E2E;
     margin: 4px 0;
 }
 
@@ -74,11 +73,12 @@
     font-size: 14px;
     font-weight: bold;
     color: #2E2E2E;
-    background-color: #c7d6dc;
+    background-color: #D9EAF1;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 

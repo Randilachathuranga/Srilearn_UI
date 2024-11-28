@@ -1,9 +1,11 @@
-  // Close the edit schedule form
+// Show the popup form
+
+  // Close the popup form
   function closeedit() {
     document.getElementById("popupEditForm").style.display = "none";
   }
   
-  // Function to update the Class
+  // Function to update the schedule
   async function Updateschedule(event, Class_id) {
     event.preventDefault();
     const form = event.target;
@@ -16,14 +18,12 @@
     };
     const table2 = {
         Location: formData.get("classLocation"),
-        Start_date: formData.get("classStart_date"),
-        End_date: formData.get("classEnd_date"),
+        Start_Time: formData.get("classStart_Time"),
+        End_time: formData.get("classEnd_time"),
     };
     const data = { table1, table2 };
     console.log("ClassData being sent:", data);
     console.log("Class ID:", Class_id);
-    
-    if (table2.Start_date < table2.End_date) {
     try {
         const response = await fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/UpdateclassApi/${Class_id}`, {
             method: "PUT",
@@ -51,13 +51,9 @@
         console.error("Error updating schedule:", error);
         alert("An error occurred while updating the schedule. Please try again later.");
     } 
-} else{
-    alert("Start date should be early earlier than the end date.")
-}
 }
 
-
-// Function to delete a Class
+// Function to delete a schedule
 function deleteschedule(Class_id) {
     if (window.confirm('Are you sure you want to delete this schedule?')) {
         fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {
@@ -70,7 +66,7 @@ function deleteschedule(Class_id) {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.text(); 
+            return response.text(); // Fetch response as text
         })
         .then(text => {
             console.log('Server response:', text);
