@@ -1,227 +1,270 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../group_project_1.0/app/views/sysadmin.css">
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    
+    <header>
+        <button id="menu-button" class="menu-button" onclick="toggleMenu()">☰</button>
+        <h1>Admin Dashboard</h1>
+    </header>
 
-    <!-- Button controls -->
-    <div>
-        <button onClick="handleStudents()">Students</button>
-        <button onClick="handleTeachers()">Teachers</button>
-        <button onClick="handleInstitutes()">Institutes</button>
-        <button onClick="postAnnouncement()">Post Announcements</button>
-        <button onClick="viewAnnouncements()">View Announcements</button>
-        <button onClick="logout()">logout</button>
-    </div>
+    <nav id="side-menu" class="side-menu">
+        <button class="close-menu" onclick="toggleMenu()">×</button>
+        <button onclick="postAnnouncement()">Post Announcements</button>
+        <button onclick="viewAnnouncements()">View Announcements</button>
+        <button onclick="viewBlogs()">View Blogs</button>
+        <button onclick="viewAds()">View Advertisements</button>
+        <button onclick="logout()">Logout</button>
+    </nav>
 
-    <!-- Containers for tables -->
-    <div id="card-container" class="card-container">
-        <!-- Students Table -->
-        <table id="student-table" border="1" style="display:none;">
-            <caption>Students</caption>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>District</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div class="main-content">
+        <nav class="top-buttons">
+            <button onclick="handleStudents()">Students</button>
+            <button onclick="handleTeachers()">Teachers</button>
+            <button onclick="handleInstitutes()">Institutes</button>
+        </nav>
 
-        <!-- Teachers Table -->
-        <table id="teacher-table" border="1" style="display:none;">
-            <caption>Teachers</caption>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>District</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="graph-container" class="graph-container">
+            <canvas id="statsChart"></canvas>
+        </div>
 
-        <!-- Institutes Table -->
-        <table id="institute-table" border="1" style="display:none;">
-            <caption>Institutes</caption>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>District</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="card-container">
+            <table id="student-table" class="data-table">
+                <caption>Students</caption>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>District</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="teacher-table" class="data-table" style="display:none;">
+                <caption>Teachers</caption>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>District</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="institute-table" class="data-table" style="display:none;">
+                <caption>Institutes</caption>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>District</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        // Hide all tables initially
-        function hideAllTables() {
-            document.getElementById("student-table").style.display = "none";
-            document.getElementById("teacher-table").style.display = "none";
-            document.getElementById("institute-table").style.display = "none";
+        let counts = { students: 0, teachers: 0, institutes: 0 };
+        const canvas = document.getElementById('statsChart');
+        const ctx = canvas.getContext('2d');
+
+        function toggleMenu() {
+            const sideMenu = document.getElementById('side-menu');
+            sideMenu.classList.toggle('visible');
         }
 
-        // Fetch and display student data
-        function handleStudents() {
-            hideAllTables();
-            fetch('sysadmin/studentapi')
+        function getcount() {
+            fetch('sysadmin/count')
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
                 })
                 .then(data => {
-                    const tbody = document.querySelector("#student-table tbody");
-                    tbody.innerHTML = '';
-                    data.forEach(record => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${record.User_id}</td>
-                            <td>${record.F_name}</td>
-                            <td>${record.L_name}</td>
-                            <td>${record.Email}</td>
-                            <td>${record.District}</td>
-                            <td>${record.Phone_number}</td>
-                            <td>${record.Address}</td>
-                            <td><button onClick="handleDelete(${record.User_id}, 'Student')">Delete</button></td>
-                            <td><button onClick="goToUpdateForm(${record.User_id})">Update</button></td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                    document.getElementById("student-table").style.display = "table";
+                    counts.students = data[0].stdcount || 0;
+                    counts.teachers = data[0].tchcount || 0;
+                    counts.institutes = data[0].instcount || 0;
+                    drawGraph();
                 })
-                .catch(error => {
-                    console.error('Error fetching student data:', error);
-                });
+                .catch(error => console.error('Error fetching counts:', error));
         }
 
-        // Fetch and display teacher data
-        function handleTeachers() {
-            hideAllTables();
-            fetch('sysadmin/teacherapi')
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const tbody = document.querySelector("#teacher-table tbody");
-                    tbody.innerHTML = '';
-                    data.forEach(record => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${record.User_id}</td>
-                            <td>${record.F_name}</td>
-                            <td>${record.L_name}</td>
-                            <td>${record.Email}</td>
-                            <td>${record.District}</td>
-                            <td>${record.Phone_number}</td>
-                            <td>${record.Address}</td>
-                            <td><button onClick="handleDelete(${record.User_id}, 'Teacher')">Delete</button></td>
-                            <td><button onClick="goToUpdateForm(${record.User_id})">Update</button></td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                    document.getElementById("teacher-table").style.display = "table";
-                })
-                .catch(error => {
-                    console.error('Error fetching teacher data:', error);
-                });
-        }
+        function drawGraph() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Set canvas size
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = 400;
 
-        // Fetch and display institute data
-        function handleInstitutes() {
-            hideAllTables();
-            fetch('sysadmin/instituteapi')
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const tbody = document.querySelector("#institute-table tbody");
-                    tbody.innerHTML = '';
-                    data.forEach(record => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${record.User_id}</td>
-                            <td>${record.F_name}</td>
-                            <td>${record.L_name}</td>
-                            <td>${record.Email}</td>
-                            <td>${record.District}</td>
-                            <td>${record.Phone_number}</td>
-                            <td>${record.Address}</td>
-                            <td><button onClick="handleDelete(${record.User_id}, 'Institute')">Delete</button></td>
-                            <td><button onClick="goToUpdateForm(${record.User_id})">Update</button></td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                    document.getElementById("institute-table").style.display = "table";
-                })
-                .catch(error => {
-                    console.error('Error fetching institute data:', error);
-                });
-        }
+            const data = [counts.students, counts.teachers, counts.institutes];
+            const labels = ['Students', 'Teachers', 'Institutes'];
+            const colors = ['#1a73e8', '#4285f4', '#0f9d58'];
+            
+            const maxValue = Math.max(...data);
+            const padding = 60;
+            const barWidth = (canvas.width - 2 * padding) / data.length - 20;
+            
+            // Draw Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
 
-        // Delete user based on type
-        function handleDelete(userId, type) {
-            fetch(`sysadmin/deleteapi/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Delete successful:', data);
-                if (type === 'Student') {
-                    handleStudents();
-                } else if (type === 'Teacher') {
-                    handleTeachers();
-                } else if (type === 'Institute') {
-                    handleInstitutes();
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting record:', error);
+            // Draw X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw bars and labels
+            data.forEach((value, index) => {
+                const x = padding + index * (barWidth + 20) + 10;
+                const barHeight = ((canvas.height - 2 * padding) * value) / maxValue;
+                const y = canvas.height - padding - barHeight;
+
+                // Draw bar
+                ctx.fillStyle = colors[index];
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw value on top of bar
+                ctx.fillStyle = '#000';
+                ctx.textAlign = 'center';
+                ctx.fillText(value, x + barWidth/2, y - 5);
+
+                // Draw label below bar
+                ctx.fillText(labels[index], x + barWidth/2, canvas.height - padding + 20);
             });
+
+            // Draw Y-axis labels
+            const steps = 5;
+            for(let i = 0; i <= steps; i++) {
+                const value = Math.round((maxValue * i) / steps);
+                const y = canvas.height - padding - ((canvas.height - 2 * padding) * i) / steps;
+                ctx.fillText(value, padding - 20, y);
+            }
+        }
+
+        function hideAllTables() {
+            document.querySelectorAll('.data-table').forEach(table => table.style.display = 'none');
+        }
+
+        function fetchData(api, tableId) {
+            hideAllTables();
+            fetch(api)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    const tbody = document.querySelector(`#${tableId} tbody`);
+                    tbody.innerHTML = '';
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${record.User_id}</td>
+                            <td>${record.F_name}</td>
+                            <td>${record.L_name}</td>
+                            <td>${record.Email}</td>
+                            <td>${record.District}</td>
+                            <td>${record.Phone_number}</td>
+                            <td>${record.Address}</td>
+                            <td>
+                                <button onclick="handleDelete(${record.User_id}, '${tableId}')">Delete</button>
+                                <button onclick="goToUpdateForm(${record.User_id})">Update</button>
+                            </td>`;
+                        tbody.appendChild(row);
+                    });
+                    document.getElementById(tableId).style.display = 'table';
+                })
+                .catch(error => console.error(`Error fetching ${tableId} data:`, error));
+        }
+
+        function handleStudents() {
+            fetchData('sysadmin/studentapi', 'student-table');
+        }
+
+        function handleTeachers() {
+            fetchData('sysadmin/teacherapi', 'teacher-table');
+        }
+
+        function handleInstitutes() {
+            fetchData('sysadmin/instituteapi', 'institute-table');
+        }
+
+        function handleDelete(userId, tableId) {
+            fetch(`sysadmin/deleteapi/${userId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to delete');
+                    return response.json();
+                })
+                .then(() => {
+                    console.log(`Record with ID ${userId} deleted.`);
+                    getcount();
+                    if (tableId === 'student-table') handleStudents();
+                    else if (tableId === 'teacher-table') handleTeachers();
+                    else if (tableId === 'institute-table') handleInstitutes();
+                })
+                .catch(error => console.error('Error deleting record:', error));
         }
 
         function goToUpdateForm(userId) {
             window.location.href = `Sysadmin/update/${userId}`;
         }
 
-        // Post announcement function
         function postAnnouncement() {
-          window.location.href=`Announcement/index`;
+            window.location.href = 'Announcement/index';
         }
 
-        // View announcements function
         function viewAnnouncements() {
-            window.location.href=`Announcement/viewann`;
-        }   
-
-        function logout(){
-            window.location.href=`Signout`;
+            window.location.href = 'Announcement/viewann';
         }
-    </script>
 
+        function viewAds() {
+            window.location.href = 'Advertisements';
+        }
+
+        function viewBlogs() {
+            window.location.href = 'Blog';
+        }
+
+        function logout() {
+            window.location.href = 'Signout';
+        }
+
+        // Initialize the page
+        getcount();
+        // Load student table initially
+        handleStudents();
+
+        // Redraw graph on window resize
+        window.addEventListener('resize', drawGraph);
+    </script>
 </body>
 </html>

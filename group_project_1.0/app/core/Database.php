@@ -1,53 +1,92 @@
 <?php
-Trait Database {
+trait Database {
 
-private function connect() {
-    $string = "mysql:hostname=" . DBHOST . ";dbname=" . DBNAME;
-    try{
-    $con = new PDO($string, DBUSER, DBPASS);
-    $con->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    return $con;
+    private $connection;
+
+    // Reusable connection setup
+    private function connect() {
+        if ($this->connection === null) {
+            $string = "mysql:hostname=" . DBHOST . ";dbname=" . DBNAME;
+            try {
+                $this->connection = new PDO($string, DBUSER, DBPASS);
+                $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Connection failed: " . $e->getMessage());
+            }
+        }
+        return $this->connection;
     }
-    catch(PDOException $e){
-        die("Connection failed: ".$e->getMessage()) ;
+
+    // Execute a query with optional data and return all results
+    public function query($query, $data = []) {
+        try {
+            $con = $this->connect();
+            $stm = $con->prepare($query);
+            $check = $stm->execute($data);
+
+            if ($check) {
+                return $stm->fetchAll(PDO::FETCH_OBJ); // Return results directly
+            }
+            return false;
+        } catch (PDOException $e) {
+            if (defined('DEBUG') && DEBUG) {
+                echo "Query failed: " . $e->getMessage();
+            }
+            return false;
+        }
     }
-}
 
-public function query($query, $data = []) {
-    $con = $this->connect();
-    $stm = $con->prepare($query);
-    $check = $stm->execute($data);
+    // Execute a query and return a single row or null if empty
+    public function getrow($query, $data = []) {
+        try {
+            $con = $this->connect();
+            $stm = $con->prepare($query);
+            $check = $stm->execute($data);
 
-    if ($check) {
-        return $stm->fetchAll(PDO::FETCH_OBJ); // Return results directly
+            if ($check) {
+                $result = $stm->fetchAll(PDO::FETCH_OBJ);
+                return $result[0] ?? null; // Return first row or null if none
+            }
+            return false;
+        } catch (PDOException $e) {
+            if (defined('DEBUG') && DEBUG) {
+                echo "Query failed: " . $e->getMessage();
+            }
+            return false;
+        }
     }
-    return false; // Return false if the execution failed
-}
 
-public function getrow($query, $data = []) {
-    $con = $this->connect();
-    $stm = $con->prepare($query);
-    $check = $stm->execute($data);
 
-    if ($check) {
-        $result= $stm->fetchAll(PDO::FETCH_OBJ); // Return results directly
-        return $result[0];
+    // Execute a Data Manipulation query and return affected rows or false if failed
+    public function duiquery($query, $data = []) {
+        try {
+            $con = $this->connect();
+            $stm = $con->prepare($query);
+            $check = $stm->execute($data);
+
+            if ($check) {
+                $affectedRows = $stm->rowCount(); 
+                return $affectedRows;             
+            }
+            return false;
+        } catch (PDOException $e) {
+            if (defined('DEBUG') && DEBUG) {
+                echo "Query failed: " . $e->getMessage();
+            }
+            return false;
+        }
     }
-    return false; // Return false if the execution failed
-}
 
-public function duiquery($query, $data = []) {
-    $con = $this->connect();                // Establish a database connection
-    $stm = $con->prepare($query);           // Prepare the query
-    $check = $stm->execute($data);         // Execute the query with the provided data
-
-    if ($check) {
-        $affectedRows = $stm->rowCount();  // Get the number of affected rows
-        return $affectedRows;              // Return the affected rows count
-    } else {
-        return false;                      // Return false if the query fails
+    // Transaction Management
+    public function beginTransaction() {
+        $this->connect()->beginTransaction();
     }
-}
 
+    public function commit() {
+        $this->connect()->commit();
+    }
 
+    public function rollback() {
+        $this->connect()->rollBack();
+    }
 }

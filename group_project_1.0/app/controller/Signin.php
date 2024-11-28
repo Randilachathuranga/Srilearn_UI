@@ -1,51 +1,53 @@
-<?php 
-
+<?php
 class Signin extends Controller {
 
-    public function index() {
-        $data = []; // Initialize data array
-        $User = new Usermodel; // Instantiate the User model
-        $User->errors = []; // Initialize errors array
+public function index() {
+    $data = []; // Initialize data array
+    $User = new Usermodel; // Instantiate the User model
+    $User->errors = []; // Initialize errors array
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            // Check if 'User_id' and 'Password' are set in the POST data
-            $arr['User_id'] = $_POST['User_id'] ?? ''; 
-            $password = $_POST['Password'] ?? '';
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        // Check if 'User_id' and 'Password' are set in the POST data
+        $arr['Email'] = $_POST['Email'] ?? ''; 
+        $password = $_POST['Password'] ?? '';
 
-            // Fetch user by 'User_id'
-            $row = $User->first($arr);
+        // Fetch user by 'User_id'
+        $row = $User->first($arr);
 
-            if ($row) {
-                // Check if the provided password matches the stored password
-                if ($password === $row->Password) {
-                    $_SESSION['User_id'] = $row->User_id;
-                    $_SESSION['Role'] = $row->Role;
+        if ($row) {
+            // Use password_verify() to check if the entered password matches the hashed password
+            if (($password==$row->Password)) {
+                $_SESSION['User_id'] = $row->User_id;
+                $_SESSION['Role'] = $row->Role;
 
-                    switch($_SESSION['Role']){
-                        case 'Student':
-                            redirect('Student');
-                        case 'Teacher':
-                            redirect('Teacher');
-                        case 'Institute':
-                            redirect('Institute');
-                        case 'Sysadmin':
-                            redirect('Sysadmin');
-                    }
-                     // Redirect to sysadmin page if login is successful
-                    return; 
-                } else {
-                    $User->errors['password'] = "Wrong password"; // Set password error message
+                switch ($_SESSION['Role']) {
+                    case 'student':
+                        redirect('Student');
+                        break;
+                    case 'teacher':
+                        redirect('Teacher');
+                        break;
+                    case 'institute':
+                        redirect('Institute');
+                        break;
+                    case 'sysadmin':
+                        redirect('Sysadmin');
+                        break;
                 }
+                // Redirect to the appropriate page based on the role
+                return; 
             } else {
-                $User->errors['User_id'] = "User not found or incorrect name"; // Set user ID error message
+                $User->errors['password'] = "Wrong password"; // Set password error message
             }
-
-            // Pass errors to the view
-            $data['errors'] = $User->errors;
+        } else {
+            $User->errors['Email'] = "Email not found or incorrect Email"; // Set user ID error message
         }
-      
 
-        // Render the 'signin' view with any errors
-        $this->view('signin', $data); 
+        // Pass errors to the view
+        $data['errors'] = $User->errors;
     }
+
+    // Render the 'signin' view with any errors
+    $this->view('signin', $data); 
+}
 }

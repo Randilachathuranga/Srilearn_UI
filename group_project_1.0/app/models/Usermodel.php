@@ -8,14 +8,17 @@ class Usermodel{
     protected $table='user';
     protected $allowedColumns=[
         'User_id','F_name','L_name','Email','District','Role',
-        'Phone_number','Address'
+        'Phone_number','Address','Password'
     ];
-
-    function get_email($data){
-        if($this->first(['Email'=>$data['Email']])){
+    public  function get_email($data){
+    
+        if($this->first(['Email'=>$data])){
             return false;
         }
+        return true;
     }
+
+    
 
     public function validate($data){
         $this->errors=[];
@@ -25,6 +28,9 @@ class Usermodel{
         }
         if(empty($data['Email'])){
             $this->errors['email']=" email is required";
+        }
+        if(!($this->get_email($data["Email"]))){
+            $this->errors["email"]= "email already exists";
         }
         if(!filter_var($data['Email'],FILTER_VALIDATE_EMAIL)){
             $this->errors['email']= 'enter a valid emai;';
@@ -44,10 +50,26 @@ class Usermodel{
         if(empty($data['Password'])){
             $this->errors['pwd']="password is required";
         }
+        if(!($data['Password']==$data['Re-password'])){
+            $this->errors['re-pwd']= 'passwords do not match';
+        }
         if(empty($this->errors)){
             return true;
         }
+        
         return false;
+    }
+
+    public function getcount(){
+       
+        $query = "SELECT
+        COUNT(CASE WHEN role = 'Student' THEN 1 END) AS stdcount,
+        COUNT(CASE WHEN role = 'Teacher' THEN 1 END) AS tchcount,
+        COUNT(CASE WHEN role = 'Institute' THEN 1 END) AS instcount
+        FROM user;
+         ";
+          return $this->query($query );
+
     }
     
 }

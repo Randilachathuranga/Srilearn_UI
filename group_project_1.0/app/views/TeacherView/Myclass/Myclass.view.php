@@ -1,3 +1,7 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +19,7 @@
     <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
 </div>
 
+<div id="user-data" data-user-id="<?php echo htmlspecialchars(string: $_SESSION['User_id']); ?>"></div>
 <div class="filterhead">
 <form id="filter" class="filter">
     <div class="form-group">
@@ -107,7 +112,6 @@
     </div>
 </div>
 
-
 <!-- Popup Form for Editing a class -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
@@ -195,3 +199,8 @@
     <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>
+
+
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
+ ?>

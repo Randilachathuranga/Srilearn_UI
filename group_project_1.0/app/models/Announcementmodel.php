@@ -3,9 +3,9 @@ class Announcementmodel{
     
     use Model;
 
-    protected $table='announcements';
+    protected $table='announcement';
     protected $allowedColumns=[
-        'date','title','announcement'
+        'annid','date','title','announcement'
     ];
 
     public function validate($data){

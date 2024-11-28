@@ -2,32 +2,34 @@
 
 class Sysadmin extends Controller {
 
-    function checkAccess($requiredRole) {
-        if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
-           echo "123";
-           redirect('Error404');
-           exit();
-        }
-    }
     
     public function index() {
     
         $model = new Usermodel();
-        echo $_SESSION['Role'];
-        $this->checkAccess('Sysadmin');
+        
+        checkAccess('sysadmin');
         $this->view('sysadmin'); 
     }
 
     public function studentapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'student']); // Fetch users, you can add conditions here
         echo json_encode($users);
     
     }
+    public function count() {
+        $model=new Usermodel();
+        checkAccess('sysadmin');
+        header('Content-Type: application/json');
+        $users = $model->getcount(); 
+        echo json_encode($users);
+    }
     
     public function teacherapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'teacher']); // Fetch users, you can add conditions here
         echo json_encode($users);
@@ -36,6 +38,7 @@ class Sysadmin extends Controller {
     
     public function instituteapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'institute']); // Fetch users, you can add conditions here
         echo json_encode($users);
@@ -44,6 +47,7 @@ class Sysadmin extends Controller {
 
     public function deleteapi($userId) {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         try {
             if ($model->delete($userId)) {  // Use $userId here, as it's passed from the route
                 echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
@@ -61,6 +65,7 @@ class Sysadmin extends Controller {
     public function update($userId) {
         // Fetch the user data by ID
         $model = new Usermodel();
+        checkAccess('sysadmin');
         $user = $model->first(['User_id' => $userId]);
     
         // Check if the request is a POST request
