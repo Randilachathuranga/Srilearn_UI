@@ -10,11 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../group_project_1.0/app/views/advertisement.css"> <!-- Link to the CSS file -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Advertisements</title>
 </head>
 <body>
     <div class="container">
+        <!-- Title -->
         <h1 class="title">Advertisements</h1>
-        
+
+        <!-- Banner Image -->
+        <div class="banner">
+            <img src="../../../group_project_1.0/app/views/advertisement.jpg" alt="Banner Image">
+        </div>
+
         <!-- Filters -->
         <div class="filters">
             <label for="adType">Filter by Type:</label>
@@ -65,37 +72,37 @@ if (isset($_SESSION['User_id'])) {
         </div>
     </div>
 
-    <script >
+    <script>
         function filterAds() {
-    const adType = document.getElementById('adType').value;
-    const subject = document.getElementById('subject').value;
-    const ads = document.querySelectorAll('.card');
+            const adType = document.getElementById('adType').value;
+            const subject = document.getElementById('subject').value;
+            const ads = document.querySelectorAll('.card');
 
-    // Show/hide subject filter dropdown
-    const subjectDropdown = document.getElementById('subject');
-    const subjectLabel = document.getElementById('subjectLabel');
-    if (adType === 'education') {
-        subjectDropdown.style.display = 'inline-block';
-        subjectLabel.style.display = 'inline-block';
-    } else {
-        subjectDropdown.style.display = 'none';
-        subjectLabel.style.display = 'none';
-    }
+            // Show/hide subject filter dropdown
+            const subjectDropdown = document.getElementById('subject');
+            const subjectLabel = document.getElementById('subjectLabel');
+            if (adType === 'education') {
+                subjectDropdown.style.display = 'inline-block';
+                subjectLabel.style.display = 'inline-block';
+            } else {
+                subjectDropdown.style.display = 'none';
+                subjectLabel.style.display = 'none';
+            }
 
-    ads.forEach(ad => {
-        const isEducation = ad.classList.contains('education');
-        const adSubject = ad.getAttribute('data-subject');
+            ads.forEach(ad => {
+                const isEducation = ad.classList.contains('education');
+                const adSubject = ad.getAttribute('data-subject');
 
-        let typeMatch = adType === 'all' || (adType === 'education' && isEducation) || (adType === 'non-education' && !isEducation);
-        let subjectMatch = adType !== 'education' || subject === 'all' || adSubject === subject;
+                let typeMatch = adType === 'all' || (adType === 'education' && isEducation) || (adType === 'non-education' && !isEducation);
+                let subjectMatch = adType !== 'education' || subject === 'all' || adSubject === subject;
 
-        ad.style.display = typeMatch && subjectMatch ? 'block' : 'none';
-    });
-}
+                ad.style.display = typeMatch && subjectMatch ? 'block' : 'none';
+            });
+        }
 
-function handleclick(){
-    window.location.href='advertisements/form';
-}
+        function handleclick(){
+            window.location.href='advertisements/form';
+        }
     </script>
 </body>
 </html>
