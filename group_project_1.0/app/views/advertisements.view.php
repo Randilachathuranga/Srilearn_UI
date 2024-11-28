@@ -107,3 +107,6 @@ if (isset($_SESSION['User_id'])) {
 </body>
 </html>
 
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
+ ?>
