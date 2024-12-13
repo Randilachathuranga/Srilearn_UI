@@ -54,3 +54,39 @@ function deleteBlog(record) {
 function gotomyBlog() {
   window.location.href = `Blog/myblogs`;
 }
+
+// function deleteBlog(record) {
+//   console.log(`Delete blog triggered for Blog ID: ${record.Blog_id}`);
+//   if (window.confirm("Are you sure you want to delete this schedule?")) {
+//     fetch(`Sysadmin/mydeleteapi/${record.Blog_id}`, {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         return response.text();
+//       })
+//       .then((text) => {
+//         console.log("Server response:", text);
+//         try {
+//           const data = JSON.parse(text);
+//           console.log("Schedule deleted successfully:", data);
+//           window.location.href =
+//             "http://localhost/group_project_1.0/public/Blog";
+//         } catch (e) {
+//           console.error("Error parsing JSON, redirecting anyway:", e);
+//           window.location.href =
+//             "http://localhost/group_project_1.0/public/Blog";
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error deleting schedule:", error);
+//       });
+//   } else {
+//     console.log("Schedule deletion canceled.");
+//   }
+// }

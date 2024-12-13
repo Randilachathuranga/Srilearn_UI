@@ -200,34 +200,7 @@ if (
 }
 }
 
-function view() {
-alert("Not implemented");
-}
 
-function UploadMat() {
-window.location.href =
-  "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadMat/UploadMat.php";
-}
-
-function UploadASS() {
-window.location.href =
-  "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
-}
-
-function viewschedule() {
-window.location.href =
-  "../../../../../group_project_1.0/app/views/TeacherView/Options/ViewClassschedule/ViewClassschedule.php";
-}
-
-function freeCard() {
-window.location.href =
-  "../../../../../group_project_1.0/app/views/TeacherView/Options/IssueFreecard/IssueFreecard.php";
-}
-
-function reqPay() {
-window.location.href =
-  "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
-}
 
 
 });
@@ -345,3 +318,31 @@ function closePopup() {
   document.getElementById("popupForm").style.display = "none";
 }
 
+function view() {
+  alert("Not implemented");
+  }
+  
+  function UploadMat() {
+  window.location.href =
+    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadMat/UploadMat.php";
+  }
+  
+  function UploadASS() {
+  window.location.href =
+    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
+  }
+  
+  function viewschedule() {
+  window.location.href =
+    "../../../../../group_project_1.0/app/views/TeacherView/Options/ViewClassschedule/ViewClassschedule.php";
+  }
+  
+  function freeCard() {
+  window.location.href =
+    "../../../../../group_project_1.0/app/views/TeacherView/Options/IssueFreecard/IssueFreecard.php";
+  }
+  
+  function reqPay() {
+  window.location.href =
+    "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
+  }
