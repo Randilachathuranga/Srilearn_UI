@@ -16,6 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 100px;
 }
 
 /* Banner Section */
@@ -108,7 +109,6 @@ body {
     gap: 20px;
     width: 100%;
     max-width: 1200px;
-    
 }
 
 .card {

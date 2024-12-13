@@ -113,7 +113,7 @@ trait Model {
             $this->duiquery($query, $data);
             return true;  // Success
         } catch (Exception $e) {
-            if (defined('DEBUG') && DEBUG) {
+            if (defined('DEBUG')) {
                 echo "Update failed: " . $e->getMessage();
             }
             return false;  // Failure
@@ -129,7 +129,7 @@ trait Model {
             $this->duiquery($query, $data);
             return true;
         } catch (Exception $e) {
-            if (defined('DEBUG') && DEBUG) {
+            if (defined('DEBUG')) {
                 echo "Delete failed: " . $e->getMessage();
             }
             return false;

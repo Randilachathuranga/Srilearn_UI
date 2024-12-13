@@ -1,38 +1,60 @@
-/* General Styling */
+/* General Page Styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 18px;
+    color: #030457; /* Consistent text color */
 }
 
+/* Banner Image */
+.banner {
+    width: 80%; /* Set the width to 80% */
+    margin: 0 auto; /* Center the banner horizontally */
+}
+
+.banner img {
+    width: 100%; /* Ensure the image fills the banner container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure it behaves like a block element */
+    object-fit: cover; /* Ensure the image covers the space */
+    max-height: 350px; /* Optional: control the maximum height of the banner */
+}
+
+
+/* Header Section */
 h1 {
     text-align: center;
-    color: #444;
+    color: #030457;
     margin: 20px 0;
     font-size: 2rem;
+    margin-top: 100px;
 }
 
-/* Container for Blog Entries */
+/* Page Container */
 #container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
+    margin-top: 20px;
+    height: 500px;
+
 }
 
 /* Blog Entry Styling */
 .record {
-    background: #fff;
+    background: #e8f0f1;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 20px;
     transform: scale(1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center; /* Centering the content inside the cards */
 }
 
 .record:hover {
@@ -79,6 +101,20 @@ button:hover {
 button:active {
     background-color: #003f7f;
     transform: scale(0.95);
+}
+
+/* Delete Button Styling */
+button.delete {
+    background-color: #d9534f; /* Red */
+    color: white;
+}
+
+button.delete:hover {
+    background-color: #c9302c; /* Dark Red */
+}
+
+button.delete:active {
+    background-color: #ac2925; /* Even darker red */
 }
 
 /* Update Form */
@@ -146,38 +182,17 @@ form button:active {
         font-size: 1.8rem;
     }
 
-    #container {
-        padding: 10px;
-        gap: 15px;
-    }
-
-    .record {
-        padding: 15px;
-    }
-
     .record h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .record p {
         font-size: 0.9rem;
     }
 
-    .record h5 {
-        font-size: 0.8rem;
-    }
-
     button {
         padding: 8px 16px;
         font-size: 13px;
-    }
-
-    form {
-        padding: 10px;
-    }
-
-    form label {
-        font-size: 0.9rem;
     }
 }
 
@@ -203,4 +218,3 @@ form button:active {
         font-size: 12px;
     }
 }
-

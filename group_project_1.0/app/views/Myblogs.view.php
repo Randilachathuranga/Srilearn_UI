@@ -1,3 +1,10 @@
+<?php
+    // Corrected the condition to check for 'sysadmin' role
+    if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php';
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,3 +126,10 @@
     </script>
 </body>
 </html>
+
+<?php
+ 
+ if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php';
+    }
+    ?>

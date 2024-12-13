@@ -92,9 +92,9 @@
                 <div class="input-wrapper">
                     <label for="role">Role:</label>
                     <select id="role" name="Role" required>
-                        <option value="Student">Student</option>
-                        <option value="Teacher">Teacher</option>
-                        <option value="Institute">Institute</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="institute">Institute</option>
                     </select>
                 </div>
             </div>

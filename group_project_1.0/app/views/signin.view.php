@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn">Sign In</button>
-                    <p>Don't have an account? <a href="signup">Sign Up</a></p>
+                    <p>Don't have an account? <a href="http://localhost/group_project_1.0/public/Signup">Sign Up</a></p>
                     <div class="guest"><a  href="guest">Log in as a Guest</a></div>
                  </div>
                 </div>

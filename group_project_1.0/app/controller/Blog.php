@@ -22,6 +22,7 @@ Class Blog extends Controller{
         echo json_encode($blogs);
     }
     public function myapi($id) {
+        checkloginstatus();
         
         $model = new Blogmodel();
 
@@ -45,6 +46,7 @@ Class Blog extends Controller{
     }
 
     public function mydeleteapi($id) {
+        checkloginstatus();
         
         $model = new Blogmodel();
         header('Content-Type: application/json');
@@ -66,6 +68,7 @@ Class Blog extends Controller{
         }
     }
     public function myupdateapi($id) {
+        checkloginstatus();
         // Get JSON input from the request body
         $jsonData = file_get_contents("php://input");
         $data = json_decode($jsonData, true);
@@ -90,6 +93,7 @@ Class Blog extends Controller{
     
     
     public function post() {
+        checkloginstatus();
         $model = new Blogmodel();
         header('Content-Type: application/json');
         

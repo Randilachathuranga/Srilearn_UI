@@ -142,6 +142,10 @@ body::before {
     transform: scale(1.05);
 }
 
+.form-group a {
+    color: #1122ba;
+}
+
 .btn:active {
     transform: scale(0.98);
 }

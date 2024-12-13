@@ -30,7 +30,7 @@
 
     <div class="profile-buttons">
     <!-- Bell Icon with Notification Badge -->
-    <a href="Announcement/viewann" class="notification-bell">
+    <a href="http://localhost/group_project_1.0/public/Announcement/viewann" class="notification-bell">
         <img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/bell.png" alt="Bell Icon">
         <span class="notification-badge" id="notificationBadge"></span>
     </a>
@@ -52,7 +52,15 @@
     </div>
     <div class="profile-links">
         <a href="http://localhost/group_project_1.0/public/Profile"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
-        <a href="http://localhost/group_project_1.0/public/Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
+        <?php if ($_SESSION['Role'] == "teacher") { ?>
+            <a href="http://localhost/group_project_1.0/public/Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
+        <?php }
+        elseif($_SESSION['Role']=='student'){?>
+            <a href="http://localhost/group_project_1.0/public/Enrollment"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
+        <?php
+            
+        } ?> 
+        
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
@@ -88,7 +96,6 @@
         <a href="http://localhost/group_project_1.0/public/ContactUS"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
         <br><br><br>
         <a href="http://localhost/group_project_1.0/public/Profile"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/user.png">View profile</a>
-        <a href="http://localhost/group_project_1.0/public/Ind_Myclass"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Classes</a>
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../group_project_1.0/app/views/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>

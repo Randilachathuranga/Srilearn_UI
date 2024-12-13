@@ -10,21 +10,21 @@
 <div class="navbar">
     <img src="../../../../../group_project_1.0/app/views/NavBar/Guest_NavBar/logo.png" alt="Logo" class="logo">
     <div class="nav-links">
-        <a href="#">Home</a>
+    <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>">Home</a>
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
-                <a href="search_teachers.php">By Teachers</a>
-                <a href="search_institutes.php">By Institutes</a>
+                <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher">By Teachers</a>
+                <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute">By Institutes</a>
             </div>
         </div>
         <a href="Advertisements">Advertisements</a>
         <a href="Blog">Blogs</a>
-        <a href="#">Contact Us</a>
+        <a href="http://localhost/group_project_1.0/public/ContactUS">Contact Us</a>
     </div>
     <div class="auth-buttons">
-        <a href="Signup" class="signup-btn" onclick="singup()">Sign Up</a>
-        <a href="Signin" class="login-btn" onclick="Login()">Login</a>
+        <a href="http://localhost/group_project_1.0/public/Signup" class="signup-btn" onclick="singup()">Sign Up</a>
+        <a href="http://localhost/group_project_1.0/public/Signin" class="login-btn" onclick="Login()">Login</a>
     </div>
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
 </div>

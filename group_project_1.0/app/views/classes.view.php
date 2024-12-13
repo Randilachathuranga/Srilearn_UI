@@ -105,7 +105,8 @@
                     <h3>Grade: ${record.Grade}</h3>
                     <p>Type: ${record.Type}</p>
                     <h5>Fee: ${record.fee}</h5>
-                    <button onclick="handleEnrollment(${record.Class_id})">Join Class</button>
+                    
+                    <?php if(($_SESSION['Role']=='student')) echo '<button onclick="handleEnrollment(${record.Class_id})">Join Class</button>';?>
                 `;
                 container.appendChild(rec);
             });

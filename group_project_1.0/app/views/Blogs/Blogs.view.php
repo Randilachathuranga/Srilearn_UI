@@ -1,7 +1,16 @@
-<?php 
- include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
 
-?>
+<?php
+    // Corrected the condition to check for 'sysadmin' role
+    
+    if($_SESSION['User_id']=='Guest'){
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/Guest_NavBar/NavBar.view.php';
+
+    }
+    elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php';
+    }
+
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +32,8 @@
 
     <!-- Button Container -->
 <div class="button-container">
-    <?php if(isset($_SESSION['User_id'])) echo '<button class="create-blog-button" onclick="createBlog(event)">Create a Blog</button>';?>
-    <?php if(isset($_SESSION['User_id'])) echo '<button class="my-blogs-button" onclick="gotomyBlog()">My Blogs</button>';?>
+    <?php if((isset($_SESSION['User_id']) && !($_SESSION['Role']=='sysadmin')) && !($_SESSION['User_id']=='Guest')) echo '<button class="create-blog-button" onclick="createBlog(event)">Create a Blog</button>';?>
+    <?php if((isset($_SESSION['User_id']) && !($_SESSION['Role']=='sysadmin')) && !($_SESSION['User_id']=='Guest')) echo '<button class="my-blogs-button" onclick="gotomyBlog()">My Blogs</button>';?>
 </div>
 
 
@@ -51,6 +60,13 @@
         <button onclick="closePopup()" class="close-button">Close</button>
     </div>
 </div>
+<script>
+    // Pass session data to JavaScript
+    const sessionData = <?php echo json_encode([
+        'User_id' => $_SESSION['User_id'] ?? null,
+        'Role' => $_SESSION['Role'] ?? null
+    ]); ?>;
+</script>
 
 
 <script src="../../../../group_project_1.0/app/views/Blogs/Blogscript.js"></script>
@@ -59,5 +75,8 @@
 </html>
 
 <?php
- include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
- ?>
+ 
+ if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php';
+    }
+    ?>
