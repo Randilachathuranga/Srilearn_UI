@@ -10,8 +10,8 @@ class Signup extends Controller {
         if($_SERVER['REQUEST_METHOD']=="POST"){
         if($User->validate($_POST) && ($User->get_email($_POST['Email']))){
             
-        $options=['cost'=>12];
-        $_POST['Password']=password_hash($_POST['Password'],PASSWORD_BCRYPT,$options);
+       // $options=['cost'=>12];
+        //$_POST['Password']=password_hash($_POST['Password'],PASSWORD_BCRYPT,$options);
         
         $User->insert($_POST);
         redirect('signin');

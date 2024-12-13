@@ -8,6 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<?php
+    // Corrected the condition to check for 'sysadmin' role
+    
+    if($_SESSION['User_id']=='Guest'){
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/Guest_NavBar/NavBar.view.php';
+
+    }
+    elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php';
+    }
+
+    ?>
 
     <!-- Header Section -->
     <header class="header">
@@ -36,8 +48,8 @@
                             <h3>${record.title}</h3>
                             <p>${record.announcement}</p>
                             <h5>${record.date}</h5>
-                            ${userRole === 'Sysadmin' ? `<button onclick="handleDelete(${record.annid})">Delete</button>` : ''}
-                            ${userRole === 'Sysadmin' ? `<button onclick="gotoupdateform(${record.annid})">Update</button>` : ''}
+                            ${userRole === 'sysadmin' ? `<button onclick="handleDelete(${record.annid})">Delete</button>` : ''}
+                            ${userRole === 'sysadmin' ? `<button onclick="gotoupdateform(${record.annid})">Update</button>` : ''}
                         `;
                         container.appendChild(rec); // Append each announcement to the container
                     });
@@ -67,3 +79,9 @@
 
 </body>
 </html>
+<?php
+ 
+ if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php';
+    }
+    ?>

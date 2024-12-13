@@ -3,6 +3,7 @@ class Announcement extends Controller {
      
     
     public function index() {
+        checkAccess('sysadmin');
         $Ann = new Announcementmodel;
 
         // Check if form is submitted
@@ -25,7 +26,7 @@ class Announcement extends Controller {
 
     public function viewann() {
         // Load the view for displaying announcements
-        
+        checkloginstatus();
         $this->view('Announcement', []);
     }
     public function api() {
@@ -36,10 +37,11 @@ class Announcement extends Controller {
     }
 
     public function deleteapi($id){
+        checkAccess('sysadmin');    
         $model= new Announcementmodel;
         
 
-         if ($_SESSION['Role'] !== 'Sysadmin') {
+         if ($_SESSION['Role'] !== 'sysadmin') {
             http_response_code(403); // Forbidden
             echo json_encode(["error" => "Unauthorized"]);
             return;
@@ -60,7 +62,7 @@ class Announcement extends Controller {
 
     
     public function updateapi($id) {
-        
+        checkAccess('sysadmin');
         $model = new Announcementmodel();
         $user = $model->first(['annid' => $id]);
     

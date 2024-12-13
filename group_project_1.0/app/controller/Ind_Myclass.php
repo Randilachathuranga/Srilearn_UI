@@ -16,7 +16,7 @@ class Ind_Myclass extends Controller{
         checkAccess('teacher');
         // echo $_SESSION['Role'];
         $this->View('TeacherView/Myclass/Myclass'); 
-                checkAccess('teacher');
+                
 
     }
 
@@ -172,7 +172,7 @@ class Ind_Myclass extends Controller{
                     $errorMessages = [];
                     if (!$result) $errorMessages[] = 'Failed to create table1';
                 }
-            }
+        }
 
 
 

@@ -1,7 +1,15 @@
-<?php 
- include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php"
+<?php
+    // Corrected the condition to check for 'sysadmin' role
+    
+    if($_SESSION['User_id']=='Guest'){
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/Guest_NavBar/NavBar.view.php';
 
-?>
+    }
+    elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php';
+    }
+
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,10 +48,11 @@
                 <option value="grd6-9">Grade 6-9</option>
             </select>
             <?php 
-if (isset($_SESSION['User_id'])) {
+if  ( isset($_SESSION['Role'])&&($_SESSION['Role'] == 'teacher' || $_SESSION['Role'] == 'institute')) {
     echo '<div class="create-button"><button onclick="handleclick()">Create Your Own Advertisement</button></div>';
 }
 ?>
+
         </div>
 
         <!-- Advertisement Cards -->
@@ -107,3 +116,10 @@ if (isset($_SESSION['User_id'])) {
 </body>
 </html>
 
+
+<?php
+ 
+ if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php';
+    }
+    ?>

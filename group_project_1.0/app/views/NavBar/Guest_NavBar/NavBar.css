@@ -7,15 +7,17 @@
 
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     background: linear-gradient(90deg, #000033, #000080);
     padding: 10px 20px;
     position: relative;
+    top: 0;
 }
 
 .logo {

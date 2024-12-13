@@ -19,12 +19,12 @@
 
         <div class="form-group">
             <label for="last_name" class="form-label">Last Name:</label>
-            <input type="text" id="last_name" name="L_name" placeholder =<?php echo $user->L_name?>class="form-input" required>
+            <input type="text" id="last_name" name="L_name" placeholder =<?php echo $user->L_name?> class="form-input" required>
         </div>
 
         <div class="form-group">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="Email" placeholder =<?php echo $user->Email?>class="form-input" required>
+            <input type="email" id="email" name="Email" placeholder =<?php echo $user->Email?> class="form-input" required>
         </div>
 
         <div class="form-group">

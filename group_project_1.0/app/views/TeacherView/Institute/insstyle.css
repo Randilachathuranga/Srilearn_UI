@@ -121,9 +121,7 @@ h1 {
   flex: 1; /* Takes up remaining space */
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f8f9fa;
   appearance: none;
   cursor: pointer;
 }

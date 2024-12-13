@@ -20,6 +20,7 @@
 </div>
 
 <div id="user-data" data-user-id="<?php echo htmlspecialchars(string: $_SESSION['User_id']); ?>"></div>
+
 <div class="filterhead">
 <form id="filter" class="filter">
     <div class="form-group">

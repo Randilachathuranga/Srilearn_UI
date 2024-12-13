@@ -1,3 +1,5 @@
+P_id = 6;
+
 document.addEventListener("DOMContentLoaded", () => {
   const userDataElement = document.getElementById("user-data");
   if (!userDataElement) {
@@ -118,6 +120,116 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial fetch with default dropdown value
   fetchAndRenderClasses(selectElement.value);
+
+  // Show the popup form
+document
+.getElementById("editScheduleForm")
+.addEventListener("submit", (event) => createSchedule(event, P_id));
+
+async function createSchedule(event, P_id) {
+console.log("createSchedule called with P_id:", P_id);
+event.preventDefault(); // Prevent form submission and page reload
+
+const form = event.target;
+const formData = new FormData(form);
+
+const table1 = {
+  Type: formData.get("Type"),
+  Subject: formData.get("Subject"),
+  Grade: formData.get("Grade"),
+  Max_std: parseInt(formData.get("Max_std"), 10),
+  fee: parseFloat(formData.get("Fee")),
+};
+const table2 = {
+  P_id: P_id,
+  Location: formData.get("Location"),
+  Start_date: formData.get("Start_date"),
+  End_date: formData.get("End_date"),
+};
+
+const institute = formData.get("Institute_name");
+
+if (
+  institute == "None" &&
+  table1.Type == "Individual" &&
+  table2.Start_date < table2.End_date
+) {
+  const data = { table1, table2 };
+  console.log("ClassData being sent:", data);
+
+  fetch(
+    `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  )
+    .then(async (response) => {
+      const contentType = response.headers.get("content-type");
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server response:", errorText);
+        throw new Error(
+          `HTTP error! Status: ${response.status}, Body: ${errorText}`
+        );
+      }
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.warn("Unexpected response format:", text);
+        return { message: text }; // Return text for unexpected formats
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Schedule submitted successfully:", data);
+      alert("Schedule created successfully!");
+      window.location.href =
+        "http://localhost/group_project_1.0/public/Ind_Myclass";
+    })
+    .catch((error) => {
+      console.error("Error submitting schedule:", error);
+      alert("There was an error submitting the schedule. Please try again.");
+    });
+} else {
+  alert(
+    "Institute name should be 'None' for individual classes, or the start date should be earlier than the end date."
+  );
+}
+}
+
+function view() {
+alert("Not implemented");
+}
+
+function UploadMat() {
+window.location.href =
+  "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadMat/UploadMat.php";
+}
+
+function UploadASS() {
+window.location.href =
+  "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
+}
+
+function viewschedule() {
+window.location.href =
+  "../../../../../group_project_1.0/app/views/TeacherView/Options/ViewClassschedule/ViewClassschedule.php";
+}
+
+function freeCard() {
+window.location.href =
+  "../../../../../group_project_1.0/app/views/TeacherView/Options/IssueFreecard/IssueFreecard.php";
+}
+
+function reqPay() {
+window.location.href =
+  "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
+}
+
+
 });
 
 //More Details
@@ -233,110 +345,3 @@ function closePopup() {
   document.getElementById("popupForm").style.display = "none";
 }
 
-// Show the popup form
-document
-  .getElementById("editScheduleForm")
-  .addEventListener("submit", (event) => createSchedule(event, P_id));
-
-async function createSchedule(event, P_id) {
-  console.log("createSchedule called with P_id:", P_id);
-  event.preventDefault(); // Prevent form submission and page reload
-
-  const form = event.target;
-  const formData = new FormData(form);
-
-  const table1 = {
-    Type: formData.get("Type"),
-    Subject: formData.get("Subject"),
-    Grade: formData.get("Grade"),
-    Max_std: parseInt(formData.get("Max_std"), 10),
-    fee: parseFloat(formData.get("Fee")),
-  };
-  const table2 = {
-    P_id: P_id,
-    Location: formData.get("Location"),
-    Start_date: formData.get("Start_date"),
-    End_date: formData.get("End_date"),
-  };
-
-  const institute = formData.get("Institute_name");
-
-  if (
-    institute == "None" &&
-    table1.Type == "Individual" &&
-    table2.Start_date < table2.End_date
-  ) {
-    const data = { table1, table2 };
-    console.log("ClassData being sent:", data);
-
-    fetch(
-      `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then(async (response) => {
-        const contentType = response.headers.get("content-type");
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("Server response:", errorText);
-          throw new Error(
-            `HTTP error! Status: ${response.status}, Body: ${errorText}`
-          );
-        }
-        if (!contentType || !contentType.includes("application/json")) {
-          const text = await response.text();
-          console.warn("Unexpected response format:", text);
-          return { message: text }; // Return text for unexpected formats
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Schedule submitted successfully:", data);
-        alert("Schedule created successfully!");
-        window.location.href =
-          "http://localhost/group_project_1.0/public/Ind_Myclass";
-      })
-      .catch((error) => {
-        console.error("Error submitting schedule:", error);
-        alert("There was an error submitting the schedule. Please try again.");
-      });
-  } else {
-    alert(
-      "Institute name should be 'None' for individual classes, or the start date should be earlier than the end date."
-    );
-  }
-}
-
-function view() {
-  alert("Not implemented");
-}
-
-function UploadMat() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadMat/UploadMat.php";
-}
-
-function UploadASS() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
-}
-
-function viewschedule() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/ViewClassschedule/ViewClassschedule.php";
-}
-
-function freeCard() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/IssueFreecard/IssueFreecard.php";
-}
-
-function reqPay() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
-}
