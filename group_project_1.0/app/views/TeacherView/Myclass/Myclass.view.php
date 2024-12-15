@@ -33,7 +33,7 @@
     </div>
 
 </form>
-<button id="create-class-btn" class="create-blog-button" onclick="ScheduleClass()">Create a class</button>
+<button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
 
 </div>
 
@@ -42,7 +42,7 @@
     <div class="container" id="class-container">
     </div>
 
-<!-- Popup Form for Creating a Schedule -->
+<!-- Popup Form for Creating a CLASS -->
 <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
         <h2>Create a classs</h2>
@@ -116,7 +116,7 @@
 <!-- Popup Form for Editing a class -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
-    <form id="editScheduleForm" onsubmit="Updateschedule(event, currentClassId)">
+    <form id="editScheduleForm" onsubmit="Updateclass(event, currentClassId)">
     
     <label for="classSubject">Subject</label>
 <select id="classSubject" name="classSubject" required>
@@ -157,7 +157,7 @@
       <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
       <button type="submit" class="submit-button">Update</button>
-      <button type="button" class="delete-button" onclick="deleteschedule(currentClassId)">Delete</button>
+      <button type="button" class="delete-button" onclick="deleteclass(currentClassId)">Delete</button>
       <button type="button" class="close-button" onclick="closeedit()">Close</button>
     </form>
   </div>

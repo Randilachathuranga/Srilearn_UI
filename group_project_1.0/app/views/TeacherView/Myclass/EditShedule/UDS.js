@@ -4,7 +4,7 @@ function closeedit() {
 }
 
 // Function to update the Class
-async function Updateschedule(event, Class_id) {
+async function Updateclass(event, Class_id) {
   event.preventDefault();
   const form = event.target;
   const formData = new FormData(form);
@@ -64,7 +64,7 @@ async function Updateschedule(event, Class_id) {
 }
 
 // Function to delete a Class
-function deleteschedule(Class_id) {
+function deleteclass(Class_id) {
   if (window.confirm("Are you sure you want to delete this schedule?")) {
     fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {
       method: "DELETE",

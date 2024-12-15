@@ -1,4 +1,4 @@
-P_id = 6;
+// P_id = 6;
 
 document.addEventListener("DOMContentLoaded", () => {
   const userDataElement = document.getElementById("user-data");
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <br>
 
               <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
-              <button class="button" onclick="editSchedule(${classItem.Class_id})">
+              <button class="button" onclick="editclass(${classItem.Class_id})">
                 <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
               </button>
             </div>
@@ -270,7 +270,7 @@ function closeModal() {
 }
 
 // Function to show the edit Class popup form
-function editSchedule(class_id) {
+function editclass(class_id) {
   currentClassId = class_id;
   console.log(`Editing schedule for Class ID: ${class_id}`);
   fetch(`Ind_Myclass/MoredetailsApi/${class_id}`)
@@ -309,7 +309,7 @@ function editSchedule(class_id) {
   document.getElementById("popupEditForm").style.display = "flex";
 }
 
-function ScheduleClass() {
+function createclass() {
   document.getElementById("popupForm").style.display = "flex";
   console.log("p_ID ", P_id);
 }
