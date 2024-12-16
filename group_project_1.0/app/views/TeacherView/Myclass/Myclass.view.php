@@ -8,15 +8,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Class</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/More_details/Moredetailss.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/EditShedules.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/More_details/Moredetailss.css">
 </head>
 <body>
 <div class="header-container">
     <h1 class="header-title">My Class <br>Details</h1>
-    <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
+    <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
 </div>
 
 <div id="user-data" data-user-id="<?php echo htmlspecialchars(string: $_SESSION['User_id']); ?>"></div>
@@ -196,8 +196,8 @@
 
 
 
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>
 

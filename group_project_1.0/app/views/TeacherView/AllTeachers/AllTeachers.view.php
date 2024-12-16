@@ -72,7 +72,8 @@
     <div class="container" id="class-container">
         <!-- Cards will be appended here -->
     </div>
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/Allteachcript.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/Allteachcript.js"></script> <!-- Link your JavaScript file -->
+    <!-- ../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/Allteachcript.js -->
     <script src="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/ViewTeacher//ViewTeachers.js"></script>
 </body>
 </html>
