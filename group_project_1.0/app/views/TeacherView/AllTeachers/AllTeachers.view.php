@@ -17,13 +17,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/ViewTeacher/ViewTeacher.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/AllteachStyles.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/ViewTeacher/ViewTeacher.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/AllteachStyles.css">
 </head>
 <body>
 <div class="header-container">
     <h1 class="header-title">Teachers<br>Details</h1>
-    <img src="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/Teacher 1.png" alt="Class Image" class="class-image">
+    <img src="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/Teacher 1.png" alt="Class Image" class="class-image">
 </div>
 
 <div class="search-container">
@@ -49,7 +49,7 @@
   <div class="form-container">
     <form id="blogForm">
       <div class="teacher-details">
-        <img src="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/Teacher 1.png" alt="Teacher Image" id="teacher-image" class="teacher-image">
+        <img src="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/Teacher 1.png" alt="Teacher Image" id="teacher-image" class="teacher-image">
         <p><strong>Name:</strong> <span id="teacher-name"></span></p>
         <p><strong>Subject:</strong> <span id="teacher-subject"></span></p>
         <p><strong>Phone number:</strong> <span id="teacher-phone"></span></p>
@@ -74,7 +74,7 @@
     </div>
     <script src="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/Allteachcript.js"></script> <!-- Link your JavaScript file -->
     <!-- ../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/Allteachcript.js -->
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/ViewTeacher//ViewTeachers.js"></script>
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/AllTeachers/ViewTeacher//ViewTeachers.js"></script>
 </body>
 </html>
 <?php
