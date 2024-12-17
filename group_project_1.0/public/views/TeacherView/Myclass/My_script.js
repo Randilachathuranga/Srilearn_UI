@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
               <button class="button" onclick="editclass(${classItem.Class_id})">
-                <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
+                <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
               </button>
             </div>
           `;
