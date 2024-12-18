@@ -18,8 +18,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blogs</title>
-    <link rel="stylesheet" href="../../../../group_project_1.0/app/views/Blogs/Blogstyles.css">
-    <link rel="stylesheet" href="../../../../group_project_1.0/app/views/Blogs/CreateBlogs/CreateBlogs.css">
+    <link rel="stylesheet" href="../../../../group_project_1.0/public/views/Blogs/Blogstyles.css">
+    <link rel="stylesheet" href="../../../../group_project_1.0/public/views/Blogs/CreateBlogs/CreateBlogs.css">
 
 </head>
 <body>
@@ -27,7 +27,7 @@
 <div class="header-container">
     <h1 class="header-title">Blogs</h1>
     
-    <img src="../../../../group_project_1.0/app/views/blogs/blogs1.png" alt="Class Image" class="class-image">
+    <img src="../../../../group_project_1.0/public/views/blogs/blogs1.png" alt="Class Image" class="class-image">
 </div>
 
     <!-- Button Container -->
@@ -69,8 +69,8 @@
 </script>
 
 
-<script src="../../../../group_project_1.0/app/views/Blogs/Blogscript.js"></script>
-<script src="../../../../group_project_1.0/app/views/Blogs/CreateBlogs/CreateBlogs.js"></script>
+<script src="../../../../group_project_1.0/public/views/Blogs/Blogscript.js"></script>
+<script src="../../../../group_project_1.0/public/views/Blogs/CreateBlogs/CreateBlogs.js"></script>
 </body>
 </html>
 

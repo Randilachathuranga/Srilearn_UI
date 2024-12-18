@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscription Plans</title>
-    <link rel="stylesheet" href="../../../../group_project_1.0/app/views/Subscriptions/SubStyles.css">
+    <link rel="stylesheet" href="../../../../group_project_1.0/public/views/Subscriptions/SubStyles.css">
 </head>
 <body>
     <div class="container">
@@ -18,7 +18,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Lite</h2>
                 <div class="plan-price">$10</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="plan-duration">1 Month</div>
                 <ul class="plan-features">
                     <li>Post Ads</li>
@@ -33,7 +33,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Pro</h2>
                 <div class="plan-price">$100</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="plan-duration">1 Year</div>
                 <ul class="plan-features">
                     <li>All Lite Features</li>
@@ -49,7 +49,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Ultimate</h2>
                 <div class="plan-price">$150</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="plan-duration">1 Year</div>
                 <ul class="plan-features">
                     <li>All Pro Features</li>
@@ -68,7 +68,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Lite</h2>
                 <div class="plan-price">$50</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="plan-duration">1 Month</div>
                 <ul class="plan-features">
                     <li>Job Hiring</li>
@@ -84,7 +84,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Pro</h2>
                 <div class="plan-price">$180</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="feature-checkbox">
                     <input type="checkbox" onchange="updatePrice(this)"> Post Ads (+$10)<br>
                     <input type="checkbox" onchange="updatePrice(this)"> Handle Jobs (+$10)<br>
@@ -99,7 +99,7 @@
             <div class="plan-card">
                 <h2 class="plan-title">Ultimate</h2>
                 <div class="plan-price">$200</div>
-                <div class="pic"><img src="../../../../group_project_1.0/app/views/subscription.webp"></div>
+                <div class="pic"><img src="../../../../group_project_1.0/public/views/subscriptions/subscription.webp"></div>
                 <div class="plan-duration">1 Year</div>
                 <ul class="plan-features">
                     <li>All Features Included</li>
@@ -146,5 +146,8 @@
             priceElement.textContent = `$${basePrice}`;
         }
     </script>
+
+<script src="../../../../group_project_1.0/public/views/Subscriptions/SubsScript.js"></script>
+
 </body>
 </html>
