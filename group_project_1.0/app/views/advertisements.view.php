@@ -60,12 +60,12 @@ if  ( isset($_SESSION['Role'])&&($_SESSION['Role'] == 'teacher' || $_SESSION['Ro
             <?php
             // Advertisement data
             $ads = [
-                ["Title" => "Scholarship Program", "Content" => "Apply for scholarships now!", "Post_date" => "2024-11-22", "Iseducation" => true, "Subject" => "scholarship", "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"],
-                ["Title" => "O/L Study Tips", "Content" => "Ace your O/L exams with these tips.", "Post_date" => "2024-11-21", "Iseducation" => true, "Subject" => "o/l", "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"],
-                ["Title" => "Grade 6 Science", "Content" => "Explore engaging science content.", "Post_date" => "2024-11-20", "Iseducation" => true, "Subject" => "grd6-9", "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"],
-                ["Title" => "Furniture Sale", "Content" => "Get the best deals on furniture!", "Post_date" => "2024-11-19", "Iseducation" => false, "Subject" => null, "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"],
-                ["Title" => "A/L Mathematics", "Content" => "Master mathematics for A/L exams.", "Post_date" => "2024-11-18", "Iseducation" => true, "Subject" => "a/l", "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"],
-                ["Title" => "Car Services", "Content" => "Affordable car services now available.", "Post_date" => "2024-11-17", "Iseducation" => false, "Subject" => null, "Image" => "../../../group_project_1.0/app/views/icon/ad.jpg"]
+                ["Title" => "Scholarship Program", "Content" => "Apply for scholarships now!", "Post_date" => "2024-11-22", "Iseducation" => true, "Subject" => "scholarship", "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"],
+                ["Title" => "O/L Study Tips", "Content" => "Ace your O/L exams with these tips.", "Post_date" => "2024-11-21", "Iseducation" => true, "Subject" => "o/l", "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"],
+                ["Title" => "Grade 6 Science", "Content" => "Explore engaging science content.", "Post_date" => "2024-11-20", "Iseducation" => true, "Subject" => "grd6-9", "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"],
+                ["Title" => "Furniture Sale", "Content" => "Get the best deals on furniture!", "Post_date" => "2024-11-19", "Iseducation" => false, "Subject" => null, "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"],
+                ["Title" => "A/L Mathematics", "Content" => "Master mathematics for A/L exams.", "Post_date" => "2024-11-18", "Iseducation" => true, "Subject" => "a/l", "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"],
+                ["Title" => "Car Services", "Content" => "Affordable car services now available.", "Post_date" => "2024-11-17", "Iseducation" => false, "Subject" => null, "Image" => "../../../group_project_1.0/public/views/icon/ad.jpg"]
             ];
             ?>
 

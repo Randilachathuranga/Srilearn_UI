@@ -3,8 +3,8 @@
  class Subscriptions extends Controller{
 
     public function index(){
-        if($_SESSION['Role'] === 'taecher' || $_SESSION['Role'] === 'institute'){
-            $this->view('Subscriptions/Subscription');
+        if($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute'){
+            $this->view('Subscriptions/Subscriptions');
         }
         $this->view('Error');
 
