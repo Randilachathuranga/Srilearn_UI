@@ -25,7 +25,7 @@ class Signup extends Controller {
         }
         
         $data['errors']=$User->errors;
-        $this->view('signup',$data); 
+        $this->view('Signin_Signup/signup',$data); 
     }
 
     

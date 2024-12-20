@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navigation Bar</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/NavBar/Guest_NavBar/NavBar.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/NavBar/Guest_NavBar/NavBar.css">
 </head>
 <body>
 <div class="navbar">
-    <img src="../../../../../group_project_1.0/public/views/NavBar/Guest_NavBar/logo.png" alt="Logo" class="logo">
+    <img src="../../../../../group_project_1.0/public/views/General/NavBar/Guest_NavBar/logo.png" alt="Logo" class="logo">
     <div class="nav-links">
     <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>">Home</a>
         <div class="dropdown">
@@ -36,23 +36,23 @@
     <button class="close-btn" onclick="toggleMenu()">←</button>
     </div>
     <div class="nav-links">
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/Home.png">Home</a>
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/school.png">By Institute</a>
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/ads.png">Advertisements</a>
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
-        <a href="#"><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
+        <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/Home.png">Home</a>
+        <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
+        <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">By Institute</a>
+        <a href="Advertisements"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">Advertisements</a>
+        <a href="Blog"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
+        <a href="http://localhost/group_project_1.0/public/ContactUS"><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
     </div>
     <br>
     <div class="auth-buttons">
-        <a href="Signup" class="signup-btn"  ><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/singup.png">Sign Up</a>
-        <a href="Signin" class="login-btn" ><img src="../../../../../group_project_1.0/public/views/NavBar/User_NavBar/icon/singup.png">Login</a>
+        <a href="http://localhost/group_project_1.0/public/Signup" class="signup-btn"  ><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/singup.png">Sign Up</a>
+        <a href="http://localhost/group_project_1.0/public/Signin" class="login-btn" ><img src="../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/singup.png">Login</a>
     </div>
 </div>
 
 <div class="nav-background" id="navBackground" onclick="toggleMenu()"></div>
 
 
-<script src=".../../../../../group_project_1.0/public/views/NavBar/Guest_NavBar/NavBar.js"></script>
+<script src=".../../../../../group_project_1.0/public/views/General/NavBar/Guest_NavBar/NavBar.js"></script>
 </body>
 </html>

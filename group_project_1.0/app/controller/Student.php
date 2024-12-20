@@ -11,7 +11,7 @@ class Student extends StudentController
     }
 
     public function classes(){
-        $this->view('classes');
+        $this->view('Byclasses/classes');
     }
 
     /**

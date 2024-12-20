@@ -22,7 +22,7 @@ class Profile extends Controller{
             }
         
        }
-       $this->view('Myprofile');
+       $this->view('Myprofile/Myprofile');
     }
 
 

@@ -126,7 +126,7 @@ Class Blog extends Controller{
 
     public function myblogs(){
         checkloginstatus();
-        $this->view('Myblogs');
+        $this->view('Blogs/Myblogs');
     }
 
 

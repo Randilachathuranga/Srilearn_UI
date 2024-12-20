@@ -3,7 +3,7 @@ class Enrollment extends Controller
 {
     public function index()
     {
-        $this->view('Enrollment');
+        $this->view('StudentView/MyEnrollements/Enrollment');
     }
 
     public function post($classid)

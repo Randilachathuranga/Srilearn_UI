@@ -14,20 +14,20 @@ class Announcement extends Controller {
             } else {
                 // If validation fails, store errors in $data['errors']
                 $data['errors'] = $Ann->errors;
-                $this->view('Announcementform', $data); // Show form with errors
+                $this->view('/AdminView/Announcements/Announcementform', $data); // Show form with errors
                 return;
             }
         }
 
         // Load the form view without errors (initial form load)
         $data['errors'] = [];
-        $this->view('Announcementform', $data);
+        $this->view('/AdminView/Announcements/Announcementform', $data);
     }
 
     public function viewann() {
         // Load the view for displaying announcements
         checkloginstatus();
-        $this->view('Announcement', []);
+        $this->view('/AdminView/Announcements/Announcement', []);
     }
     public function api() {
         $model = new Announcementmodel;
@@ -80,7 +80,7 @@ class Announcement extends Controller {
         }
     
         
-        $this->view('Announcementupdateform', ['ann' => $user]);
+        $this->view('/AdminView/Announcements/Announcementupdateform', ['ann' => $user]);
     }
          
 }
