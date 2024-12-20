@@ -17,7 +17,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Form</title>
-  <link rel="stylesheet" href="../../../../group_project_1.0/app//views/Contactform//contact.css">
+  <link rel="stylesheet" href="../../../../group_project_1.0/public/views/General/Contactform//contact.css">
 </head>
 <body>
 
@@ -25,7 +25,7 @@
   <div class="form-section">
     <h2>Get in touch with us</h2>
     <div class="user-info">
-      <img src="../../../../group_project_1.0/app//views/Contactform/contactform 1.png" alt="Profile Image" class="avatar">
+      <img src="../../../../group_project_1.0/public//views/General/Contactform/contactform 1.png" alt="Profile Image" class="avatar">
       <p>Hi, I'm Amanda. Need help? Use the form below or email me at <a href="mailto:hello@california_golfclub.org">hello@california_golfclub.org</a>.</p>
     </div>
     
@@ -44,12 +44,12 @@
   </div>
   
   <div class="image-section">
-    <img src="../../../../group_project_1.0/app//views/Contactform/contactform 1.png" alt="Contact Illustration">
+    <img src="../../../../group_project_1.0/public//views/General/Contactform/contactform 1.png" alt="Contact Illustration">
   </div>
 </div>
 
 
-  <script src="../../../../group_project_1.0/app//views/Contactform/Contact.js"></script>
+  <script src="../../../../group_project_1.0/public//views/General/Contactform/Contact.js"></script>
 
 </body>
 </html>

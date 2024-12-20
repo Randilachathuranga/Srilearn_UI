@@ -6,7 +6,7 @@ class Institute_teacher extends Controller{
             $model1 = new Usermodel();
             $model2 = new Normalteachermodel();
             $model3 = new User_subjectmodel();
-            $this->View('/MyTeachers'); 
+            $this->View('InstituteView/InstituteTeachers/MyTeachers'); 
         }
 
 

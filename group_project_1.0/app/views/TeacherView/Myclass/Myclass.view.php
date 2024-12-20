@@ -8,15 +8,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Class</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/EditShedules.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/app/views/TeacherView/Myclass/More_details/Moredetailss.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/EditShedules.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/More_details/Moredetailss.css">
 </head>
 <body>
 <div class="header-container">
     <h1 class="header-title">My Class <br>Details</h1>
-    <img src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
+    <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/class1.png" alt="Class Image" class="class-image">
 </div>
 
 <div id="user-data" data-user-id="<?php echo htmlspecialchars(string: $_SESSION['User_id']); ?>"></div>
@@ -33,7 +33,7 @@
     </div>
 
 </form>
-<button id="create-class-btn" class="create-blog-button" onclick="ScheduleClass()">Create a class</button>
+<button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
 
 </div>
 
@@ -42,7 +42,7 @@
     <div class="container" id="class-container">
     </div>
 
-<!-- Popup Form for Creating a Schedule -->
+<!-- Popup Form for Creating a CLASS -->
 <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
         <h2>Create a classs</h2>
@@ -116,7 +116,7 @@
 <!-- Popup Form for Editing a class -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
-    <form id="editScheduleForm" onsubmit="Updateschedule(event, currentClassId)">
+    <form id="editScheduleForm" onsubmit="Updateclass(event, currentClassId)">
     
     <label for="classSubject">Subject</label>
 <select id="classSubject" name="classSubject" required>
@@ -157,7 +157,7 @@
       <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
       <button type="submit" class="submit-button">Update</button>
-      <button type="button" class="delete-button" onclick="deleteschedule(currentClassId)">Delete</button>
+      <button type="button" class="delete-button" onclick="deleteclass(currentClassId)">Delete</button>
       <button type="button" class="close-button" onclick="closeedit()">Close</button>
     </form>
   </div>
@@ -196,8 +196,8 @@
 
 
 
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
-    <script src="../../../../../group_project_1.0/app/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>
 

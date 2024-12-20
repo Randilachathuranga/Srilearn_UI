@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
-    <link rel="stylesheet" href="../../../../group_project_1.0/app/views/Footer/Footer.css">
+    <link rel="stylesheet" href="../../../../group_project_1.0/public/views/General/Footer/Footer.css">
 </head>
 <body>
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="../../../../../group_project_1.0/app/views/Footer/logo.png" alt="Logo">
+                <img src="../../../../../group_project_1.0/public/views/General/Footer/logo.png" alt="Logo">
             </div>
             <div class="quick-links">
                 <h3>Quick Links</h3>
@@ -34,10 +34,10 @@
             <div class="social-links" id="follow">
                 <h3>Follow Us</h3>
                 <br>
-                <a href="#"><i class="fab fa-instagram"></i>Instagram <img src="../../../../group_project_1.0/app/views/Footer/instagram.png"> </a>
-                <a href="#"><i class="fab fa-facebook-f"></i> Facebook <img src="../../../../group_project_1.0/app/views/Footer/facebook.png"></a>
-                <a href="#"><i class="fab fa-twitter"></i> Twitter <img src="../../../../group_project_1.0/app/views/Footer/twitter.png"></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i>Youtube <img src="../../../../group_project_1.0/app/views/Footer/youtube.png"> </a>
+                <a href="#"><i class="fab fa-instagram"></i>Instagram <img src="../../../../group_project_1.0/public/views/General/Footer/instagram.png"> </a>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook <img src="../../../../group_project_1.0/public/views/General/Footer/facebook.png"></a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter <img src="../../../../group_project_1.0/public/views/General/Footer/twitter.png"></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i>Youtube <img src="../../../../group_project_1.0/public/views/General/Footer/youtube.png"> </a>
             </div>
         </div>
         <div class="footer-bottom">

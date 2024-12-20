@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>View Class Schedule</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../../../../../../group_project_1.0/public/views/TeacherView/Options/ViewClassschedule/styles.css">
 </head>
 <body>
   <div class="container">
@@ -26,6 +26,6 @@
     </table>
   </div>
 
-  <script src="script.js"></script>
+  <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/ViewClassschedule/script.js"></script>
 </body>
 </html>

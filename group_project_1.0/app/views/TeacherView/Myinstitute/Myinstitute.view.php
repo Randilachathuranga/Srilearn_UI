@@ -9,18 +9,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0//app//views//TeacherView/Myinstitute/insStyle.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0//public//views//TeacherView/Myinstitute/insStyle.css"> <!-- Link your CSS file -->
 </head>
 <body>
 <div class="header-container">
     <h1 class="header-title">My Institute<br>Details</h1>
-    <img src="../../../../../group_project_1.0//app//views//TeacherView/Myinstitute/institute 1.png" alt="Class Image" class="class-image">
+    <img src="../../../../../group_project_1.0//public//views//TeacherView/Myinstitute/institute 1.png" alt="Class Image" class="class-image">
 </div>
 
     <div class="container" id="class-container">
         <!-- Cards will be appended here -->
     </div>
-    <script src="../../../../../group_project_1.0//app//views//TeacherView/Myinstitute/institutestyles.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0//public//views//TeacherView/Myinstitute/institutestyles.js"></script> <!-- Link your JavaScript file -->
 </body>
 </html>
 

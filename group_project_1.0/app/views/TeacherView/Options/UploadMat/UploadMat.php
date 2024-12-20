@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Learning Materials</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/Styles.css">
 </head>
 <body>
   <div class="container">
@@ -22,6 +22,6 @@
       <button class="cancel" onclick="cancelChanges()">Cancel</button>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
 </body>
 </html>

@@ -4,13 +4,13 @@
 
     public function index(){
     
-        $this->view('advertisements');
+        $this->view('Advertisements/advertisements');
     }
 
     public function form(){
         if($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute'){
             
-                $this->view('adform');
+                $this->view('Advertisements/adform');
             
         
         }else{

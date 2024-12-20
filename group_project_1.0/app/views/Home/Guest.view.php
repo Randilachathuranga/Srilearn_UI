@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SriLearn Home</title>
-  <link rel="stylesheet" href="../../../../group_project_1.0/app/views/Home/Home.css">
+  <link rel="stylesheet" href="../../../../group_project_1.0/public/views/General/Home/Home.css">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
 
     <!-- Right Section: Logo -->
     <div class="right-section">
-      <img src="../../../../group_project_1.0/app/views/Home/images/logo.png" alt="SriLearn Logo">
+      <img src="../../../../group_project_1.0/public/views/General/Home/images/logo.png" alt="SriLearn Logo">
     </div>
   </div>
   
@@ -69,22 +69,22 @@
     <!-- Benefits Section -->
     <div class="benefits-container">
   <div class="benefit">
-    <img src="../../../../group_project_1.0/app/views/Home/images/student.png" alt="Student Focused">
+    <img src="../../../../group_project_1.0/public/views/General/Home/images/student.png" alt="Student Focused">
     <h3>STUDENT FOCUSED</h3>
     <p>Our platform puts students at the center of the learning experience. With easy access to a wide variety of resources, personalized learning paths, and secure interactions, students are empowered to learn at their own pace, ensuring a more tailored education experience.</p>
   </div>
   <div class="benefit">
-    <img src="../../../../group_project_1.0/app/views/Home/images/learning.png" alt="Learning Enhanced">
+    <img src="../../../../group_project_1.0/public/views/General/Home/images/learning.png" alt="Learning Enhanced">
     <h3>LEARNING ENHANCED</h3>
     <p>Our platform is designed to enhance the learning process by providing a dynamic, engaging environment for students and educators alike. Through collaborative features such as real-time discussions, shared resources, and peer feedback, students can deepen their understanding and actively participate in their own learning journey.</p>
   </div>
   <div class="benefit">
-    <img src="../../../../group_project_1.0/app/views/Home/images/teacher.png" alt="Teacher Empowered">
+    <img src="../../../../group_project_1.0/public/views/General/Home/images/teacher.png" alt="Teacher Empowered">
     <h3>TEACHER EMPOWERED</h3>
     <p>We believe that teachers are the heart of the educational experience. Our platform provides educators with the tools they need to easily create, manage, and deliver dynamic lessons to students, saving valuable time and allowing them to focus on what matters most—teaching.</p>
   </div>
   <div class="benefit">
-    <img src="../../../../group_project_1.0/app/views/Home/images/ins.png" alt="Institute Optimized">
+    <img src="../../../../group_project_1.0/public/views/General/Home/images/ins.png" alt="Institute Optimized">
     <h3>INSTITUTE OPTIMIZED</h3>
     <p>Our platform streamlines administrative tasks for educational institutions, providing comprehensive tools for managing student data, scheduling, communication, and more. With a central hub for all administrative functions, institutes can focus on enhancing the educational experience while leaving the logistics to the system.</p>
   </div>
@@ -107,7 +107,7 @@
       data-driven analytics, SriLearn empowers users to thrive in a competitive and fast-paced educational landscape.
     </p>
     <div class="about-image">
-      <img src="../../../../group_project_1.0/app/views/Home/images/about.jpg" alt="About SriLearn">
+      <img src="../../../../group_project_1.0/public/views/General/Home/images/about.jpg" alt="About SriLearn">
     </div>
   </div>
 </section>
@@ -123,14 +123,14 @@
     </ul>
 
     <div>
-      <img src="../../../../group_project_1.0/app/views/Home/images/post.png" alt="Learning Made Easy">
+      <img src="../../../../group_project_1.0/public/views/General/Home/images/post.png" alt="Learning Made Easy">
     </div>
 
 </div>
 <div class="testimonials">
   <div class="testimonial">
     <div class="image">
-      <img src="../../../../group_project_1.0/app/views/Home/images/this.png" alt="Thissa Jananayake">
+      <img src="../../../../group_project_1.0/public/views/General/Home/images/this.png" alt="Thissa Jananayake">
     </div>
     <div>
       <p class="quote">
@@ -146,7 +146,7 @@
   </div>
   <div class="testimonial">
     <div class="image">
-      <img src="../../../../group_project_1.0/app/views/Home/images/nila.png" alt="Nilantha Jayasuriya">
+      <img src="../../../../group_project_1.0/public/views/General/Home/images/nila.png" alt="Nilantha Jayasuriya">
     </div>
     <div>
       <p class="quote">
@@ -169,7 +169,7 @@
 </div>
 
 
-  <script src="../../../../group_project_1.0/app/views/Home/Home.js"></script>
+  <script src="../../../../group_project_1.0/public/views/General/Home/Home.js"></script>
   </body>
 </html>
 <?php
