@@ -2,6 +2,6 @@
 class Institute extends Controller{
     public function index(){
         checkAccess('institute');
-        $this->view("Home/Home");
+        $this->view("General/Home/Home");
     }
 }

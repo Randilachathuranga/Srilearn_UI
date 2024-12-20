@@ -2,10 +2,10 @@
 Class GeneralController extends Controller {
 
    public function loadinstitute(){
-      $this->view('Byinstitute/Institute');
+      $this->view('General/Byinstitute/Institute');
    }
    public function loadteacher(){
-    $this->view('/Byteacher/AllTeachers');
+    $this->view('General/Byteacher/AllTeachers');
    }
 
 }

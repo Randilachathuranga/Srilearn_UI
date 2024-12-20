@@ -7,11 +7,11 @@ class Student extends StudentController
      */
     public function index()
     {
-        $this->view('Home/Home');
+        $this->view('General/Home/Home');
     }
 
     public function classes(){
-        $this->view('Byclasses/classes');
+        $this->view('General/Byclasses/classes');
     }
 
     /**

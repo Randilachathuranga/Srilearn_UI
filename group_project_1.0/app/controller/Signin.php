@@ -48,6 +48,6 @@ public function index() {
     }
 
     // Render the 'signin' view with any errors
-    $this->view('Signin_Signup/signin', $data); 
+    $this->view('General/Signin_Signup/signin', $data); 
 }
 }

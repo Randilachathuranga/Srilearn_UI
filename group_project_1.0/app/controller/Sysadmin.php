@@ -8,7 +8,7 @@ class Sysadmin extends Controller {
         $model = new Usermodel();
         
         checkAccess('sysadmin');
-        $this->view('Sysadmin/sysadmin'); 
+        $this->view('AdminView/Sysadmin/sysadmin'); 
     }
 
     public function studentapi() {
@@ -103,7 +103,7 @@ class Sysadmin extends Controller {
         }
     
         // Display the updateUser view with user data only if not POST
-        $this->view('Sysadmin/updateUser', ['user' => $user]);
+        $this->view('AdminView/Sysadmin/updateUser', ['user' => $user]);
     }
     
 
