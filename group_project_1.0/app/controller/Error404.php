@@ -4,7 +4,7 @@ class Error404 extends Controller{
     public function index(){
         
         
-        $this->view('Errorpage/Error404');
+        $this->view('General/Errorpage/Error404');
     }
 }
 

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   fetch(
     // "../../../../../group_project_1.0/app/views/TeacherView/AllTeachers/getallteachers.php"
-    "../../../../group_project_1.0/app/views/Byteacher/getallteachers.php"
+    "../../../../../group_project_1.0/app/views/General/Byteacher/getallteachers.php"
   ) // Replace with your PHP script URL if different
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");

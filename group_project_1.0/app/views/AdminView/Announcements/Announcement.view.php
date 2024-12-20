@@ -12,11 +12,11 @@
     // Corrected the condition to check for 'sysadmin' role
     
     if($_SESSION['User_id']=='Guest'){
-        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/Guest_NavBar/NavBar.view.php';
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
 
     }
     elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
-        require 'C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php';
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
     }
 
     ?>
@@ -83,6 +83,6 @@
 <?php
  
  if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
-        require 'C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php';
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
     }
     ?>

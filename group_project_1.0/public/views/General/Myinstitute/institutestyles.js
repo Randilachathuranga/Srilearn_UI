@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("../../../../../group_project_1.0//app//views/General/Byinstitute/getallInstitute.php") // Replace with your PHP script URL
+  fetch("../../../../../group_project_1.0//app//views//General/Myinstitute/getInstitute.php") // Replace with your PHP script URL
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Phone: ${institute['Phone number']}</p>
             <p>District: ${institute.District}</p>
             <p>City: ${institute.City}</p>
-            <button class="card-button" onclick="ViewInstitute('${institute.Name}')">View</button>
-            <button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>
+            <button class="card-button" onclick="showDetails('${institute.Name}')">View</button>
           </div>
         `;
         container.appendChild(card);
@@ -29,14 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Function to show institute details when the button is clicked
-function Applyinstitute(institute) {
-  document.getElementById("popupApply").style.display = "flex";
-}
-
-function ViewInstitute(institute) {
-  document.getElementById("popupForm").style.display = "flex";  
-}
-
-function serach(city){
-  alert("searching");
+function showDetails(name) {
+  alert("More details about " + name);
 }

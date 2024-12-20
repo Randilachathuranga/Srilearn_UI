@@ -5,7 +5,7 @@ Class Guest extends Controller{
         $_SESSION['User_id']='Guest';
         $_SESSION['Role']='Guest';
 
-        $this->view('Home/Guest');
+        $this->view('General/Home/Guest');
     }
 
 }

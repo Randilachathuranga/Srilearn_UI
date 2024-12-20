@@ -2,7 +2,7 @@
 
 Class Blog extends Controller{
     public function index(){
-        $this->view('/Blogs/Blogs');   
+        $this->view('General/Blogs/Blogs');   
     }
 
     public function api() {
@@ -126,7 +126,7 @@ Class Blog extends Controller{
 
     public function myblogs(){
         checkloginstatus();
-        $this->view('Blogs/Myblogs');
+        $this->view('General/Blogs/Myblogs');
     }
 
 

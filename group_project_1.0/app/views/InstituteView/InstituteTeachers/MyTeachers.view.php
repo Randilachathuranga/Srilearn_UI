@@ -1,5 +1,5 @@
 <?php 
-include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBar.view.php";
+include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php";
 ?>
 
 <!DOCTYPE html>
@@ -32,5 +32,5 @@ include "C:xampp/htdocs/group_project_1.0/app/views/NavBar/User_NavBar/UserNavBa
 </html>
 
 <?php
- include "C:xampp/htdocs/group_project_1.0/app/views/Footer/Footer.php"
+ include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"
  ?>
