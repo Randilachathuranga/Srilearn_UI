@@ -2,14 +2,6 @@
 
 class Ind_Myclass extends Controller{
 
-    // function checkAccess($requiredRole) {
-    //     if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
-    //        echo "123";
-    //        redirect('Error404');
-    //        exit();
-    //     }
-    // }
-
     public function index() {
     
         $model = new Myclassmodel();
@@ -24,12 +16,12 @@ class Ind_Myclass extends Controller{
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
 
-        $isPremium = $model->checkPremium($P_id);
-        if (!$isPremium) {
-            http_response_code(403); // Forbidden
-            echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
-            return;
-        }
+        // $isPremium = $model->checkPremium($P_id);
+        // if (!$isPremium) {
+        //     http_response_code(403); // Forbidden
+        //     echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
+        //     return;
+        // }
 
         $t1 = $model->table1;
         $t2 = $model->table2;

@@ -181,12 +181,13 @@
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
+            <p><span id="classid" style="display: none;"></span></p>
         </div>
         <div class="button-container">
             <button onclick="UploadMat()" class="buttons">Upload Learning materials</button>
             <button onclick="UploadASS()" class="buttons">Upload Assignments marks</button>
             <button onclick="view()" class="buttons">View Institute</button>
-            <button onclick="viewschedule()" class="buttons">View Class schedule</button>
+            <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard()" class="buttons">Issue free cards</button>
             <button onclick="reqPay()" class="buttons">Request payrolls</button>
         </div>
