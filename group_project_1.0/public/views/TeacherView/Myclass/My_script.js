@@ -242,6 +242,7 @@ function showDetails(Class_id) {
           document.getElementById("classInstitute").textContent = "None";
         }
         document.getElementById("moreGrade").textContent = classDetail.Grade;
+        document.getElementById("classid").textContent = classDetail.Class_id;
         document.getElementById("classFee").textContent = classDetail.fee;
         document.getElementById("maxstu").textContent = classDetail.Max_std;
         document.getElementById(
@@ -330,9 +331,14 @@ function UploadASS() {
     "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
 }
 
-function viewschedule() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/ViewClassschedule/ViewClassschedule.php";
+function viewschedule(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
+  console.log("Class ID stored in sessionStorage:", Class_id);
+}
+
+function getClassId() {
+  return document.getElementById('classid').textContent.trim();
 }
 
 function freeCard() {
