@@ -137,7 +137,7 @@
             })
             .catch(error => {
                 console.error('Error during enrollment:', error);
-                alert('Could not complete enrollment. Please try again later.');
+                alert('Could not complete enrollment. You are already enrolled to this class.');
             });
         }
     </script>

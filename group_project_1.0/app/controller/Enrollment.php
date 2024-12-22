@@ -10,10 +10,10 @@ class Enrollment extends Controller
     {
         // Instantiate the model
         $model = new Enrollmodel();
-
+    
         // Set the response type to JSON
         header('Content-Type: application/json');
-
+    
         // Prepare input data
         $inputData = [
             'Date' => date("Y-m-d"),
@@ -21,32 +21,43 @@ class Enrollment extends Controller
             'Class_id' => $classid,
             'Isdiscountavail' => 0
         ];
-
-        // Check if the necessary session data exists
+    
+        // Check if the user is logged in
         if (empty($inputData['Stu_id'])) {
+            http_response_code(401); // Unauthorized
             echo json_encode(['error' => 'User not logged in. Please log in to enroll.']);
             return;
         }
-
+    
+        // Check if the user is already enrolled in the class
+        $isEnrolled = $model->checkisEnrolled($inputData['Stu_id'], $inputData['Class_id']);
+    
+        if ($isEnrolled) {
+            http_response_code(403); // Forbidden
+            echo json_encode(['error' => 'You are already enrolled in this class.']);
+            return;
+        }
+    
         try {
             // Insert the enrollment data using the model
             $enroll = $model->insert($inputData);
-
+    
             if ($enroll) {
                 // Send success response
+                http_response_code(200); // OK
                 echo json_encode(['message' => 'Enrolled successfully', 'data' => $enroll]);
-                return;
             } else {
                 // Send failure response
+                http_response_code(500); // Internal Server Error
                 echo json_encode(['message' => 'Could not enroll. Please try again later.']);
-                return;
             }
         } catch (Exception $e) {
             // Catch and log any errors
+            http_response_code(500); // Internal Server Error
             echo json_encode(['error' => 'An error occurred while enrolling.', 'details' => $e->getMessage()]);
-            return;
         }
     }
+    
 
  public function api(){
     $model = new Enrollmodel();

@@ -56,8 +56,10 @@
                     <h2>Subject: ${record.Subject}</h2>
                     <h3>Grade: ${record.Grade}</h3>
                     <p>Type: ${record.Type}</p>
+                    <p>Max Student: ${record.Max_std}</p>
                     <h5>Fee: ${record.fee}</h5>
                     <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
+                    <button onclick="viewShedule(${record.Class_id})">Schedule</button>
                 `;
                 container.appendChild(rec);
             });
@@ -76,6 +78,12 @@
             .catch(error => {
                 console.error('Error deleting record:', error);
             });
+        }
+
+        function viewShedule(Class_id){
+            sessionStorage.setItem("class_id", Class_id);
+             window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
+            console.log("Class ID stored in sessionStorage:", Class_id);
         }
     </script>
 </body>
