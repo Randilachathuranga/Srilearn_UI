@@ -1,3 +1,8 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,38 +16,33 @@
     <h1>Issue Free Cards</h1>
 
     <!-- Filter Section -->
-    <div class="filter-section">
-      <div>
-        <label for="classScheduleFilter">Filter by Class Schedule:</label>
-        <select id="classScheduleFilter">
-          <!-- Options populated dynamically -->
-        </select>
-      </div>
-      <div>
-        <label for="studentIdFilter">Filter by Student ID:</label>
-        <select id="studentIdFilter" disabled>
-          <!-- Options populated dynamically -->
-        </select>
-      </div>
-    </div>
+   <!-- Filter Section -->
+<div class="filter-section">
+  <div>
+    <label for="studentIdFilter">Filter by Student ID:</label>
+    <select id="studentIdFilter" disabled>
+      <!-- Options populated dynamically -->
+      <option value="">None</option>
 
-    <!-- Issue Free Card Button -->
+    </select>
+  </div>
+</div>
     <div class="button-container">
-      <button id="issueCardBtn" disabled>Issue Free Card</button>
+      <button id="issueCardBtn" disabled onclick="handleIssueCard()">Issue Free Card</button>
     </div>
 
     <!-- Issued Cards Section -->
     <div class="issued-cards">
-      <h2>Issued Free Cards</h2>
       <table>
         <thead>
           <tr>
-            <th>Card ID</th>
-            <th>Schedule ID</th>
             <th>Student ID</th>
+            <th>Name</th>
             <th>Issued Date</th>
+            <th>Action</th>
           </tr>
         </thead>
+        <br>
         <tbody id="issuedCardsTable">
           <!-- Issued cards will appear here -->
         </tbody>
@@ -50,6 +50,16 @@
     </div>
   </div>
 
+  <Script>
+     const userRole = `<?php echo $_SESSION['Role']; ?>`;  // Make sure this is properly set in the PHP view
+     console.log(userRole);
+</Script>
+
   <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/IssueFreecard/script.js"></script>
 </body>
 </html>
+
+
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"
+ ?>

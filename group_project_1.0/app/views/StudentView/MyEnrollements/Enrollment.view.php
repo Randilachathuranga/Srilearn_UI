@@ -50,19 +50,21 @@
             }
 
             classes.forEach(record => {
-                const rec = document.createElement('div');
-                rec.className = 'record';
-                rec.innerHTML = `
-                    <h2>Subject: ${record.Subject}</h2>
-                    <h3>Grade: ${record.Grade}</h3>
-                    <p>Type: ${record.Type}</p>
-                    <p>Max Student: ${record.Max_std}</p>
-                    <h5>Fee: ${record.fee}</h5>
-                    <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
-                    <button onclick="viewShedule(${record.Class_id})">Schedule</button>
-                `;
-                container.appendChild(rec);
-            });
+    const rec = document.createElement('div');
+    rec.className = 'record';
+    rec.innerHTML = `
+        <h2>Subject: ${record.Subject}</h2>
+        <h3>Grade: ${record.Grade}</h3>
+        <p>Type: ${record.Type}</p>
+        <p>Max Student: ${record.Max_std}</p>
+        <h5>Fee: ${record.fee}</h5>
+        ${record.Isdiscountavail === 1 ? '<p class="free-card-msg">You have a free card for this class</p>' : ''}
+        <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
+        <button onclick="viewShedule(${record.Class_id})">Schedule</button>
+    `;
+    container.appendChild(rec);
+});
+
         }
 
         function deleteEnrollment(id) {

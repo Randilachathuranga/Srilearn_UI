@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
      
         // Only show the Update and Delete buttons if the user is a teacher
         if (userRole === 'teacher') {
-            // Setup "Update" button
+            // Setup "Update" button 
             updateBtn.textContent = "Update";
             updateBtn.className = "update";
             updateBtn.onclick = () => {

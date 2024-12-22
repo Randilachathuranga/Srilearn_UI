@@ -1,99 +1,165 @@
-// Sample Class Schedule Data
-const schedules = [
-    { id: 101, start: '08:00 AM', end: '10:00 AM', date: '2024-11-25' },
-    { id: 102, start: '10:30 AM', end: '12:30 PM', date: '2024-11-26' },
-    { id: 103, start: '01:00 PM', end: '03:00 PM', date: '2024-11-27' },
-  ];
-  
-  // Sample Student Data
-  const students = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    { id: 3, name: 'Emily Johnson' },
-    { id: 4, name: 'Michael Brown' },
-  ];
-  
-  // DOM Elements
-  const classScheduleFilter = document.getElementById('classScheduleFilter');
-  const studentIdFilter = document.getElementById('studentIdFilter');
-  const issueCardBtn = document.getElementById('issueCardBtn');
-  const issuedCardsTable = document.getElementById('issuedCardsTable');
-  
-  // Issued Cards Array
-  const issuedCards = [];
-  
-  // Populate Class Schedule Dropdown
-  function populateClassScheduleDropdown() {
-    schedules.forEach(schedule => {
-      const option = document.createElement('option');
-      option.value = schedule.id;
-      option.textContent = `Schedule ID: ${schedule.id} (${schedule.date})`;
-      classScheduleFilter.appendChild(option);
+const classId = sessionStorage.getItem("class_id");
+console.log("Retrieved Class ID from sessionStorage:", classId);
+
+// Fetch students for the class to populate the filter dropdown
+fetch(`http://localhost/group_project_1.0/public/FreeCard/viewAPI/${classId}`)
+  .then((response) => response.json())
+  .then((data) => {
+    const studentIdFilter = document.getElementById("studentIdFilter");
+
+    // Assuming 'data' contains an array of students for the specific class
+    data.forEach(student => {
+      // Only add students where Isdiscountavail == 0
+      if (student.Isdiscountavail === 0) {
+        const option = document.createElement("option");
+        option.value = student.Stu_id;
+        option.textContent = student.Stu_id;  // Or any other information you'd like to show (e.g., name)
+        studentIdFilter.appendChild(option);
+      }
     });
-  }
+
+    // Enable the filter and button after fetching
+    studentIdFilter.disabled = false;
+    document.getElementById("issueCardBtn").disabled = false;
+  })
+  .catch((error) => {
+    console.error("Error fetching students for the class:", error);
+  });
+
+
+
+
+  // Handle button click for issuing a free card
+  function handleIssueCard() {
+    const studentIdFilter = document.getElementById("studentIdFilter");
+    const selectedStudentId = studentIdFilter.value;
   
-  // Populate Student Dropdown
-  function populateStudentDropdown() {
-    studentIdFilter.innerHTML = '<option value="">Select Student</option>';
-    students.forEach(student => {
-      const option = document.createElement('option');
-      option.value = student.id;
-      option.textContent = `${student.id} - ${student.name}`;
-      studentIdFilter.appendChild(option);
-    });
-  }
-  
-  // Enable/Disable Filters and Button
-  classScheduleFilter.addEventListener('change', () => {
-    if (classScheduleFilter.value) {
-      studentIdFilter.disabled = false;
-      populateStudentDropdown();
+    if (selectedStudentId) {
+      if (confirm("Are you sure you want to add this student to the free card list?")) {
+        fetch(`http://localhost/group_project_1.0/public/FreeCard/Createfreecard/${selectedStudentId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ classId }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to issue free card.");
+            }
+            console.log(`Free card issued for Student ID ${selectedStudentId}.`);
+            window.location.href = "http://localhost/group_project_1.0/public/FreeCard";
+          })
+          .catch((error) => {
+            alert("Error issuing free card: " + error.message);
+          });
+      }
     } else {
-      studentIdFilter.disabled = true;
-      issueCardBtn.disabled = true;
+      alert("Please select a student ID.");
     }
-  });
-  
-  studentIdFilter.addEventListener('change', () => {
-    issueCardBtn.disabled = !studentIdFilter.value;
-  });
-  
-  // Issue Free Card
-  function issueFreeCard() {
-    const scheduleId = classScheduleFilter.value;
-    const studentId = studentIdFilter.value;
-  
-    // Generate Unique Card ID
-    const cardId = `CARD-${Math.floor(Math.random() * 10000)}`;
-  
-    // Get Current Date
-    const issuedDate = new Date().toISOString().split('T')[0];
-  
-    // Add to Issued Cards
-    issuedCards.push({ cardId, scheduleId, studentId, issuedDate });
-  
-    // Render Issued Cards Table
-    renderIssuedCards();
   }
-  
-  // Render Issued Cards Table
-  function renderIssuedCards() {
-    issuedCardsTable.innerHTML = '';
-    issuedCards.forEach(card => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${card.cardId}</td>
-        <td>${card.scheduleId}</td>
-        <td>${card.studentId}</td>
-        <td>${card.issuedDate}</td>
-      `;
-      issuedCardsTable.appendChild(row);
+
+  // Handle delete function
+  function handleDeleteCard(StudentId) {
+    if (StudentId) {
+        fetch(`http://localhost/group_project_1.0/public/FreeCard/Deletefreecard/${StudentId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ classId }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to issue free card.");
+            }
+            console.log(`Free card issued for Student ID ${StudentId}.`);
+            window.location.href = "http://localhost/group_project_1.0/public/FreeCard";
+          })
+          .catch((error) => {
+            alert("Error issuing free card: " + error.message);
+          });
+    } else {
+      alert("Please select a student ID.");
+    }
+  }
+
+
+
+
+
+// Fetch issued free cards for the class
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(`http://localhost/group_project_1.0/public/FreeCard/viewAPI/${classId}`)
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.error("No free cards found for this class.");
+          return [];
+        }
+        throw new Error("An unexpected error occurred.");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const issuedCardsTable = document.getElementById("issuedCardsTable");
+      if (!issuedCardsTable) {
+        console.error("Table body element with ID 'issuedCardsTable' not found.");
+        return;
+      }
+
+      // Clear previous rows
+      issuedCardsTable.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        issuedCardsTable.innerHTML = "<p>No free cards found for this class.</p>";
+        return;
+      }
+
+      data.forEach((freecard_list) => {
+        if (freecard_list.Isdiscountavail == 1) {
+          const row = document.createElement("tr");
+
+          // Create table cells for Class ID, Student ID, and Issued Date
+          const Stu_id = createInputCell("text", freecard_list.Stu_id);
+          const Class_id = createInputCell("text", freecard_list.F_name + " " +freecard_list.L_name);
+          const Issue_date = createInputCell("text", freecard_list.Date);
+
+          // Append cells to row
+          row.appendChild(Stu_id);
+          row.appendChild(Class_id);
+          row.appendChild(Issue_date);
+
+          // If the user is a teacher, show a delete button
+          if (userRole === 'teacher') {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete";
+            deleteBtn.onclick = () => {
+              if (confirm("Are you sure you want to delete this free card?")) {
+                handleDeleteCard(freecard_list.Stu_id);
+              }
+            };
+            row.appendChild(deleteBtn);
+          }
+
+          // Append row to the table
+          issuedCardsTable.appendChild(row);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching free cards:", error);
     });
-  }
-  
-  // Event Listener for Issue Card Button
-  issueCardBtn.addEventListener('click', issueFreeCard);
-  
-  // Initialize Page
-  populateClassScheduleDropdown();
-  
+});
+
+// Helper function to create input cells
+function createInputCell(type, value) {
+  const cell = document.createElement("td");
+  const input = document.createElement("input");
+  input.type = type;
+  input.value = value;
+  input.disabled = true;
+  cell.appendChild(input);
+  return cell;
+}

@@ -341,10 +341,11 @@ function getClassId() {
   return document.getElementById('classid').textContent.trim();
 }
 
-function freeCard() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/IssueFreecard/IssueFreecard.php";
-}
+function freeCard(Class_id) {
+    sessionStorage.setItem("class_id", Class_id);
+    window.location.href = "http://localhost/group_project_1.0/public/FreeCard";
+    console.log("Class ID stored in sessionStorage:", Class_id);
+  }
 
 function reqPay() {
   window.location.href =
