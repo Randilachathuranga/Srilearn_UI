@@ -1,96 +1,226 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: block;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 150px auto 50px;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+td input {
+  border: none; /* No border for input fields */
+  background: transparent; /* Transparent background */
+  color: black; /* Black text */
+  font-size: inherit; /* Inherits font size from parent td */
+  padding: 0; /* Removes padding for a clean look */
+}
+
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tr.text{
+  background-color: #dc3545;
+}
+
+tbody td {
+  padding: 10px;
+}
+
+
+
+
+button.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filter-section div {
+  width: 48%;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+
+button {
+  background-color: #172468;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete {
+  background-color: #f03b17;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.issued-cards th, .issued-cards td {
+  padding: 10px;
+  text-align: left;
+  border: none;
+
+}
+
+.issued-cards th {
+  background-color: #007bff;
+  color: white;
+}
+
+
+
+
+
+
+@media (max-width: 1200px) {
   .container {
-    max-width: 800px;
-    width: 100%;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 120px auto 50px;
   }
-  
-  h1, h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 15px;
+
+  h1 {
+    font-size: 2.2rem;
   }
-  
-  .filter-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 20px;
+
+  button.create-schedule {
+    padding: 10px 14px;
+    font-size: 13px;
   }
-  
-  .filter-section div {
-    width: 48%;
-    margin-bottom: 10px;
+
+  button.update, button.delete {
+    padding: 6px 10px;
+    font-size: 13px;
   }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 100px auto 30px;
+    padding: 15px;
   }
-  
-  select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+
+  h1 {
+    font-size: 2rem;
   }
-  
-  .button-container {
-    text-align: center;
-    margin-bottom: 20px;
+
+  button.create-schedule {
+    padding: 10px 12px;
+    font-size: 12px;
   }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+
+  table {
     font-size: 14px;
   }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+
+  button.update, button.delete {
+    font-size: 12px;
+    padding: 6px 8px;
   }
-  
-  button:hover:not(:disabled) {
-    background-color: #0056b3;
+
+  input[type="time"], select {
+    font-size: 12px;
+    padding: 6px;
   }
-  
-  .issued-cards table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+
+  #scheduleFormPopup {
+    width: 90%;
+    top: 15%;
   }
-  
-  .issued-cards th, .issued-cards td {
+
+  #scheduleFormPopup button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 80px auto 20px;
     padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
   }
-  
-  .issued-cards th {
-    background-color: #007bff;
-    color: white;
+
+  h1 {
+    font-size: 1.8rem;
   }
-  
-  .issued-cards tbody tr:hover {
-    background-color: #f1f1f1;
+
+  button.create-schedule {
+    font-size: 12px;
+    padding: 8px 10px;
   }
-  
+
+  table {
+    font-size: 12px;
+  }
+
+  button.update, button.delete {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  input[type="time"], select {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  #scheduleFormPopup {
+    width: 90%;
+    top: 10%;
+  }
+
+  #scheduleFormPopup button {
+    font-size: 12px;
+    padding: 6px;
+  }
+}

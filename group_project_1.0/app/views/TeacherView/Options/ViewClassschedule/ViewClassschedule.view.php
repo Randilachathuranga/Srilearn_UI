@@ -13,7 +13,12 @@
 <body>
   <div class="container">
     <h1>Class Schedule</h1>
-    <button class="create-schedule" onclick="openForm()">Create Schedule</button>
+    
+    <?php 
+                if ($_SESSION['Role'] == 'teacher') { 
+                    echo '<button class="create-schedule" onclick="openForm()">Create Schedule</button>';
+                }
+                ?>
     <table>
       <thead>
         <tr>
