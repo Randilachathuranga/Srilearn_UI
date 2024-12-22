@@ -20,7 +20,11 @@
           <th>Start Time</th>
           <th>End Time</th>
           <th>Date</th>
-          <th>Actions</th>
+          <?php 
+                if ($_SESSION['Role'] == 'teacher') { 
+                    echo '<th>Actions</th>';
+                }
+                ?>
         </tr>
       </thead>
       <tbody id="scheduleTable">
