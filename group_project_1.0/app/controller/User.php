@@ -2,19 +2,19 @@
 
 class User extends Controller
 {
-   /* public function __construct()
+    public function __construct()
     {
         // Start the session if it's not already started
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-    }*/
-public function index(){
-    $this->view('lol');
-}
-    public function editprofile($user_id)
+    }
+
+    public function editprofile()
     {
         // Hardcoded user_id for now
+        $user_id = 1; // Replace this with $_SESSION['user_id'] when login is implemented
+
         // Load UserModel to fetch user data
         $userModel = new UserModel();
         $userData = $userModel->first(['User_id' => $user_id]);
@@ -44,19 +44,11 @@ public function index(){
         }
 
         // Load the EditProfile view and pass necessary data
-        // $this->view('user/EditProfile', [
-        //     'userData' => $userData,
-        //     'errors' => $errors ?? [],
-        //     'successMessage' => $successMessage ?? '',
-        //     'errorMessage' => $errorMessage ?? ''
-        // ]);
+        $this->view('user/EditProfile', [
+            'userData' => $userData,
+            'errors' => $errors ?? [],
+            'successMessage' => $successMessage ?? '',
+            'errorMessage' => $errorMessage ?? ''
+        ]);
     }
-     function api($id) {
-            $model = new Usermodel();
-            header('Content-Type: application/json');
-            $users = $model->where(['User_id'=>$id]); // Fetch users, you can add conditions here
-            echo json_encode($users);
-        
-        }
-    
 }

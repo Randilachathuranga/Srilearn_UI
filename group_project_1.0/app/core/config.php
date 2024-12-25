@@ -26,7 +26,8 @@ if (!isset($_SESSION['last_regeneration'])) {
 } else {
     $interval = 60 * 30;
     if (time() - $_SESSION['last_regeneration'] >= $interval) {
-        
+        session_destroy();
+        exit;
     }
 }
 function regenerate_session_id(){

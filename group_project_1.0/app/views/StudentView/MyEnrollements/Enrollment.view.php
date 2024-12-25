@@ -1,0 +1,96 @@
+<?php 
+ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php"
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Enrollments</title>
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/StudentView/MyEnrollements/enrollmentview.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-container">
+            <h1 class="header-title">My Enrollments</h1>
+        </div>
+
+        <!-- Banner Section -->
+        <div class="banner-container">
+            <img src="../../../../../group_project_1.0/public/views/StudentView/MyEnrollements/teacherclass.jpg" alt="Teacher Class" class="banner-image">
+        </div>
+
+        <!-- Classes Display Section -->
+        <div class="classes-container" id="classes-container">
+            <!-- Enrolled classes will be dynamically rendered here -->
+        </div>
+    </div>
+
+    <script>
+        // Fetch all enrolled classes initially
+        document.addEventListener('DOMContentLoaded', fetchAllClasses);
+
+        function fetchAllClasses() {
+            fetch('http://localhost/group_project_1.0/public/Enrollment/api/')
+                .then(response => response.ok ? response.json() : Promise.reject('Failed to load'))
+                .then(data => renderClasses(data || [])) // Ensure data is an array
+                .catch(error => console.error('Error fetching all classes:', error));
+        }
+
+        function renderClasses(classes) {
+            const container = document.getElementById('classes-container');
+            container.innerHTML = ""; // Clear existing content
+
+            if (!classes || classes.length === 0) {
+                container.innerHTML = "<p>No enrollments found.</p>";
+                return;
+            }
+
+            classes.forEach(record => {
+    const rec = document.createElement('div');
+    rec.className = 'record';
+    rec.innerHTML = `
+        <h2>Subject: ${record.Subject}</h2>
+        <h3>Grade: ${record.Grade}</h3>
+        <p>Type: ${record.Type}</p>
+        <p>Max Student: ${record.Max_std}</p>
+        <h5>Fee: ${record.fee}</h5>
+        ${record.Isdiscountavail === 1 ? '<p class="free-card-msg">You have a free card for this class</p>' : ''}
+        <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
+        <button onclick="viewShedule(${record.Class_id})">Schedule</button>
+    `;
+    container.appendChild(rec);
+});
+
+        }
+
+        function deleteEnrollment(id) {
+            fetch(`http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(() => {
+                location.reload(); // Reload the page to reflect the deletion
+            })
+            .catch(error => {
+                console.error('Error deleting record:', error);
+            });
+        }
+
+        function viewShedule(Class_id){
+            sessionStorage.setItem("class_id", Class_id);
+             window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
+            console.log("Class ID stored in sessionStorage:", Class_id);
+        }
+    </script>
+</body>
+</html>
+
+<?php
+ include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"
+ ?>

@@ -9,7 +9,22 @@
         header("Location: /group_project_1.0/public/" . $path);
         die(); // Ensures termination after redirect
     }
+
     
-    
+    function checkAccess($requiredRole) {
+        if (!isset($_SESSION['User_id']) || $_SESSION['Role'] !== $requiredRole) {
+           redirect('Error404');
+           exit();
+        }
+    }
+
+    function checkloginstatus(){
+        if(!isset($_SESSION['User_id'])){
+            redirect('Error404');
+            exit();
+        }
+
+    }
+  
     
    

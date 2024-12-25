@@ -2,32 +2,34 @@
 
 class Sysadmin extends Controller {
 
-    function checkAccess($requiredRole) {
-        if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
-           echo "123";
-           redirect('Error404');
-           exit();
-        }
-    }
     
     public function index() {
     
         $model = new Usermodel();
-        echo $_SESSION['Role'];
-        $this->checkAccess('Sysadmin');
-        $this->view('sysadmin'); 
+        
+        checkAccess('sysadmin');
+        $this->view('AdminView/Sysadmin/sysadmin'); 
     }
 
     public function studentapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'student']); // Fetch users, you can add conditions here
         echo json_encode($users);
     
     }
+    public function count() {
+        $model=new Usermodel();
+        checkAccess('sysadmin');
+        header('Content-Type: application/json');
+        $users = $model->getcount(); 
+        echo json_encode($users);
+    }
     
     public function teacherapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'teacher']); // Fetch users, you can add conditions here
         echo json_encode($users);
@@ -36,6 +38,7 @@ class Sysadmin extends Controller {
     
     public function instituteapi() {
         $model = new Usermodel();
+        checkAccess('sysadmin');
         header('Content-Type: application/json');
         $users = $model->where(['role'=>'institute']); // Fetch users, you can add conditions here
         echo json_encode($users);
@@ -43,24 +46,47 @@ class Sysadmin extends Controller {
     }
 
     public function deleteapi($userId) {
-        $model = new Usermodel();
+        // Ensure models are loaded properly
+        $userModel = new Usermodel();
+        $delModel = new Delmodel(); 
+    
+        // Ensure user has the right access
+        checkAccess('sysadmin');
+    
         try {
-            if ($model->delete($userId)) {  // Use $userId here, as it's passed from the route
-                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
-            }
-             
-        } catch (Exception $e) {
-            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            // Fetch user data for the given ID
+            $userData = $userModel->where(['User_id'=>$userId]); 
+            $assocArray = get_object_vars($userData[0]);
             
+            // Ensure user exists before proceeding
+            if (!$userData) {
+                echo json_encode(['status' => 'error', 'message' => 'User not found']);
+                return;
+            }
+    
+            // Insert the user data into the DelModel
+            if (!$delModel->insert($assocArray)) {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to move user data to the deleted table']);
+                return;
+            }
+    
+            // Delete the user from the UserModel
+            if (!$userModel->delete($userId)) {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user from original table']);
+                return;
+            }
+    
+            echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
+        } catch (Exception $e) {
+            // Handle any exceptions
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
-         
     }
 
     public function update($userId) {
         // Fetch the user data by ID
         $model = new Usermodel();
+        checkAccess('sysadmin');
         $user = $model->first(['User_id' => $userId]);
     
         // Check if the request is a POST request
@@ -77,7 +103,7 @@ class Sysadmin extends Controller {
         }
     
         // Display the updateUser view with user data only if not POST
-        $this->view('updateUser', ['user' => $user]);
+        $this->view('AdminView/Sysadmin/updateUser', ['user' => $user]);
     }
     
 

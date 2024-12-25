@@ -1,8 +1,8 @@
 <?php 
 class Teacher extends Controller{
     public function index(){
-echo "teacher";
-echo $_SESSION['Role'];
+        checkAccess('teacher');
+        $this->view("General/Home/Home");
+    }
 
-}
 }

@@ -7,7 +7,11 @@ class Student extends StudentController
      */
     public function index()
     {
-        $this->Studentview('Dashboard');
+        $this->view('General/Home/Home');
+    }
+
+    public function classes(){
+        $this->view('General/Byclasses/classes');
     }
 
     /**
@@ -19,13 +23,48 @@ class Student extends StudentController
     public function viewClasses($subject, $grade)
     {
         $model = new StudentModel();
+        try {
+            $classes = $model->getClassesForStudent($subject,$grade);
+            
+            if ($classes) {
+                // Return blogs as JSON
+                echo json_encode($classes);
+            } else {
+                // Handle case where no blogs were found
+                echo json_encode([]);
+            }
+        } catch (Exception $e) {
+            // Error handling in case of an exception
+            echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+        }
 
-        // Fetch classes
-        $classes = $model->getClassesForStudent($subject, $grade);
-
-        // Pass classes to the view
-        $this->Studentview('ViewClasses', ['subject' => $subject, 'grade' => $grade, 'classes' => $classes]);
     }
+
+    public function allclasses(){
+        $model= new StudentModel();
+
+        
+        header('Content-Type: application/json');
+    
+        // Fetch blogs for the given user ID
+        try {
+            $classes = $model->findall();
+            
+            if ($classes) {
+                // Return blogs as JSON
+                echo json_encode($classes);
+            } else {
+                // Handle case where no blogs were found
+                echo json_encode(['message' => 'No classes found .']);
+            }
+        } catch (Exception $e) {
+            // Error handling in case of an exception
+            echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+        }
+
+    }
+
+
 
     /**
      * API for viewing classes (JSON).

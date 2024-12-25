@@ -1,7 +1,9 @@
 <?php
 class Announcement extends Controller {
+     
     
     public function index() {
+        checkAccess('sysadmin');
         $Ann = new Announcementmodel;
 
         // Check if form is submitted
@@ -12,20 +14,20 @@ class Announcement extends Controller {
             } else {
                 // If validation fails, store errors in $data['errors']
                 $data['errors'] = $Ann->errors;
-                $this->view('Announcementform', $data); // Show form with errors
+                $this->view('/AdminView/Announcements/Announcementform', $data); // Show form with errors
                 return;
             }
         }
 
         // Load the form view without errors (initial form load)
         $data['errors'] = [];
-        $this->view('Announcementform', $data);
+        $this->view('/AdminView/Announcements/Announcementform', $data);
     }
 
     public function viewann() {
         // Load the view for displaying announcements
-        echo $_SESSION['Role'];
-        $this->view('Announcement', []);
+        checkloginstatus();
+        $this->view('/AdminView/Announcements/Announcement', []);
     }
     public function api() {
         $model = new Announcementmodel;
@@ -33,5 +35,61 @@ class Announcement extends Controller {
         $ann = $model->findall(); 
         echo json_encode($ann);
     }
-  
+
+    public function deleteapi($id){
+        checkAccess('sysadmin');    
+        $model= new Announcementmodel;
+        
+
+         if ($_SESSION['Role'] !== 'sysadmin') {
+            http_response_code(403); // Forbidden
+            echo json_encode(["error" => "Unauthorized"]);
+            return;
+        }
+        try {
+            if ($model->delete($id,'annid')) {  // Use $userId here, as it's passed from the route
+                echo json_encode(['status' => 'success', 'message' => 'aNn deleted successfully']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete Ann']);
+            }
+             
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            
+        }
+         
+    }
+
+    
+    public function updateapi($id) {
+        checkAccess('sysadmin');
+        $model = new Announcementmodel();
+        $user = $model->first(['annid' => $id]);
+    
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($model->update($id, $_POST,'annid')) {
+                
+                
+                redirect('Announcement/viewann');
+                
+            } else {
+                
+                echo "Failed to update ann.";
+            }
+        }
+    
+        
+        $this->view('/AdminView/Announcements/Announcementupdateform', ['ann' => $user]);
+    }
+         
 }
+
+
+    
+
+        
+    
+
+  
+

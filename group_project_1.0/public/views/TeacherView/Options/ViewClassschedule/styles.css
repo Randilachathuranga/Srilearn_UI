@@ -1,0 +1,365 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: block; /* Ensure block layout for full-page height */
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 150px auto 50px; /* Adjust top margin for navbar and bottom margin for spacing */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Large heading */
+}
+
+button.create-schedule {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+button.create-schedule:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+thead th {
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody td {
+  padding: 10px;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.update {
+  background-color: #28a745;
+  color: white;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+button.update:hover {
+  background-color: #218838;
+}
+
+button.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+button.delete:hover {
+  background-color: #c82333;
+}
+
+/* Input and select styles */
+input[type="time"], select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+}
+
+/* Popup form */
+/* Popup form */
+#scheduleFormPopup {
+  position: fixed;
+  top: 20%;
+  left: 35%;
+  max-width: 500px; /* Limit max width */
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  display: none; /* Hidden by default */
+  width: 100%;
+  height: 100%;
+}
+
+/* Modal content */
+.modal-content {
+  position: relative;
+  padding: 20px;
+  background-color: #f5f8f9;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Popup form fields */
+#scheduleFormPopup form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label styling */
+#scheduleFormPopup label {
+  margin-bottom: 5px;
+}
+
+/* Input fields */
+#scheduleFormPopup input {
+  margin-bottom: 15px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Buttons */
+#scheduleFormPopup button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#scheduleFormPopup button[type="submit"] {
+  background-color: #1a237e; /* Dark blue background */
+  color: white;
+}
+
+#scheduleFormPopup button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Hover effects for buttons */
+#scheduleFormPopup button[type="submit"]:hover {
+  background-color: #1a237e;
+}
+
+#scheduleFormPopup button[type="button"]:hover {
+  background-color: #c82333;
+}
+
+/* Dark background overlay */
+#scheduleFormPopup:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: -1;
+}
+
+/* Ensure the form is centered and stays responsive */
+@media (max-width: 768px) {
+  #scheduleFormPopup {
+    width: 90%; /* Make it more responsive on smaller screens */
+  }
+}
+
+
+/* Media Query for Tablets */
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  input[type="time"], select {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .container {
+    margin: 120px 10px 50px; /* Adjusted for smaller screens */
+  }
+
+  h1 {
+    font-size: 2.5rem; /* Reduce font size on smaller screens */
+    margin: 20px 0; /* Center heading */
+  }
+
+  button.create-schedule {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  button.update, button.delete {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* Media Query for Phones */
+@media (max-width: 480px) {
+  table {
+    font-size: 12px;
+  }
+
+  .container {
+    margin: 100px 10px 40px; /* Adjusted margin for phones */
+  }
+
+  h1 {
+    font-size: 2rem; /* Smaller heading font size */
+  }
+
+  button.create-schedule {
+    font-size: 12px;
+  }
+
+  button.update, button.delete {
+    font-size: 12px;
+  }
+}
+
+
+/* Ensure the form is centered and stays responsive */
+@media (max-width: 1200px) {
+  .container {
+    margin: 120px auto 50px; /* Adjust top margin for tablets */
+  }
+  
+  h1 {
+    font-size: 2.2rem; /* Slightly smaller heading */
+  }
+
+  button.create-schedule {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  button.update, button.delete {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 100px auto 30px; /* Adjust for smaller screens */
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 2rem; /* Smaller heading font size */
+  }
+  
+  button.create-schedule {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  table {
+    font-size: 14px;
+  }
+
+  button.update, button.delete {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  input[type="time"], select {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  /* Popup form adjustments */
+  #scheduleFormPopup {
+    width: 90%;
+    top: 15%;
+  }
+  
+  #scheduleFormPopup button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 80px auto 20px; /* Adjust for smaller screens */
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 1.8rem; /* Smaller heading */
+  }
+  
+  button.create-schedule {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  table {
+    font-size: 12px;
+  }
+
+  button.update, button.delete {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  input[type="time"], select {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  /* Popup form adjustments */
+  #scheduleFormPopup {
+    width: 90%;
+    top: 10%;
+  }
+  
+  #scheduleFormPopup button {
+    font-size: 12px;
+    padding: 6px;
+  }
+}

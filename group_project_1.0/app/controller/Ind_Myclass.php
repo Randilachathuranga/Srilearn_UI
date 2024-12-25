@@ -1,32 +1,27 @@
 <?php
 
-class Ind_Myclass extends TeacherController{
-
-     function checkAccess($requiredRole) {
-        if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== $requiredRole) {
-            echo "123";
-           redirect('Error404');
-            exit();
-    }
-     }
+class Ind_Myclass extends Controller{
 
     public function index() {
     
         $model = new Myclassmodel();
+        checkAccess('teacher');
         // echo $_SESSION['Role'];
-        $this->Teacherview('Myclass'); 
+        $this->View('TeacherView/Myclass/Myclass'); 
+                
+
     }
 
     //view my all classes
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
 
-        $isPremium = $model->checkPremium($P_id);
-        if (!$isPremium) {
-            http_response_code(403); // Forbidden
-            echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
-            return;
-        }
+        // $isPremium = $model->checkPremium($P_id);
+        // if (!$isPremium) {
+        //     http_response_code(403); // Forbidden
+        //     echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
+        //     return;
+        // }
 
         $t1 = $model->table1;
         $t2 = $model->table2;
@@ -102,8 +97,8 @@ class Ind_Myclass extends TeacherController{
         ];
         $table2_data = [
             'Location' => $data['table2']['Location'] ?? null,
-            'Start_Time' => $data['table2']['Start_Time'] ?? null,
-            'End_time' => $data['table2']['End_time'] ?? null,
+            'Start_date' => $data['table2']['Start_date'] ?? null,
+            'End_date' => $data['table2']['End_date'] ?? null,
         ];
         if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table2']);
@@ -129,8 +124,10 @@ class Ind_Myclass extends TeacherController{
         
         //create a class
         public function CreateclassApi($P_id) {
+
             $jsonData = file_get_contents('php://input');
             $data = json_decode($jsonData, true);
+
             if (json_last_error() !== JSON_ERROR_NONE) {
                 echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
                 return;
@@ -140,16 +137,17 @@ class Ind_Myclass extends TeacherController{
                 return;
             }
             $table1_data = [
+                'Type' => $data['table1']['Type'] ?? null,
                 'Subject' => $data['table1']['Subject'] ?? null,
                 'Grade' => $data['table1']['Grade'] ?? null,
                 'Max_std' => $data['table1']['Max_std'] ?? null,
                 'fee' => $data['table1']['fee'] ?? null,
-                'P_id' => $P_id,
             ];
             $table2_data = [
+                'P_id' => $P_id,
                 'Location' => $data['table2']['Location'] ?? null,
-                'Start_Time' => $data['table2']['Start_Time'] ?? null,
-                'End_time' => $data['table2']['End_time'] ?? null,
+                'Start_date' => $data['table2']['Start_date'] ?? null,
+                'End_date' => $data['table2']['End_date'] ?? null,
             ];
             if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
                 echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table2']);
@@ -159,14 +157,14 @@ class Ind_Myclass extends TeacherController{
             error_log("Prepared table2 data: " . print_r($table2_data, true));
             $model = new Myclassmodel();
     
-            $result = $model->insertclass($this->$table1_data, $this->$table2_data,$P_id);
+            $result = $model->insertclass($table1_data,$table2_data);
                 if ($result) {
-                    echo json_encode(['status' => 'success', 'message' => 'Class created successfully']);
+                    echo json_encode(['status' => 'Success', 'message' => 'Class created successfully']);
                 } else {
                     $errorMessages = [];
                     if (!$result) $errorMessages[] = 'Failed to create table1';
                 }
-            }
+        }
 
 
 

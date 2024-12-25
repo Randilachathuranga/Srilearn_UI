@@ -1,7 +1,6 @@
 <?php
 
-Trait Model {
-   
+trait Model {
     use Database;
 
     protected $limit = '10';
@@ -10,64 +9,72 @@ Trait Model {
     protected $order_column = "id";
     public $errors = [];
 
+    // Filter records with matching or non-matching conditions
     public function where($data, $data_not = []) {
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
-        $query = "select * from $this->table where ";
+        $query = "SELECT * FROM $this->table WHERE ";
+
         foreach ($keys as $key) {
-            $query .= $key . "=:" . $key . " && ";
+            $query .= "$key = :$key AND ";
         }
         foreach ($keys_not as $key) {
-            $query .= $key . "!=:" . $key . " && ";
+            $query .= "$key != :$key AND ";
         }
-        $query = trim($query, " && ");
-        $query .= " limit $this->limit offset $this->offset";
+        $query = rtrim($query, " AND ");
+        $query .= " LIMIT $this->limit OFFSET $this->offset";
+        
         $data = array_merge($data, $data_not);
         return $this->query($query, $data);
     }
 
-    public function InnerJoinwhere($table1, $table2, $joinCondition, $data, $data_not = []) {
+    public function InnerJoinwhere($table1, $table2, $joinCondition, $data, $data_not = []){
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
         $query = "select * from $table1 INNER JOIN $table2 ON $joinCondition where ";
-        foreach ($keys as $key) {
-            $query .= $key . "=:" . $key . " && ";
+       foreach($keys as $key){
+                $query.=$key."=:".$key." && ";
         }
-        foreach ($keys_not as $key) {
-            $query .= $key . "!=:" . $key . " && ";
+        foreach($keys_not as $key){
+            $query.=$key."!=:".$key." && ";
         }
         $query = trim($query, " && ");
         $query .= " limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
         return $this->query($query, $data);
     }
-
+    
+    // Find all records from the table
     public function findall() {
-        $query = "select * from $this->table ";
+        $query = "SELECT * FROM $this->table";
         return $this->query($query);
     }
 
+    // Find the first matching record based on conditions
     public function first($data, $data_not = []) {
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
-        $query = "select * from $this->table where ";
+        $query = "SELECT * FROM $this->table WHERE ";
+
         foreach ($keys as $key) {
-            $query .= $key . "=:" . $key . " && ";
+         
+         
+            $query .= "$key = :$key AND ";
         }
         foreach ($keys_not as $key) {
-            $query .= $key . "!=:" . $key . " && ";
+            $query .= "$key != :$key AND ";
         }
-        $query = trim($query, " && ");
-        $query .= " limit $this->limit offset $this->offset";
+        $query = rtrim($query, " AND ");
+        $query .= " LIMIT 1";
+        
         $data = array_merge($data, $data_not);
         $result = $this->query($query, $data);
-        if ($result) {
-            return $result[0];
-        }
-        return false;
+        return $result ? $result[0] : false;
     }
 
+    // Insert a new record
     public function insert($data) {
+        // Filter out unallowed columns
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
@@ -75,13 +82,15 @@ Trait Model {
                 }
             }
         }
+
         $keys = array_keys($data);
-        $query = "insert into $this->table (" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-        $result = $this->query($query, $data);
-        return false;
+        $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
+        return $this->duiquery($query, $data) ? true : false;
     }
 
+    // Update a record by ID with optional custom ID column
     public function update($id, $data, $id_column = 'User_id') {
+        // Filter out unallowed columns
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
@@ -89,47 +98,41 @@ Trait Model {
                 }
             }
         }
-
+    
         $keys = array_keys($data);
         $query = "UPDATE $this->table SET ";
-
-        // Build the query string with placeholders
         foreach ($keys as $key) {
             $query .= "$key = :$key, ";
         }
-
-        // Remove trailing comma
-        $query = rtrim($query, ', ');
-
-        // Add the WHERE clause
+        $query = rtrim($query, ", ");
         $query .= " WHERE $id_column = :$id_column";
-
-        // Bind the ID to the data array for the WHERE clause
+        
         $data[$id_column] = $id;
+        
         try {
-            // Execute the query and return the result
-            $this->query($query, $data);
-            return true;
+            $this->duiquery($query, $data);
+            return true;  // Success
         } catch (Exception $e) {
-            return false;
+            if (defined('DEBUG')) {
+                echo "Update failed: " . $e->getMessage();
+            }
+            return false;  // Failure
         }
     }
-
+    
+    // Delete a record by ID with optional custom ID column
     public function delete($id, $id_column = 'User_id') {
+        $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
+        $data = [$id_column => $id];
+        
         try {
-            $data[$id_column] = $id;
-            $query = "delete from $this->table where $id_column = :$id_column ";
-            $this->query($query, $data);
+            $this->duiquery($query, $data);
             return true;
         } catch (Exception $e) {
+            if (defined('DEBUG')) {
+                echo "Delete failed: " . $e->getMessage();
+            }
             return false;
         }
-    }
-
-    // Method to update the password securely
-    public function updatePassword($id, $newPassword, $id_column = 'User_id') {
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT); // Secure password hashing
-        $data = ['Password' => $hashedPassword];
-        return $this->update($id, $data, $id_column);
     }
 }

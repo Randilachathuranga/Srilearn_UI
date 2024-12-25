@@ -1,11 +1,11 @@
 <?php
 
-class StudentModel
+class Studentmodel
 {
     use Model;
 
     // Table definitions
-    public $classTable = 'class'; // Class table
+    public $table = 'class'; // Class table
     public $enrollmentTable = 'enrollment'; // Enrollment table
 
     // Allowed columns
@@ -20,8 +20,9 @@ class StudentModel
      * @return array - List of matching classes.
      */
     public function getClassesForStudent($subject, $grade)
-    {
-        $query = "SELECT * FROM {$this->classTable} WHERE Subject = :Subject AND Grade = :Grade";
+    {   
+        $query = "SELECT * FROM {$this->table} WHERE Subject = :Subject AND Grade = :Grade";
+
         $params = [
             'Subject' => $subject,
             'Grade' => $grade
