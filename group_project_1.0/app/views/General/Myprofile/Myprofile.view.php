@@ -20,7 +20,6 @@
             <input type="hidden" id="userId" value="<?php echo $_SESSION['User_id']; ?>">
             <label for="image">Upload Image:</label>
             <input type="file" name="image" id="image" accept="image/*" required>
-            <button type="submit">Upload</button>
         </form>
         <!-- Preview uploaded image -->
         <img id="userImage" src="" alt="User Image">
@@ -125,9 +124,13 @@
 
 
     // Handle image upload
-    document.getElementById('imageForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
+    // Automatically handle image upload on file selection
+    document.getElementById('image').addEventListener('change', async (event) => {
+        const fileInput = event.target;
+        if (fileInput.files.length === 0) return;
+
+        const formData = new FormData();
+        formData.append('image', fileInput.files[0]);
 
         try {
             const response = await fetch(`http://localhost/group_project_1.0/public/Profile/upload_image/${userId}`, {
