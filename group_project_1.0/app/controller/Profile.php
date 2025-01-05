@@ -71,6 +71,72 @@ class Profile extends Controller{
         }
     }
 
+    // Upload and save image
+    public function upload_image($user_id) {
+        $model = new User_imagemodel();
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+            $file = $_FILES['image'];
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/';
+            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $maxFileSize = 2 * 1024 * 1024; // 2 MB
+    
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                echo json_encode(['success' => false, 'message' => 'Invalid file type.']);
+                return;
+            }
+            if ($file['size'] > $maxFileSize) {
+                echo json_encode(['success' => false, 'message' => 'File size exceeds the limit.']);
+                return;
+            }
+            $newFileName = hash('sha256', uniqid() . microtime()) . '.' . $fileExtension;
+            $uploadPath = $uploadDir . $newFileName;
+            if (!file_exists($uploadDir) && !mkdir($uploadDir, 0777, true) && !is_dir($uploadDir)) {
+                echo json_encode(['success' => false, 'message' => 'Failed to create directory.']);
+                return;
+            }
+            if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+                $imagePath = '/group_project_1.0/public/uploads/' . $newFileName;
+                if ($model->check_if_exists($user_id)) {
+                    $result = $model->update($user_id, ['Src' => $imagePath]);
+                } else {
+                    $result = $model->insert(['User_id' => $user_id, 'Src' => $imagePath]);
+                }
+                if ($result) {
+                    echo json_encode(['success' => true, 'newSrc' => $imagePath]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Database operation failed.']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to upload image.']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Invalid request.']);
+        }
+    }
+    
+
+    // Fetch user image to display on profile
+    public function view_image($user_id) {
+        $model = new User_imagemodel();
+
+
+        $image = $model->where(['User_id' => $user_id]);
+
+        if (empty($image)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($image, JSON_PRETTY_PRINT);
+    }
+
+
+
+
 }
 
 
