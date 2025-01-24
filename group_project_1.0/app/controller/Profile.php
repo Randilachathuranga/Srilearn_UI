@@ -77,7 +77,7 @@ class Profile extends Controller{
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
             $file = $_FILES['image'];
-            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/';
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/img/';
             $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
             $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
             $maxFileSize = 2 * 1024 * 1024; // 2 MB
@@ -97,7 +97,7 @@ class Profile extends Controller{
                 return;
             }
             if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                $imagePath = '/group_project_1.0/public/uploads/' . $newFileName;
+                $imagePath = '/group_project_1.0/public/uploads/img/' . $newFileName;
                 if ($model->check_if_exists($user_id)) {
                     $result = $model->update($user_id, ['Src' => $imagePath]);
                 } else {
