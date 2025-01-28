@@ -3,7 +3,9 @@ const classId = sessionStorage.getItem("class_id");
 console.log("Class ID:", classId);
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetch(`http://localhost/group_project_1.0/public/Learning_mat/viewMat/${classId}`)
+  fetch(
+    `http://localhost/group_project_1.0/public/Learning_mat/viewMat/${classId}`
+  )
     .then((response) => {
       if (!response.ok) {
         if (response.status === 404) {
@@ -72,6 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
           };
           materialDiv.appendChild(deleteBtn);
 
+          // const Updatebtn = document.createElement("button");
+          // Updatebtn.textContent = `Update`;
+          // Updatebtn.onclick = function () {
+          //   showupdateForm();
+          // };
+          // materialDiv.appendChild(Updatebtn);
+
           topicDiv.appendChild(materialDiv);
         });
 
@@ -83,18 +92,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
 // upload pdf
 const uploadForm = document.getElementById("uploadForm");
 if (uploadForm) {
   uploadForm.addEventListener("submit", async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     const formData = new FormData(uploadForm);
     try {
-      const response = await fetch(`http://localhost/group_project_1.0/public/Learning_mat/insertLearningMat/${classId}`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `http://localhost/group_project_1.0/public/Learning_mat/insertLearningMat/${classId}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -103,7 +114,8 @@ if (uploadForm) {
       if (result.message) {
         alert(result.message);
         hideUploadForm(); // Hide the form after successful submission
-        window.location.href = "http://localhost/group_project_1.0/public/Learning_mat";
+        window.location.href =
+          "http://localhost/group_project_1.0/public/Learning_mat";
       } else if (result.error) {
         alert(`Error: ${result.error}`);
       } else {
@@ -111,13 +123,14 @@ if (uploadForm) {
       }
     } catch (error) {
       console.error("Error during form submission:", error);
-      alert("An error occurred while uploading the material. Please try again.");
+      alert(
+        "An error occurred while uploading the material. Please try again."
+      );
     }
   });
 } else {
   console.error("Upload form element not found.");
 }
-
 
 // Show the upload form
 function showUploadForm() {
@@ -125,19 +138,27 @@ function showUploadForm() {
   document.getElementById("overlay").style.display = "block";
 }
 
+//Show the update form
+// function showupdateForm(){
+//   document.getElementById("updateForm").style.display = "block";
+//   document.getElementById("overlay").style.display = "block";
+// }
+
 // Hide the upload form
 function hideUploadForm() {
   document.getElementById("uploadForm").style.display = "none";
   document.getElementById("overlay").style.display = "none";
 }
 
-
-
-function deleteMat(Mat_id){
+// delete
+function deleteMat(Mat_id) {
   console.log(Mat_id);
-  fetch(`http://localhost/group_project_1.0/public/Learning_mat/deleteMat/${Mat_id}`, {
-    method: "DELETE",
-  })
+  fetch(
+    `http://localhost/group_project_1.0/public/Learning_mat/deleteMat/${Mat_id}`,
+    {
+      method: "DELETE",
+    }
+  )
     .then((response) => {
       if (!response.ok) {
         throw new Error("An unexpected error occurred.");
@@ -148,7 +169,8 @@ function deleteMat(Mat_id){
       console.log("Deleted data:", data);
       if (data.message) {
         alert(data.message);
-        window.location.href = "http://localhost/group_project_1.0/public/Learning_mat";
+        window.location.href =
+          "http://localhost/group_project_1.0/public/Learning_mat";
       } else if (data.error) {
         alert(`Error: ${data.error}`);
       } else {
@@ -160,3 +182,68 @@ function deleteMat(Mat_id){
       alert("An error occurred while deleting the material. Please try again.");
     });
 }
+
+// update mat
+// const UpdateForm = document.getElementById("uploadForm");
+// if (UpdateForm) {
+//   UpdateForm.addEventListener("submit", async function (event) {
+//     event.preventDefault();
+//     const formData = new FormData(UpdateForm);
+//     try {
+//       const response = await fetch(
+//         `http://localhost/group_project_1.0/public/Learning_mat/updateMat/${material.Mat_id}`,
+//         {
+//           method: "POST",
+//           body: formData,
+//         }
+//       );
+
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//       }
+//       const result = await response.json();
+//       if (result.message) {
+//         alert(result.message);
+//         hideUploadForm(); // Hide the form after successful submission
+//         window.location.href =
+//           "http://localhost/group_project_1.0/public/Learning_mat";
+//       } else if (result.error) {
+//         alert(`Error: ${result.error}`);
+//       } else {
+//         alert("Unexpected response from the server.");
+//       }
+//     } catch (error) {
+//       console.error("Error during form submission:", error);
+//       alert(
+//         "An error occurred while uploading the material. Please try again."
+//       );
+//     }
+//   });
+// } else {
+//   console.error("Upload form element not found.");
+// }
+// function UpdateMat(Mat_id) {
+//   fetch(`http://localhost/group_project_1.0/public/Learning_mat/getMat/${Mat_id}`)
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error("An error occurred while fetching material details.");
+//       }
+//       return response.json();
+//     })
+//     .then((material) => {
+//       // Show the update form
+//       const updateForm = document.getElementById("updateForm");
+//       document.getElementById("overlay").style.display = "block";
+//       updateForm.style.display = "block";
+
+//       // Populate form fields with existing data
+//       document.getElementById("update_topic").value = material.topic;
+//       document.getElementById("update_sub_topic").value = material.sub_topic;
+//       document.getElementById("update_Description").value = material.Description;
+//       document.getElementById("update_pdf").dataset.matId = Mat_id; // Attach Mat_id to the form
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching material details:", error);
+//       alert("Failed to fetch material details.");
+//     });
+// }
