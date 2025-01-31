@@ -92,63 +92,80 @@ class Learning_mat extends Controller
         echo json_encode(['message' => 'Mat deleted successfully']);
     }
 
-    //updsate function
-    public function updateMat($Mat_id){
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/materials/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        $model = new Learning_matmodel();
-
-        $existingMat = $model->where(['Mat_id' => $Mat_id]);
-
-        if (!$existingMat) {
-            echo json_encode(['error' => 'Material not found.']);
-            return;
-        }
-
-        $updateData = [
-            'topic'       => $_POST['topic'] ?? $existingMat['topic'],
-            'sub_topic'   => $_POST['sub_topic'] ?? $existingMat['sub_topic'],
-            'Description' => $_POST['Description'] ?? $existingMat['Description'],
-            'Date'        => date('Y-m-d H:i:s'), 
-        ];
-
-        if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
-            $fileTmpPath = $_FILES['pdf']['tmp_name'];
-            $fileName = basename($_FILES['pdf']['name']);
-            $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-            if ($fileExt === 'pdf') {
+    // Update Learning Material
+    public function updateMat($Mat_id) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/materials/';
+            
+            // Ensure the directory exists
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+    
+            $model = new Learning_matmodel();
+            $existingMat = $model->where(['Mat_id' => $Mat_id]);
+    
+            if (!$existingMat) {
+                echo json_encode(['error' => 'Material not found.']);
+                return;
+            }
+    
+            // Prepare update data with existing values as defaults
+            $updateData = [
+                'topic'       => $_POST['topic'] ?? $existingMat['topic'],
+                'sub_topic'   => $_POST['sub_topic'] ?? $existingMat['sub_topic'],
+                'Description' => $_POST['Description'] ?? $existingMat['Description'],
+                'Date'        => date('Y-m-d H:i:s'),
+            ];
+    
+            // Handle PDF upload if a new file is provided
+            if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['pdf']['tmp_name'];
+                $fileName = basename($_FILES['pdf']['name']);
+                $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    
+                // Validate file type
+                if ($fileExt !== 'pdf') {
+                    echo json_encode(['error' => 'Only PDF files are allowed.']);
+                    return;
+                }
+    
+                // Create a unique filename
                 $newFileName = uniqid() . '-' . $fileName;
                 $destPath = $uploadDir . $newFileName;
                 $fileUrl = 'http://localhost/group_project_1.0/public/uploads/materials/' . $newFileName;
-
-                if (move_uploaded_file($fileTmpPath, $destPath)) {
-                    $updateData['Url'] = $fileUrl;
-
-                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . parse_url($existingMat['Url'], PHP_URL_PATH))) {
-                        unlink($_SERVER['DOCUMENT_ROOT'] . parse_url($existingMat['Url'], PHP_URL_PATH));
-                    }
-                } else {
+    
+                // Attempt to move the uploaded file
+                if (!move_uploaded_file($fileTmpPath, $destPath)) {
                     echo json_encode(['error' => 'Failed to upload the new file.']);
                     return;
                 }
-            } else {
-                echo json_encode(['error' => 'Only PDF files are allowed.']);
-                return;
+    
+                // Remove the old file if it exists
+                if (!empty($existingMat['Url'])) {
+                    $oldFilePath = $_SERVER['DOCUMENT_ROOT'] . parse_url($existingMat['Url'], PHP_URL_PATH);
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+    
+                // Update URL with the new file
+                $updateData['Url'] = $fileUrl;
             }
-        }
-        if ($model->update($Mat_id, $updateData, 'Mat_id')) {
-            echo json_encode(['message' => 'Material updated successfully.', 'material' => $updateData]);
+    
+            // Perform the update
+            if ($model->update($Mat_id, $updateData, 'Mat_id')) {
+                echo json_encode([
+                    'message' => 'Material updated successfully.', 
+                    'material' => $updateData
+                ]);
+            } else {
+                echo json_encode(['error' => 'Failed to update the material.']);
+            }
         } else {
-            echo json_encode(['error' => 'Failed to update the material.']);
+            echo json_encode(['error' => 'Invalid request method.']);
         }
-    } else {
-        echo json_encode(['error' => 'Invalid request method.']);
     }
-}
 
 
 }
