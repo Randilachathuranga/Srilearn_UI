@@ -351,3 +351,9 @@ function reqPay() {
   window.location.href =
     "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
 }
+
+function viewStudents(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/ClassStudents";
+  console.log("Class ID stored in sessionStorage:", Class_id);
+}

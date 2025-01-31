@@ -190,6 +190,7 @@
             <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard(getClassId())" class="buttons">Issue free cards</button>
             <button onclick="reqPay()" class="buttons">Request payrolls</button>
+            <button onclick="viewStudents(getClassId())" class="buttons">View all students</button>
         </div>
     </div>
 </div>

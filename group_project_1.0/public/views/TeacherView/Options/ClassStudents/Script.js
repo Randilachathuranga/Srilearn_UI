@@ -1,0 +1,120 @@
+const classId = sessionStorage.getItem("class_id");
+console.log("Retrieved Class ID from sessionStorage:", classId);
+
+let allStudentsData = []; // Store all students data globally
+
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
+
+    fetch(`http://localhost/group_project_1.0/public/ClassStudents/viewstudents/${classId}`)
+        .then((response) => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.error("No students found for this class.");
+                    updateTableMessage("No students found for this class.");
+                    return [];
+                }
+                throw new Error("An unexpected error occurred.");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            allStudentsData = data; // Store all data
+            renderStudentsTable(data);
+        })
+        .catch((error) => {
+            console.error("Error fetching students:", error);
+            updateTableMessage("An error occurred while fetching students.");
+        });
+
+    // Live search functionality
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        filterStudents(searchTerm);
+    });
+
+    function renderStudentsTable(students) {
+        const studentsTableBody = document.getElementById("studentsTableBody");
+        
+        if (!studentsTableBody) {
+            console.error("Table body element not found.");
+            return;
+        }
+        
+        // Clear previous rows
+        studentsTableBody.innerHTML = "";
+        
+        if (!students || students.length === 0) {
+            updateTableMessage("No students found for this class.");
+            return;
+        }
+        
+        students.forEach((student) => {
+            const row = document.createElement("tr");
+            
+            // Create cells for each student detail
+            const cellData = [
+                student.Stu_id,
+                `${student.F_name} ${student.L_name}`,
+                student.Email,
+                student.District,
+                student.Phone_number,
+                student.Address
+            ];
+            
+            cellData.forEach(data => {
+                const cell = document.createElement("td");
+                cell.textContent = data;
+                row.appendChild(cell);
+            });
+            
+            // Create remove button cell
+            const removeCell = document.createElement("td");
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.className = "btn btn-danger";
+            removeButton.onclick = () => removeStudent(student.Enrollment_id);
+            
+            removeCell.appendChild(removeButton);
+            row.appendChild(removeCell);
+            
+            studentsTableBody.appendChild(row);
+        });
+    }
+    function filterStudents(searchTerm) {
+        const filteredStudents = allStudentsData.filter(student => 
+            `${student.F_name} ${student.L_name}`.toLowerCase().includes(searchTerm)
+        );
+
+        renderStudentsTable(filteredStudents);
+    }
+
+    function updateTableMessage(message) {
+        const studentsTableBody = document.getElementById("studentsTableBody");
+        if (studentsTableBody) {
+            studentsTableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="no-data">${message}</td>
+                </tr>
+            `;
+        }
+    }
+});
+
+
+function removeStudent(id) {
+    alert("Are you sure you want to leave this class?");
+    fetch(`http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(() => {
+        location.reload(); // Reload the page to reflect the deletion
+    })
+    .catch(error => {
+        console.error('Error deleting record:', error);
+    });
+}
