@@ -20,7 +20,51 @@
     <title>My Blogs</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Blogs/Blogstyles.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Blogs/CreateBlogs/CreateBlogs.css">
+<style>
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .pagination-container button {
+        margin: 0 10px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color:rgb(38, 15, 190);
+        color: white;
+        cursor: pointer;
+    }
+    .pagination-container span {
+        margin: 0 10px;
+    }
 
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .search-input {
+        width: 300px;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .search-button {
+        padding: 10px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
 <?php $today = date("Y-m-d"); ?>
@@ -28,6 +72,16 @@
     <h1 class="header-title">Blogs</h1>
     
     <img src="../../../../../group_project_1.0/public/views/General/Blogs/blogs1.png" alt="Class Image" class="class-image">
+</div>
+
+<div class="search-container">
+    <input 
+        type="text" 
+        id="blog-search-input" 
+        placeholder="Search blogs by title..." 
+        class="search-input"
+    >
+    <button id="search-button" class="search-button">Search</button>
 </div>
 
     <!-- Button Container -->
