@@ -326,9 +326,10 @@ function UploadMat(Class_id) {
   console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
-function UploadASS() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
+function UploadASS(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
+  console.log("Class ID stored in sessionStorage:", Class_id);  
 }
 
 function viewschedule(Class_id) {
