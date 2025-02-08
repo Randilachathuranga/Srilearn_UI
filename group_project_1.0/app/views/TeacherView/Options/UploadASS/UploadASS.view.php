@@ -1,5 +1,6 @@
 <?php   
-include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php"  
+include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php" 
+ 
 ?>
 
 <!DOCTYPE html>
@@ -14,11 +15,21 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
     <div class="container">
         <div class="assignments-header">
             <h2>All Assignments</h2>
-            <button class="create-assignment-btn" onclick="Createform()">
+            
+            <?php 
+                if ($_SESSION['Role'] == 'teacher') { 
+                    echo '<button class="create-assignment-btn" onclick="Createform()">
                 <span class="plus-icon">+</span>
                 Create
             </button>
+';
+                }
+    ?>
+
         </div>
+
+        <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
+
         
         <div id="alertContainer"></div>
         
@@ -42,7 +53,6 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
   </div>
 </div>
 
-
 <!-- Student Marks Table -->
 <div class="StudentMarksTable" id="StudentMarksTable">
     <table class="table table-bordered">
@@ -54,6 +64,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
         </tbody>
     </table>
 </div>
+
 
 
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadASS/script.js"></script>

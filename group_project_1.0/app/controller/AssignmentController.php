@@ -23,8 +23,10 @@ Class AssignmentController extends Controller{
                 throw new Exception("Invalid data format: Marks array is required");
             }
 
+            $Ass_name = $requestData['Ass_name'];
+
             // Step 1: Insert into Assignment Table
-            $model->insertASS($Class_id);    
+            $model->insertASS($Ass_name,$Class_id);    
             $Ass_id = $model->last_InsertId();
 
             // Step 2: Insert Assignment Marks
@@ -135,7 +137,7 @@ Class AssignmentController extends Controller{
     }
 
     // delete assignment
-    public function DeleteAssingment($Ass_id) {
+    public function DeleteAssignment($Ass_id) {
         $model = new Assignment();
         try {
             if ($model->Del_ass($Ass_id)) {  // Use $userId here, as it's passed from the route
