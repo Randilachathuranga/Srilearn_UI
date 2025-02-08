@@ -20,17 +20,22 @@
         }
         
     
-        public function insertASS($Class_id) {
+        public function insertASS($Ass_name, $Class_id) {
             try {
-                $query = "INSERT INTO {$this->table2} (Class_id) VALUES (:class_id)";
-                $data = ['class_id' => $Class_id];
-    
+                $query = "INSERT INTO {$this->table2} (Ass_name, Class_id) VALUES (:Ass_name, :Class_id)";
+                $data = [
+                    'Ass_name' => $Ass_name,
+                    'Class_id' => $Class_id
+                ];
+        
                 $this->duiquery($query, $data);
-    
+        
             } catch (Exception $e) {
+                // Catch and throw an error if something goes wrong
                 throw new Exception("Database error: " . $e->getMessage());
             }
         }
+        
     
         public function insertAssignmentMarks($Ass_id, $studentData) {
             try {
