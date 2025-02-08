@@ -304,9 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //create Ass
+
+// JavaScript for creating the form
 function Createform() {
   let allStudentsData = [];
-  let assignment_name = ""; // Variable to store the assignment name
+  let assignment_name = "";
 
   // Create a table header
   const tableHeader = document.getElementById("tableHeader");
@@ -323,10 +325,31 @@ function Createform() {
     tableHeader.appendChild(headerRow);
   }
 
+  // Show modal function
+  function showModal() {
+    const modal = document.getElementById('assignmentModal');
+    modal.style.display = 'block';
+    // Center the modal when shown
+    const modalContent = document.querySelector('.modal-content');
+    modalContent.style.transform = 'translate(-50%, -50%)';
+  }
+
+  // Close modal function
+  function closeModal() {
+    const modal = document.getElementById('assignmentModal');
+    modal.style.display = 'none';
+  }
+
+  // Add close modal event listener
+  window.onclick = function(event) {
+    const modal = document.getElementById('assignmentModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  }
+
   // Fetch the list of students for the class
-  fetch(
-    `http://localhost/group_project_1.0/public/ClassStudents/viewstudents/${classId}`
-  )
+  fetch(`http://localhost/group_project_1.0/public/ClassStudents/viewstudents/${classId}`)
     .then((response) => {
       if (!response.ok) {
         if (response.status === 404) {
@@ -341,6 +364,7 @@ function Createform() {
     .then((data) => {
       allStudentsData = data;
       renderStudentsTable(data);
+      showModal(); // Show modal after table is rendered
     })
     .catch((error) => {
       console.error("Error fetching students:", error);
@@ -357,7 +381,7 @@ function Createform() {
     assignmentNameCell.colSpan = 3;
     const assignmentNameInput = document.createElement("input");
     assignmentNameInput.type = "text";
-    assignmentNameInput.className = "form-control";
+    assignmentNameInput.className = "form-control mb-3";
     assignmentNameInput.id = "assignment_name";
     assignmentNameInput.placeholder = "Enter Assignment Name";
     assignmentNameCell.appendChild(assignmentNameInput);
@@ -391,10 +415,11 @@ function Createform() {
     const buttonRow = document.createElement("tr");
     const buttonCell = document.createElement("td");
     buttonCell.colSpan = 3;
+    buttonCell.className = "text-center";
 
     const okButton = document.createElement("button");
     okButton.textContent = "Add Assignment";
-    okButton.className = "btn btn-success";
+    okButton.className = "btn btn-success mt-3";
     okButton.onclick = addAssignment;
 
     buttonCell.appendChild(okButton);
@@ -405,7 +430,6 @@ function Createform() {
   // Add the assignment with marks data
   async function addAssignment() {
     try {
-      // Get the assignment name
       assignment_name = document.getElementById("assignment_name").value;
 
       if (!assignment_name) {
@@ -426,11 +450,6 @@ function Createform() {
         }
       });
 
-      console.log(
-        "Sending data:",
-        JSON.stringify({ Marks: marksData, Ass_name: assignment_name }, null, 2)
-      );
-
       const response = await fetch(
         `http://localhost/group_project_1.0/public/AssignmentController/createASS/${classId}`,
         {
@@ -444,20 +463,21 @@ function Createform() {
       );
 
       const responseData = await response.json();
-      console.log("Server response:", responseData);
 
       if (!responseData.success) {
         throw new Error(responseData.error || "Failed to add assignment");
       }
 
       alert("Assignment created successfully!");
-      window.location.href =
-        "http://localhost/group_project_1.0/public/AssignmentController";
+      closeModal();
+      window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
     } catch (error) {
       console.error("Error adding assignment:", error);
       alert(error.message || "Failed to add assignment. Please try again.");
     }
   }
+
+
 
   function updateTableMessage(message) {
     const studentsTableBody = document.getElementById("studentsTableBody");
@@ -471,4 +491,8 @@ function Createform() {
   }
 }
 
+
+function back(){
+  document.getElementById('assignmentModal').style.display = "none";
+}
 
