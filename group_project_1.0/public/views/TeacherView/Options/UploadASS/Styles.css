@@ -138,13 +138,6 @@
   z-index: 1000;
 }
 
-.modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 50%;
-}
 
 .close {
   color: #aaa;
@@ -283,6 +276,94 @@ button:hover {
   background-color: #0078A0;
 }
 
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
 
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
 
+.close-button {
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/* Table styles */
+.StudentMarksTable {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table input.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.table input.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Button styles */
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}

@@ -54,15 +54,24 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 </div>
 
 <!-- Student Marks Table -->
-<div class="StudentMarksTable" id="StudentMarksTable">
-    <table class="table table-bordered">
+<!-- Modal structure -->
+<div id="assignmentModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add Assignment</h2>
+      <span class="close-button" onclick="back()">&times;</span>
+    </div>
+    <div class="StudentMarksTable" id="StudentMarksTable">
+      <table class="table table-bordered table-hover">
         <thead class="table-dark" id="tableHeader">
-            <!-- Headers will be inserted dynamically here -->
+          <!-- Headers will be inserted dynamically here -->
         </thead>
         <tbody id="studentsTableBody">
-            <!-- Student rows will be inserted dynamically here -->
+          <!-- Student rows will be inserted dynamically here -->
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 </div>
 
 
