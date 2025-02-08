@@ -14,7 +14,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
     <div class="container">
         <div class="assignments-header">
             <h2>All Assignments</h2>
-            <button class="create-assignment-btn">
+            <button class="create-assignment-btn" onclick="Createform()">
                 <span class="plus-icon">+</span>
                 Create
             </button>
@@ -43,6 +43,19 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 </div>
 
 
+<!-- Student Marks Table -->
+<div class="StudentMarksTable" id="StudentMarksTable">
+    <table class="table table-bordered">
+        <thead class="table-dark" id="tableHeader">
+            <!-- Headers will be inserted dynamically here -->
+        </thead>
+        <tbody id="studentsTableBody">
+            <!-- Student rows will be inserted dynamically here -->
+        </tbody>
+    </table>
+</div>
+
+
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadASS/script.js"></script>
 </body>
 </html>
@@ -50,3 +63,4 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 <?php
  include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"
  ?>
+

@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const classId = sessionStorage.getItem("class_id");
-  console.log("Retrieved Class ID from sessionStorage:", classId);
+const classId = sessionStorage.getItem("class_id");
+console.log("Retrieved Class ID from sessionStorage:", classId);
 
+document.addEventListener("DOMContentLoaded", () => {
   function loadAssignments() {
     fetch(
-      "http://localhost/group_project_1.0/public/AssignmentController/AllAssingments"
+      `http://localhost/group_project_1.0/public/AssignmentController/AllAssignments/${classId}`
     )
       .then((response) => {
         if (!response.ok) {
@@ -20,28 +20,71 @@ document.addEventListener("DOMContentLoaded", () => {
         const assignmentsContainer = document.getElementById(
           "assignmentsContainer"
         );
+        if (!assignmentsContainer) {
+          console.error("assignmentsContainer element not found in DOM");
+          return;
+        }
+
         assignmentsContainer.innerHTML = "";
 
-        // Modify the card creation in loadAssignments function
-        assignments.forEach((assignment) => {
+        // Group assignments by Ass_id
+        const uniqueAssignments = Array.from(
+          new Map(assignments.map((item) => [item.Ass_id, item])).values()
+        );
+
+        uniqueAssignments.sort((a, b) => a.Ass_id - b.Ass_id);
+
+        uniqueAssignments.forEach((assignment) => {
           const card = document.createElement("div");
           card.classList.add("assignment-card");
 
+          const submissions = assignments.filter(
+            (a) => a.Ass_id === assignment.Ass_id
+          );
+          const submissionCount = submissions.length;
+
           card.innerHTML = `
-      <div class="assignment-number">Assignment #${assignment.Ass_id}</div>
-      <div class="card-buttons">
-          <button class="view-btn" onclick="viewAssignment(${assignment.Ass_id})">View Assingment</button>
-          <button class="delete-btn" onclick="deleteAssignment(${assignment.Ass_id})">Delete Assingment</button>
-          <div class="search-section">
-              <input type="number" class="STU_id" id="STU_id_${assignment.Ass_id}" 
-                  placeholder="Enter Student ID" />
-              <button class="search-btn" onclick="My_Marks(${assignment.Ass_id})">Search</button>
-          </div>
-          <div id="result_${assignment.Ass_id}" class="result-container"></div>
-      </div>
-  `;
+            <div class="assignment-number">
+              Assignment #${assignment.Ass_id}
+            </div>
+            <div class="card-buttons">
+              <button class="view-btn" data-assignment-id="${assignment.Ass_id}">View Assignment</button>
+              <button class="delete-btn" data-assignment-id="${assignment.Ass_id}">Delete Assignment</button>
+              <div class="search-section">
+                <input type="number" class="STU_id" id="STU_id_${assignment.Ass_id}" 
+                     placeholder="Enter Student ID" />
+                <button class="search-btn" data-assignment-id="${assignment.Ass_id}">Search</button>
+              </div>
+              <div id="result_${assignment.Ass_id}" class="result-container"></div>
+            </div>
+          `;
 
           assignmentsContainer.appendChild(card);
+        });
+
+        // Add event listeners
+        document.querySelectorAll(".view-btn").forEach((btn) => {
+          btn.addEventListener("click", (event) => {
+            const assignmentId =
+              event.target.getAttribute("data-assignment-id");
+            viewAssignment(assignmentId);
+          });
+        });
+
+        document.querySelectorAll(".delete-btn").forEach((btn) => {
+          btn.addEventListener("click", (event) => {
+            const assignmentId =
+              event.target.getAttribute("data-assignment-id");
+            deleteAssignment(assignmentId);
+          });
+        });
+
+        document.querySelectorAll(".search-btn").forEach((btn) => {
+          btn.addEventListener("click", (event) => {
+            const assignmentId =
+              event.target.getAttribute("data-assignment-id");
+            My_Marks(assignmentId);
+          });
         });
       })
       .catch((error) => {
@@ -50,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  //
+  // View Assignment Function
   window.viewAssignment = function (Ass_id) {
     fetch(
       `http://localhost/group_project_1.0/public/AssignmentController/ViewAllStudentsMarks/${Ass_id}`
@@ -68,31 +111,31 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((students) => {
         const modalContent = document.getElementById("modalContent");
         modalContent.innerHTML = `
-              <h2>Assignment #${Ass_id} - Student Marks</h2>
-              <table>
-                <tr>
-                  <th>Student ID</th>
-                  <th>Name</th>
-                  <th>Marks</th>
-                  <th>Update Marks</th>
-                </tr>
-                ${students
-                  .map(
-                    (stu) => `
-                  <tr>
-                    <td>${stu.Stu_id}</td>
-                    <td>${stu.Name}</td>
-                    <td id="marks_${stu.Stu_id}">${stu.Marks}</td>
-                    <td>
-                      <button id="updateBtn_${stu.Stu_id}" onclick="enableEdit(${stu.Stu_id}, ${Ass_id})">
-                        Update Marks
-                      </button>
-                    </td>
-                  </tr>`
-                  )
-                  .join("")}
-              </table>
-            `;
+          <h2>Assignment #${Ass_id} - Student Marks</h2>
+          <table>
+            <tr>
+              <th>Student ID</th>
+              <th>Name</th>
+              <th>Marks</th>
+              <th>Update Marks</th>
+            </tr>
+            ${students
+              .map(
+                (stu) => `
+              <tr>
+                <td>${stu.Stu_id}</td>
+                <td>${stu.Name}</td>
+                <td id="marks_${stu.Stu_id}">${stu.Marks}</td>
+                <td>
+                  <button id="updateBtn_${stu.Stu_id}" onclick="enableEdit(${stu.Stu_id}, ${Ass_id})">
+                    Update Marks
+                  </button>
+                </td>
+              </tr>`
+              )
+              .join("")}
+          </table>
+        `;
 
         document.getElementById("modal").style.display = "block";
       })
@@ -102,15 +145,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  // Function to enable editing
+  // Enable Edit Function
   window.enableEdit = function (Stu_id, Ass_id) {
     const marksCell = document.getElementById(`marks_${Stu_id}`);
     const currentMarks = marksCell.innerText;
 
-    // Replace marks text with an input field
     marksCell.innerHTML = `<input type="number" id="marksInput_${Stu_id}" value="${currentMarks}" style="width: 60px;">`;
 
-    // Change button to "OK"
     const updateBtn = document.getElementById(`updateBtn_${Stu_id}`);
     updateBtn.innerText = "OK";
     updateBtn.onclick = function () {
@@ -118,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // Function to save updated marks
+  // Save Updated Marks Function
   window.saveUpdatedMarks = function (Stu_id, Ass_id) {
     const inputField = document.getElementById(`marksInput_${Stu_id}`);
     const newMarks = inputField.value;
@@ -134,10 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
-          // Update the table cell with the new marks
           document.getElementById(`marks_${Stu_id}`).innerText = newMarks;
 
-          // Change button back to "Update Marks"
           const updateBtn = document.getElementById(`updateBtn_${Stu_id}`);
           updateBtn.innerText = "Update Marks";
           updateBtn.onclick = function () {
@@ -155,8 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  //
-
+  // Delete Assignment Function
   window.deleteAssignment = function (Ass_id) {
     if (confirm("Are you sure you want to delete this assignment?")) {
       fetch(
@@ -181,74 +219,215 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Search Marks Function
+  window.My_Marks = function (assId) {
+    const studentId = document.getElementById(`STU_id_${assId}`).value;
+    const result = document.getElementById(`result_${assId}`);
+
+    if (!studentId) {
+      showAlert("Please enter a valid Student ID", "error");
+      return;
+    }
+
+    fetch(
+      `http://localhost/group_project_1.0/public/AssignmentController/MyMarks/${studentId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ assId: assId }),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            response.status === 404
+              ? "No marks found for this student"
+              : "An unexpected error occurred"
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const student = data[0];
+          result.innerHTML = `
+            <div class="result-card">
+              <h3>Student Details</h3>
+              <p>Student ID: ${student.Stu_id}</p>
+              <p>Name: ${student.Name}</p>
+              <p>Marks: ${student.Marks}</p>
+            </div>
+          `;
+          result.style.display = "block";
+        } else {
+          throw new Error("No marks found for this student");
+        }
+      })
+      .catch((error) => {
+        showAlert(error.message, "error");
+        result.innerHTML = `<div class="error-message">${error.message}</div>`;
+        result.style.display = "block";
+      });
+  };
+
+  // Alert Function
+  window.showAlert = function (message, type) {
+    const alertContainer = document.getElementById("alertContainer");
+    alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+    setTimeout(() => {
+      alertContainer.innerHTML = "";
+    }, 3000);
+  };
+
+  // Modal Close Event
   document.getElementById("modalClose").addEventListener("click", () => {
     document.getElementById("modal").style.display = "none";
   });
 
+  // Initial load
   loadAssignments();
 });
 
-// Correct the fetch function and the body of the request
-function My_Marks(assId) {
-  const studentId = document.getElementById(`STU_id_${assId}`).value;
-  const result = document.getElementById(`result_${assId}`); // Add this line
-  if (!studentId) {
-    showAlert("Please enter a valid Student ID", "error");
-    return;
+
+
+
+
+
+function Createform() {
+  let allStudentsData = [];
+
+  const tableHeader = document.getElementById("tableHeader");
+  if (tableHeader) {
+      const headerRow = document.createElement("tr");
+      const headers = ["Student ID", "Name", "Marks"];
+
+      headers.forEach((headerText) => {
+          const th = document.createElement("th");
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+      });
+
+      tableHeader.appendChild(headerRow);
   }
-  fetch(
-    `http://localhost/group_project_1.0/public/AssignmentController/MyMarks/${studentId}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ assId: assId }),
-    }
-  )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          response.status === 404
-            ? "No marks found for this student"
-            : "An unexpected error occurred"
-        );
+
+  fetch(`http://localhost/group_project_1.0/public/ClassStudents/viewstudents/${classId}`)
+      .then((response) => {
+          if (!response.ok) {
+              if (response.status === 404) {
+                  console.error("No students found for this class.");
+                  updateTableMessage("No students found for this class.");
+                  return [];
+              }
+              throw new Error("An unexpected error occurred.");
+          }
+          return response.json();
+      })
+      .then((data) => {
+          allStudentsData = data;
+          renderStudentsTable(data);
+      })
+      .catch((error) => {
+          console.error("Error fetching students:", error);
+      });
+
+  function renderStudentsTable(students) {
+      const studentsTableBody = document.getElementById("studentsTableBody");
+      studentsTableBody.innerHTML = "";
+
+      students.forEach((student) => {
+          const row = document.createElement("tr");
+
+          const cellData = [
+              student.Stu_id,
+              `${student.F_name} ${student.L_name}`
+          ];
+
+          cellData.forEach((data) => {
+              const cell = document.createElement("td");
+              cell.textContent = data;
+              row.appendChild(cell);
+          });
+
+          const marksCell = document.createElement("td");
+          const marksInput = document.createElement("input");
+          marksInput.type = "number";
+          marksInput.className = "form-control";
+          marksInput.id = `marks_${student.Stu_id}`;
+          marksInput.placeholder = "Enter Marks";
+          marksCell.appendChild(marksInput);
+          row.appendChild(marksCell);
+
+          studentsTableBody.appendChild(row);
+      });
+
+      const buttonRow = document.createElement("tr");
+      const buttonCell = document.createElement("td");
+      buttonCell.colSpan = 3;
+
+      const okButton = document.createElement("button");
+      okButton.textContent = "Add Assignment";
+      okButton.className = "btn btn-success";
+      okButton.onclick = addAssignment;
+
+      buttonCell.appendChild(okButton);
+      buttonRow.appendChild(buttonCell);
+      studentsTableBody.appendChild(buttonRow);
+  }
+
+  async function addAssignment() {
+      try {
+          let marksData = [];
+
+          allStudentsData.forEach(student => {
+              const marksInput = document.getElementById(`marks_${student.Stu_id}`);
+              if (marksInput) {
+                  marksData.push({
+                      Stu_id: student.Stu_id,
+                      Name: `${student.F_name} ${student.L_name}`,
+                      Marks: marksInput.value || 0
+                  });
+              }
+          });
+
+          console.log("Sending data:", JSON.stringify({ Marks: marksData }, null, 2));
+
+          const response = await fetch(`http://localhost/group_project_1.0/public/AssignmentController/createASS/${classId}`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+              },
+              body: JSON.stringify({ Marks: marksData })
+          });
+
+          const responseData = await response.json();
+          console.log("Server response:", responseData);
+
+          if (!responseData.success) {
+              throw new Error(responseData.error || "Failed to add assignment");
+          }
+
+          alert("Assignment created successfully!");
+          window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
+
+      } catch (error) {
+          console.error("Error adding assignment:", error);
+          alert(error.message || "Failed to add assignment. Please try again.");
       }
-      return response.json();
-    })
-    .then((data) => {
-      if (Array.isArray(data) && data.length > 0) {
-        const student = data[0];
-        // Update the result div with the marks
-        result.innerHTML = `
-              <div class="result-card">
-                  <h3>Student Details</h3>
-                  <p>Student ID: ${student.Stu_id}</p>
-                  <p>Name: ${student.Name}</p>
-                  <p>Marks: ${student.Marks}</p>
-              </div>
+  }
+
+
+
+  function updateTableMessage(message) {
+    const studentsTableBody = document.getElementById("studentsTableBody");
+    if (studentsTableBody) {
+      studentsTableBody.innerHTML = `
+              <tr>
+                  <td colspan="3" class="no-data">${message}</td>
+              </tr>
           `;
-        result.style.display = "block";
-      } else {
-        throw new Error("No marks found for this student");
-      }
-    })
-    .catch((error) => {
-      showAlert(error.message, "error");
-      result.innerHTML = `<div class="error-message">${error.message}</div>`;
-      result.style.display = "block";
-    });
-}
-
-function closePopup() {
-  window.location.href =
-    "http://localhost/group_project_1.0/public/AssignmentController";
-}
-
-function showAlert(message, type) {
-  const alertContainer = document.getElementById("alertContainer");
-  alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-  setTimeout(() => {
-    alertContainer.innerHTML = "";
-  }, 3000);
+    }
+  }
 }
