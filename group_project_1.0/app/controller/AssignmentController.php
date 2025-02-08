@@ -6,74 +6,77 @@ Class AssignmentController extends Controller{
     }
 
     // create Assingments
-    public function createASS() {
-        $model = new Assignment();
+    public function createASS($Class_id) {
+        ob_clean();
         header('Content-Type: application/json');
-        $inputData = json_decode(file_get_contents('php://input'), true);
-        if (isset($inputData['Class_id'], $inputData['Stu_id'], $inputData['Name'], $inputData['Marks'])) {
-            try {
-                $model->createTrigger();
-                $Ass_id = $model->insertASS($inputData['Class_id']);
-                if (!$Ass_id) {
-                    throw new Exception("Failed to create assignment");
-                }
-                $result = $model->insertAssignmentMarks(
-                    $Ass_id,
-                    $inputData['Stu_id'],
-                    $inputData['Name'],
-                    $inputData['Marks']
-                );
-                
-                if ($result) {
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Assignment created successfully',
-                        'data' => [
-                            'Ass_id' => $Ass_id,
-                            'Class_id' => $inputData['Class_id'],
-                            'marks_data' => [
-                                'Stu_id' => $inputData['Stu_id'],
-                                'Name' => $inputData['Name'],
-                                'Marks' => $inputData['Marks']
-                            ]
-                        ]
-                    ]);
-                } else {
-                    echo json_encode([
-                        'success' => false,
-                        'message' => 'Could not insert the Assignment marks'
-                    ]);
-                }
-            } catch (Exception $e) {
-                echo json_encode([
-                    'success' => false,
-                    'error' => 'An error occurred while creating the Assignment.',
-                    'details' => $e->getMessage()
-                ]);
+
+        try {
+            $model = new Assignment();
+
+            $requestData = json_decode(file_get_contents('php://input'), true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception("Invalid JSON input: " . json_last_error_msg());
             }
-        } else {
-            echo json_encode([
+
+            if (!isset($requestData['Marks']) || !is_array($requestData['Marks'])) {
+                throw new Exception("Invalid data format: Marks array is required");
+            }
+
+            // Step 1: Insert into Assignment Table
+            $model->insertASS($Class_id);    
+            $Ass_id = $model->last_InsertId();
+
+            // Step 2: Insert Assignment Marks
+            $marksInserted = $model->insertAssignmentMarks($Ass_id, $requestData['Marks']);
+
+            $response = [
+                'success' => true,
+                'message' => 'Assignment created successfully',
+                'data' => [
+                    'Ass_id' => $Ass_id,
+                    'Class_id' => $Class_id,
+                    'students_processed' => $marksInserted
+                ]
+            ];
+
+            echo json_encode($response);
+
+        } catch (Exception $e) {
+            $errorResponse = [
                 'success' => false,
-                'error' => 'Missing required fields: Class_id, Stu_id, Name, or Marks'
-            ]);
+                'error' => $e->getMessage()
+            ];
+
+            echo json_encode($errorResponse);
         }
-    }  
+        exit();
+    }
+       
 
     //view marks for all students
-    public function AllAssingments(){
+    public function AllAssignments($Class_id) {
         $model = new Assignment();
-
-        $ASS = $model->allassingsments();
-
-        if (empty($ASS)) {
-            http_response_code(404); // Not Found
-            echo json_encode(['error' => 'No Assigment found for the given Ass_id.']);
+        $ASS = $model->allAssignments($Class_id);
+    
+        // Debugging: Check the SQL query output
+        if ($ASS === false) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Database query failed']);
             return;
         }
-
+    
+        if (empty($ASS)) {
+            http_response_code(404);
+            echo json_encode(['error' => 'No assignments found for the given Class_id.']);
+            return;
+        }
+    
         header('Content-Type: application/json');
         echo json_encode($ASS, JSON_PRETTY_PRINT);
     }
+    
+    
 
     //view marks for all students
     public function ViewAllStudentsMarks($Ass_id){

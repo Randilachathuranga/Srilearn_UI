@@ -4,55 +4,62 @@
         
         public $table = 'assignment_marks';
         public $table2 = 'assignment_table';
-        
-        public function createTrigger() {
-            $dropTrigger = "DROP TRIGGER IF EXISTS after_assignment_insert";
+
+        public function last_InsertId() {
+            $query = "SELECT MAX(Ass_id) AS last_id FROM {$this->table2}";
             
-            $createTrigger = "
-                CREATE TRIGGER after_assignment_insert 
-                AFTER INSERT ON {$this->table2}
-                FOR EACH ROW 
-                BEGIN
-                    SET @last_ass_id = NEW.Ass_id;
-                END;
-            ";
+            $result = $this->query($query);  // Execute the query
             
-            try {
-                $this->query($dropTrigger);
-                return $this->query($createTrigger);
-            } catch (Exception $e) {
-                return false;
+            // Check if result exists and return the last ID
+            if ($result && isset($result[0]->last_id)) {
+                return $result[0]->last_id;
             }
+            
+            // Return null if the query fails or no result
+            return null;
         }
         
+    
         public function insertASS($Class_id) {
             try {
-                $this->query("SET @last_ass_id = NULL");
                 $query = "INSERT INTO {$this->table2} (Class_id) VALUES (:class_id)";
-                $data = ['Class_id' => $Class_id];
-                $result = $this->duiquery($query, $data);
-                $lastAssId = $this->query("SELECT @last_ass_id as id")->fetch(PDO::FETCH_ASSOC);
-                return $lastAssId['id'] ?? false;
+                $data = ['class_id' => $Class_id];
+    
+                $this->duiquery($query, $data);
+    
             } catch (Exception $e) {
-                throw new Exception("Failed to insert into assignment_table: " . $e->getMessage());
+                throw new Exception("Database error: " . $e->getMessage());
             }
         }
-        
-        public function insertAssignmentMarks($Ass_id, $Stu_id, $Name, $Marks) {
+    
+        public function insertAssignmentMarks($Ass_id, $studentData) {
             try {
+                if (!$Ass_id) {
+                    throw new Exception("Invalid Assignment ID");
+                }
+    
                 $query = "INSERT INTO {$this->table} (Ass_id, Stu_id, Name, Marks) 
-                        VALUES (:ass_id, :stu_id, :name, :marks)";
+                         VALUES (:ass_id, :stu_id, :name, :marks)";
                 
-                $data = [
-                    'Ass_id' => $Ass_id,
-                    'Stu_id' => $Stu_id,
-                    'Name' => $Name,
-                    'Marks' => $Marks
-                ];
-                
-                return $this->query($query, $data);
+                $successCount = 0;
+    
+                foreach ($studentData as $student) {
+                    $data = [
+                        'ass_id' => $Ass_id,
+                        'stu_id' => $student['Stu_id'],
+                        'name' => $student['Name'],
+                        'marks' => $student['Marks']
+                    ];
+    
+                    if ($this->query($query, $data)) {
+                        $successCount++;
+                    }
+                }
+    
+                return $successCount;
+    
             } catch (Exception $e) {
-                throw new Exception("Failed to insert assignment marks: " . $e->getMessage());
+                throw new Exception("Failed to insert marks: " . $e->getMessage());
             }
         }
         
@@ -71,10 +78,14 @@
         }
 
         //All assingments
-        public function allassingsments() {
-            $query = "SELECT * FROM $this->table2";
-            return $this->query($query);
+        public function allAssignments($Class_id) {
+            $query = "SELECT * FROM $this->table2 AS t 
+                      LEFT JOIN $this->table AS m ON t.Ass_id = m.Ass_id 
+                      WHERE t.Class_id = :Class_id";
+        
+            return $this->query($query, ['Class_id' => $Class_id]);
         }
+        
 
         //update a Spesific student mark
         public function UpdateSTUM($conditions, $data) {
