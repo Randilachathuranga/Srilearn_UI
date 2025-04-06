@@ -12,17 +12,15 @@ class Ind_Myclass extends Controller{
 
     }
 
-    //view my all classes
+    //view my individual classes
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
-
         // $isPremium = $model->checkPremium($P_id);
         // if (!$isPremium) {
         //     http_response_code(403); // Forbidden
         //     echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
         //     return;
         // }
-
         $t1 = $model->table1;
         $t2 = $model->table2;
         $joinCondition = $model->joinCondition;
@@ -39,15 +37,15 @@ class Ind_Myclass extends Controller{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //More details about single class
-    public function MoredetailsApi($Class_id) {
+    //view my institute classes
+    public function MyinstituteClass($N_id) {
         $model = new Myclassmodel();
 
         $t1 = $model->table1;
-        $t2 = $model->table2;
-        $joinCondition = $model->joinCondition;
+        $t2 = $model->table3;
+        $joinCondition = $model->joinCondition3;
         
-        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['N_id' => $N_id]);
 
         if (empty($class)) {
             http_response_code(404); // Not Found
@@ -55,6 +53,38 @@ class Ind_Myclass extends Controller{
             return;
         }
 
+        header('Content-Type: application/json');
+        echo json_encode($class, JSON_PRETTY_PRINT);
+    }
+
+    //More details about individual class
+    public function MoredetailsApi($Class_id) {
+        $model = new Myclassmodel();
+        $t1 = $model->table1;
+        $t2 = $model->table2;
+        $joinCondition = $model->joinCondition;
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
+        if (empty($class)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
+        header('Content-Type: application/json');
+        echo json_encode($class, JSON_PRETTY_PRINT);
+    }
+
+    //More details about individual class
+    public function Moredetailsinstitute($Class_id) {
+        $model = new Myclassmodel();
+        $t1 = $model->table1;
+        $t2 = $model->table3;
+        $joinCondition = $model->joinCondition3;
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['InstClass_id' => $Class_id]);
+        if (empty($class)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
         header('Content-Type: application/json');
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
