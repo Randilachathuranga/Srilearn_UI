@@ -15,17 +15,10 @@ class Myclassmodel{
     ];
 
     public $table2='individual_class';
-    public $allowedColumns2=[
-        'Location','Start_date','End_date'
-    ];
 
     //for institute class
     public $table3 = 'instituteteacher_class';
     public $joinCondition3 = "class.class_id = instituteteacher_class.InstClass_id";
-    public $table4 = 'normal_teacher';
-    public $joinCondition4 = "normal_teacher.N_ID = instituteteacher_class.N_ID";
-    public $table5 = 'user';
-    public $joinCondition5 = "user.User_id = normal_teacher.InstClass_id";
 
     //columns for insert into class table and individual class table
     public $ColumnsforT1=[
@@ -61,44 +54,47 @@ class Myclassmodel{
     }
 
     //update model
-    public function updateclass($id, $data, $id_column = 'Class_id', $table = '', $allowedColumns = []) {
-        $allowedTables = ['class', 'individual_class']; 
+    public function updateclass($id, $data, $id_column = 'Class_id', $table = '') {
+        // List all valid tables you want to allow for update
+        $allowedTables = ['class', 'individual_class', 'instituteteacher_class', 'normal_teacher']; 
+    
         if (!in_array($table, $allowedTables)) {
             error_log("Invalid table name: $table");
             return false;
         }
-        $filteredData = [];
-        if (!empty($allowedColumns)) {
-            foreach ($data as $key => $value) {
-                if (in_array($key, $allowedColumns)) {
-                    $filteredData[$key] = $value; // Keep only allowed columns
-                }
-            }
-        }
+    
+        // Filter only allowed columns in $data
+        $filteredData = array_filter($data, function ($value) {
+            return $value !== null && $value !== ''; // Skip null/empty values
+        });
+    
         if (empty($filteredData)) {
             error_log("No valid data to update for table: $table");
             return false;
         }
+    
+        // Build dynamic SQL update query
         $keys = array_keys($filteredData);
         $query = "UPDATE $table SET ";
         foreach ($keys as $key) {
-            $query .= "$key = :$key, "; // Add column and placeholder
+            $query .= "$key = :$key, ";
         }
-        $query = rtrim($query, ', '); // Remove the trailing comma
-        $query .= " WHERE $id_column = :$id_column"; // Add WHERE clause
+        $query = rtrim($query, ', ');
+        $query .= " WHERE $id_column = :$id_column";
+    
+        // Add ID to the bound data
         $filteredData[$id_column] = $id;
+    
         try {
-            // Execute the query using the duiquery method
             $affectedRows = $this->duiquery($query, $filteredData);
-    
             error_log("Rows affected for table $table: $affectedRows");
-    
-            return $affectedRows > 0; // Return true if rows were updated
+            return $affectedRows > 0;
         } catch (Exception $e) {
             error_log("Error executing update query for table $table: " . $e->getMessage());
             return false;
         }
     }
+    
 
     // Get the Class_id
     public function getLastInsertId($data, $data_not = []) {

@@ -62,13 +62,29 @@ document.addEventListener("DOMContentLoaded", () => {
   
         // Subject images map
         const subjectImages = {
+          Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
+          Agriculture: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
+          Art: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Art.jpeg",
+          BioSystemsTechnology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
+          Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+          Buddhism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
           Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
           Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
           English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
           Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
           History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
           IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
-          Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+          BusinessStudies: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
+          Catholicism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
+          CivicEducation: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
+          Commerce: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
+          Drama: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
+          Engineering: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
+          Geography   : "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg", 
+          Health: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg", 
+          Science: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
+          Sinhala: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+          Tamil: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
         };
   
         // Render each class card
@@ -233,14 +249,14 @@ function showDetails(Class_id) {
       }
 
       const subjectImages = {
-        Physics: "Class_images/science.png",
-        Mathematics: "Class_images/Maths.png",
-        English: "Class_images/English.png",
-        Chemistry: "Class_images/science.png",
-        History: "Class_images/History.png",
-        IT: "Class_images/It.png",
-        Biology: "Class_images/Bio.png",
-        CS: "Class_images/It.png"
+        Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+        Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+        English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+        Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+        History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+        IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
+        Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+        Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp"
       };
 
       const imageBasePath = "../../../../../group_project_1.0/public/views/TeacherView/Myclass/";
@@ -251,7 +267,7 @@ function showDetails(Class_id) {
       document.getElementById("moreSubject").textContent = classDetail.Subject || "N/A";
       document.getElementById("classType").textContent = classDetail.Type || "N/A";
       document.getElementById("locat").textContent = classDetail.Location || classDetail.Hall_number || "N/A";
-      // document.getElementById("classInstitute").textContent = classDetail.Type === "Individual" ? "None" : (classDetail.Type || "N/A");
+      document.getElementById("Hall_no").textContent = classDetail.Hall_number || "N/A";
       document.getElementById("moreGrade").textContent = classDetail.Grade || "N/A";
       document.getElementById("classid").textContent = classDetail.Class_id || "N/A";
       document.getElementById("classFee").textContent = classDetail.fee || "N/A";
