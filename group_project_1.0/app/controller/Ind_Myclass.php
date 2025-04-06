@@ -138,11 +138,12 @@ class Ind_Myclass extends Controller{
         error_log("Prepared table2 data: " . print_r($table2_data, true));
         $model = new Myclassmodel();
 
-        $result1 = $model->updateclass($Class_id, $table1_data, 'Class_id', $model->table1, $model->allowedColumns1);
-        $result2 = $model->updateclass($Class_id, $table2_data, 'IndClass_id', $model->table2, $model->allowedColumns2);
+        $result1 = $model->updateclass($Class_id, $table1_data, 'Class_id', $model->table1);
+        $result2 = $model->updateclass($Class_id, $table2_data, 'IndClass_id', $model->table2);
+        $result3 = $model->updateclass($Class_id, $table2_data, 'InstClass_id', $model->table3);
             
             // Only return success if both updates were successful
-            if ($result1 || $result2) {
+            if ($result1 || $result2 || $result3) {
                 echo json_encode(['status' => 'success', 'message' => 'Class updated successfully']);
             } else {
                 $errorMessages = [];

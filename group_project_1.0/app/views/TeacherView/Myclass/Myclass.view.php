@@ -50,12 +50,29 @@
         <label for="Subject">Subject</label>
 <select id="Subject" name="Subject" required>
     <option value="" disabled selected>Select a subject</option>
-    <option value=" Mathematics">Mathematics</option>
-    <option value="Science">Science</option>
-    <option value="History">History</option>
-    <option value="English">English</option>
-    <option value="Physics">Physics</option>
-    <option value="Biology">Biology</option>
+    <option value="Accounting">Accounting</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Art">Art</option>
+<option value="BioSystemsTechnology">Bio Systems Technology</option>
+<option value="Biology">Biology</option>
+<option value="Buddhism">Buddhism</option>
+<option value="BusinessStudies">Business Studies</option>
+<option value="Catholicism">Catholicism</option>
+<option value="CivicEducation">Civic Education</option>
+<option value="Commerce">Commerce</option>
+<option value="Drama">Drama and Theatre</option>
+<option value="English">English</option>
+<option value="Engineering">Engineering Technology</option>
+<option value="Geography">Geography</option>
+<option value="Health">Health & Physical Education</option>
+<option value="History">History</option>
+<option value="ICT">ICT</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Physics">Physics</option>
+<option value="Science">Science</option>
+<option value="Sinhala">Sinhala</option>
+<option value="Tamil">Tamil</option>
+
     <!-- Add more options as needed -->
 </select>
             <div class="create-row">
@@ -121,13 +138,29 @@
     <label for="classSubject">Subject</label>
 <select id="classSubject" name="classSubject" required>
     <option value="" disabled selected>Select a subject</option>
-    <option value="Mathematics">Mathematics</option>
-    <option value="Physics">Physics</option>
-    <option value="Science">Science</option>
-    <option value="History">History</option>
-    <option value="English">English</option>
-    <option value="It">It</option>
-    <option value="Biology">Biology</option>
+    <option value="Accounting">Accounting</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Art">Art</option>
+<option value="BioSystemsTechnology">Bio Systems Technology</option>
+<option value="Biology">Biology</option>
+<option value="Buddhism">Buddhism</option>
+<option value="BusinessStudies">Business Studies</option>
+<option value="Catholicism">Catholicism</option>
+<option value="CivicEducation">Civic Education</option>
+<option value="Commerce">Commerce</option>
+<option value="Drama">Drama and Theatre</option>
+<option value="English">English</option>
+<option value="Engineering">Engineering Technology</option>
+<option value="Geography">Geography</option>
+<option value="Health">Health & Physical Education</option>
+<option value="History">History</option>
+<option value="ICT">ICT</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Physics">Physics</option>
+<option value="Science">Science</option>
+<option value="Sinhala">Sinhala</option>
+<option value="Tamil">Tamil</option>
+
 
 </select>
 
@@ -176,10 +209,10 @@
         <img id="classImage" src="" alt="Class Image" />
         <div class="class-details">
             <p><strong>Date:</strong> <span id="classdate"></span></p>
-            <!-- <p><strong>Institute:</strong> <span id="classInstitute"></span></p> -->
             <p><strong>Type:</strong> <span id="classType"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
+            <p><strong>Hall no:</strong> <span id="Hall_no"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
             <p><span id="classid" style="display: none;"></span></p>
         </div>
@@ -189,7 +222,7 @@
             <button onclick="view()" class="buttons">View Institute</button>
             <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard(getClassId())" class="buttons">Issue free cards</button>
-            <button onclick="reqPay()" class="buttons">Request payrolls</button>
+            <!-- <button onclick="reqPay()" class="buttons">Request payrolls</button> -->
             <button onclick="viewStudents(getClassId())" class="buttons">View all students</button>
         </div>
     </div>

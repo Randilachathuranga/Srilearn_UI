@@ -6,60 +6,75 @@ function closeedit() {
 // Function to update the Class
 async function Updateclass(event, Class_id) {
   event.preventDefault();
+
   const form = event.target;
   const formData = new FormData(form);
+
+  // Prepare data
   const table1 = {
     Subject: formData.get("classSubject"),
     Grade: formData.get("classGrade"),
     fee: parseInt(formData.get("classfee"), 10),
     Max_std: parseInt(formData.get("classMax_std"), 10),
   };
+
   const table2 = {
     Location: formData.get("classLocation"),
     Start_date: formData.get("classStart_date"),
     End_date: formData.get("classEnd_date"),
   };
+
   const data = { table1, table2 };
   console.log("ClassData being sent:", data);
   console.log("Class ID:", Class_id);
 
-  if (table2.Start_date < table2.End_date) {
-    try {
-      const response = await fetch(
-        `http://localhost/group_project_1.0/public/Ind_Myclass/UpdateclassApi/${Class_id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      const textResponse = await response.text(); // Try reading as text first to debug
-      console.log("Raw API Response:", textResponse);
+  // Optional: validate date range
+  if (
+    table2.Start_date &&
+    table2.End_date &&
+    table2.Start_date >= table2.End_date
+  ) {
+    alert("Start date should be earlier than the end date.");
+    return;
+  }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const result = JSON.parse(textResponse); // Manually parse it if needed
-      console.log("API Response:", result);
-      if (result.status === "success") {
-        alert("Schedule updated successfully!");
-        window.location.href =
-          "http://localhost/group_project_1.0/public/Ind_Myclass";
-      } else {
-        alert(`Failed to update schedule: ${result.message}`);
-        window.location.href =
-          "http://localhost/group_project_1.0/public/Ind_Myclass";
-      }
-    } catch (error) {
-      console.error("Error updating schedule:", error);
-      alert(
-        "An error occurred while updating the schedule. Please try again later."
-      );
+  try {
+    const endpoints = [
+      `http://localhost/group_project_1.0/public/Ind_Myclass/UpdateclassApi/${Class_id}`,
+    ];
+
+    const updateRequests = endpoints.map((url) =>
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+    );
+
+    const responses = await Promise.all(updateRequests);
+    const rawResponses = await Promise.all(responses.map((res) => res.text()));
+    console.log("Raw API Responses:", rawResponses);
+
+    const success = responses.every((res) => res.ok);
+
+    if (!success) {
+      throw new Error("One or more update requests failed.");
     }
-  } else {
-    alert("Start date should be early earlier than the end date.");
+
+    const result = JSON.parse(rawResponses[0]); // Assume similar response structure
+    if (result.status === "success") {
+      alert("Schedule updated successfully!");
+    } else {
+      alert(`Update failed: ${result.message}`);
+    }
+
+    window.location.href =
+      "http://localhost/group_project_1.0/public/Ind_Myclass";
+  } catch (error) {
+    console.error("Error during update:", error);
+    alert("An error occurred while updating. Please try again later.");
   }
 }
 
