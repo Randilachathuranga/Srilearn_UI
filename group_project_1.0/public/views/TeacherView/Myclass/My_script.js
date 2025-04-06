@@ -17,98 +17,98 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const fetchAndRenderClasses = (filterType) => {
-    fetch(`Ind_Myclass/MyclassApi/${P_id}`)
-      .then((response) => {
-        if (!response.ok) {
-          if (response.status === 403) {
-            throw new Error("Access denied. Not a premium teacher.");
-          } else if (response.status === 404) {
-            throw new Error("No classes found for the given teacher.");
-          } else {
-            throw new Error("An unexpected error occurred.");
+    const fetchUrls = [
+      fetch(`Ind_Myclass/MyclassApi/${P_id}`),
+      fetch(`Ind_Myclass/MyinstituteClass/${P_id}`)
+    ];
+  
+    Promise.allSettled(fetchUrls)
+      .then(results => {
+        const jsonPromises = results.map(result => {
+          if (result.status === "fulfilled" && result.value.ok) {
+            return result.value.json();
           }
-        }
-        return response.json();
+          return Promise.resolve([]); // Treat rejected or non-ok fetches as empty data
+        });
+  
+        return Promise.all(jsonPromises);
       })
-      .then((data) => {
+      .then(dataArrays => {
+        const combinedData = [...dataArrays[0], ...dataArrays[1]];
+  
         const container = document.getElementById("class-container");
         if (!container) {
-          console.error(
-            "Container element with ID 'class-container' not found."
-          );
+          console.error("Container element with ID 'class-container' not found.");
           return;
         }
-        container.innerHTML = ""; // Clear previous cards
-
-        if (!data || data.length === 0) {
+  
+        container.innerHTML = ""; // Clear previous results
+  
+        if (combinedData.length === 0) {
           container.innerHTML = "<p>No classes found for this teacher.</p>";
           return;
         }
-
-        // Filter data based on the selected filter type
+  
+        // Filter data by class type if needed
         const filteredData =
           filterType === "All"
-            ? data // Show all classes if "All" is selected
-            : data.filter((classItem) => classItem.Type === filterType);
-
+            ? combinedData
+            : combinedData.filter(classItem => classItem.Type === filterType);
+  
         if (filteredData.length === 0) {
           container.innerHTML = `<p>No ${filterType.toLowerCase()} classes found.</p>`;
           return;
         }
-
-        // Render filtered cards
-        filteredData.forEach((classItem) => {
+  
+        // Subject images map
+        const subjectImages = {
+          Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+          Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+          English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+          Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+          History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+          IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
+          Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+        };
+  
+        // Render each class card
+        filteredData.forEach(classItem => {
           const card = document.createElement("div");
           card.className = "card";
-
-          const subjectImages = {
-            Physics:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-            Mathematics:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
-            English:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
-            Chemistry:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-            History:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
-            IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
-            Biology:
-              "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
-          };
-
+  
           const imageUrl =
             subjectImages[classItem.Subject] ||
             "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/defult.jpg";
-
+  
           card.innerHTML = `
             <div class="card-content">
-              <img src="${imageUrl}" alt="${classItem.title}">
+              <img src="${imageUrl}" alt="${classItem.Subject}">
               <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
               <br>
-              <p><h3>Address:</h3> ${classItem.Location}</p>
+              <p><h3>Address:</h3> ${classItem.Location || classItem.Hall_number}</p>
               <br>
-              <p>Start date: ${classItem.Start_date}</p>
-              <p>End date: ${classItem.End_date}</p>
-                            <br>
-
+              <p>Start date: ${classItem.Start_date || "N/A"}</p>
+              <p>End date: ${classItem.End_date || "N/A"}</p>
+              <br>
               <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
               <button class="button" onclick="editclass(${classItem.Class_id})">
                 <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
               </button>
             </div>
           `;
+  
           container.appendChild(card);
         });
       })
-      .catch((error) => {
+      .catch(error => {
         const container = document.getElementById("class-container");
         if (container) {
-          container.innerHTML = `<p class="error">${error.message}</p>`;
+          container.innerHTML = `<p class="error">Failed to load classes: ${error.message}</p>`;
         }
         console.error("There was a problem with the fetch operation:", error);
       });
   };
+  
 
   // Fetch and render classes on dropdown selection change
   selectElement.addEventListener("change", () => {
@@ -204,59 +204,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //More Details
 function showDetails(Class_id) {
-  fetch(`Ind_Myclass/MoredetailsApi/${Class_id}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch class details");
+  const individualUrl = `Ind_Myclass/MoredetailsApi/${Class_id}`;
+  const instituteUrl = `Ind_Myclass/Moredetailsinstitute/${Class_id}`;
+
+  Promise.allSettled([
+    fetch(individualUrl),
+    fetch(instituteUrl)
+  ])
+    .then(results => {
+      const successful = results.filter(r => r.status === 'fulfilled' && r.value.ok);
+      if (successful.length === 0) {
+        throw new Error("No valid response from any API.");
       }
-      return response.json();
+
+      return Promise.all(successful.map(r => r.value.json()));
     })
-    .then((details) => {
-      if (details && details.length > 0) {
-        const classDetail = details[0]; // Assuming a single class detail is returned
-        const subjectImages = {
-          Physics:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-          Mathematics:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
-          English:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
-          Chemistry:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-          History:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
-          IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
-          Biology:
-            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
-        };
-        const imageUrl =
-          subjectImages[classDetail.Subject] ||
-          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/defult.jpg";
-        document.getElementById("classImage").src = imageUrl; // Corrected to set the src of the image element
-        document.getElementById("moreSubject").textContent =
-          classDetail.Subject;
-        document.getElementById("classType").textContent = classDetail.Type;
-        document.getElementById("locat").textContent = classDetail.Location;
-        if (classDetail.Type == "Individual") {
-          document.getElementById("classInstitute").textContent = "None";
-        }
-        document.getElementById("moreGrade").textContent = classDetail.Grade;
-        document.getElementById("classid").textContent = classDetail.Class_id;
-        document.getElementById("classFee").textContent = classDetail.fee;
-        document.getElementById("maxstu").textContent = classDetail.Max_std;
-        document.getElementById(
-          "classdate"
-        ).textContent = `${classDetail.Start_date} - ${classDetail.End_date}`;
-        console.log("Class Details:", classDetail);
-        if (classDetail.image) {
-          document.getElementById("classImage").src = classDetail.image;
-        }
-        document.getElementById("modalBackground").style.display = "block";
-      } else {
-        console.error("No class details available.");
+    .then(dataArrays => {
+      const [individualClassData = [], instituteClassData = []] = dataArrays;
+
+      const classDetail = 
+        (individualClassData.length > 0 && individualClassData[0]) || 
+        (instituteClassData.length > 0 && instituteClassData[0]);
+
+      if (!classDetail) {
+        console.error("No class details found.");
+        alert("Class details not available.");
+        return;
       }
+
+      const subjectImages = {
+        Physics: "Class_images/science.png",
+        Mathematics: "Class_images/Maths.png",
+        English: "Class_images/English.png",
+        Chemistry: "Class_images/science.png",
+        History: "Class_images/History.png",
+        IT: "Class_images/It.png",
+        Biology: "Class_images/Bio.png",
+        CS: "Class_images/It.png"
+      };
+
+      const imageBasePath = "../../../../../group_project_1.0/public/views/TeacherView/Myclass/";
+      const imageUrl = classDetail.image || 
+        imageBasePath + (subjectImages[classDetail.Subject] || "Class_images/defult.jpg");
+
+      document.getElementById("classImage").src = imageUrl;
+      document.getElementById("moreSubject").textContent = classDetail.Subject || "N/A";
+      document.getElementById("classType").textContent = classDetail.Type || "N/A";
+      document.getElementById("locat").textContent = classDetail.Location || classDetail.Hall_number || "N/A";
+      document.getElementById("classInstitute").textContent = classDetail.Type === "Individual" ? "None" : (classDetail.N_id || "N/A");
+      document.getElementById("moreGrade").textContent = classDetail.Grade || "N/A";
+      document.getElementById("classid").textContent = classDetail.Class_id || "N/A";
+      document.getElementById("classFee").textContent = classDetail.fee || "N/A";
+      document.getElementById("maxstu").textContent = classDetail.Max_std || "N/A";
+      document.getElementById("classdate").textContent = 
+        `${classDetail.Start_date || "N/A"} - ${classDetail.End_date || "N/A"}`;
+
+      document.getElementById("modalBackground").style.display = "block";
+
+      console.log("Class Details:", classDetail);
     })
-    .catch((error) => {
+    .catch(error => {
       console.error("Error fetching data:", error);
       alert("Failed to load class details.");
     });
