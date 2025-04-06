@@ -60,7 +60,10 @@
         <h5>Fee: ${record.fee}</h5>
         ${record.Isdiscountavail === 1 ? '<p class="free-card-msg">You have a free card for this class</p>' : ''}
         <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
-        <button onclick="viewShedule(${record.Class_id})">Schedule</button>
+        <button onclick="viewShedule(${record.Class_id})">Schedule</button> <br><br>
+        <button onclick="viewMat(${record.Class_id})">Learning Materials</button> <br><br>
+        <button onclick="viewASS(${record.Class_id})">Assingments</button>
+
     `;
     container.appendChild(rec);
 });
@@ -68,6 +71,7 @@
         }
 
         function deleteEnrollment(id) {
+            alert("Are you sure you want to leave this class?");
             fetch(`http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -87,6 +91,19 @@
              window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
             console.log("Class ID stored in sessionStorage:", Class_id);
         }
+
+        function viewMat(Class_id){
+            sessionStorage.setItem("class_id", Class_id);
+            window.location.href = "http://localhost/group_project_1.0/public/Learning_mat";
+            console.log("Class ID stored in sessionStorage:", Class_id);
+        }
+
+        function viewASS(Class_id){
+            sessionStorage.setItem("class_id", Class_id);
+            window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
+            console.log("Class ID stored in sessionStorage:", Class_id);
+        }
+
     </script>
 </body>
 </html>

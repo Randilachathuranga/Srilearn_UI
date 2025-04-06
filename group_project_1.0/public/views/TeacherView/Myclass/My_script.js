@@ -1,4 +1,3 @@
-// P_id = 6;
 
 document.addEventListener("DOMContentLoaded", () => {
   const userDataElement = document.getElementById("user-data");
@@ -321,14 +320,16 @@ function view() {
   alert("Not implemented");
 }
 
-function UploadMat() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadMat/UploadMat.php";
+function UploadMat(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/Learning_mat";
+  console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
-function UploadASS() {
-  window.location.href =
-    "../../../../../group_project_1.0/app/views/TeacherView/Options/UploadASS/UploadASS.php";
+function UploadASS(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
+  console.log("Class ID stored in sessionStorage:", Class_id);  
 }
 
 function viewschedule(Class_id) {
@@ -350,4 +351,10 @@ function freeCard(Class_id) {
 function reqPay() {
   window.location.href =
     "../../../../../group_project_1.0/app/views/TeacherView/Options/RequestPayrolls/RequestPayrolls.php";
+}
+
+function viewStudents(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/ClassStudents";
+  console.log("Class ID stored in sessionStorage:", Class_id);
 }

@@ -9,18 +9,39 @@ Class Blog extends Controller{
         $model = new Blogmodel();
         header('Content-Type: application/json');
         
-        // Fetch all blogs
-        $blogs = $model->findall();
+        // Pagination and search parameters
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+        $blogsPerPage = 6;
+        $offset = ($page - 1) * $blogsPerPage;
+    
+        // Fetch total blog count with search filter
+        $totalBlogs = $model->getTotalBlogCount($search);
+        $totalPages = ceil($totalBlogs / $blogsPerPage);
+    
+        // Fetch paginated blogs with search filter
+        $blogs = $model->findPaginatedBlogs($blogsPerPage, $offset, $search);
         
         // Loop through each blog post to fetch the associated user
         foreach ($blogs as $blog) {
-            $user = $model->get_user(['User_id'=>$blog->User_id]); // Fetch user data based on user_id
-            $blog->user = $user; // Add the user data to the blog post
+            $user = $model->get_user(['User_id' => $blog->User_id]); 
+            $blog->user = $user;
         }
         
+        // Prepare response with pagination info
+        $response = [
+            'blogs' => $blogs,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'totalBlogs' => $totalBlogs,
+            'searchTerm' => $search
+        ];
+        
         // Return the blogs with user data as a JSON response
-        echo json_encode($blogs);
+        echo json_encode($response);
     }
+
+
     public function myapi($id) {
         checkloginstatus();
         
@@ -97,28 +118,21 @@ Class Blog extends Controller{
         $model = new Blogmodel();
         header('Content-Type: application/json');
         
-        // Get the raw POST data from the request body (JSON)
         $inputData = json_decode(file_get_contents('php://input'), true); // Decode the incoming JSON
         $inputData['User_id']=$_SESSION['User_id'];
-        // Check if the required fields are present in the data
         if (isset($inputData['Title'], $inputData['Content'], $inputData['Post_date'],  $inputData['User_id'])) {
             try {
-                // Call the model's insert method with the decoded data
                 $blogs = $model->insert($inputData);
     
                 if ($blogs) {
-                    // Return the inserted blog data as JSON
                     echo json_encode(['message' => 'Blog created successfully', 'data' => $blogs]);
                 } else {
-                    // If no data was inserted, return an error message
                     echo json_encode(['message' => 'Could not insert the blog']);
                 }
             } catch (Exception $e) {
-                // Handle error and return an error response
                 echo json_encode(['error' => 'An error occurred while creating the blog.', 'details' => $e->getMessage()]);
             }
         } else {
-            // If required fields are missing, return an error message
             echo json_encode(['error' => 'Missing required fields: Title, Content, or Post_date']);
         }
     }

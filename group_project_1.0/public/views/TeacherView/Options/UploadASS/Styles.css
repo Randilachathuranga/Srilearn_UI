@@ -1,86 +1,369 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f8fa; /* Light background color */
-    margin: 0;
-    padding: 0;
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100vh; /* Full height to center the content */
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 120px;
+}
+
+/* Header section styles */
+.assignments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.assignments-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+/* Create assignment button styles */
+.create-assignment-btn, .search-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.create-assignment-btn:hover, .search-btn:hover {
+  background-color: #45a049;
+}
+
+/* Assignments layout */
+.assignments-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* Modern horizontal assignment card */
+.assignment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-wrap: wrap;
+}
+
+.assignment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Assignment number */
+.assignment-number {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Card buttons */
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* View and Delete buttons */
+.view-btn, .delete-btn {
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.view-btn {
+  background-color: #008CBA;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #0078A0;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #D32F2F;
+}
+
+/* Input field for Student ID */
+.card-buttons input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100px;
+}
+
+/* Popup styles */
+.popup, .modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+/* Search Section */
+.search-section {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.STU_id {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 150px;
+}
+
+/* Result Container */
+.result-container {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.result-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.result-card h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.result-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 10px;
+  color: #d32f2f;
+  text-align: center;
+}
+
+.error-message p:first-child {
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .assignments-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .container {
-    max-width: 700px; /* Make it a bit bigger */
-    width: 100%; /* Ensure it scales for smaller screens */
-    margin: 0 auto;
-    background: #ffffff; /* White background for the card */
-    padding: 30px; /* Add more padding for better spacing */
-    border-radius: 10px; /* Slightly larger rounded corners */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow for depth */
+
+  .create-assignment-btn, .search-btn {
+    width: 100%;
+    justify-content: center;
   }
-  
-  h1 {
+
+  .assignment-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .card-buttons {
+    width: 100%;
     text-align: center;
-    color: #333;
-    font-size: 24px; /* Slightly larger heading */
   }
-  
-  
-  .upload-box {
-    border: 2px dashed #007bff;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    color: #007bff;
+
+  .modal-content {
+    width: 90%;
   }
-  
-  .upload-box input[type="file"] {
-    display: none;
-  }
-  
-  .upload-box p {
-    margin: 0;
-    font-size: 14px;
-  }
-  
-  .file-list {
-    margin-top: 15px;
-    list-style: none;
-    padding: 0;
-  }
-  
-  .file-list li {
-    margin: 5px 0;
-    padding: 10px;
-    background: #f1f1f1;
-    border-radius: 5px;
-  }
-  
-  .button-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .button-container button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .button-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  .button-container button.cancel {
-    background-color: #6c757d;
-  }
-  
-  .button-container button.cancel:hover {
-    background-color: #5a6268;
-  }
-  
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Update Marks button */
+button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0078A0;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.close-button {
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/* Table styles */
+.StudentMarksTable {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table input.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.table input.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Button styles */
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
