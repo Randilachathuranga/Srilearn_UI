@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${imageUrl}" alt="${classItem.Subject}">
               <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
               <br>
-              <p><h3>Address:</h3> ${classItem.Location || classItem.Hall_number}</p>
+              <p><h3>Address:</h3> ${classItem.Location }</p>
               <br>
               <p>Start date: ${classItem.Start_date || "N/A"}</p>
               <p>End date: ${classItem.End_date || "N/A"}</p>
@@ -251,7 +251,7 @@ function showDetails(Class_id) {
       document.getElementById("moreSubject").textContent = classDetail.Subject || "N/A";
       document.getElementById("classType").textContent = classDetail.Type || "N/A";
       document.getElementById("locat").textContent = classDetail.Location || classDetail.Hall_number || "N/A";
-      document.getElementById("classInstitute").textContent = classDetail.Type === "Individual" ? "None" : (classDetail.N_id || "N/A");
+      // document.getElementById("classInstitute").textContent = classDetail.Type === "Individual" ? "None" : (classDetail.Type || "N/A");
       document.getElementById("moreGrade").textContent = classDetail.Grade || "N/A";
       document.getElementById("classid").textContent = classDetail.Class_id || "N/A";
       document.getElementById("classFee").textContent = classDetail.fee || "N/A";
@@ -278,41 +278,67 @@ function closeModal() {
 function editclass(class_id) {
   currentClassId = class_id;
   console.log(`Editing schedule for Class ID: ${class_id}`);
-  fetch(`Ind_Myclass/MoredetailsApi/${class_id}`)
-    .then((response) => {
-      console.log("API Response Status:", response.status); // Log the status
-      if (!response.ok) {
-        throw new Error("Failed to fetch class details");
-      }
-      return response.json();
-    })
-    .then((details) => {
-      console.log("Fetched Details:", details); // Log the fetched data
 
-      if (details && details.length > 0) {
-        const classDetail = details[0]; // Assume the first object is needed
-        console.log("Class Detail Object:", classDetail);
-        document.getElementById("classSubject").value = classDetail.Subject;
-        document.getElementById("classGrade").value = classDetail.Grade;
-        document.getElementById("classfee").value = classDetail.fee;
-        document.getElementById("classMax_std").value = classDetail.Max_std;
-        document.getElementById("classStart_date").value =
-          classDetail.Start_date;
-        document.getElementById("classEnd_date").value = classDetail.End_date;
-        document.getElementById("classLocation").value = classDetail.Location;
-      } else {
-        console.error("No class details available.");
-        alert("No class details found for the selected ID.");
+  const allfetch = [
+    fetch(`Ind_Myclass/MoredetailsApi/${class_id}`),
+    fetch(`Ind_Myclass/Moredetailsinstitute/${class_id}`)
+  ];
+
+  Promise.all(allfetch)
+    .then((responses) => {
+      // Check for response status
+      for (const response of responses) {
+        if (!response.ok) {
+          console.warn("Some data might be missing. Status:", response.status);
+        }
       }
+
+      // Convert all responses to JSON
+      return Promise.all(
+        responses.map((response) => {
+          // If not OK, return empty array to avoid breaking the chain
+          return response.ok ? response.json() : [];
+        })
+      );
+    })
+    .then((dataArrays) => {
+      const individualClassData = dataArrays[0];
+      const instituteClassData = dataArrays[1];
+
+      // Prefer individual data, fallback to institute
+      let classDetail = null;
+      if (individualClassData && individualClassData.length > 0) {
+        classDetail = individualClassData[0];
+      } else if (instituteClassData && instituteClassData.length > 0) {
+        classDetail = instituteClassData[0];
+      }
+
+      if (!classDetail) {
+        console.error("No class details found.");
+        alert("No class details found for the selected ID.");
+        return;
+      }
+
+      console.log("Class Detail Object:", classDetail);
+
+      // Fill form fields
+      document.getElementById("classSubject").value = classDetail.Subject || "";
+      document.getElementById("classGrade").value = classDetail.Grade || "";
+      document.getElementById("classfee").value = classDetail.fee || "";
+      document.getElementById("classMax_std").value = classDetail.Max_std || "";
+      document.getElementById("classStart_date").value = classDetail.Start_date || "";
+      document.getElementById("classEnd_date").value = classDetail.End_date || "";
+      document.getElementById("classLocation").value = classDetail.Location || classDetail.Hall_number || "";
+
+      // Show the popup form
+      document.getElementById("popupEditForm").style.display = "flex";
     })
     .catch((error) => {
       console.error("Error fetching class details:", error);
       alert("Failed to load class details. Please try again.");
     });
-
-  // Show the popup form
-  document.getElementById("popupEditForm").style.display = "flex";
 }
+
 
 function createclass() {
   document.getElementById("popupForm").style.display = "flex";

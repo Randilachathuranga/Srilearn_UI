@@ -43,6 +43,34 @@ trait Model {
         $data = array_merge($data, $data_not);
         return $this->query($query, $data);
     }
+
+    // public function InnerJoinwhereMultiple($tables, $joinConditions, $data = [], $data_not = []) {
+    //     if (count($tables) < 2 || count($joinConditions) < count($tables) - 1) {
+    //         throw new Exception("Insufficient join conditions for given tables.");
+    //     }
+    //     $query = "SELECT * FROM {$tables[0]}";
+    //     // Add each JOIN
+    //     for ($i = 1; $i < count($tables); $i++) {
+    //         $query .= " INNER JOIN {$tables[$i]} ON {$joinConditions[$i - 1]}";
+    //     }
+    //     $query .= " WHERE ";
+    //     // Conditions: equal
+    //     foreach ($data as $key => $value) {
+    //         $query .= "$key = :$key AND ";
+    //     }
+    //     // Conditions: not equal
+    //     foreach ($data_not as $key => $value) {
+    //         $query .= "$key != :$key AND ";
+    //     }
+    //     // Trim trailing AND
+    //     $query = rtrim($query, " AND ");
+    //     // Limit + Offset
+    //     $query .= " LIMIT $this->limit OFFSET $this->offset";
+    //     // Merge data
+    //     $params = array_merge($data, $data_not);
+    //     return $this->query($query, $params);
+    // }
+    
     
     // Find all records from the table
     public function findall() {

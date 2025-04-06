@@ -176,7 +176,7 @@
         <img id="classImage" src="" alt="Class Image" />
         <div class="class-details">
             <p><strong>Date:</strong> <span id="classdate"></span></p>
-            <p><strong>Institute:</strong> <span id="classInstitute"></span></p>
+            <!-- <p><strong>Institute:</strong> <span id="classInstitute"></span></p> -->
             <p><strong>Type:</strong> <span id="classType"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>

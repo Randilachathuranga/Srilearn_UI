@@ -19,11 +19,13 @@ class Myclassmodel{
         'Location','Start_date','End_date'
     ];
 
+    //for institute class
     public $table3 = 'instituteteacher_class';
     public $joinCondition3 = "class.class_id = instituteteacher_class.InstClass_id";
-    // public $allowedColumns3=[
-    //     'Location','Start_date','End_date'
-    // ];
+    public $table4 = 'normal_teacher';
+    public $joinCondition4 = "normal_teacher.N_ID = instituteteacher_class.N_ID";
+    public $table5 = 'user';
+    public $joinCondition5 = "user.User_id = normal_teacher.InstClass_id";
 
     //columns for insert into class table and individual class table
     public $ColumnsforT1=[
