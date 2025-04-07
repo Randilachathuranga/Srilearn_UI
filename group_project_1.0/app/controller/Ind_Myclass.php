@@ -130,6 +130,12 @@ class Ind_Myclass extends Controller{
             'Start_date' => $data['table2']['Start_date'] ?? null,
             'End_date' => $data['table2']['End_date'] ?? null,
         ];
+        $table3_data = [
+            'Location' => $data['table2']['Location'] ?? null,
+            'Start_date' => $data['table2']['Start_date'] ?? null,
+            'End_date' => $data['table2']['End_date'] ?? null,
+            'Hall_number' => $data['table2']['Hall_number'] ?? null,
+        ];
         if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table2']);
             return;
@@ -140,7 +146,7 @@ class Ind_Myclass extends Controller{
 
         $result1 = $model->updateclass($Class_id, $table1_data, 'Class_id', $model->table1);
         $result2 = $model->updateclass($Class_id, $table2_data, 'IndClass_id', $model->table2);
-        $result3 = $model->updateclass($Class_id, $table2_data, 'InstClass_id', $model->table3);
+        $result3 = $model->updateclass($Class_id, $table3_data, 'InstClass_id', $model->table3);
             
             // Only return success if both updates were successful
             if ($result1 || $result2 || $result3) {

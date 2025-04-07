@@ -22,6 +22,7 @@ async function Updateclass(event, Class_id) {
     Location: formData.get("classLocation"),
     Start_date: formData.get("classStart_date"),
     End_date: formData.get("classEnd_date"),
+    Hall_number: formData.get("Hall_number"), 
   };
 
   const data = { table1, table2 };

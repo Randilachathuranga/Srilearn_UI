@@ -164,9 +164,18 @@
 
 </select>
 
-    
-    <label for="classGrade">Grade</label>
-      <input type="number" id="classGrade" name="classGrade" required />
+<div class="fm-row ">
+   <div>
+   <label for="classGrade">Grade</label>
+   <input type="number" id="classGrade" name="classGrade" required />
+   </div>
+      <div>
+          <label for="Hall_number">Hall number</label>
+          <input type="text" id="Hall_number" name="Hall_number" disabled />
+        </div>
+
+        </div>
+        
       <div class="fm-row ">
         <div>
           <label for="classfee">Fee</label>
@@ -185,8 +194,10 @@
         <div>
           <label for="classEnd_date">End date</label>
           <input type="date" id="classEnd_date" name="classEnd_date" required />
-        </div>
+        </div> 
+        
       </div>
+     
       <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
       <button type="submit" class="submit-button">Update</button>
