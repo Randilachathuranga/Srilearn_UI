@@ -355,6 +355,12 @@ function editclass(class_id) {
       // Fill form fields
       document.getElementById("classSubject").value = classDetail.Subject || "";
       document.getElementById("classGrade").value = classDetail.Grade || "";
+      if(classDetail.Type === "Institute") {
+        document.getElementById("Hall_number").value = classDetail.Hall_number || "";
+        Hall_number.disabled = false;
+      }else {
+        document.getElementById("Hall_number").value = "None";
+      }
       document.getElementById("classfee").value = classDetail.fee || "";
       document.getElementById("classMax_std").value = classDetail.Max_std || "";
       document.getElementById("classStart_date").value = classDetail.Start_date || "";

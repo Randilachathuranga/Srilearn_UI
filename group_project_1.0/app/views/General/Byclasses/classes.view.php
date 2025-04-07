@@ -33,19 +33,47 @@
             <div class="dropdown-container">
                 <label for="subject">Select Subject:</label>
                 <select id="subject">
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Biology">Science</option>
-                    <option value="History">History</option>
-                    <option value="English">English</option>
-                    <option value="Physics">Physics</option>
+                <option value="Buddhism">Buddhism</option>
+<option value="Civics">Civics</option>
+<option value="Commerce">Commerce</option>
+<option value="Dance">Dance</option>
+<option value="Drama">Drama</option>
+<option value="Eastern Music">Eastern Music</option>
+<option value="English">English</option>
+<option value="Geography">Geography</option>
+<option value="Health">Health</option>
+<option value="History">History</option>
+<option value="ICT">ICT</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Pali">Pali</option>
+<option value="Physical Education">Physical Education</option>
+<option value="Physics">Physics</option>
+<option value="Political Science">Political Science</option>
+<option value="Religion">Religion</option>
+<option value="Science">Science</option>
+<option value="Sinhala">Sinhala</option>
+<option value="Tamil">Tamil</option>
+<option value="Technology">Technology</option>
+<option value="Western Music">Western Music</option>
+
                 </select>
 
                 <label for="grade">Select Grade:</label>
                 <select id="grade">
-                    <option value=6>Grade 6</option>
-                    <option value=7>Grade 7</option>
-                    <option value=11>Grade 11</option>
-                    <option value=12>Grade 12</option>
+                <option value="1">Grade 1</option>
+<option value="2">Grade 2</option>
+<option value="3">Grade 3</option>
+<option value="4">Grade 4</option>
+<option value="5">Grade 5</option>
+<option value="6">Grade 6</option>
+<option value="7">Grade 7</option>
+<option value="8">Grade 8</option>
+<option value="9">Grade 9</option>
+<option value="10">Grade 10</option>
+<option value="11">Grade 11</option>
+<option value="12">Grade 12</option>
+<option value="13">Grade 13</option>
+
                 </select>
             </div>
         </div>
