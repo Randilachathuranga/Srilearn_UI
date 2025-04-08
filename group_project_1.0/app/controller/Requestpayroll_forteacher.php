@@ -1,14 +1,8 @@
 <?php
 
-class ViewinstituteController extends Controller
+class Requestpayroll_forteacher extends Controller
 {
-    public function index()
-    {
-        $this->view('TeacherView/Options/ViewInstitute/ViewInstitute');
-    }
-
-    //institute for spesific class
-    public function viewmyinstitute($Class_id)
+    public function mydetails($Class_id)
     {
         $model = new Myclassmodel();
         header('Content-Type: application/json');
@@ -18,7 +12,7 @@ class ViewinstituteController extends Controller
 
         $joinConditions = [
         'instituteteacher_class.N_id = normal_teacher.N_id',
-        'normal_teacher.Institute_ID = user.User_id'
+        'normal_teacher.N_id = user.User_id'
         ];
 
     $data = [
