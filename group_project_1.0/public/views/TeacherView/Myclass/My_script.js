@@ -160,32 +160,48 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial fetch with default dropdown value
   fetchAndRenderClasses(selectElement.value);
 
+
+  
   //fetch institute for spesific class
+  let instituteDataMap = {}; // To store name -> address mapping (or the full object if needed)
+
   async function fetchInstitutes(P_id) {
     try {
       const response = await fetch(
         `http://localhost/group_project_1.0/public/Normalteacher_Controller/findmyinstitutes/${P_id}`
       );
       const institutes = await response.json();
-
+  
       const instituteSelect = document.getElementById("Institute_name");
-      // Clear previous options
       instituteSelect.innerHTML =
         '<option value="" disabled selected>Select Institute</option><option value="None">None</option>';
-
-      // Add institute options to the dropdown
+  
       institutes.forEach((institute) => {
-        const fullName = `${institute.F_name} ${institute.L_name}`; // Concatenate first name and last name
+        const fullName = `${institute.F_name} ${institute.L_name}`;
         const option = document.createElement("option");
-        option.value = fullName; // Use the concatenated name as the value
-        option.textContent = fullName; // Display the concatenated name
+        option.value = fullName;
+        option.textContent = fullName;
         instituteSelect.appendChild(option);
+  
+        // Save full data keyed by fullName
+        instituteDataMap[fullName] = institute;
       });
     } catch (error) {
       console.error("Error fetching institutes:", error);
     }
   }
-
+  document.getElementById("Institute_name").addEventListener("change", function () {
+    const selectedName = this.value;
+  
+    if (selectedName !== "None" && instituteDataMap[selectedName]) {
+      const selectedInstitute = instituteDataMap[selectedName];
+      const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key
+      document.getElementById("Location").value = address;
+    } else {
+      document.getElementById("Location").value = ""; // Clear address if None selected
+    }
+  });
+  
   fetchInstitutes(P_id);
 
   // Show the popup form
@@ -193,134 +209,134 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("editScheduleForm")
     .addEventListener("submit", (event) => createSchedule(event, P_id));
 
-    async function createSchedule(event, P_id) {
-      console.log("createSchedule called with P_id:", P_id);
-      event.preventDefault(); // Prevent form submission and page reload
-  
-      const form = event.target;
-      const formData = new FormData(form);
-  
-      const table1 = {
-        Type: formData.get("Type"),
-        Subject: formData.get("Subject"),
-        Grade: formData.get("Grade"),
-        Max_std: parseInt(formData.get("Max_std"), 10),
-        fee: parseFloat(formData.get("Fee")),
-      };
-      const table2 = {
-        P_id: P_id,
-        Location: formData.get("Location"),
-        Start_date: formData.get("Start_date"),
-        End_date: formData.get("End_date"),
-      };
-  
-      const table3 = {
-        N_id: N_id, // Changed from N_id to P_id since that's what you're passing
-        Location: formData.get("Location"),
-        Start_date: formData.get("Start_date"),
-        End_date: formData.get("End_date"),
-        Hall_number: formData.get("Hallnumber"),
-      };
-  
-      const institute = formData.get("Institute_name");
-  
-      if (
-        institute == "None" &&
-        table1.Type == "Individual" &&
-        table2.Start_date < table2.End_date
-      ) {
-        const data = { table1, table2 };
-        console.log("ClassData being sent:", data);
-  
-        fetch(
-          `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        )
-          .then(async (response) => {
-            const contentType = response.headers.get("content-type");
-            if (!response.ok) {
-              const errorText = await response.text();
-              console.error("Server response:", errorText);
-              throw new Error(
-                `HTTP error! Status: ${response.status}, Body: ${errorText}`
-              );
-            }
-            if (!contentType || !contentType.includes("application/json")) {
-              const text = await response.text();
-              console.warn("Unexpected response format:", text);
-              return { message: text }; // Return text for unexpected formats
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Schedule submitted successfully:", data);
-            alert("Schedule created successfully!");
-            window.location.href =
-              "http://localhost/group_project_1.0/public/Ind_Myclass";
-          })
-          .catch((error) => {
-            console.error("Error submitting schedule:", error);
-            alert(
-              "There was an error submitting the schedule. Please try again."
+  async function createSchedule(event, P_id) {
+    console.log("createSchedule called with P_id:", P_id);
+    event.preventDefault(); // Prevent form submission and page reload
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const table1 = {
+      Type: formData.get("Type"),
+      Subject: formData.get("Subject"),
+      Grade: formData.get("Grade"),
+      Max_std: parseInt(formData.get("Max_std"), 10),
+      fee: parseFloat(formData.get("Fee")),
+    };
+    const table2 = {
+      P_id: P_id,
+      Location: formData.get("Location"),
+      Start_date: formData.get("Start_date"),
+      End_date: formData.get("End_date"),
+    };
+
+    const table3 = {
+      N_id: N_id, // Changed from N_id to P_id since that's what you're passing
+      Location: formData.get("Location"),
+      Start_date: formData.get("Start_date"),
+      End_date: formData.get("End_date"),
+      Hall_number: formData.get("Hallnumber"),
+    };
+
+    const institute = formData.get("Institute_name");
+
+    if (
+      institute == "None" &&
+      table1.Type == "Individual" &&
+      table2.Start_date < table2.End_date
+    ) {
+      const data = { table1, table2 };
+      console.log("ClassData being sent:", data);
+
+      fetch(
+        `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
+        .then(async (response) => {
+          const contentType = response.headers.get("content-type");
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Server response:", errorText);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Body: ${errorText}`
             );
-          });
-      } else if (
-        institute !== "None" &&
-        table1.Type == "Institute" &&
-        table3.Start_date < table3.End_date // Changed from table2.Start_date to table3.Start_date
-      ) {
-        const data2 = { table1, table3 };
-        console.log("ClassData being sent:", data2,table3);
-  
-        fetch(
-          `http://localhost/group_project_1.0/public/Ind_Myclass/CreateinstituteclassApi/${N_id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data2),
           }
-        )
-          .then(async (response) => {
-            const contentType = response.headers.get("content-type");
-            if (!response.ok) {
-              const errorText = await response.text();
-              console.error("Server response:", errorText);
-              throw new Error(
-                `HTTP error! Status: ${response.status}, Body: ${errorText}`
-              );
-            }
-            if (!contentType || !contentType.includes("application/json")) {
-              const text = await response.text();
-              console.warn("Unexpected response format:", text);
-              return { message: text }; // Return text for unexpected formats
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Schedule submitted successfully:", data);
-            alert("Schedule created successfully!");
-            window.location.href =
-              "http://localhost/group_project_1.0/public/Ind_Myclass";
-          })
-          .catch((error) => {
-            console.error("Error submitting schedule:", error);
-            alert(
-              "There was an error submitting the schedule. Please try again."
+          if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.warn("Unexpected response format:", text);
+            return { message: text }; // Return text for unexpected formats
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Schedule submitted successfully:", data);
+          alert("Schedule created successfully!");
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Ind_Myclass";
+        })
+        .catch((error) => {
+          console.error("Error submitting schedule:", error);
+          alert(
+            "There was an error submitting the schedule. Please try again."
+          );
+        });
+    } else if (
+      institute !== "None" &&
+      table1.Type == "Institute" &&
+      table3.Start_date < table3.End_date // Changed from table2.Start_date to table3.Start_date
+    ) {
+      const data2 = { table1, table3 };
+      console.log("ClassData being sent:", data2);
+
+      fetch(
+        `http://localhost/group_project_1.0/public/Ind_Myclass/CreateinstituteclassApi/${N_id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data2),
+        }
+      )
+        .then(async (response) => {
+          const contentType = response.headers.get("content-type");
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Server response:", errorText);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Body: ${errorText}`
             );
-          });
-      } else {
-        alert(
-          "Institute name should be 'None' for individual classes and Institute name should not be None for institute classes."
-        );
-      }
+          }
+          if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.warn("Unexpected response format:", text);
+            return { message: text }; // Return text for unexpected formats
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Schedule submitted successfully:", data);
+          alert("Schedule created successfully!");
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Ind_Myclass";
+        })
+        .catch((error) => {
+          console.error("Error submitting schedule:", error);
+          alert(
+            "There was an error submitting the schedule. Please try again."
+          );
+        });
+    } else {
+      alert(
+        "Institute name should be 'None' for individual classes and Institute name should not be None for institute classes."
+      );
+    }
   }
 });
 
