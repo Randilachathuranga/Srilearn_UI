@@ -73,7 +73,6 @@
 <option value="Sinhala">Sinhala</option>
 <option value="Tamil">Tamil</option>
 
-    <!-- Add more options as needed -->
 </select>
 <div class="create-row">
             <div>
