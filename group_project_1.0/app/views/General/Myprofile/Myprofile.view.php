@@ -112,6 +112,7 @@
             .then(response => response.json())
             .then(result => {
                 if (result.length > 0 && result[0].Src) {
+                    console.log(result);
                     document.getElementById('userImage').src = result[0].Src;
                 }else{
                     document.getElementById('userImage').src = '../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg';

@@ -543,9 +543,11 @@ function closePopup() {
   document.getElementById("popupForm").style.display = "none";
 }
 
-function view() {
-  alert("Not implemented");
-}
+function viewinst(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href =
+    "http://localhost/group_project_1.0/public/ViewinstituteController";
+  console.log("Class ID stored in sessionStorage:", Class_id);}
 
 function UploadMat(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
