@@ -1,32 +1,29 @@
-// Fetch advertisements from the server dynamically when the page loads
-window.onload = function() {
-    fetchAds();
-};
+// Redirect to 'adform' when the button is clicked
+function handleclick() {
+    window.location.href = 'advertisements/form';  // This should route to the correct form view
+}
 
-// Function to fetch ads from the backend using AJAX
+// Function to fetch ads dynamically and display them
 function fetchAds() {
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd')  // Adjust the path to your controller's viewadd method
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd')  // URL for fetching ads
         .then(response => response.json())
-        .then(data => {
-            displayAds(data);
-        })
+        .then(data => displayAds(data))
         .catch(error => console.error('Error fetching ads:', error));
 }
 
-// Function to display ads in the container
+// Function to display ads
 function displayAds(ads) {
     const adContainer = document.getElementById('adContainer');
-    adContainer.innerHTML = ''; // Clear the container before adding new ads
+    adContainer.innerHTML = ''; // Clear any existing ads
 
     if (ads.message) {
         adContainer.innerHTML = `<p>${ads.message}</p>`;
         return;
     }
 
-    // Loop through the ads and create HTML elements
     ads.forEach(ad => {
         const adElement = document.createElement('div');
-        adElement.classList.add('card', ad.Iseducation ? 'education' : 'non-education');
+        adElement.classList.add('ad-card', ad.Iseducation ? 'education' : 'non-education');
         adElement.setAttribute('data-subject', ad.Subject);
 
         adElement.innerHTML = `
@@ -40,13 +37,13 @@ function displayAds(ads) {
     });
 }
 
-// Function to filter advertisements based on type and subject
+// Function to filter ads based on type and subject
 function filterAds() {
     const adType = document.getElementById('adType').value;
     const subject = document.getElementById('subject').value;
-    const ads = document.querySelectorAll('.card');
+    const ads = document.querySelectorAll('.ad-card');
 
-    // Show/hide subject filter dropdown
+    // Show/hide subject filter based on adType
     const subjectDropdown = document.getElementById('subject');
     const subjectLabel = document.getElementById('subjectLabel');
     if (adType === 'education') {
@@ -57,7 +54,7 @@ function filterAds() {
         subjectLabel.style.display = 'none';
     }
 
-    // Loop through the ads and apply filters
+    // Apply filters to each ad
     ads.forEach(ad => {
         const isEducation = ad.classList.contains('education');
         const adSubject = ad.getAttribute('data-subject');
@@ -69,7 +66,7 @@ function filterAds() {
     });
 }
 
-// Redirect the user to the form for creating a new advertisement
-function handleclick(){
-    window.location.href = 'advertisements/form';  // Adjust the path as necessary
-}
+// Fetch ads when the page loads
+window.onload = function() {
+    fetchAds();
+};

@@ -1,15 +1,11 @@
 <?php
-    // Corrected the condition to check for 'sysadmin' role
-    
-    if($_SESSION['User_id']=='Guest'){
+    // Check for 'Guest' or user role to load the appropriate NavBar
+    if ($_SESSION['User_id'] == 'Guest') {
         require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
-
-    }
-    elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+    } elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
         require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
     }
-
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,10 +44,11 @@
             </select>
 
             <?php 
-            if (isset($_SESSION['Role']) && ($_SESSION['Role'] == 'teacher' || $_SESSION['Role'] == 'institute')) {
-                echo '<div class="create-button"><button onclick="handleclick()">Create Your Own Advertisement</button></div>';
-            }
-            ?>
+    if (isset($_SESSION['Role']) && ($_SESSION['Role'] == 'teacher' || $_SESSION['Role'] == 'institute')) {
+        echo '<div class="create-button"><button onclick="handleclick()">Create Your Own Advertisement</button></div>';
+    }
+?>
+
         </div>
 
         <!-- Advertisement Cards Container -->
@@ -60,14 +57,13 @@
         </div>
     </div>
 
-    <script src="../../../../../group_project_1.0/public/views/General/Advertisements/advertisments.js"></script> <!-- Link to your JavaScript file -->
+    <script src="../../../../../group_project_1.0/public/views/General/Advertisements/advertisements.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>
 
-
 <?php
- 
- if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+    // Include footer if the user is not a sysadmin
+    if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
         require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
     }
-    ?>
+?>

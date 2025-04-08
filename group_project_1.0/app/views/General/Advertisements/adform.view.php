@@ -3,30 +3,29 @@
     if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
         require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
     }
-    ?>
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Submit Advertisement</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Advertisements/adform.css"> <!-- Link to the CSS file -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="form-container">
     <h1 class="title">Submit Advertisement</h1>
-    <form id="adForm" class="ad-form">
+    <form id="adForm" class="ad-form" method="POST" action="submit_advertisement.php"> <!-- Set the form method to POST -->
         <div class="form-group">
             <label for="title">Advertisement Title</label>
-            <input type="text" id="title" name="Title" required 
-                   placeholder="Enter advertisement title">
+            <input type="text" id="title" name="Title" required placeholder="Enter advertisement title">
         </div>
 
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea id="content" name="Content" required 
-                      placeholder="Enter advertisement content"></textarea>
+            <textarea id="content" name="Content" required placeholder="Enter advertisement content"></textarea>
         </div>
 
         <div class="form-group">
@@ -81,9 +80,9 @@ document.getElementById('non_educational').addEventListener('change', function()
     
 </body>
 </html>
+
 <?php
- 
- if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+    if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
         require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
     }
-    ?>
+?>
