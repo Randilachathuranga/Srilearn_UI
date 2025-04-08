@@ -75,17 +75,31 @@
 
     <!-- Add more options as needed -->
 </select>
-            <div class="create-row">
+<div class="create-row">
+            <div>
+                 <label for="Institute_name">Institute</label>
+                     <select id="Institute_name" name="Institute_name" required>
+                    <option value="" disabled selected>Select Institute</option>
+                    <option value="None">None</option>
+                     <!-- Dynamically populated institutes will go here -->
+                    </select>
+                    </div>
+
                 <div>
-                    <label for="Fee">Fee</label>
-                    <input type="number" id="Fee" name="Fee" required>
-                </div>
-                <div>
-                    <label for="Location">Address</label>
-                    <input type="text" id="Location" name="Location" required>
+                    <label for="Type">Type</label>
+                    <select id="Type" name="Type" required>
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Institute">Institute</option>
+                    </select>
                 </div>
             </div>
+
             <div class="create-row">
+            <div>
+                    <label for="Hallnumber">Hall number</label>
+                    <input type="text" id="Hallnumber" name="Hallnumber" required>
+                </div>
                 <div>
                     <label for="Grade">Grade</label>
                     <input type="number" id="Grade" name="Grade" required>
@@ -97,6 +111,18 @@
             </div>
             <div class="create-row">
                 <div>
+                    <label for="Fee">Fee</label>
+                    <input type="number" id="Fee" name="Fee" required>
+                </div>
+                
+                <div>
+                    <label for="Location">Address</label>
+                    <input type="text" id="Location" name="Location" required>
+                </div>
+            </div>
+            
+            <div class="create-row">
+                <div>
                     <label for="Start_date">Start Date</label>
                     <input type="date" id="Start_date" name="Start_date" required>
                 </div>
@@ -105,25 +131,7 @@
                     <input type="date" id="End_date" name="End_date" required>
                 </div>
             </div>
-            <div class="create-row">
-                <div>
-                    <label for="Institute_name">Institute</label>
-                    <select id="Institute_name" name="Institute_name" required>
-                        <option value="" disabled selected>Select Institute</option>
-                        <option value="None">None</option>
-                        <option value="Institute1">Institute1</option>
-                        <option value="Institute2">Institute2</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="Type">Type</label>
-                    <select id="Type" name="Type" required>
-                        <option value="" disabled selected>Select Type</option>
-                        <option value="Individual">Individual</option>
-                        <option value="Institute">Institute</option>
-                    </select>
-                </div>
-            </div>
+            
             <button type="submit" class="submit-button">Submit</button>
             <button type="button" onclick="closePopup()" class="close-button">Close</button>
         </form>
