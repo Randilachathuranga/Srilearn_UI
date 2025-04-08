@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const userDataElement = document.getElementById("user-data");
   if (!userDataElement) {
@@ -8,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Get the user ID from the data attribute
   const P_id = userDataElement.dataset.userId;
+  const N_id = userDataElement.dataset.userId;
   const formElement = document.getElementById("filter");
   const selectElement = formElement.querySelector("#filter-type");
 
@@ -19,104 +19,129 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchAndRenderClasses = (filterType) => {
     const fetchUrls = [
       fetch(`Ind_Myclass/MyclassApi/${P_id}`),
-      fetch(`Ind_Myclass/MyinstituteClass/${P_id}`)
+      fetch(`Ind_Myclass/MyinstituteClass/${P_id}`),
     ];
-  
+
     Promise.allSettled(fetchUrls)
-      .then(results => {
-        const jsonPromises = results.map(result => {
+      .then((results) => {
+        const jsonPromises = results.map((result) => {
           if (result.status === "fulfilled" && result.value.ok) {
             return result.value.json();
           }
           return Promise.resolve([]); // Treat rejected or non-ok fetches as empty data
         });
-  
+
         return Promise.all(jsonPromises);
       })
-      .then(dataArrays => {
+      .then((dataArrays) => {
         const combinedData = [...dataArrays[0], ...dataArrays[1]];
-  
+
         const container = document.getElementById("class-container");
         if (!container) {
-          console.error("Container element with ID 'class-container' not found.");
+          console.error(
+            "Container element with ID 'class-container' not found."
+          );
           return;
         }
-  
+
         container.innerHTML = ""; // Clear previous results
-  
+
         if (combinedData.length === 0) {
           container.innerHTML = "<p>No classes found for this teacher.</p>";
           return;
         }
-  
+
         // Filter data by class type if needed
         const filteredData =
           filterType === "All"
             ? combinedData
-            : combinedData.filter(classItem => classItem.Type === filterType);
-  
+            : combinedData.filter((classItem) => classItem.Type === filterType);
+
         if (filteredData.length === 0) {
           container.innerHTML = `<p>No ${filterType.toLowerCase()} classes found.</p>`;
           return;
         }
-  
+
         // Subject images map
         const subjectImages = {
-          Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
-          Agriculture: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
+          Accounting:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
+          Agriculture:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
           Art: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Art.jpeg",
-          BioSystemsTechnology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
-          Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
-          Buddhism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
-          Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-          Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
-          English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
-          Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-          History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+          BioSystemsTechnology:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
+          Biology:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+          Buddhism:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
+          Physics:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+          Mathematics:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+          English:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+          Chemistry:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+          History:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
           IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
-          BusinessStudies: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
-          Catholicism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
-          CivicEducation: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
-          Commerce: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
-          Drama: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
-          Engineering: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
-          Geography   : "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg", 
-          Health: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg", 
-          Science: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
-          Sinhala: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
-          Tamil: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+          BusinessStudies:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
+          Catholicism:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
+          CivicEducation:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
+          Commerce:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
+          Drama:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
+          Engineering:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
+          Geography:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg",
+          Health:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg",
+          Science:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
+          Sinhala:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+          Tamil:
+            "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
         };
-  
+
         // Render each class card
-        filteredData.forEach(classItem => {
+        filteredData.forEach((classItem) => {
           const card = document.createElement("div");
           card.className = "card";
-  
+
           const imageUrl =
             subjectImages[classItem.Subject] ||
             "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/defult.jpg";
-  
+
           card.innerHTML = `
             <div class="card-content">
               <img src="${imageUrl}" alt="${classItem.Subject}">
               <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
               <br>
-              <p><h3>Address:</h3> ${classItem.Location }</p>
+              <p><h3>Address:</h3> ${classItem.Location}</p>
               <br>
               <p>Start date: ${classItem.Start_date || "N/A"}</p>
               <p>End date: ${classItem.End_date || "N/A"}</p>
               <br>
-              <button class="card-button" onclick="showDetails(${classItem.Class_id})">More Details</button>
+              <button class="card-button" onclick="showDetails(${
+                classItem.Class_id
+              })">More Details</button>
               <button class="button" onclick="editclass(${classItem.Class_id})">
                 <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
               </button>
             </div>
           `;
-  
+
           container.appendChild(card);
         });
       })
-      .catch(error => {
+      .catch((error) => {
         const container = document.getElementById("class-container");
         if (container) {
           container.innerHTML = `<p class="error">Failed to load classes: ${error.message}</p>`;
@@ -124,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("There was a problem with the fetch operation:", error);
       });
   };
-  
 
   // Fetch and render classes on dropdown selection change
   selectElement.addEventListener("change", () => {
@@ -136,85 +160,167 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial fetch with default dropdown value
   fetchAndRenderClasses(selectElement.value);
 
+  //fetch institute for spesific class
+  async function fetchInstitutes(P_id) {
+    try {
+      const response = await fetch(
+        `http://localhost/group_project_1.0/public/Normalteacher_Controller/findmyinstitutes/${P_id}`
+      );
+      const institutes = await response.json();
+
+      const instituteSelect = document.getElementById("Institute_name");
+      // Clear previous options
+      instituteSelect.innerHTML =
+        '<option value="" disabled selected>Select Institute</option><option value="None">None</option>';
+
+      // Add institute options to the dropdown
+      institutes.forEach((institute) => {
+        const fullName = `${institute.F_name} ${institute.L_name}`; // Concatenate first name and last name
+        const option = document.createElement("option");
+        option.value = fullName; // Use the concatenated name as the value
+        option.textContent = fullName; // Display the concatenated name
+        instituteSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching institutes:", error);
+    }
+  }
+
+  fetchInstitutes(P_id);
+
   // Show the popup form
   document
     .getElementById("editScheduleForm")
     .addEventListener("submit", (event) => createSchedule(event, P_id));
 
-  async function createSchedule(event, P_id) {
-    console.log("createSchedule called with P_id:", P_id);
-    event.preventDefault(); // Prevent form submission and page reload
-
-    const form = event.target;
-    const formData = new FormData(form);
-
-    const table1 = {
-      Type: formData.get("Type"),
-      Subject: formData.get("Subject"),
-      Grade: formData.get("Grade"),
-      Max_std: parseInt(formData.get("Max_std"), 10),
-      fee: parseFloat(formData.get("Fee")),
-    };
-    const table2 = {
-      P_id: P_id,
-      Location: formData.get("Location"),
-      Start_date: formData.get("Start_date"),
-      End_date: formData.get("End_date"),
-    };
-
-    const institute = formData.get("Institute_name");
-
-    if (
-      institute == "None" &&
-      table1.Type == "Individual" &&
-      table2.Start_date < table2.End_date
-    ) {
-      const data = { table1, table2 };
-      console.log("ClassData being sent:", data);
-
-      fetch(
-        `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
-        .then(async (response) => {
-          const contentType = response.headers.get("content-type");
-          if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Server response:", errorText);
-            throw new Error(
-              `HTTP error! Status: ${response.status}, Body: ${errorText}`
+    async function createSchedule(event, P_id) {
+      console.log("createSchedule called with P_id:", P_id);
+      event.preventDefault(); // Prevent form submission and page reload
+  
+      const form = event.target;
+      const formData = new FormData(form);
+  
+      const table1 = {
+        Type: formData.get("Type"),
+        Subject: formData.get("Subject"),
+        Grade: formData.get("Grade"),
+        Max_std: parseInt(formData.get("Max_std"), 10),
+        fee: parseFloat(formData.get("Fee")),
+      };
+      const table2 = {
+        P_id: P_id,
+        Location: formData.get("Location"),
+        Start_date: formData.get("Start_date"),
+        End_date: formData.get("End_date"),
+      };
+  
+      const table3 = {
+        N_id: N_id, // Changed from N_id to P_id since that's what you're passing
+        Location: formData.get("Location"),
+        Start_date: formData.get("Start_date"),
+        End_date: formData.get("End_date"),
+        Hall_number: formData.get("Hallnumber"),
+      };
+  
+      const institute = formData.get("Institute_name");
+  
+      if (
+        institute == "None" &&
+        table1.Type == "Individual" &&
+        table2.Start_date < table2.End_date
+      ) {
+        const data = { table1, table2 };
+        console.log("ClassData being sent:", data);
+  
+        fetch(
+          `http://localhost/group_project_1.0/public/Ind_Myclass/CreateclassApi/${P_id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        )
+          .then(async (response) => {
+            const contentType = response.headers.get("content-type");
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.error("Server response:", errorText);
+              throw new Error(
+                `HTTP error! Status: ${response.status}, Body: ${errorText}`
+              );
+            }
+            if (!contentType || !contentType.includes("application/json")) {
+              const text = await response.text();
+              console.warn("Unexpected response format:", text);
+              return { message: text }; // Return text for unexpected formats
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Schedule submitted successfully:", data);
+            alert("Schedule created successfully!");
+            window.location.href =
+              "http://localhost/group_project_1.0/public/Ind_Myclass";
+          })
+          .catch((error) => {
+            console.error("Error submitting schedule:", error);
+            alert(
+              "There was an error submitting the schedule. Please try again."
             );
+          });
+      } else if (
+        institute !== "None" &&
+        table1.Type == "Institute" &&
+        table3.Start_date < table3.End_date // Changed from table2.Start_date to table3.Start_date
+      ) {
+        const data2 = { table1, table3 };
+        console.log("ClassData being sent:", data2,table3);
+  
+        fetch(
+          `http://localhost/group_project_1.0/public/Ind_Myclass/CreateinstituteclassApi/${N_id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data2),
           }
-          if (!contentType || !contentType.includes("application/json")) {
-            const text = await response.text();
-            console.warn("Unexpected response format:", text);
-            return { message: text }; // Return text for unexpected formats
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Schedule submitted successfully:", data);
-          alert("Schedule created successfully!");
-          window.location.href =
-            "http://localhost/group_project_1.0/public/Ind_Myclass";
-        })
-        .catch((error) => {
-          console.error("Error submitting schedule:", error);
-          alert(
-            "There was an error submitting the schedule. Please try again."
-          );
-        });
-    } else {
-      alert(
-        "Institute name should be 'None' for individual classes, or the start date should be earlier than the end date."
-      );
-    }
+        )
+          .then(async (response) => {
+            const contentType = response.headers.get("content-type");
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.error("Server response:", errorText);
+              throw new Error(
+                `HTTP error! Status: ${response.status}, Body: ${errorText}`
+              );
+            }
+            if (!contentType || !contentType.includes("application/json")) {
+              const text = await response.text();
+              console.warn("Unexpected response format:", text);
+              return { message: text }; // Return text for unexpected formats
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Schedule submitted successfully:", data);
+            alert("Schedule created successfully!");
+            window.location.href =
+              "http://localhost/group_project_1.0/public/Ind_Myclass";
+          })
+          .catch((error) => {
+            console.error("Error submitting schedule:", error);
+            alert(
+              "There was an error submitting the schedule. Please try again."
+            );
+          });
+      } else {
+        alert(
+          "Institute name should be 'None' for individual classes and Institute name should not be None for institute classes."
+        );
+      }
   }
 });
 
@@ -223,23 +329,22 @@ function showDetails(Class_id) {
   const individualUrl = `Ind_Myclass/MoredetailsApi/${Class_id}`;
   const instituteUrl = `Ind_Myclass/Moredetailsinstitute/${Class_id}`;
 
-  Promise.allSettled([
-    fetch(individualUrl),
-    fetch(instituteUrl)
-  ])
-    .then(results => {
-      const successful = results.filter(r => r.status === 'fulfilled' && r.value.ok);
+  Promise.allSettled([fetch(individualUrl), fetch(instituteUrl)])
+    .then((results) => {
+      const successful = results.filter(
+        (r) => r.status === "fulfilled" && r.value.ok
+      );
       if (successful.length === 0) {
         throw new Error("No valid response from any API.");
       }
 
-      return Promise.all(successful.map(r => r.value.json()));
+      return Promise.all(successful.map((r) => r.value.json()));
     })
-    .then(dataArrays => {
+    .then((dataArrays) => {
       const [individualClassData = [], instituteClassData = []] = dataArrays;
 
-      const classDetail = 
-        (individualClassData.length > 0 && individualClassData[0]) || 
+      const classDetail =
+        (individualClassData.length > 0 && individualClassData[0]) ||
         (instituteClassData.length > 0 && instituteClassData[0]);
 
       if (!classDetail) {
@@ -249,52 +354,85 @@ function showDetails(Class_id) {
       }
 
       const subjectImages = {
-        Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
-        Agriculture: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
+        Accounting:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
+        Agriculture:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
         Art: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Art.jpeg",
-        BioSystemsTechnology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
-        Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
-        Buddhism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
-        Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-        Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
-        English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
-        Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
-        History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+        BioSystemsTechnology:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
+        Biology:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+        Buddhism:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
+        Physics:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+        Mathematics:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+        English:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+        Chemistry:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+        History:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
         IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
-        BusinessStudies: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
-        Catholicism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
-        CivicEducation: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
-        Commerce: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
-        Drama: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
-        Engineering: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
-        Geography   : "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg", 
-        Health: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg", 
-        Science: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
-        Sinhala: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
-        Tamil: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+        BusinessStudies:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
+        Catholicism:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
+        CivicEducation:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
+        Commerce:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
+        Drama:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
+        Engineering:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
+        Geography:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg",
+        Health:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg",
+        Science:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
+        Sinhala:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+        Tamil:
+          "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
       };
 
-      const imageBasePath = "../../../../../group_project_1.0/public/views/TeacherView/Myclass/";
-      const imageUrl = classDetail.image || 
-        imageBasePath + (subjectImages[classDetail.Subject] || "Class_images/defult.jpg");
+      const imageBasePath =
+        "../../../../../group_project_1.0/public/views/TeacherView/Myclass/";
+      const imageUrl =
+        classDetail.image ||
+        imageBasePath +
+          (subjectImages[classDetail.Subject] || "Class_images/defult.jpg");
 
       document.getElementById("classImage").src = imageUrl;
-      document.getElementById("moreSubject").textContent = classDetail.Subject || "N/A";
-      document.getElementById("classType").textContent = classDetail.Type || "N/A";
-      document.getElementById("locat").textContent = classDetail.Location || classDetail.Hall_number || "N/A";
-      document.getElementById("Hall_no").textContent = classDetail.Hall_number || "N/A";
-      document.getElementById("moreGrade").textContent = classDetail.Grade || "N/A";
-      document.getElementById("classid").textContent = classDetail.Class_id || "N/A";
-      document.getElementById("classFee").textContent = classDetail.fee || "N/A";
-      document.getElementById("maxstu").textContent = classDetail.Max_std || "N/A";
-      document.getElementById("classdate").textContent = 
-        `${classDetail.Start_date || "N/A"} - ${classDetail.End_date || "N/A"}`;
+      document.getElementById("moreSubject").textContent =
+        classDetail.Subject || "N/A";
+      document.getElementById("classType").textContent =
+        classDetail.Type || "N/A";
+      document.getElementById("locat").textContent =
+        classDetail.Location || classDetail.Hall_number || "N/A";
+      document.getElementById("Hall_no").textContent =
+        classDetail.Hall_number || "N/A";
+      document.getElementById("moreGrade").textContent =
+        classDetail.Grade || "N/A";
+      document.getElementById("classid").textContent =
+        classDetail.Class_id || "N/A";
+      document.getElementById("classFee").textContent =
+        classDetail.fee || "N/A";
+      document.getElementById("maxstu").textContent =
+        classDetail.Max_std || "N/A";
+      document.getElementById("classdate").textContent = `${
+        classDetail.Start_date || "N/A"
+      } - ${classDetail.End_date || "N/A"}`;
 
       document.getElementById("modalBackground").style.display = "block";
 
       console.log("Class Details:", classDetail);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error fetching data:", error);
       alert("Failed to load class details.");
     });
@@ -312,7 +450,7 @@ function editclass(class_id) {
 
   const allfetch = [
     fetch(`Ind_Myclass/MoredetailsApi/${class_id}`),
-    fetch(`Ind_Myclass/Moredetailsinstitute/${class_id}`)
+    fetch(`Ind_Myclass/Moredetailsinstitute/${class_id}`),
   ];
 
   Promise.all(allfetch)
@@ -355,17 +493,22 @@ function editclass(class_id) {
       // Fill form fields
       document.getElementById("classSubject").value = classDetail.Subject || "";
       document.getElementById("classGrade").value = classDetail.Grade || "";
-      if(classDetail.Type === "Institute") {
-        document.getElementById("Hall_number").value = classDetail.Hall_number || "";
+      if (classDetail.Type === "Institute") {
+        document.getElementById("Hall_number").value =
+          classDetail.Hall_number || "";
         Hall_number.disabled = false;
-      }else {
+      } else {
         document.getElementById("Hall_number").value = "None";
+        Hall_number.disabled = true;
       }
       document.getElementById("classfee").value = classDetail.fee || "";
       document.getElementById("classMax_std").value = classDetail.Max_std || "";
-      document.getElementById("classStart_date").value = classDetail.Start_date || "";
-      document.getElementById("classEnd_date").value = classDetail.End_date || "";
-      document.getElementById("classLocation").value = classDetail.Location || classDetail.Hall_number || "";
+      document.getElementById("classStart_date").value =
+        classDetail.Start_date || "";
+      document.getElementById("classEnd_date").value =
+        classDetail.End_date || "";
+      document.getElementById("classLocation").value =
+        classDetail.Location || classDetail.Hall_number || "";
 
       // Show the popup form
       document.getElementById("popupEditForm").style.display = "flex";
@@ -376,10 +519,8 @@ function editclass(class_id) {
     });
 }
 
-
 function createclass() {
   document.getElementById("popupForm").style.display = "flex";
-  console.log("p_ID ", P_id);
 }
 
 function closePopup() {
@@ -392,31 +533,34 @@ function view() {
 
 function UploadMat(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
-  window.location.href = "http://localhost/group_project_1.0/public/Learning_mat";
+  window.location.href =
+    "http://localhost/group_project_1.0/public/Learning_mat";
   console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
 function UploadASS(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
-  window.location.href = "http://localhost/group_project_1.0/public/AssignmentController";
-  console.log("Class ID stored in sessionStorage:", Class_id);  
+  window.location.href =
+    "http://localhost/group_project_1.0/public/AssignmentController";
+  console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
 function viewschedule(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
-  window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
+  window.location.href =
+    "http://localhost/group_project_1.0/public/ClassShcedules";
   console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
 function getClassId() {
-  return document.getElementById('classid').textContent.trim();
+  return document.getElementById("classid").textContent.trim();
 }
 
 function freeCard(Class_id) {
-    sessionStorage.setItem("class_id", Class_id);
-    window.location.href = "http://localhost/group_project_1.0/public/FreeCard";
-    console.log("Class ID stored in sessionStorage:", Class_id);
-  }
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href = "http://localhost/group_project_1.0/public/FreeCard";
+  console.log("Class ID stored in sessionStorage:", Class_id);
+}
 
 function reqPay() {
   window.location.href =
@@ -425,6 +569,7 @@ function reqPay() {
 
 function viewStudents(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
-  window.location.href = "http://localhost/group_project_1.0/public/ClassStudents";
+  window.location.href =
+    "http://localhost/group_project_1.0/public/ClassStudents";
   console.log("Class ID stored in sessionStorage:", Class_id);
 }

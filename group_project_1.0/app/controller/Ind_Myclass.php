@@ -159,12 +159,10 @@ class Ind_Myclass extends Controller{
             }
         } 
         
-        //create a class
+        //create a individual class
         public function CreateclassApi($P_id) {
-
             $jsonData = file_get_contents('php://input');
             $data = json_decode($jsonData, true);
-
             if (json_last_error() !== JSON_ERROR_NONE) {
                 echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
                 return;
@@ -203,6 +201,56 @@ class Ind_Myclass extends Controller{
                 }
         }
 
+
+        //create a institute class
+    //create a institute class
+public function CreateinstituteclassApi($N_id) {
+    $jsonData = file_get_contents('php://input');
+    $data = json_decode($jsonData, true);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input']);
+        return;
+    }
+    
+    if (!isset($data['table1']) || !isset($data['table3'])) {
+        echo json_encode(['status' => 'error', 'message' => 'Missing table1 or table3 data']);
+        return;
+    }
+    
+    $table1_data = [
+        'Type' => $data['table1']['Type'] ?? null,
+        'Subject' => $data['table1']['Subject'] ?? null,
+        'Grade' => $data['table1']['Grade'] ?? null,
+        'Max_std' => $data['table1']['Max_std'] ?? null,
+        'fee' => $data['table1']['fee'] ?? null,
+    ];
+    
+    $table2_data = [
+        'N_id' => $N_id,
+        'Location' => $data['table3']['Location'] ?? null,
+        'Start_date' => $data['table3']['Start_date'] ?? null,
+        'End_date' => $data['table3']['End_date'] ?? null,
+        'Hall_number' => $data['table3']['Hall_number'] ?? null,
+    ];
+    
+    if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid or incomplete data for table1 or table3']);
+        return;
+    }
+    
+    error_log("Prepared table1 data: " . print_r($table1_data, true));
+    error_log("Prepared table2 data: " . print_r($table2_data, true));
+    
+    $model = new Myclassmodel();
+    $result = $model->insertinstituteclass($table1_data,$table2_data);
+    
+    if ($result) {
+        echo json_encode(['status' => 'Success', 'message' => 'Class created successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to create class']);
+    }
+}
 
 
     }
