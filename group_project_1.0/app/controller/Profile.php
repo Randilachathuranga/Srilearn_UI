@@ -49,27 +49,27 @@ class Profile extends Controller{
             echo json_encode(['error' => 'An error occurred while fetching user.', 'details' => $e->getMessage()]);
         }
     }
-    public function myupdateapi($id) {
-        // Get JSON input from the request body
-        $jsonData = file_get_contents("php://input");
-        $data = json_decode($jsonData, true);
+    // public function myupdateapi($id) {
+    //     // Get JSON input from the request body
+    //     $jsonData = file_get_contents("php://input");
+    //     $data = json_decode($jsonData, true);
     
-        // Check for decoding errors
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            echo json_encode(['error' => 'Invalid JSON input']);
-            return;
-        }
+    //     // Check for decoding errors
+    //     if (json_last_error() !== JSON_ERROR_NONE) {
+    //         echo json_encode(['error' => 'Invalid JSON input']);
+    //         return;
+    //     }
     
-        // Proceed with updating using $id and $data
-        $model = new Blogmodel();
-        $updated = $model->update($id, $data, 'Blog_id');
+    //     // Proceed with updating using $id and $data
+    //     $model = new Blogmodel();
+    //     $updated = $model->update($id, $data, 'Blog_id');
         
-        if ($updated) {
-            echo json_encode(['success' => 'Blog updated successfully']);
-        } else {
-            echo json_encode(['error' => 'Failed to update blog']);
-        }
-    }
+    //     if ($updated) {
+    //         echo json_encode(['success' => 'Blog updated successfully']);
+    //     } else {
+    //         echo json_encode(['error' => 'Failed to update blog']);
+    //     }
+    // }
 
     // Upload and save image
     public function upload_image($user_id) {

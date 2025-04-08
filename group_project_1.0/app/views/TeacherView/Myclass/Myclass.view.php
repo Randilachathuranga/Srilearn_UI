@@ -237,7 +237,7 @@
         <div class="button-container">
             <button onclick="UploadMat(getClassId())" class="buttons">Upload Learning materials</button>
             <button onclick="UploadASS(getClassId())" class="buttons">Upload Assignments marks</button>
-            <button onclick="view()" class="buttons">View Institute</button>
+            <button onclick="viewinst(getClassId())" class="buttons">View Institute</button>
             <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard(getClassId())" class="buttons">Issue free cards</button>
             <!-- <button onclick="reqPay()" class="buttons">Request payrolls</button> -->

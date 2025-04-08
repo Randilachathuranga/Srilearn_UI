@@ -20,6 +20,8 @@ class Myclassmodel{
     public $table3 = 'instituteteacher_class';
     public $joinCondition3 = "class.class_id = instituteteacher_class.InstClass_id";
 
+    public $table4 = 'normal_teacher';
+
     //columns for insert into class table and individual class table
     public $ColumnsforT1=[
         'Type','Subject','Grade','Max_std','fee'
