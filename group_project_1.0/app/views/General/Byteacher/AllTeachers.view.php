@@ -49,22 +49,30 @@
   <div class="form-container">
     <form id="blogForm">
       <div class="teacher-details">
-        <img src="../../../../../group_project_1.0/public/views/General/Byteacher/Teacher 1.png" alt="Teacher Image" id="teacher-image" class="teacher-image">
+        <!-- Profile image -->
+        <img 
+          src="" 
+          alt="Teacher Image" 
+          id="teacher-image" 
+          class="teacher-image"
+        >
+
+        <!-- Teacher info fields -->
         <p><strong>Name:</strong> <span id="teacher-name"></span></p>
         <p><strong>Subject:</strong> <span id="teacher-subject"></span></p>
         <p><strong>Phone number:</strong> <span id="teacher-phone"></span></p>
         <p><strong>Email:</strong> <span id="teacher-email"></span></p>
-        <p><strong>Institute:</strong> <span id="teacher-institute"></span></p>
+        <p><strong>My Institutes:</strong> <span id="teacher-institute"></span></p>
         <p><strong>Address:</strong> <span id="teacher-address"></span></p>
-
-        <p></p><strong>Qualifications:</strong> <span id="teacher-qualifications"></span></p>
-        
+        <p><strong>District:</strong> <span id="teacher-district"></span></p>
       </div>
     </form>
+
+    <!-- Close button -->
     <button type="button" class="close-button" onclick="closePopup()"></button>
   </div>
-  
 </div>
+
 
 
 
