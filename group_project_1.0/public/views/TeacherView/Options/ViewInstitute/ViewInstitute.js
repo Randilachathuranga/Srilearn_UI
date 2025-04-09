@@ -56,7 +56,7 @@ function requestPayroll() {
     .then((data) => {
       const item = data[0];
 
-      document.getElementById("Institute_ID").value = item.Institute_ID;
+      document.getElementById("Institute_ID").value = item.inst_id;
       document.getElementById("N_id").value = item.N_id;
       document.getElementById("InstClass_id").value = item.InstClass_id;
 
@@ -107,7 +107,7 @@ document
 
     // First check if the teacher can submit a new request
     fetch(
-      `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/checkmyrequest/${formValues.N_id}`
+      `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/checkmyrequest/${formValues.N_id}/${formValues.InstClass_id}`
     )
       .then((response) => response.json())
       .then((checkData) => {
@@ -127,7 +127,7 @@ document
         );
 
         // If the check indicates the teacher can submit a new request (30 days have passed)
-        if (daysDifference > 30) {
+        if (daysDifference >= 30) {
           submitPayrollRequest(formValues);
         } else {
           // Show message why the teacher can't submit a new request
