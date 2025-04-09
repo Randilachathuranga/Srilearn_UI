@@ -14,8 +14,8 @@
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
-                <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher">By Teachers</a>
-                <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute">By Institutes</a>
+                <a href="http://localhost/group_project_1.0/public/By_teacher">By Teachers</a>
+                <a href="http://localhost/group_project_1.0/public/By_institute">By Institutes</a>
             </div>
         </div>
         <a href="Advertisements">Advertisements</a>
@@ -37,8 +37,8 @@
     </div>
     <div class="nav-links">
         <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/Home.png">Home</a>
-        <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
-        <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">By Institute</a>
+        <a href="http://localhost/group_project_1.0/public/By_teacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
+        <a href="http://localhost/group_project_1.0/public/By_institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">By Institute</a>
         <a href="Advertisements"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">Advertisements</a>
         <a href="Blog"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
         <a href="http://localhost/group_project_1.0/public/ContactUS"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/contact-mail.png">Contact Us</a>
