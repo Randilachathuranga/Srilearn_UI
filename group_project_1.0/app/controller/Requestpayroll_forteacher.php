@@ -2,36 +2,36 @@
 
 class Requestpayroll_forteacher extends Controller
 {
-    public function mydetails($Class_id)
-    {
-        $model = new Myclassmodel();
-        header('Content-Type: application/json');
-        try {
+//     public function mydetails($Class_id)
+//     {
+//         $model = new Myclassmodel();
+//         header('Content-Type: application/json');
+//         try {
         
-        $tables = ['instituteteacher_class', 'normal_teacher', 'user'];
+//         $tables = ['instituteteacher_class', 'normal_teacher', 'user'];
 
-        $joinConditions = [
-        'instituteteacher_class.N_id = normal_teacher.N_id',
-        'normal_teacher.N_id = user.User_id'
-        ];
+//         $joinConditions = [
+//         'instituteteacher_class.N_id = normal_teacher.N_id',
+//         'normal_teacher.N_id = user.User_id'
+//         ];
 
-    $data = [
-    'instituteteacher_class.InstClass_id' => $Class_id
-    ];
+//     $data = [
+//     'instituteteacher_class.InstClass_id' => $Class_id
+//     ];
 
-    $data_not = []; // if you have any != conditions
+//     $data_not = []; // if you have any != conditions
 
-    $result = $model->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
+//     $result = $model->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
 
-            if ($result) {
-                echo json_encode($result);
-            } else {
-                echo json_encode(['message' => 'No institute found for this class ID.']);
-            }
-        } catch (Exception $e) {
-            echo json_encode(['error' => 'An error occurred while fetching materials.', 'details' => $e->getMessage()]);
-        }
-   }
+//             if ($result) {
+//                 echo json_encode($result);
+//             } else {
+//                 echo json_encode(['message' => 'No institute found for this class ID.']);
+//             }
+//         } catch (Exception $e) {
+//             echo json_encode(['error' => 'An error occurred while fetching materials.', 'details' => $e->getMessage()]);
+//         }
+//    }
 
    //insert payroll request data for payroll_request table
    public function insertpayrollrequest($classId)
@@ -78,13 +78,13 @@ class Requestpayroll_forteacher extends Controller
     }
 }
 
-    public function checkmyrequest($N_id)
+    public function checkmyrequest($N_id,$InstClass_id)
     {
         $model = new payroll_request();
         header('Content-Type: application/json');
         try {
         
-        $result = $model->where(['N_id' => $N_id , 'stateis' => 1]);
+        $result = $model->where(['N_id' => $N_id , 'InstClass_id' => $InstClass_id ,'stateis' => 1]);
 
             if ($result) {
                 echo json_encode($result);
