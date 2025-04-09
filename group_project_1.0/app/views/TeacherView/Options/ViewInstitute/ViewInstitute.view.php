@@ -30,6 +30,7 @@
       <input type="hidden" id="N_id" name="N_id">
       <input type="hidden" id="InstClass_id" name="InstClass_id">
 
+
       <div class="form-group">
         <label for="current_date">Current Date:</label>
         <input type="text" id="current_date" name="current_date" readonly>
@@ -37,7 +38,12 @@
 
       <div class="form-group">
         <label for="bankdetails">Bank Details:</label>
-        <input type="text" id="bankdetails" name="bankdetails" required>
+        <input type="text" id="bankdetails" name="bankdetails" placeholder="Account number and all other stuff" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Amount">Amount:</label>
+        <input type="text" id="Amount" name="Amount" placeholder="Amount" required>
       </div>
 
       <div class="popup-buttons">

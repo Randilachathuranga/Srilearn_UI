@@ -89,3 +89,43 @@ document.getElementById("payrollForm").addEventListener("submit", function (e) {
   alert("Payroll request submitted successfully!");
   closePopup();
 });
+
+//submit
+document
+  .getElementById("payrollForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Assign the form values to an object (key-value pairs)
+    const formValues = {
+      Institute_ID: document.getElementById("Institute_ID").value,
+      N_id: document.getElementById("N_id").value,
+      InstClass_id: document.getElementById("InstClass_id").value,
+      current_date: document.getElementById("current_date").value,
+      bankdetails: document.getElementById("bankdetails").value,
+      Amount: document.getElementById("Amount").value,
+    };
+
+    console.log("Form Values:", formValues);
+
+    // Send the FormData via fetch
+    fetch(
+      `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest/${formValues.InstClass_id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues), // Send the form data as JSON
+      }
+    )
+      .then((response) => response.json()) // Assuming the server responds with JSON
+      .then((data) => {
+        console.log("Response Data:", data); // Handle response data
+        // Close the popup or give feedback to the user as needed
+        closePopup();
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Handle any errors
+      });
+  });
