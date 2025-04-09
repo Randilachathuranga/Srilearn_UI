@@ -84,7 +84,7 @@ class Requestpayroll_forteacher extends Controller
         header('Content-Type: application/json');
         try {
         
-        $result = $model->where(['N_id' => $N_id]);
+        $result = $model->where(['N_id' => $N_id , 'stateis' => 1]);
 
             if ($result) {
                 echo json_encode($result);
