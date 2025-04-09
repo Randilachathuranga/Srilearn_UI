@@ -185,11 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
   
         // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
+        document.getElementById("inst_id").value = institute.Institute_ID;
       });
     } catch (error) {
       console.error("Error fetching institutes:", error);
     }
   }
+
+  
   document.getElementById("Institute_name").addEventListener("change", function () {
     const selectedName = this.value;
   
@@ -236,10 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
       Start_date: formData.get("Start_date"),
       End_date: formData.get("End_date"),
       Hall_number: formData.get("Hallnumber"),
+      inst_id: formData.get("inst_id"),
     };
 
     const institute = formData.get("Institute_name");
-
+    console.log("id ekd = ",table3)
     if (
       institute == "None" &&
       table1.Type == "Individual" &&

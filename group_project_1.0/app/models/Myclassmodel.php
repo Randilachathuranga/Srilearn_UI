@@ -32,7 +32,7 @@ class Myclassmodel{
     ];
 
     protected $ColumnsforT3 = [
-        'InstClass_id', 'N_id', 'Location', 'Start_date', 'End_date','Hall_number'
+        'InstClass_id', 'N_id', 'Location', 'Start_date', 'End_date','Hall_number','inst_id'
     ];
 
     public $joinCondition = "class.class_id = individual_class.IndClass_id";

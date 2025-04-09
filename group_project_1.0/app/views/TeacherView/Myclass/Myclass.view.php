@@ -99,6 +99,7 @@
                     <label for="Hallnumber">Hall number</label>
                     <input type="text" id="Hallnumber" name="Hallnumber" required>
                 </div>
+                    <input type="hidden" id="inst_id" name="inst_id" required>
                 <div>
                     <label for="Grade">Grade</label>
                     <input type="number" id="Grade" name="Grade" required>
