@@ -77,6 +77,47 @@ class Enrollment extends Controller
     }
  }
 
+ public function allindividual(){
+    $model= new StudentModel();
+    header('Content-Type: application/json');
+    try {
+        $tables =['class','individual_class','user','enrollment'];
+        $join_conditions = ['class.Class_id = individual_class.IndClass_id', 'individual_class.P_id = user.User_id',
+        'enrollment.Class_id=class.Class_id'];
+
+        $data =['enrollment.Stu_id' =>$_SESSION['User_id']];
+        $datanot=[];
+        $individual = $model->InnerJoinwhereMultiple($tables,$join_conditions,$data,$datanot);
+        if ($individual) {
+            echo json_encode($individual);
+        } else {
+            echo json_encode(['message' => 'No classes found .']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+    }
+}
+
+public function allinstitute(){
+    $model= new StudentModel();
+    header('Content-Type: application/json');
+    try {
+        $tables2 =['class','instituteteacher_class','enrollment'];
+        $join_conditions2 = ['class.Class_id = instituteteacher_class.InstClass_id','enrollment.Class_id=class.Class_id'];
+
+        $data2 =['enrollment.Stu_id' =>$_SESSION['User_id']];
+        $datanot=[];
+        $institute = $model->InnerJoinwhereMultiple($tables2,$join_conditions2,$data2,$datanot);
+        if ($institute) {
+            echo json_encode($institute);
+        } else {
+            echo json_encode(['message' => 'No classes found .']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+    }
+}
+
  public function mydeleteapi($id) {
         
     $model = new Enrollmodel();

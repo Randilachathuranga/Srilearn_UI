@@ -95,23 +95,60 @@
 
         // Fetch all classes and render
         function fetchAllClasses() {
-            fetch('http://localhost/group_project_1.0/public/Student/allclasses')
-                .then(response => response.ok ? response.json() : Promise.reject('Failed to load'))
-                .then(data => renderClasses(data || [])) // Ensure data is an array
-                .catch(error => console.error('Error fetching all classes:', error));
-        }
+    const individualURL = 'http://localhost/group_project_1.0/public/Student/allindividual';
+    const instituteURL = 'http://localhost/group_project_1.0/public/Student/allinstitute';
+
+    Promise.all([
+        fetch(individualURL).then(res => res.ok ? res.json() : []),
+        fetch(instituteURL).then(res => res.ok ? res.json() : [])
+    ])
+    .then(([individualData, instituteData]) => {
+        const allClasses = [...individualData, ...instituteData];
+        renderClasses(allClasses);
+    })
+    .catch(error => console.error('Error fetching class data:', error));
+}
+
 
         // Fetch filtered classes based on dropdown selections
         function fetchFilteredClasses() {
-            const subject = document.getElementById("subject").value;
-            const grade = document.getElementById("grade").value;
-
-            const url = `http://localhost/group_project_1.0/public/Student/viewClasses/${subject}/${grade}`;
-            fetch(url)
-                .then(response => response.ok ? response.json() : Promise.reject('Failed to load'))
-                .then(data => renderClasses(data || [])) // Ensure data is an array
-                .catch(error => console.error('Error fetching filtered classes:', error));
-        }
+    const subject = document.getElementById("subject").value;
+    const grade = document.getElementById("grade").value;
+    let combinedResults = [];
+    const fetchUrl1 = fetch(`http://localhost/group_project_1.0/public/Student/viewindividual/${subject}/${grade}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        
+    const fetchUrl2 = fetch(`http://localhost/group_project_1.0/public/Student/viewinstitute/${subject}/${grade}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+    
+    Promise.all([fetchUrl1, fetchUrl2])
+        .then(([data1, data2]) => {
+            // Only add data1 if it exists and is not null
+            if (data1) {
+                if (Array.isArray(data1) && data1.length > 0) {
+                    combinedResults = combinedResults.concat(data1);
+                }
+            }
+            if (data2) {
+                if (Array.isArray(data2) && data2.length > 0) {
+                    combinedResults = combinedResults.concat(data2);
+                }
+            }
+            renderClasses(combinedResults);
+        })
+        .catch(error => {
+            console.error('Error fetching filtered classes:', error);
+            renderClasses([]); // Render empty array in case of error
+        });
+}
 
         // Render classes dynamically
         function renderClasses(classes) {
@@ -130,8 +167,11 @@
                 rec.className = 'record';
                 rec.innerHTML = `
                     <h2>Subject: ${record.Subject}</h2>
+                    <h5>Teacher : ${record.F_name || "N/A"} ${record.L_name || " "}</h5>
                     <h3>Grade: ${record.Grade}</h3>
                     <p>Type: ${record.Type}</p>
+                    <p>Address: ${record.Location}</p>
+                    <p>Subject: ${record.Subject}</p>
                     <h5>Fee: ${record.fee}</h5>
                     
                     <?php if(($_SESSION['Role']=='student')) echo '<button onclick="handleEnrollment(${record.Class_id})">Join Class</button>';?>
