@@ -20,48 +20,107 @@ class Student extends StudentController
      * @param string $subject - The subject to filter.
      * @param string $grade - The grade to filter.
      */
-    public function viewClasses($subject, $grade)
+
+     public function viewClasses($subject, $grade)
+     {
+         $model = new StudentModel();
+         try {
+             $classes = $model->getClassesForStudent($subject,$grade);
+             
+             if ($classes) {
+                 // Return blogs as JSON
+                 echo json_encode($classes);
+             } else {
+                 // Handle case where no blogs were found
+                 echo json_encode([]);
+             }
+         } catch (Exception $e) {
+             // Error handling in case of an exception
+             echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+         }
+ 
+     }
+
+     
+    public function viewindividual($subject, $grade)
     {
-        $model = new StudentModel();
+        $model= new StudentModel();
+        header('Content-Type: application/json');
         try {
-            $classes = $model->getClassesForStudent($subject,$grade);
-            
-            if ($classes) {
-                // Return blogs as JSON
-                echo json_encode($classes);
+            $tables =['class','individual_class','user'];
+            $join_conditions = ['class.Class_id = individual_class.IndClass_id', 'individual_class.P_id = user.User_id'];
+            $data =['class.Subject' => $subject, 'class.Grade' => $grade];
+            $datanot=[];
+            $individual = $model->InnerJoinwhereMultiple($tables,$join_conditions,$data,$datanot);
+            if ($individual) {
+                echo json_encode($individual);
             } else {
-                // Handle case where no blogs were found
-                echo json_encode([]);
+                echo json_encode(['message' => 'No classes found .']);
             }
         } catch (Exception $e) {
-            // Error handling in case of an exception
             echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
         }
 
     }
 
-    public function allclasses(){
+    public function viewinstitute($subject, $grade)
+    {
         $model= new StudentModel();
-
-        
         header('Content-Type: application/json');
-    
-        // Fetch blogs for the given user ID
         try {
-            $classes = $model->findall();
-            
-            if ($classes) {
-                // Return blogs as JSON
-                echo json_encode($classes);
+            $tables2 =['class','instituteteacher_class'];
+            $join_conditions2 = ['class.Class_id = instituteteacher_class.InstClass_id'];
+            $data2 =['class.Subject' => $subject, 'class.Grade' => $grade];
+            $datanot=[];
+            $institute = $model->InnerJoinwhereMultiple($tables2,$join_conditions2,$data2,$datanot);
+            if ($institute) {
+                echo json_encode($institute);
             } else {
-                // Handle case where no blogs were found
                 echo json_encode(['message' => 'No classes found .']);
             }
         } catch (Exception $e) {
-            // Error handling in case of an exception
             echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
         }
 
+    }
+
+    public function allindividual(){
+        $model= new StudentModel();
+        header('Content-Type: application/json');
+        try {
+            $tables =['class','individual_class','user'];
+            $join_conditions = ['class.Class_id = individual_class.IndClass_id', 'individual_class.P_id = user.User_id'];
+            $data =['class.Type' => 'Individual'];
+            $datanot=[];
+            $individual = $model->InnerJoinwhereMultiple($tables,$join_conditions,$data,$datanot);
+            if ($individual) {
+                echo json_encode($individual);
+            } else {
+                echo json_encode(['message' => 'No classes found .']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+        }
+    }
+
+    public function allinstitute(){
+        $model= new StudentModel();
+        header('Content-Type: application/json');
+        try {
+            $tables2 =['class','instituteteacher_class'];
+            $join_conditions2 = ['class.Class_id = instituteteacher_class.InstClass_id'];
+            $data2 =['class.Type' => 'Institute',
+            ];
+            $datanot=[];
+            $institute = $model->InnerJoinwhereMultiple($tables2,$join_conditions2,$data2,$datanot);
+            if ($institute) {
+                echo json_encode($institute);
+            } else {
+                echo json_encode(['message' => 'No classes found .']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
+        }
     }
 
 
