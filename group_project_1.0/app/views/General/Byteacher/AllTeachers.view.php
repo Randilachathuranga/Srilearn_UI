@@ -30,15 +30,30 @@
   <label for="city-dropdown" class="dropdown-label">Subject Stream</label>
   <div class="dropdown-button-wrapper">
     <select id="city-dropdown" class="dropdown" required>
-      <option value="" disabled selected hidden>Subject</option>
-      <option value="new-york">English</option>
-      <option value="los-angeles">Science</option>
-      <option value="chicago">Maths</option>
-      <option value="houston">History</option>
-      <option value="phoenix">Chemestry</option>
-      <option value="chicago">Physics</option>
-      <option value="houston">It</option>
-      <option value="phoenix">Sinhala</option>
+      <option value="Subject" disabled selected hidden>Subject</option>
+      <option value="All">All Subjects</option>
+      <option value="Accounting">Accounting</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Art">Art</option>
+<option value="BioSystemsTechnology">Bio Systems Technology</option>
+<option value="Biology">Biology</option>
+<option value="Buddhism">Buddhism</option>
+<option value="BusinessStudies">Business Studies</option>
+<option value="Catholicism">Catholicism</option>
+<option value="CivicEducation">Civic Education</option>
+<option value="Commerce">Commerce</option>
+<option value="Drama">Drama and Theatre</option>
+<option value="English">English</option>
+<option value="Engineering">Engineering Technology</option>
+<option value="Geography">Geography</option>
+<option value="Health">Health & Physical Education</option>
+<option value="History">History</option>
+<option value="ICT">ICT</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Physics">Physics</option>
+<option value="Science">Science</option>
+<option value="Sinhala">Sinhala</option>
+<option value="Tamil">Tamil</option>
     </select>
     <button type="button" class="search-button" onclick="search()">Search</button>
   </div>
@@ -63,7 +78,7 @@
         <p><strong>Phone number:</strong> <span id="teacher-phone"></span></p>
         <p><strong>Email:</strong> <span id="teacher-email"></span></p>
         <p><strong>My Institutes:</strong> <span id="teacher-institute"></span></p>
-        <p><strong>Address:</strong> <span id="teacher-address"></span></p>
+        <p><strong>My Address:</strong> <span id="teacher-address"></span></p>
         <p><strong>District:</strong> <span id="teacher-district"></span></p>
       </div>
     </form>

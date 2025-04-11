@@ -10,12 +10,17 @@ class By_teacher extends Controller{
         header('Content-Type: application/json'); // Set header for JSON response
         $model=new Usermodel();
 
-        $result = $model->where(["Role" => "teacher"]);
+        $tables = ['user','teacher'];
+
+        $join_condition =['user.User_id = teacher.Teach_id'];
+
+        $data = ['user.Role' => 'teacher'];
+
+        $data_not = [];
+        $result = $model->InnerJoinwhereMultiple($tables,$join_condition,$data,$data_not);
         if ($result) {
-            // Return blogs as JSON
             echo json_encode($result);
         } else {
-            // Handle case where no blogs were found
             echo json_encode(['message' => 'no teachers found']);
         }
     }
@@ -24,9 +29,36 @@ class By_teacher extends Controller{
         header('Content-Type: application/json'); // Set header for JSON response
         $model=new Usermodel();
 
-        $result = $model->where(["Role" => "teacher" , "User_id"=>$id]);
+        $tables = ['user','teacher'];
+
+        $join_condition =['user.User_id = teacher.Teach_id'];
+
+        $data = ['user.Role' => 'teacher' , "User_id"=>$id];
+
+        $data_not = [];
+        $result = $model->InnerJoinwhereMultiple($tables,$join_condition,$data,$data_not);
         if ($result) {
-            // Return blogs as JSON
+            echo json_encode($result);
+        } else {
+            // Handle case where no blogs were found
+            echo json_encode(['message' => 'no teachers found']);
+        }
+    }
+
+    
+    public function teachers_by_subject($Subject){
+        header('Content-Type: application/json'); // Set header for JSON response
+        $model=new Usermodel();
+
+        $tables = ['user','teacher'];
+
+        $join_condition =['user.User_id = teacher.Teach_id'];
+
+        $data = ['user.Role' => 'teacher' , "teacher.Subject"=>$Subject];
+
+        $data_not = [];
+        $result = $model->InnerJoinwhereMultiple($tables,$join_condition,$data,$data_not);
+        if ($result) {
             echo json_encode($result);
         } else {
             // Handle case where no blogs were found
