@@ -17,8 +17,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0//public//views//General//Byinstitute/insstyle.css"> <!-- Link your CSS file -->
-    <link rel="stylesheet" href="../../../../../group_project_1.0//public//views//General//Byinstitute/ViewInstitute/ViewInstitute.css">
-    <link rel="stylesheet" href="../../../../../group_project_1.0//public//views//General//Byinstitute/ApplyInstitute//ApplyInstitute.css">
 </head>
 <body>
 <div class="header-container">
@@ -27,15 +25,36 @@
 </div>
 
 <div class="search-container">
-  <label for="city-dropdown" class="dropdown-label">Search City</label>
+  <label for="city-dropdown" class="dropdown-label">Search District</label>
   <div class="dropdown-button-wrapper">
     <select id="city-dropdown" class="dropdown" required>
-      <option value="" disabled selected hidden>City</option>
-      <option value="new-york">New York</option>
-      <option value="los-angeles">Los Angeles</option>
-      <option value="chicago">Chicago</option>
-      <option value="houston">Houston</option>
-      <option value="phoenix">Phoenix</option>
+      <option value="" disabled selected hidden>Select District</option>
+      <option value="All">All</option>
+      <option value="ampara">Ampara</option>
+      <option value="anuradhapura">Anuradhapura</option>
+      <option value="badulla">Badulla</option>
+      <option value="batticaloa">Batticaloa</option>
+      <option value="colombo">Colombo</option>
+      <option value="galle">Galle</option>
+      <option value="gampaha">Gampaha</option>
+      <option value="hambantota">Hambantota</option>
+      <option value="jaffna">Jaffna</option>
+      <option value="kalutara">Kalutara</option>
+      <option value="kandy">Kandy</option>
+      <option value="kegalle">Kegalle</option>
+      <option value="kilinochchi">Kilinochchi</option>
+      <option value="kurunegala">Kurunegala</option>
+      <option value="mannar">Mannar</option>
+      <option value="matale">Matale</option>
+      <option value="matara">Matara</option>
+      <option value="monaragala">Monaragala</option>
+      <option value="mullaitivu">Mullaitivu</option>
+      <option value="nuwara-eliya">Nuwara Eliya</option>
+      <option value="polonnaruwa">Polonnaruwa</option>
+      <option value="puttalam">Puttalam</option>
+      <option value="ratnapura">Ratnapura</option>
+      <option value="trincomalee">Trincomalee</option>
+      <option value="vavuniya">Vavuniya</option>
     </select>
     <button type="button" class="search-button" onclick="serach()">Search</button>
   </div>
@@ -43,9 +62,11 @@
 
 
 
-    <div class="container" id="class-container">
-        <!-- Cards will be appended here -->
-    </div>
+
+<div class="container" id="class-container">
+  <!-- Static card -->
+</div>
+
 
 
     <!-- Popup form for institute details details -->
@@ -53,24 +74,20 @@
   <div class="form-container">
     <form id="blogForm">
       <div class="teacher-details">
-        <img src="../../../../../group_project_1.0/public/views/General/Byinstitute/Institute_images/2.jpg" alt="Teacher Image" id="teacher-image" class="teacher-image">
+        <img src="../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg" alt="Teacher Image" id="institute-image" class="teacher-image">
     
         <!-- New fields for institute details -->
         <p><strong>Institute Name:</strong> <span id="institute-name"></span></p>
         <p><strong>Location:</strong> <span id="institute-location"></span></p>
-        <p><strong>Subject Streams:</strong> <span id="subject-streams"></span></p>
         <p><strong>Institute Phone Number:</strong> <span id="institute-phone"></span></p>
         <p><strong>Institute Email:</strong> <span id="institute-email"></span></p>
         <p><strong>District:</strong> <span id="institute-district"></span></p>
-        
-        <!-- Additional details about the class -->
-        <p><strong>Class Description:</strong> <span id="class-description"></span></p>
-        <p><strong>Ratings:</strong> <span id="class-ratings"></span></p>
       </div>
     </form>
     <button type="button" class="close-button" onclick="closePopup()"></button>
   </div>
 </div>
+
 
 
 <!-- popun apply institute -->
@@ -127,10 +144,12 @@
 </div>
 
 
+<script>
+// Pass PHP session data to JavaScript
+const userRole = "<?php echo isset($_SESSION['Role']) ? $_SESSION['Role'] : ''; ?>";
+</script>
 
     <script src="../../../../../group_project_1.0//public//views//General//Byinstitute/insscript.js"></script> <!-- Link your JavaScript file -->
-    <script src="../../../../../group_project_1.0//public//views//General//Byinstitute/ViewInstitute/ViewInstitute.js"></script>
-    <script src="../../../../../group_project_1.0//public//views//General//Byinstitute/ApplyInstitute/ApplyInstitute.js"></script>
 </body>
 </html>
 
