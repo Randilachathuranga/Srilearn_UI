@@ -1,10 +1,10 @@
 <?php
-    // Check for 'Guest' or user role to load the appropriate NavBar
-    if ($_SESSION['User_id'] == 'Guest') {
-        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
-    } elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
-        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
-    }
+// Load appropriate NavBar
+if ($_SESSION['User_id'] === 'Guest') {
+    require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
+} elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+    require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,9 +12,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Advertisements/advertisement.css"> <!-- Link to your CSS file -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Advertisements</title>
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -22,7 +24,7 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="../../../../../group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
+            <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
         </div>
 
         <!-- Filters Section -->
@@ -44,26 +46,55 @@
             </select>
 
             <?php 
-    if (isset($_SESSION['Role']) && ($_SESSION['Role'] == 'teacher' || $_SESSION['Role'] == 'institute')) {
-        echo '<div class="create-button"><button onclick="handleclick()">Create Your Own Advertisement</button></div>';
-    }
-?>
-
+            if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+                echo '<div class="create-button"><button onclick="handleClick()">Create Your Own Advertisement</button></div>';
+            }
+            ?>
         </div>
 
         <!-- Advertisement Cards Container -->
-        <div id="adContainer" class="ad-container">
-            <!-- Ads will be inserted dynamically by JS -->
-        </div>
+        <!-- Advertisement Cards Container -->
+        <div id="adContainer" class="ad-container"></div>
+        <!-- Ads will be inserted dynamically by JavaScript -->
+
     </div>
 
-    <script src="../../../../../group_project_1.0/public/views/General/Advertisements/advertisements.js"></script> <!-- Link to your JavaScript file -->
+    <!-- JavaScript -->
+    
+    <script>document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd') // Adjust this URL to match your routing structure
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+            
+        })
+        .then(data => {
+            console.log(data)
+            const container = document.getElementById('adContainer');
+            data.forEach(record => {
+                const rec = document.createElement('div');
+                rec.className = 'record';
+                rec.innerHTML = `
+                    <h3>${record.Ad_id}</h3>
+                    <p>${record.Title}</p>
+                    <h5>${record.Content}</h5>
+                   
+                `;
+                container.appendChild(rec); // Append each announcement to the container
+            });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+});
+window.addEventListener('DOMContentLoaded', initAdsPage);
+</script>
 </body>
 </html>
 
 <?php
-    // Include footer if the user is not a sysadmin
-    if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
-        require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
-    }
+// Include footer if user is not sysadmin
+if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+    require 'C:/xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
+}
 ?>

@@ -12,7 +12,7 @@ class Advertisements extends Controller {
         $ads = $model->findall();  // Fetch all ads
 
         // Send the ads data to the view
-        $this->view('General/Advertisements/advertisements', ['ads' => $ads]);
+        $this->view('General/Advertisements/advertisements');
     }
 
     // Display form for adding new advertisements (for teacher or institute roles)

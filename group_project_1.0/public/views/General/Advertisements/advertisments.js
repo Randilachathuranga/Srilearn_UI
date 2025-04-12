@@ -1,52 +1,41 @@
-// Redirect to 'adform' when the button is clicked
-function handleclick() {
-    window.location.href = 'advertisements/form';  // This should route to the correct form view
-}
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd') // Adjust this URL to match your routing structure
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+            
+        })  
+        .then(data => {
+            console.log(data)
+            const container = document.getElementById('adContainer');
+            data.forEach(record => {
+                const rec = document.createElement('div');
+                rec.className = 'record';
+                rec.innerHTML = `
+                    <h3>${record.title}</h3>
+                    <p>${record.announcement}</p>
+                    <h5>${record.date}</h5>
+                    ${userRole === 'sysadmin' ? `<button onclick="handleDelete(${record.annid})">Delete</button>` : ''}
+                    ${userRole === 'sysadmin' ? `<button onclick="gotoupdateform(${record.annid})">Update</button>` : ''}
+                `;
+                container.appendChild(rec); // Append each announcement to the container
+            });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+});
+window.addEventListener('DOMContentLoaded', initAdsPage);
 
-// Function to fetch ads dynamically and display them
-function fetchAds() {
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd')  // URL for fetching ads
-        .then(response => response.json())
-        .then(data => displayAds(data))
-        .catch(error => console.error('Error fetching ads:', error));
-}
 
-// Function to display ads
-function displayAds(ads) {
-    const adContainer = document.getElementById('adContainer');
-    adContainer.innerHTML = ''; // Clear any existing ads
-
-    if (ads.message) {
-        adContainer.innerHTML = `<p>${ads.message}</p>`;
-        return;
-    }
-
-    ads.forEach(ad => {
-        const adElement = document.createElement('div');
-        adElement.classList.add('ad-card', ad.Iseducation ? 'education' : 'non-education');
-        adElement.setAttribute('data-subject', ad.Subject);
-
-        adElement.innerHTML = `
-            <img src="../../../../../group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="${ad.Title}">
-            <h2>${ad.Title}</h2>
-            <p>${ad.Content}</p>
-            <small>Posted on: ${ad.Post_date}</small>
-        `;
-
-        adContainer.appendChild(adElement);
-    });
-}
-
-// Function to filter ads based on type and subject
 function filterAds() {
-    const adType = document.getElementById('adType').value;
-    const subject = document.getElementById('subject').value;
-    const ads = document.querySelectorAll('.ad-card');
+    const typeFilter = document.getElementById('adType').value;
+    const subjectFilter = document.getElementById('subject').value;
 
-    // Show/hide subject filter based on adType
+    // Show subject dropdown only if educational
     const subjectDropdown = document.getElementById('subject');
     const subjectLabel = document.getElementById('subjectLabel');
-    if (adType === 'education') {
+    if (typeFilter === 'education') {
         subjectDropdown.style.display = 'inline-block';
         subjectLabel.style.display = 'inline-block';
     } else {
@@ -54,19 +43,23 @@ function filterAds() {
         subjectLabel.style.display = 'none';
     }
 
-    // Apply filters to each ad
-    ads.forEach(ad => {
-        const isEducation = ad.classList.contains('education');
-        const adSubject = ad.getAttribute('data-subject');
+    let filtered = [...adsData];
 
-        let typeMatch = adType === 'all' || (adType === 'education' && isEducation) || (adType === 'non-education' && !isEducation);
-        let subjectMatch = adType !== 'education' || subject === 'all' || adSubject === subject;
+    if (typeFilter === 'education') {
+        filtered = filtered.filter(ad => ad.Iseducation === "1");
+    } else if (typeFilter === 'non-education') {
+        filtered = filtered.filter(ad => ad.Iseducation === "0");
+    }
 
-        ad.style.display = typeMatch && subjectMatch ? 'block' : 'none';
-    });
+    // If education is selected, apply subject filter
+    if (typeFilter === 'education' && subjectFilter !== 'all') {
+        filtered = filtered.filter(ad => ad.Subject.toLowerCase().includes(subjectFilter.toLowerCase()));
+    }
+
+    renderAds(filtered);
 }
 
-// Fetch ads when the page loads
-window.onload = function() {
-    fetchAds();
-};
+function handleClick() {
+    // Redirect to ad creation page
+    window.location.href = '/group_project_1.0/app/views/General/Advertisements/create_advertisement.php';
+}
