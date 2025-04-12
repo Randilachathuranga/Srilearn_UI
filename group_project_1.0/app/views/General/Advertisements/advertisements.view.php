@@ -19,6 +19,59 @@ if ($_SESSION['User_id'] === 'Guest') {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="form-container hidden" display=none>
+    <h1 class="title">Submit Advertisement</h1>
+    <form id="adForm" class="ad-form" method="POST" action="submit_advertisement.php"> <!-- Set the form method to POST -->
+        <div class="form-group">
+            <label for="title">Advertisement Title</label>
+            <input type="text" id="title" name="Title" required placeholder="Enter advertisement title">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="Content" required placeholder="Enter advertisement content"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="post_date">Post Date</label>
+            <input type="date" id="post_date" name="Post_date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Advertisement Type</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="educational" name="ad_type" value="educational" required>
+                    <label for="educational">Educational</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="non_educational" name="ad_type" value="non_educational">
+                    <label for="non_educational">Non-Educational</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="subjectGroup" style="display: none;">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+                <option value="">Select a subject</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="science">Science</option>
+                <option value="literature">Literature</option>
+                <option value="history">History</option>
+                <option value="computer_science">Computer Science</option>
+                <option value="languages">Languages</option>
+                <option value="arts">Arts</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Advertisement</button>
+    </form>
+</div>
+
+
     <div class="container">
         <h1 class="title">Advertisements</h1>
 
@@ -62,7 +115,7 @@ if ($_SESSION['User_id'] === 'Guest') {
     <!-- JavaScript -->
     
     <script>document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd') // Adjust this URL to match your routing structure
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewall') // Adjust this URL to match your routing structure
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
@@ -75,9 +128,9 @@ if ($_SESSION['User_id'] === 'Guest') {
                 const rec = document.createElement('div');
                 rec.className = 'record';
                 rec.innerHTML = `
-                    <h3>${record.Ad_id}</h3>
                     <p>${record.Title}</p>
                     <h5>${record.Content}</h5>
+                    <button onclick="handleDelete(${record.Ad_id})">Delete</button>
                    
                 `;
                 container.appendChild(rec); // Append each announcement to the container
@@ -88,6 +141,34 @@ if ($_SESSION['User_id'] === 'Guest') {
         });
 });
 window.addEventListener('DOMContentLoaded', initAdsPage);
+
+async function handleDelete(id) {
+    try {
+        alert("are you sure ?")
+        const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Delete successful:", data);
+        // Optionally update UI or notify user here
+        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // change URL as needed
+
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        // You can also show a message to the user here
+    }
+}
+
+
+function handleClick() {
+    // Redirect to ad creation page
+    alert("hi");
+}
 </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ class AdvertisementModel{
     protected $allowedColumns=[
         'Ad_id','User_id','Title','Content','Post_date','Iseducation','Subject'
     ];
+    
     public function validate($data){
         $this->errors=[];
 

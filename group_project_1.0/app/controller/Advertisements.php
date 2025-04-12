@@ -2,62 +2,30 @@
 
 class Advertisements extends Controller {
 
-    // Load advertisements page, handle form submission
-    public function index() {
-        $this->requireTeacherOrInstitute();
-
-        $Ads = new AdvertisementModel; // ✅ Fixed class name
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($Ads->validate($_POST)) {
-                $Ads->insert($_POST);
-                redirect('Advertisements/viewadd');
-            } else {
-                $data['errors'] = $Ads->errors;
-                $this->view('General/Advertisements/advertisements', $data);
-                return;
-            }
-        }
-
-        $data['errors'] = [];
-        $this->view('General/Advertisements/advertisements', $data);
+  
+    public function index(){
+        $this->view('General/Advertisements/advertisements');
     }
 
-    // Show form to add new ad
-    public function form() {
-        $this->requireTeacherOrInstitute();
-        $this->view('General/Advertisements/adform');
+    public function viewall() {
+        header('Content-Type: application/json');
+
+        $model = new AdvertisementModel();
+        $allads = $model->findall();
+
+        echo json_encode($allads);
     }
 
-    // View all ads (list)
-    public function viewadd() {
-        checkloginstatus();
-        $this->view('General/Advertisements/advertisements', []);
-    }
 
-    // API: Return all ads in JSON
-    public function api() {
-        $model = new AdvertisementModel;
-        $ads = $model->findAll();
-
-        $this->jsonResponse($ads);
-    }
 
     // API: Delete specific ad
     public function deleteapi($id) {
-        $this->requireTeacherOrInstitute();
+        // $this->requireTeacherOrInstitute();
 
         $model = new AdvertisementModel;
 
-        try {
-            if ($model->delete($id, 'addid')) {
-                $this->jsonResponse(['status' => 'success', 'message' => 'Ad deleted successfully']);
-            } else {
-                $this->jsonResponse(['status' => 'error', 'message' => 'Failed to delete ad']);
-            }
-        } catch (Exception $e) {
-            $this->jsonResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
-        }
+        $deleteadd = $model->delete($id,'Ad_id');
+        echo json_encode($deleteadd);
     }
 
     // Update existing ad
@@ -91,11 +59,9 @@ class Advertisements extends Controller {
         checkAccess(['teacher', 'institute']);
     }
 
-    // 📦 Standardized JSON response
-    private function jsonResponse($data, $status = 200) {
-        http_response_code($status);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
+    public function createadd(){
+        
     }
+
+  
 }

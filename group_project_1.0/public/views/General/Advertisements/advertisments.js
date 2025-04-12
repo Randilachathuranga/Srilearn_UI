@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewadd') // Adjust this URL to match your routing structure
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewall') // Adjust this URL to match your routing structure
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
