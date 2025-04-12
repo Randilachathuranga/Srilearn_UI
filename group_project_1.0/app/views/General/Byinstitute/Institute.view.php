@@ -64,8 +64,8 @@
 
 
 <div class="container" id="class-container">
-  <!-- Static card -->
-</div>
+    <!-- Static card -->
+  </div>
 
 
 
@@ -145,9 +145,9 @@
 
 
 <script>
-// Pass PHP session data to JavaScript
-const userRole = "<?php echo isset($_SESSION['Role']) ? $_SESSION['Role'] : ''; ?>";
+  const userRole = "<?php echo $_SESSION['Role']; ?>";
 </script>
+
 
     <script src="../../../../../group_project_1.0//public//views//General//Byinstitute/insscript.js"></script> <!-- Link your JavaScript file -->
 </body>

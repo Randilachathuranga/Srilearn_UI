@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Create a unique ID for each image
         const imageId = `institute-image-${institute.User_id}`;
         
+
+        let applyButton = "";
+          if (userRole === "teacher") {
+           applyButton = `<button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>`;
+          }
         // Create card first with placeholder image
         const card = document.createElement("div");
         card.className = "card";
@@ -21,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Phone: ${institute.Phone_number}</p>
             <p>District: ${institute.District}</p>
             <button class="card-button" onclick="ViewInstitute('${institute.User_id}')">View</button>
-            <button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>
+            ${applyButton}
           </div>
         `;
         container.appendChild(card);
