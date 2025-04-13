@@ -9,4 +9,18 @@
         $this->view('Error');
 
     }
+
+    public function viewallsubdetails(){
+        header('Content-Type: application/json'); // Set header for JSON response
+        $model=new Subdetailsmodel();
+ 
+        $result = $model->findAll();
+        if ($result) {
+            // Return blogs as JSON
+            echo json_encode($result);
+        } else {
+            // Handle case where no blogs were found
+            echo json_encode(['message' => 'no teachers found']);
+        }
+    }
 }
