@@ -26,4 +26,20 @@ class Normalteacher_Controller extends Controller
         header('Content-Type: application/json');
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
+
+    public function leaveinstitute($N_id, $Institute_ID) {
+        $model = new Normalteacher();
+    
+        $leave = $model->delete($N_id,'N_id',$Institute_ID,'Institute_ID');
+    
+        header('Content-Type: application/json');
+    
+        if ($leave) {
+            echo json_encode(['success' => true, 'message' => 'Successfully left the institute.']);
+        } else {
+            http_response_code(404); // Not Found
+            echo json_encode(['success' => false, 'error' => 'Failed to leave the institute. Record may not exist.']);
+        }
+    }
+    
 }  
