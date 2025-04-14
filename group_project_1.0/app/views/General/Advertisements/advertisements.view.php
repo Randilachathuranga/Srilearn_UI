@@ -39,7 +39,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
 <div class="form-container hidden" id="adFormContainer">
     <h1 class="title">Submit Advertisement</h1>
-    <form id="adForm" class="ad-form" method="POST" action="submit_advertisement.php">
+    <form id="adForm" class="ad-form" method="POST">
         
         <!-- Step 1: Only this section shows initially -->
         <div class="form-group">

@@ -15,7 +15,6 @@ adForm.addEventListener('submit', async (event) => {
 
     const formData = new FormData(adForm);
     const formObject = Object.fromEntries(formData.entries());
-
     const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
         method: 'POST',
         headers: {
