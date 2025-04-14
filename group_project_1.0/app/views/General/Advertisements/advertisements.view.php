@@ -13,31 +13,35 @@ if ($_SESSION['User_id'] === 'Guest') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
-    
-    <!-- CSS Styles -->
+
     <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script defer src="/group_project_1.0/public/views/General/Advertisements/advertisements.js"></script> <!-- Your JS file -->
+    
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .form-container {
+            margin: 30px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="form-container hidden" display=none>
+<div class="form-container hidden" id="adFormContainer">
     <h1 class="title">Submit Advertisement</h1>
-    <form id="adForm" class="ad-form" method="POST" action="submit_advertisement.php"> <!-- Set the form method to POST -->
-        <div class="form-group">
-            <label for="title">Advertisement Title</label>
-            <input type="text" id="title" name="Title" required placeholder="Enter advertisement title">
-        </div>
-
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea id="content" name="Content" required placeholder="Enter advertisement content"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="post_date">Post Date</label>
-            <input type="date" id="post_date" name="Post_date" required>
-        </div>
-
+    <form id="adForm" class="ad-form" method="POST" action="submit_advertisement.php">
+        
+        <!-- Step 1: Only this section shows initially -->
         <div class="form-group">
             <label>Advertisement Type</label>
             <div class="radio-group">
@@ -52,77 +56,88 @@ if ($_SESSION['User_id'] === 'Guest') {
             </div>
         </div>
 
-        <div class="form-group" id="subjectGroup" style="display: none;">
-            <label for="subject">Subject</label>
-            <select id="subject" name="subject">
-                <option value="">Select a subject</option>
-                <option value="mathematics">Mathematics</option>
-                <option value="science">Science</option>
-                <option value="literature">Literature</option>
-                <option value="history">History</option>
-                <option value="computer_science">Computer Science</option>
-                <option value="languages">Languages</option>
-                <option value="arts">Arts</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
+        <!-- Step 2: Hidden at first, shown after ad_type is selected -->
+        <div id="moreFields" class="hidden">
+            <div class="form-group">
+                <label for="title">Advertisement Title</label>
+                <input type="text" id="title" name="Title" required placeholder="Enter advertisement title">
+            </div>
 
-        <button type="submit" class="submit-btn">Submit Advertisement</button>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="Content" required placeholder="Enter advertisement content"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="post_date">Post Date</label>
+                <input type="date" id="post_date" name="Post_date" required>
+            </div>
+
+            <div class="form-group" id="subjectGroup" style="display: none;">
+                <label for="subject">Subject</label>
+                <select id="subject" name="subject">
+                    <option value="">Select a subject</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="literature">Literature</option>
+                    <option value="history">History</option>
+                    <option value="computer_science">Computer Science</option>
+                    <option value="languages">Languages</option>
+                    <option value="arts">Arts</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Advertisement</button>
+        </div>
     </form>
 </div>
 
+<div class="container">
+    <h1 class="title">Advertisements</h1>
 
-    <div class="container">
-        <h1 class="title">Advertisements</h1>
-
-        <!-- Banner Section -->
-        <div class="banner">
-            <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
-        </div>
-
-        <!-- Filters Section -->
-        <div class="filters">
-            <label for="adType">Filter by Type:</label>
-            <select id="adType" onchange="filterAds()">
-                <option value="all">All</option>
-                <option value="education">Educational</option>
-                <option value="non-education">Non-Educational</option>
-            </select>
-
-            <label for="subject" id="subjectLabel" style="display: none;">Filter by Subject:</label>
-            <select id="subject" style="display: none;" onchange="filterAds()">
-                <option value="all">All</option>
-                <option value="scholarship">Scholarship</option>
-                <option value="o/l">O/L</option>
-                <option value="a/l">A/L</option>
-                <option value="grd6-9">Grade 6-9</option>
-            </select>
-
-            <?php 
-            if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
-                echo '<div class="create-button"><button onclick="handleClick()">Create Your Own Advertisement</button></div>';
-            }
-            ?>
-        </div>
-
-        <!-- Advertisement Cards Container -->
-        <!-- Advertisement Cards Container -->
-        <div id="adContainer" class="ad-container"></div>
-        <!-- Ads will be inserted dynamically by JavaScript -->
-
+    <!-- Banner Section -->
+    <div class="banner">
+        <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
     </div>
 
-    <!-- JavaScript -->
-    
-    <script>document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewall') // Adjust this URL to match your routing structure
+    <!-- Filters Section -->
+    <div class="filters">
+        <label for="adType">Filter by Type:</label>
+        <select id="adType" onchange="filterAds()">
+            <option value="all">All</option>
+            <option value="education">Educational</option>
+            <option value="non-education">Non-Educational</option>
+        </select>
+
+        <label for="subject" id="subjectLabel" style="display: none;">Filter by Subject:</label>
+        <select id="subject" style="display: none;" onchange="filterAds()">
+            <option value="all">All</option>
+            <option value="scholarship">Scholarship</option>
+            <option value="o/l">O/L</option>
+            <option value="a/l">A/L</option>
+            <option value="grd6-9">Grade 6-9</option>
+        </select>
+
+        <?php 
+        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+            echo '<div class="create-button"><button onclick="handleClick()">Create Your Own Advertisement</button></div>';
+        }
+        ?>
+    </div>
+
+    <div id="adContainer" class="ad-container"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Load advertisements from the server
+    fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
-            
         })
         .then(data => {
-            console.log(data)
             const container = document.getElementById('adContainer');
             data.forEach(record => {
                 const rec = document.createElement('div');
@@ -131,20 +146,20 @@ if ($_SESSION['User_id'] === 'Guest') {
                     <p>${record.Title}</p>
                     <h5>${record.Content}</h5>
                     <button onclick="handleDelete(${record.Ad_id})">Delete</button>
-                   
                 `;
-                container.appendChild(rec); // Append each announcement to the container
+                container.appendChild(rec);
             });
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
 });
-window.addEventListener('DOMContentLoaded', initAdsPage);
 
+// Handle ad deletion
 async function handleDelete(id) {
     try {
-        alert("are you sure ?")
+        if (!confirm("Are you sure you want to delete this advertisement?")) return;
+
         const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
             method: 'DELETE'
         });
@@ -155,19 +170,25 @@ async function handleDelete(id) {
 
         const data = await response.json();
         console.log("Delete successful:", data);
-        // Optionally update UI or notify user here
-        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // change URL as needed
+        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // Refresh page
 
     } catch (error) {
         console.error("Error deleting item:", error);
-        // You can also show a message to the user here
     }
 }
 
-
+// Handle clicking "Create Advertisement" button
 function handleClick() {
-    // Redirect to ad creation page
-    alert("hi");
+    const form = document.getElementById('adFormContainer');
+    form.classList.remove('hidden');
+    form.scrollIntoView({ behavior: 'smooth' });
+
+    // When ad_type radio is selected, reveal rest of the form
+    document.querySelectorAll('input[name="ad_type"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            document.getElementById('moreFields').classList.remove('hidden');
+        });
+    });
 }
 </script>
 </body>
