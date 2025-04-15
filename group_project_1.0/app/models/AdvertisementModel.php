@@ -11,8 +11,8 @@ class AdvertisementModel{
     public function validate($data){
         $this->errors=[];
 
-        if(empty($data['title'])){
-            $this->errors['title']="title is required";
+        if(empty($data['Title'])){
+            $this->errors['Title']="title is required";
         }
         if(empty($data['Advertisment'])){
             $this->errors['Advertisment']="Advertisment is required";

@@ -55,6 +55,27 @@ class Advertisements extends Controller {
         }
     }
     
+    public function myupdateapi($id) {
+        checkloginstatus();
+        // Get JSON input from the request body
+        $jsonData = file_get_contents("php://input");
+        $data = json_decode($jsonData, true);
     
+        // Check for decoding errors
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo json_encode(['error' => 'Invalid JSON input']);
+            return;
+        }
+    
+        // Proceed with updating using $id and $data
+        $model = new AdvertisementModel();
+        $updated = $model->update($id, $data, '_id');
+        
+        if ($updated) {
+            echo json_encode(['success' => 'Advertistment updated successfully']);
+        } else {
+            echo json_encode(['error' => 'Failed to update blog']);
+        }
+    } 
   
 }

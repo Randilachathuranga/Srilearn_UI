@@ -16,7 +16,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
     <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <script defer src="/group_project_1.0/public/views/General/Advertisements/advertisements.js"></script> <!-- Your JS file -->
+    
     
     <style>
         .hidden {
@@ -73,21 +73,6 @@ if ($_SESSION['User_id'] === 'Guest') {
                 <input type="date" id="post_date" name="Post_date" required>
             </div>
 
-            <div class="form-group" id="subjectGroup" style="display: none;">
-                <label for="subject">Subject</label>
-                <select id="subject" name="subject">
-                    <option value="">Select a subject</option>
-                    <option value="mathematics">Mathematics</option>
-                    <option value="science">Science</option>
-                    <option value="literature">Literature</option>
-                    <option value="history">History</option>
-                    <option value="computer_science">Computer Science</option>
-                    <option value="languages">Languages</option>
-                    <option value="arts">Arts</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
             <button type="submit" class="submit-btn">Submit Advertisement</button>
         </div>
     </form>
@@ -108,15 +93,6 @@ if ($_SESSION['User_id'] === 'Guest') {
             <option value="all">All</option>
             <option value="education">Educational</option>
             <option value="non-education">Non-Educational</option>
-        </select>
-
-        <label for="subject" id="subjectLabel" style="display: none;">Filter by Subject:</label>
-        <select id="subject" style="display: none;" onchange="filterAds()">
-            <option value="all">All</option>
-            <option value="scholarship">Scholarship</option>
-            <option value="o/l">O/L</option>
-            <option value="a/l">A/L</option>
-            <option value="grd6-9">Grade 6-9</option>
         </select>
 
         <?php 
@@ -146,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${record.Title}</p>
                     <h5>${record.Content}</h5>
                     <button onclick="handleDelete(${record.Ad_id})">Delete</button>
+                    <button onclick="handleUpdate(${record.Ad_id})">Update</button>
                 `;
                 container.appendChild(rec);
             });
@@ -174,6 +151,98 @@ async function handleDelete(id) {
 
     } catch (error) {
         console.error("Error deleting item:", error);
+    }
+}
+
+// Handle update
+function handleUpdate(ad) {
+    const form = document.getElementById('adFormContainer');
+    const titleInput = document.getElementById('title');
+    const contentInput = document.getElementById('content');
+    const postDateInput = document.getElementById('post_date');
+    const moreFields = document.getElementById('moreFields');
+
+    form.classList.remove('hidden');
+    moreFields.classList.remove('hidden');
+
+    // Set form values
+    titleInput.value = ad.Title;
+    contentInput.value = ad.Content;
+    postDateInput.value = ad.Post_date;
+
+    // Set Iseducation radio buttons
+    if (ad.Iseducation === "1") {
+        document.getElementById('educational').checked = true;
+    } else {
+        document.getElementById('non_educational').checked = true;
+    }
+
+    // Change submit behavior for update
+    const adForm = document.getElementById('adForm');
+    adForm.onsubmit = async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(adForm);
+        const formObject = Object.fromEntries(formData.entries());
+
+        // Add Iseducation manually based on radio
+        formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+
+        try {
+            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/updateapi/${ad.Ad_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formObject)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Advertisement updated successfully!');
+                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+            } else {
+                alert(result.error || 'Update failed.');
+            }
+        } catch (error) {
+            console.error('Update error:', error);
+            alert('Something went wrong while updating.');
+        }
+    };
+}
+
+// Handle form submission for inserting a new advertisement
+async function handleInsert(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const form = document.getElementById('adForm');
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries());
+
+    // Handle radio button for Iseducation
+    formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+
+    try {
+        const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formObject)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.message === 'Advertisement created successfully') {
+            alert('Advertisement created successfully!');
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // Redirect or refresh
+        } else {
+            alert(result.error || result.message || 'Failed to create advertisement.');
+        }
+    } catch (error) {
+        console.error('Error inserting advertisement:', error);
+        alert('Something went wrong while inserting.');
     }
 }
 
