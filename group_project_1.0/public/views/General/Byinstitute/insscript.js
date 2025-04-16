@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let applyButton = "";
           if (userRole === "teacher") {
-           applyButton = `<button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>`;
+           applyButton = `<button class="card-button" onclick="Applyinstitute('${institute.User_id}')">Apply</button>`;
           }
         // Create card first with placeholder image
         const card = document.createElement("div");
@@ -114,14 +114,6 @@ function ViewInstitute(userId) {
 }
 
 
-function Applyinstitute(institute) {
-  document.getElementById("popupApply").style.display = "flex";
-  
-}
-
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
   // Set up the search button click handler
   document.querySelector(".search-button").addEventListener("click", search);
@@ -171,7 +163,7 @@ function search() {
             <p>Phone: ${institute.Phone_number}</p>
             <p>District: ${institute.District}</p>
             <button class="card-button" onclick="ViewInstitute('${institute.User_id}')">View</button>
-            <button class="card-button" onclick="Applyinstitute('${institute.Name}')">Apply</button>
+            <button class="card-button" onclick="Applyinstitute('${institute.User_id}')">Apply</button>
           </div>
         `;
         container.appendChild(card);
@@ -202,41 +194,88 @@ function search() {
     });
 }
 
-
-
-
-
-
 // Close the popup form
 function closeApply() {
   document.getElementById("popupApply").style.display = "none";
 }
 
+
+function Applyinstitute(institute) {
+  document.getElementById("popupApply").style.display = "flex";
+  // document.getElementById("inst_id").textContent = institute; 
+  
+  fetch(`http://localhost/group_project_1.0/public/Jobrollcontroller/viewallsubjects/${institute}`)
+    .then((response) => {
+      if (!response.ok) throw new Error("Failed to fetch subjects");
+      return response.json();
+    })
+    .then((data) => {
+      // console.log("Subjects fetched successfully:", data);
+      const subjectContainer = document.getElementById("all_subjects");
+      subjectContainer.innerHTML = ""; // Clear previous content
+
+      const activeSubjects = data
+        .filter(subject => subject.Status === 'Active')
+        .map(subject => subject.Subject);
+      const title = document.createElement("h3");
+      if (activeSubjects.length === 0) {
+        title.textContent = "Teaching Position: No active subjects available.";
+      } else if (activeSubjects.length === 1) {
+        title.textContent = `Teaching Position: ${activeSubjects[0]}`;
+      } else if (activeSubjects.length === 2) {
+        title.textContent = `Teaching Position: ${activeSubjects[0]} and ${activeSubjects[1]}`;
+      } else {
+        title.textContent = `Teaching Position: ${activeSubjects.slice(0, -1).join(", ")} and ${activeSubjects[activeSubjects.length - 1]}`;
+      }
+      subjectContainer.appendChild(title);
+
+      const subjectDropdown = document.getElementById("subject");
+      subjectDropdown.innerHTML = "";
+
+      data.forEach((subject) => {
+        if (subject.Status === "Active") {
+          const option = document.createElement("option");
+          option.value = subject.Subject;
+          option.textContent = subject.Subject;
+          subjectDropdown.appendChild(option);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching subjects:", error);
+    });    
+}
+
+
+
+
+
 // Submit the blog and redirect to the main blog page
-function submitApply() {
-  const firstName = document.getElementById("firstName").value;
-  const lastName = document.getElementById("lastName").value;
+function submitApply() {  
+
+  const Full_name = document.getElementById("Full_name").value;
   const email = document.getElementById("email").value;
   const subject = document.getElementById("subject").value;
   const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
   const qualifications = document.getElementById("qualifications").value;
+  const Jr_id = '1';
 
   // Check if all fields are filled
-  if (firstName && lastName && email && subject && phone && address && qualifications) {
+  if (Full_name && email && subject && phone && qualifications && Jr_id) {  
       // Prepare the data to be sent
       const applicationData = {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          subject: subject,
-          phone: phone,
-          address: address,
-          qualifications: qualifications
+          Jr_id: Jr_id,
+          Teacher_id: userID,
+          Date: new Date().toISOString().split('T')[0], 
+          Full_name: Full_name,
+          Email: email,
+          Subject: subject,
+          Phone_number: phone,
+          Qualifications: qualifications
       };
 
       // Use fetch to send the data to the server
-      fetch('path/to/your/api/submitApplication', { // Replace with your actual API endpoint
+      fetch(`http://localhost/group_project_1.0/public/Jobrollcontroller/applyforjobs/${userID}`, { // Replace with your actual API endpoint
           method: 'POST', // HTTP method
           headers: {
               'Content-Type': 'application/json' // Tell the server you're sending JSON data
