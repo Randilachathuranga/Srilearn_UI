@@ -93,51 +93,39 @@
 <!-- popun apply institute -->
 <div id="popupApply" class="popup-form" style="display: none;">
     <div class="form-container">
-        <h2>Teaching Position Application</h2>
+        <h2 id="all_subjects"></h2>
 
-        <!-- Row 1: First Name and Last Name -->
+        <br><br>
         <div class="form-row">
             <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" required>
+                <label for="Full_name">Full Name</label>
+                <input type="text" id="Full_name" name="Full_name" required>
             </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" required>
-            </div>
-        </div>
-
-        <!-- Row 2: Email and Subject -->
-        <div class="form-row">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject" required>
+                <input type="text" id="email" name="email" required>
             </div>
         </div>
-
-        <!-- Row 3: Address and Phone -->
         <div class="form-row">
             <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
+                <label for="subject">Subject</label>
+                <select id="subject" name="subject" required>
+                    <option value="" disabled selected hidden>Select Subject</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required>
+                <label for="phone">Phone number</label>
+                <input type="text" id="phone" name="phone" required>
             </div>
         </div>
 
-        <!-- Row 4: Qualifications -->
         <div class="form-group">
             <label for="qualifications">Qualifications</label>
             <textarea id="qualifications" name="qualifications" rows="4" required></textarea>
         </div>
 
-        <!-- Submit and Close Buttons -->
+        <p id="inst_id"></p>
+
         <button onclick="submitApply()" class="submit-button">Submit</button>
         <button onclick="closeApply()" class="close-button"></button>
     </div>
@@ -146,6 +134,7 @@
 
 <script>
   const userRole = "<?php echo $_SESSION['Role']; ?>";
+  const userID = "<?php echo $_SESSION['User_id']; ?>";
 </script>
 
 

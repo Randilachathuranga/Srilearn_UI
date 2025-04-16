@@ -513,3 +513,31 @@ h1 {
       padding: 10px;
   }
 }
+
+/* Styling for the Subject Dropdown */
+#subject {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #030457;
+  border-radius: 8px;
+  background-color: #ffffff;
+  appearance: none; /* Removes default browser styles */
+  cursor: pointer;
+  color: #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#subject:focus {
+  border-color: #060883;
+  box-shadow: 0px 0px 8px rgba(6, 8, 131, 0.5);
+  outline: none;
+}
+
+#subject option {
+  color: #333;
+  background-color: #ffffff;
+}
+
+
