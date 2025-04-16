@@ -30,7 +30,7 @@ class Normalteacher_Controller extends Controller
     public function leaveinstitute($N_id, $Institute_ID) {
         $model = new Normalteacher();
     
-        $leave = $model->delete($N_id,'N_id',$Institute_ID,'Institute_ID');
+        $leave = $model->deleteteacher($N_id,'N_id',$Institute_ID,'Institute_ID');
     
         header('Content-Type: application/json');
     
