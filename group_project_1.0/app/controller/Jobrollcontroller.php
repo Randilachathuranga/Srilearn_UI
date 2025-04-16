@@ -104,7 +104,8 @@ class Jobrollcontroller extends Controller{
         $data = [
             'Teacher_id' => $Teacher_id,
             'Inst_id'=>$Inst_id,
-            'institute_applications.Subject' => $Subject
+            'institute_applications.Subject' => $Subject,
+            'stateis' => '2'
         ];
 
         $q1 = $model1->InnerJoinwhereMultiple($tables,$join_condition,$data,[]);
@@ -128,7 +129,8 @@ class Jobrollcontroller extends Controller{
                 $data = [
                     'Inst_id' => $Inst_id,
                     'Status' => 'Active',
-                    'Status' => $inputData['Subject']
+                    'Status' => $inputData['Subject'],
+                    'application_date' =>$inputData['application_date']
                 ];
                 $Jobroll = $model->insert($data);
                 
@@ -145,21 +147,23 @@ class Jobrollcontroller extends Controller{
         }
     }
 
-    //delete jobroll
     public function deleteJobroll($Jr_id) {
         $model = new Jobroll();
         header('Content-Type: application/json');
+    
         try {
-            $Jobroll = $model->delete($Jr_id,'Jr_id');
-            if ($Jobroll) {
-                echo json_encode($Jobroll);
+            $deleted = $model->delete($Jr_id, 'Jr_id');
+            
+            if ($deleted) {
+                echo json_encode(['success' => 'Jobroll deleted']);
             } else {
-                echo json_encode(['message' => 'No Jobroll found for this user.']);
+                echo json_encode(['error' => 'No Jobroll found with this ID.']);
             }
         } catch (Exception $e) {
-            echo json_encode(['error' => 'An error occurred while fetching Jobroll.', 'details' => $e->getMessage()]);
+            echo json_encode(['error' => 'An error occurred while deleting the Jobroll.', 'details' => $e->getMessage()]);
         }
     }
+    
 
     //Activate or diactivate jobroll
     public function Active_inactive($Jr_id) {
@@ -249,9 +253,6 @@ class Jobrollcontroller extends Controller{
         $q1 = $model->update($ID,$data,'ID');
         if($q1){
             echo json_encode(['message' => 'rejected successfully']);
-        }
-        else{
-            echo json_encode(['message' => 'no subjects found']);
         }
     }
 
