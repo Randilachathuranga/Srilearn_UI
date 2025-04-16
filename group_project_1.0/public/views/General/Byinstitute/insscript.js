@@ -202,7 +202,7 @@ function closeApply() {
 
 function Applyinstitute(institute) {
   document.getElementById("popupApply").style.display = "flex";
-  // document.getElementById("inst_id").textContent = institute; 
+  document.getElementById("inst_id").textContent = institute; 
   
   fetch(`http://localhost/group_project_1.0/public/Jobrollcontroller/viewallsubjects/${institute}`)
     .then((response) => {
@@ -258,13 +258,14 @@ function submitApply() {
   const subject = document.getElementById("subject").value;
   const phone = document.getElementById("phone").value;
   const qualifications = document.getElementById("qualifications").value;
-  const Jr_id = '1';
+  const Inst_id = document.getElementById('inst_id').textContent;
+  // const Jr_id = '1';
 
   // Check if all fields are filled
-  if (Full_name && email && subject && phone && qualifications && Jr_id) {  
+  if (Full_name && email && subject && phone && qualifications && Inst_id) {  
       // Prepare the data to be sent
       const applicationData = {
-          Jr_id: Jr_id,
+          Inst_id: Inst_id,
           Teacher_id: userID,
           Date: new Date().toISOString().split('T')[0], 
           Full_name: Full_name,

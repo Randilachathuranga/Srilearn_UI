@@ -20,43 +20,58 @@ class Jobrollcontroller extends Controller{
         }
     }
 
-    //view specific id
-    public function viewjobrollid($Inst_id,$Subject){
-        header('Content-Type: application/json'); // Set header for JSON response
+    public function getJr_id($data) {
         $model = new Jobroll();
-
-        $q1 = $model->where(['Inst_id' => $Inst_id ,'Subject' => $Subject ]);
-
-        if($q1){
-            echo json_encode($q1[0]->Jr_id);
-        }else{
-            echo json_encode(['message' => 'no subjects found']);
+        $keys = array_keys($data);
+        $query = "SELECT Jr_id FROM jobroll WHERE ";
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " AND ";
         }
+        $query = rtrim($query, " AND ");
+        $query .= " LIMIT 10 OFFSET 0";
+        
+        // No need for array_merge with a single array
+        $result = $model->query($query, $data);
+        
+        if ($result && isset($result[0]->Jr_id)) {
+            return $result[0]->Jr_id; // Return Jr_id, not Class_id
+        }
+        return false;
     }
-
-
+    
     public function applyforjobs($Teacher_id) {
         $model = new Institute_applications();
         header('Content-Type: application/json');
         
-        $inputData = json_decode(file_get_contents('php://input'), true); // Decode the incoming JSON
-
-        $insertion_data = [
-            'Jr_id' => $inputData['Jr_id'],
-            'Teacher_id' => $Teacher_id,
-            'Date' => $inputData['Date'],
-            'Full_name' => $inputData['Full_name'],
-            'Email' => $inputData['Email'],
-            'Subject' => $inputData['Subject'],
-            'Phone_number' => $inputData['Phone_number'],
-            'Qualifications' => $inputData['Qualifications'],
-            'stateis' => '1'
-        ];
-
-        if (isset($insertion_data)) {
+        $inputData = json_decode(file_get_contents('php://input'), true);
+        
+        if (isset($inputData['Inst_id']) && isset($inputData['Subject'])) {
+            $data = [
+                'Inst_id' => $inputData['Inst_id'],
+                'Subject' => $inputData['Subject']
+            ];
+            
+            $Jr_id = $this->getJr_id($data);
+            if (!$Jr_id) {
+                echo json_encode(['error' => 'No matching Jr_id found']);
+                return;
+            }
+            
+            $insertion_data = [
+                'Jr_id' => $Jr_id,  // Add the Jr_id here
+                'Teacher_id' => $Teacher_id,
+                'Date' => $inputData['Date'],
+                'Full_name' => $inputData['Full_name'],
+                'Email' => $inputData['Email'],
+                'Subject' => $inputData['Subject'],
+                'Phone_number' => $inputData['Phone_number'],
+                'Qualifications' => $inputData['Qualifications'],
+                'stateis' => '1'
+            ];
+            
             try {
                 $application = $model->insert($insertion_data);
-    
+                
                 if ($application) {
                     echo json_encode(['message' => 'successfully', 'data' => $application]);
                 } else {

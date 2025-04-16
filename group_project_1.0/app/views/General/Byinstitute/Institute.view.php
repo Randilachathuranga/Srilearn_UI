@@ -124,7 +124,7 @@
             <textarea id="qualifications" name="qualifications" rows="4" required></textarea>
         </div>
 
-        <!-- <p id="inst_id"></p> -->
+        <p id="inst_id"></p>
 
         <button onclick="submitApply()" class="submit-button">Submit</button>
         <button onclick="closeApply()" class="close-button"></button>
