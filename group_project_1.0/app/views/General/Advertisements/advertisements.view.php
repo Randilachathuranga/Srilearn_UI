@@ -37,11 +37,12 @@ if ($_SESSION['User_id'] === 'Guest') {
 </head>
 <body>
 
+<!-- Form Container -->
 <div class="form-container hidden" id="adFormContainer">
     <h1 class="title">Submit Advertisement</h1>
     <form id="adForm" class="ad-form" method="POST">
         
-        <!-- Step 1: Only this section shows initially -->
+        <!-- Step 1: Ad Type Selection -->
         <div class="form-group">
             <label>Advertisement Type</label>
             <div class="radio-group">
@@ -56,7 +57,7 @@ if ($_SESSION['User_id'] === 'Guest') {
             </div>
         </div>
 
-        <!-- Step 2: Hidden at first, shown after ad_type is selected -->
+        <!-- Step 2: Additional Fields (Initially Hidden) -->
         <div id="moreFields" class="hidden">
             <div class="form-group">
                 <label for="title">Advertisement Title</label>
@@ -71,6 +72,11 @@ if ($_SESSION['User_id'] === 'Guest') {
             <div class="form-group">
                 <label for="post_date">Post Date</label>
                 <input type="date" id="post_date" name="Post_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Subject">Subject</label>
+                <input type="text" id="Subject" name="Subject" required>
             </div>
 
             <button type="submit" class="submit-btn">Submit Advertisement</button>
@@ -106,7 +112,9 @@ if ($_SESSION['User_id'] === 'Guest') {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+    const User_id = "<?php echo $_SESSION['User_id']; ?>";
+
+    document.addEventListener('DOMContentLoaded', () => {
     // Load advertisements from the server
     fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
         .then(response => {
@@ -214,14 +222,18 @@ function handleUpdate(ad) {
 
 // Handle form submission for inserting a new advertisement
 async function handleInsert(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const form = document.getElementById('adForm');
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries());
 
-    // Handle radio button for Iseducation
+    // Additional values
     formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+    formObject.User_id = User_id; // Make sure this variable is defined globally
+
+    console.log("User ID:", formObject.User_id);
+    console.log("Full form data:", formObject);
 
     try {
         const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
@@ -236,30 +248,35 @@ async function handleInsert(event) {
 
         if (response.ok && result.message === 'Advertisement created successfully') {
             alert('Advertisement created successfully!');
-            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // Redirect or refresh
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
         } else {
             alert(result.error || result.message || 'Failed to create advertisement.');
         }
     } catch (error) {
         console.error('Error inserting advertisement:', error);
-        alert('Something went wrong while inserting.');
+        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'
     }
 }
 
 // Handle clicking "Create Advertisement" button
 function handleClick() {
-    const form = document.getElementById('adFormContainer');
-    form.classList.remove('hidden');
-    form.scrollIntoView({ behavior: 'smooth' });
+        const formContainer = document.getElementById('adFormContainer');
+        formContainer.classList.remove('hidden');
+        formContainer.scrollIntoView({ behavior: 'smooth' });
 
-    // When ad_type radio is selected, reveal rest of the form
-    document.querySelectorAll('input[name="ad_type"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-            document.getElementById('moreFields').classList.remove('hidden');
+        // Show extra fields when ad_type is selected
+        const adTypeRadios = document.querySelectorAll('input[name="ad_type"]');
+        adTypeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.getElementById('moreFields').classList.remove('hidden');
+            });
         });
-    });
-}
-</script>
+
+        // Attach submit handler
+        const adForm = document.getElementById('adForm');
+        adForm.removeEventListener('submit', handleInsert); // Avoid duplicate listeners
+        adForm.addEventListener('submit', handleInsert);
+    }</script>
 </body>
 </html>
 

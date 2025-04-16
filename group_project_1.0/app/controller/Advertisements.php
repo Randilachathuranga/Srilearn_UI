@@ -36,11 +36,16 @@ class Advertisements extends Controller {
     
         $inputData = json_decode(file_get_contents('php://input'), true); // Decode incoming JSON
     
-    
-    
-        if ($model->validate($inputData)) {
+        $data = [
+            'User_id' => $inputData['User_id'],
+            'Title' => $inputData['Title'],
+            'Content' => $inputData['Content'],
+            'Post_data' => $inputData['Post_data'],
+            'Iseducation' => $inputData['Iseducation'],
+            'Subject' => $inputData['Subject']
+        ];
             try {
-                $add = $model->insert($inputData);
+                $add = $model->insert($data);
                 if ($add) {
                     echo json_encode(['message' => 'Advertisement created successfully', 'data' => $add]);
                     header("Location:http://localhost/group_project_1.0/public/Advertisements");
@@ -50,9 +55,7 @@ class Advertisements extends Controller {
             } catch (Exception $e) {
                 echo json_encode(['error' => 'An error occurred while creating the advertisement.', 'details' => $e->getMessage()]);
             }
-        } else {
-            echo json_encode(['error' => 'Missing required fields: Title, Content, or Post_date']);
-        }
+ 
     }
     
     public function myupdateapi($id) {
@@ -69,7 +72,7 @@ class Advertisements extends Controller {
     
         // Proceed with updating using $id and $data
         $model = new AdvertisementModel();
-        $updated = $model->update($id, $data, '_id');
+        $updated = $model->update($id, $data, 'Ad_id');
         
         if ($updated) {
             echo json_encode(['success' => 'Advertistment updated successfully']);
@@ -77,5 +80,7 @@ class Advertisements extends Controller {
             echo json_encode(['error' => 'Failed to update blog']);
         }
     } 
+
+    
   
 }
