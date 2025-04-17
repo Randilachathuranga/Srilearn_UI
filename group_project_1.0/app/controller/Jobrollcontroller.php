@@ -105,10 +105,9 @@ class Jobrollcontroller extends Controller{
             'Teacher_id' => $Teacher_id,
             'Inst_id'=>$Inst_id,
             'institute_applications.Subject' => $Subject,
-            'stateis' => '2'
         ];
 
-        $q1 = $model1->InnerJoinwhereMultiple($tables,$join_condition,$data,[]);
+        $q1 = $model1->InnerJoinwhereMultiple($tables,$join_condition,$data,['stateis' => '2']);
        
         if($q1){
             echo json_encode($q1);
