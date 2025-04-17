@@ -41,10 +41,10 @@
                     </div>
                 </div>
                 <div class="form-group double-field">
-                    <div class="input-wrapper">
+                    <!-- <div class="input-wrapper">
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="Email" disabled>
-                    </div>
+                    </div> -->
                     <div class="input-wrapper">
                         <label for="phone_number">Phone Number:</label>
                         <input type="tel" id="phone_number" name="Phone_number" disabled>
@@ -94,7 +94,7 @@
                 // Populate form with data
                 document.getElementById('first_name').value = data.F_name || '';
                 document.getElementById('last_name').value = data.L_name || '';
-                document.getElementById('email').value = data.Email || '';
+                // document.getElementById('email').value = data.Email || '';
                 document.getElementById('phone_number').value = data.Phone_number || '';
                 document.getElementById('address').value = data.Address || '';
                 document.getElementById('district').value = data.District || '';
