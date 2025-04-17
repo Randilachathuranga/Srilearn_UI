@@ -168,7 +168,7 @@ function handleUpdate(ad) {
     const titleInput = document.getElementById('title');
     const contentInput = document.getElementById('content');
     const postDateInput = document.getElementById('post_date');
-    const moreFields = document.getElementById('moreFields');
+    const subject = document.getElementById('subject');
 
     form.classList.remove('hidden');
     moreFields.classList.remove('hidden');
@@ -177,6 +177,7 @@ function handleUpdate(ad) {
     titleInput.value = ad.Title;
     contentInput.value = ad.Content;
     postDateInput.value = ad.Post_date;
+    SubjectInput.value = ad.Subject;
 
     // Set Iseducation radio buttons
     if (ad.Iseducation === "1") {
