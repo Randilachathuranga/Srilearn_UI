@@ -160,8 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial fetch with default dropdown value
   fetchAndRenderClasses(selectElement.value);
 
-
-  
   //fetch institute for spesific class
   let instituteDataMap = {}; // To store name -> address mapping (or the full object if needed)
 
@@ -171,40 +169,55 @@ document.addEventListener("DOMContentLoaded", () => {
         `http://localhost/group_project_1.0/public/Normalteacher_Controller/findmyinstitutes/${P_id}`
       );
       const institutes = await response.json();
-  
+
       const instituteSelect = document.getElementById("Institute_name");
       instituteSelect.innerHTML =
         '<option value="" disabled selected>Select Institute</option><option value="None">None</option>';
-  
+
       institutes.forEach((institute) => {
         const fullName = `${institute.F_name} ${institute.L_name}`;
         const option = document.createElement("option");
         option.value = fullName;
         option.textContent = fullName;
         instituteSelect.appendChild(option);
-  
+
         // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
-        document.getElementById("inst_id").value = institute.Institute_ID;
+        // document.getElementById("inst_id").value = institute.Institute_ID;
       });
     } catch (error) {
       console.error("Error fetching institutes:", error);
     }
   }
 
-  
-  document.getElementById("Institute_name").addEventListener("change", function () {
-    const selectedName = this.value;
-  
-    if (selectedName !== "None" && instituteDataMap[selectedName]) {
-      const selectedInstitute = instituteDataMap[selectedName];
-      const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key
-      document.getElementById("Location").value = address;
-    } else {
-      document.getElementById("Location").value = ""; // Clear address if None selected
-    }
-  });
-  
+  document
+    .getElementById("Institute_name")
+    .addEventListener("change", function () {
+      const selectedName = this.value;
+
+      if (selectedName !== "None" && instituteDataMap[selectedName]) {
+        const selectedInstitute = instituteDataMap[selectedName];
+        const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key
+        document.getElementById("Location").value = address;
+      } else {
+        document.getElementById("Location").value = ""; // Clear address if None selected
+      }
+    });
+
+  document
+    .getElementById("Institute_name")
+    .addEventListener("change", function () {
+      const selectedName = this.value;
+
+      if (selectedName !== "None" && instituteDataMap[selectedName]) {
+        const selectedInstitute = instituteDataMap[selectedName];
+        const inst_id = selectedInstitute.Institute_ID; // Adjust this if your backend returns it under another key
+        document.getElementById("inst_id").value = inst_id;
+      } else {
+        alert("Institute not found for this Address");
+      }
+    });
+
   fetchInstitutes(P_id);
 
   // Show the popup form
@@ -243,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const institute = formData.get("Institute_name");
-    console.log("id ekd = ",table3)
+    console.log("id ekd = ", table3);
     if (
       institute == "None" &&
       table1.Type == "Individual" &&
@@ -551,7 +564,8 @@ function viewinst(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
   window.location.href =
     "http://localhost/group_project_1.0/public/ViewinstituteController";
-  console.log("Class ID stored in sessionStorage:", Class_id);}
+  console.log("Class ID stored in sessionStorage:", Class_id);
+}
 
 function UploadMat(Class_id) {
   sessionStorage.setItem("class_id", Class_id);
