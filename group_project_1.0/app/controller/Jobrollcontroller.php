@@ -124,20 +124,21 @@ class Jobrollcontroller extends Controller{
         header('Content-Type: application/json');
         $inputData = json_decode(file_get_contents('php://input'), true);
 
-        if (isset($inputData['Subject'])) {
+        if (isset($inputData['Subject']) && isset($inputData['description'])) {
             try {
                 $data = [
                     'Inst_id' => $Inst_id,
                     'Status' => 'Active',
-                    'Status' => $inputData['Subject'],
-                    'application_date' =>$inputData['application_date']
+                    'Subject' => $inputData['Subject'],
+                    'application_date' =>$inputData['application_date'],
+                    'description' => $inputData['description']
                 ];
                 $Jobroll = $model->insert($data);
                 
                 if ($Jobroll) {
-                    echo json_encode(['message' => 'successfully', 'data' => $Jobroll]);
+                    echo json_encode(['success' => 'successfully', 'data' => $Jobroll]);
                 } else {
-                    echo json_encode(['message' => 'Could not insert the Jobroll']);
+                    echo json_encode(['error' => 'Could not insert the Jobroll']);
                 }
             } catch (Exception $e) {
                 echo json_encode(['error' => 'An error occurred while creating the Jobroll.', 'details' => $e->getMessage()]);
@@ -146,6 +147,7 @@ class Jobrollcontroller extends Controller{
             echo json_encode(['error' => 'Missing required fields']);
         }
     }
+    
 
     public function deleteJobroll($Jr_id) {
         $model = new Jobroll();
