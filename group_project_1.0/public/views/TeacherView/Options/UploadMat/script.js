@@ -314,7 +314,7 @@ function request() {
       console.log("Request data:", data);
       
       // Check if data exists and has elements
-      if (data && data.length > 0 && data[0].Status === 0) {
+      if ((data && data.length > 0 && data[0].Status === 0) || (data && data.length > 0 && data[0].Status === 1)) {
         alert("You have already requested old materials.");
       } else {
         return fetch(`http://localhost/group_project_1.0/public/Learning_mat/requestOldMat/${User_id}/${classId}`)
@@ -334,4 +334,103 @@ function request() {
       console.error("Error:", error);
       alert("An error occurred: " + error.message);
     });
+}
+
+
+function showRequests() {
+  document.getElementById("overlay").style.display = "block";
+  const popup = document.getElementById('requestPopup');
+  const tableBody = document.getElementById('requestsTableBody');
+  const noRequestsMessage = document.getElementById('noRequestsMessage');
+  const errorMessage = document.getElementById('errorMessage');
+  const requestsTable = document.getElementById('requestsTable');
+  tableBody.innerHTML = '';
+  noRequestsMessage.style.display = 'none';
+  errorMessage.style.display = 'none';
+  requestsTable.style.display = 'none';
+  tableBody.innerHTML = `
+    <tr><td colspan="3" style="text-align:center;">Loading...</td></tr>
+  `;
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/allrequests/${classId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(requests => {
+      console.log("Fetched Requests:", requests);
+      tableBody.innerHTML = ''; // Clear loading message
+
+      if (!Array.isArray(requests) || requests.length === 0) {
+        noRequestsMessage.style.display = 'block';
+      } else {
+        requestsTable.style.display = 'table';
+
+        requests.forEach(request => {
+          const row = document.createElement('tr');
+
+          const id = request.Stu_id;
+          const Name = request.F_name + " " + request.L_name || 'Unknown';
+          const status = request.Status === 0 ? 'Pending' : 'Approved';
+          const request_id = request.ID;
+
+          row.innerHTML = `
+            <td>${id}</td>
+            <td>${Name}</td>
+            <td>
+              <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+            </td>
+            <td>
+              ${status === 'Pending' ? `
+                <button class="action-button approve-button" onclick="updateRequestStatus(${request_id})">Approve</button>
+              ` : ''}
+            </td>
+          `;
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      popup.style.display = "block";
+    })
+    .catch(error => {
+      console.error("Error fetching requests:", error.message);
+      console.log("Requested URL:", fetchURL);
+      errorMessage.style.display = 'block';
+      popup.style.display = "block";
+    });
+}
+
+
+
+function closeRequestPopup() {
+  document.getElementById('requestPopup').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+}
+
+
+
+function updateRequestStatus(requestId) {
+ if(confirm("Are you sure you want to approve this request?")) {
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/acceptrequest/${requestId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: status })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      showRequests();
+    } else {
+      alert('Failed to update status: ' + data.message);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while updating the status');
+  });
+ }
 }

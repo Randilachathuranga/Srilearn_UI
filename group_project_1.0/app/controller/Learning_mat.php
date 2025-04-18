@@ -215,6 +215,48 @@ public function viewrequest($User_id,$Class_id){
     }
 }
 
+public function allrequests($Class_id)
+    {
+        $model = new Request_oldmat();
+        header('Content-Type: application/json');
+        try {
+
+            $tables = [
+                'user', 'request_oldmat'
+            ];
+
+            $joincondition = [
+                'user.User_id = request_oldmat.Stu_id'
+            ];
+            $data = [
+                'request_oldmat.Class_id' => $Class_id,
+            ];
+
+            $materials = $model->InnerJoinwhereMultiple($tables, $joincondition, $data, []);
+
+            if ($materials) {
+                echo json_encode($materials);
+            } else {
+                echo json_encode(['message' => 'No materials found for this class ID.']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'An error occurred while fetching materials.', 'details' => $e->getMessage()]);
+        }
+    }
+
+public function acceptrequest($request_id) {
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $data = [
+        'Status' => '1'
+    ];
+    $result = $model->update($request_id, $data, 'ID');
+    if ($result) {
+        echo json_encode(['success' => 'Request accepted successfully.']);
+    } else {
+        echo json_encode(['message' => 'Failed to accept the request.']);
+    }
+}
 
 }
 ?>

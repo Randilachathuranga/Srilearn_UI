@@ -21,7 +21,7 @@ h1 {
 }
 
 /* Upload button styles */
-#uploadMat {
+#uploadMat,#request,#ShowRequests{
   background-color: #3498db;
   color: white;
   padding: 12px 24px;
@@ -33,23 +33,7 @@ h1 {
   margin-left: 10px;
 }
 
-#uploadMat:hover {
-  background-color: #2980b9;
-}
-
-#request {
-  background-color: #3498db;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-  margin-bottom: 20px;
-  transition: background-color 0.3s ease;
-  margin-left: 10px;
-}
-
-#request:hover {
+#uploadMat:hover,#ShowRequests:hover,#request:hover {
   background-color: #2980b9;
 }
 
@@ -330,4 +314,100 @@ h1 {
         margin: 10px 0;
         text-align: center;
     }
+}
+
+.request-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.request-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.request-content {
+  padding: 20px;
+  max-height: calc(80vh - 60px);
+  overflow-y: auto;
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.requests-table th, 
+.requests-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.requests-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.requests-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.action-button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.approve-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.reject-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+#noRequestsMessage, #errorMessage {
+  text-align: center;
+  padding: 20px;
+  color: #666;
 }
