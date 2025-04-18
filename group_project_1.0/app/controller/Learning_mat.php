@@ -167,6 +167,54 @@ class Learning_mat extends Controller
         }
     }
 
+public function checkenrolldate($User_id, $Class_id) {
+    $model = new Enrollmodel();
+    header('Content-Type: application/json');
+    $tables = [
+        'user','enrollment'
+    ];
+    $joincondition = [
+        'user.User_id = enrollment.Stu_id'
+    ];
+    $data = [
+        'user.User_id' => $User_id,
+        'enrollment.Class_id' => $Class_id
+    ];
+    $result = $model->InnerJoinwhereMultiple($tables, $joincondition, $data, []);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
+public function requestOldMat($User_id,$Class_id) {
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $data = [
+        'Stu_id' => $User_id,
+        'Class_id' => $Class_id,
+        'Status' => '0'
+    ];
+    $result = $model->insert($data);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
+public function viewrequest($User_id,$Class_id){
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $result = $model->where(['Stu_id' => $User_id, 'Class_id' => $Class_id]);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
 
 }
 ?>
