@@ -1,15 +1,9 @@
-// Constants and utility functions
-const API_BASE_URL = "http://localhost/group_project_1.0/public/Learning_mat";
 const classId = sessionStorage.getItem("class_id");
-
-// Templates
-const topicTemplate = document.getElementById("topic-template");
-const materialTemplate = document.getElementById("material-template");
 
 // Form handling functions
 function showUploadForm() {
   document.getElementById("uploadForm").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay").style.display = "block"; //background blur
 }
 
 function hideUploadForm() {
@@ -17,16 +11,17 @@ function hideUploadForm() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function showUpdateForm(material) {
+// Modified this function to accept individual properties rather than a complete object
+function showUpdateForm(matId, topic, subTopic, description) {
   const updateForm = document.getElementById("updateForm");
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay").style.display = "block"; //background blur
   updateForm.style.display = "block";
 
   // Populate form with existing data
-  document.getElementById("update_mat_id").value = material.Mat_id;
-  document.getElementById("update_topic").value = material.topic;
-  document.getElementById("update_sub_topic").value = material.sub_topic;
-  document.getElementById("update_Description").value = material.Description;
+  document.getElementById("update_mat_id").value = matId;
+  document.getElementById("update_topic").value = topic;
+  document.getElementById("update_sub_topic").value = subTopic;
+  document.getElementById("update_Description").value = description;
 }
 
 function hideUpdateForm() {
@@ -43,7 +38,9 @@ function hideOverlay() {
 // API functions
 async function fetchMaterials() {
   try {
-    const response = await fetch(`${API_BASE_URL}/viewMat/${classId}`);
+    const response = await fetch(
+      `http://localhost/group_project_1.0/public/Learning_mat/viewMat/${classId}`
+    );
     if (!response.ok) {
       if (response.status === 404) {
         console.error("No materials found for this class.");
@@ -59,16 +56,20 @@ async function fetchMaterials() {
   }
 }
 
-async function deleteMat(matId) {
+async function deleteMaterial(matId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/deleteMat/${matId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost/group_project_1.0/public/Learning_mat/deleteMat/${matId}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await response.json();
 
     if (data.message) {
       alert(data.message);
-      window.location.href = API_BASE_URL;
+      window.location.href =
+        "http://localhost/group_project_1.0/public/Learning_mat";
     } else {
       throw new Error(data.error || "Unexpected response from server");
     }
@@ -78,71 +79,69 @@ async function deleteMat(matId) {
   }
 }
 
-// UI rendering functions
-function renderMaterialItem(material) {
-  const materialNode = materialTemplate.content.cloneNode(true);
-  
-  // Corrected role retrieval
-  const Role = document.getElementById("user_role").value;
-
-  materialNode.querySelector(".sub-topic").textContent = `Sub-topic: ${material.sub_topic}`;
-  materialNode.querySelector(".description").textContent = `Description: ${material.Description}`;
-  materialNode.querySelector(".date").textContent = `Date: ${material.Date}`;
-
-  const downloadLink = materialNode.querySelector(".download-link");
-  downloadLink.href = material.Url;
-  downloadLink.textContent = "Download PDF";
-
-  if (Role === "teacher") {
-    const deleteBtn = materialNode.querySelector(".delete-btn");
-    deleteBtn.onclick = () => deleteMat(material.Mat_id);
-
-    const updateBtn = materialNode.querySelector(".update-btn");
-    updateBtn.onclick = () => showUpdateForm(material);
-  }
-
-  return materialNode;
-}
-
-function renderTopicSection(topic, materials) {
-  const topicNode = topicTemplate.content.cloneNode(true);
-
-  topicNode.querySelector(".topic-title").textContent = topic;
-  const materialsContainer = topicNode.querySelector(".materials-container");
-
-  materials.forEach((material) => {
-    materialsContainer.appendChild(renderMaterialItem(material));
-  });
-
-  return topicNode;
-}
-
-async function renderMaterialsList() {
+// Direct DOM manipulation functions without templates
+function displayMaterials() {
   const container = document.getElementById("materialsList");
   container.innerHTML = ""; // Clear previous content
 
-  const materials = await fetchMaterials();
+  fetchMaterials().then((materials) => {
+    if (materials.length === 0) {
+      container.innerHTML = "<p>No materials found for this class.</p>";
+      return;
+    }
 
-  if (materials.length === 0) {
-    container.innerHTML = "<p>No materials found for this class.</p>";
-    return;
-  }
+    const groupedMaterials = materials.reduce((acc, material) => {
+      acc[material.topic] = acc[material.topic] || [];
+      acc[material.topic].push(material);
+      return acc;
+    }, {});
 
-  // Group materials by topic
-  const groupedMaterials = materials.reduce((acc, material) => {
-    (acc[material.topic] = acc[material.topic] || []).push(material);
-    return acc;
-  }, {});
-
-  // Render each topic section
-  Object.entries(groupedMaterials).forEach(([topic, materials]) => {
-    container.appendChild(renderTopicSection(topic, materials));
+    container.innerHTML = Object.entries(groupedMaterials)
+      .map(
+        ([topic, materials]) => `
+          <div class="topic-section">
+            <h2>${topic}</h2>
+            <div class="materials-container">
+              ${materials
+                .map(
+                  (material) => `
+                    <div class="material-item">
+                      <p>Sub-topic: ${material.sub_topic}</p>
+                      <p>Description: ${material.Description}</p>
+                      <p>Date: ${material.Date}</p>
+                      <a href="${material.Url}" target="_blank">Download PDF</a>
+                      ${
+                        document.getElementById("user_role").value === "teacher"
+                          ? `
+                            <button class="delete-btn" onclick="deleteMaterial(${
+                              material.Mat_id
+                            })">Delete</button>
+                            <button class="update-btn" onclick="showUpdateForm(${
+                              material.Mat_id
+                            }, '${material.topic}', '${
+                              material.sub_topic
+                            }', '${material.Description.replace(
+                              /'/g,
+                              "\\'"
+                            )}')">Update</button>
+                          `
+                          : ""
+                      }
+                    </div>
+                  `
+                )
+                .join("")}
+            </div>
+          </div>
+        `
+      )
+      .join("");
   });
 }
 
 // Form submission handling
 document.addEventListener("DOMContentLoaded", () => {
-  renderMaterialsList();
+  displayMaterials();
 
   // Upload form handling
   const uploadForm = document.getElementById("uploadForm");
@@ -153,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const response = await fetch(
-          `${API_BASE_URL}/insertLearningMat/${classId}`,
+          `http://localhost/group_project_1.0/public/Learning_mat/insertLearningMat/${classId}`,
           {
             method: "POST",
             body: formData,
@@ -168,7 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result.message) {
           alert(result.message);
           hideUploadForm();
-          window.location.href = API_BASE_URL;
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Learning_mat";
         } else {
           throw new Error(result.error || "Unexpected response from server");
         }
@@ -190,10 +190,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const matId = document.getElementById("update_mat_id").value;
 
       try {
-        const response = await fetch(`${API_BASE_URL}/updateMat/${matId}`, {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          `http://localhost/group_project_1.0/public/Learning_mat/updateMat/${matId}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -203,7 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result.message) {
           alert(result.message);
           hideUpdateForm();
-          window.location.href = API_BASE_URL;
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Learning_mat";
         } else {
           throw new Error(result.error || "Unexpected response from server");
         }
