@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +8,15 @@
 </head>
 <body>
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php" ?>
-
+    
     <h1>Class Materials</h1>
-    <?php 
-                if ($_SESSION['Role'] == 'teacher') { 
-                    echo '    <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>';
-                }
-    ?>
+    
+    <?php if ($_SESSION['Role'] == 'teacher') { ?>
+        <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>
+    <?php } ?>
+    
     <div id="overlay" onclick="hideOverlay()"></div>
-
- <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
-
-
+    <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
     
     <!-- Upload Form -->
     <form id="uploadForm" enctype="multipart/form-data" method="POST">
@@ -38,8 +34,9 @@
         <input type="file" id="pdf" name="pdf" accept=".pdf" required>
         
         <button type="submit">Upload</button>
+        <button type="button" onclick="hideUploadForm()">Cancel</button>
     </form>
-
+    
     <!-- Update Form -->
     <form id="updateForm" enctype="multipart/form-data" method="POST">
         <input type="hidden" id="update_mat_id" name="Mat_id">
@@ -58,33 +55,12 @@
         <button type="submit">Update</button>
         <button type="button" onclick="hideUpdateForm()">Cancel</button>
     </form>
-
+    
     <div id="materialsList">
-        <!-- Template for material items -->
-        <template id="topic-template">
-            <div class="topic-section">
-                <h2 class="topic-title"></h2>
-                <div class="materials-container"></div>
-            </div>
-        </template>
-
-        <template id="material-template">
-            <div class="material-item">
-                <p class="sub-topic"></p>
-                <p class="description"></p>
-                <p class="date"></p>
-                <a class="download-link" target="_blank">Download PDF</a>
-                <?php 
-                if ($_SESSION['Role'] == 'teacher') { 
-                    echo '<button class="delete-btn">Delete</button>';
-                    echo '<button class="update-btn">Update</button>';
-                }
-    ?>
-            </div>
-        </template>
+        <!-- Materials will be loaded here -->
     </div>
-
+    
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php" ?>
-    <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
+     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
 </body>
 </html>
