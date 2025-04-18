@@ -37,6 +37,22 @@ h1 {
   background-color: #2980b9;
 }
 
+#request {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+#request:hover {
+  background-color: #2980b9;
+}
+
 /* Overlay styles */
 #overlay {
   display: none;

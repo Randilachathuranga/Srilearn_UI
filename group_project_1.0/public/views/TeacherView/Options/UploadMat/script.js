@@ -79,65 +79,144 @@ async function deleteMaterial(matId) {
   }
 }
 
+
+
 // Direct DOM manipulation functions without templates
 function displayMaterials() {
-  const container = document.getElementById("materialsList");
-  container.innerHTML = ""; // Clear previous content
+  if (Role == 'teacher') {
+    const container = document.getElementById("materialsList");
+    container.innerHTML = ""; // Clear previous content
 
-  fetchMaterials().then((materials) => {
-    if (materials.length === 0) {
-      container.innerHTML = "<p>No materials found for this class.</p>";
-      return;
-    }
+    fetchMaterials().then((materials) => {
+      if (materials.length === 0) {
+        container.innerHTML = "<p>No materials found for this class.</p>";
+        return;
+      }
 
-    const groupedMaterials = materials.reduce((acc, material) => {
-      acc[material.topic] = acc[material.topic] || [];
-      acc[material.topic].push(material);
-      return acc;
-    }, {});
+      const groupedMaterials = materials.reduce((acc, material) => {
+        acc[material.topic] = acc[material.topic] || [];
+        acc[material.topic].push(material);
+        return acc;
+      }, {});
 
-    container.innerHTML = Object.entries(groupedMaterials)
-      .map(
-        ([topic, materials]) => `
-          <div class="topic-section">
-            <h2>${topic}</h2>
-            <div class="materials-container">
-              ${materials
+      container.innerHTML = Object.entries(groupedMaterials)
+        .map(
+          ([topic, materials]) => `
+            <div class="topic-section">
+              <h2>${topic}</h2>
+              <div class="materials-container">
+                ${materials
+                  .map(
+                    (material) => `
+                      <div class="material-item">
+                        <p>Sub-topic: ${material.sub_topic}</p>
+                        <p>Description: ${material.Description}</p>
+                        <p>Date: ${material.Date}</p>
+                        <a href="${material.Url}" target="_blank">Download PDF</a>
+                        ${
+                          document.getElementById("user_role").value === "teacher"
+                            ? `
+                              <button class="delete-btn" onclick="deleteMaterial(${
+                                material.Mat_id
+                              })">Delete</button>
+                              <button class="update-btn" onclick="showUpdateForm(${
+                                material.Mat_id
+                              }, '${material.topic}', '${
+                                material.sub_topic
+                              }', '${material.Description.replace(
+                                /'/g,
+                                "\\'"
+                              )}')">Update</button>
+                            `
+                            : ""
+                        }
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `
+        )
+        .join("");
+    });
+  } else if (Role == 'student') {
+    // First, check enrollment date
+    fetch(`http://localhost/group_project_1.0/public/Learning_mat/checkenrolldate/${User_id}/${classId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((enrollmentData) => {
+        console.log("Enrollment data:", enrollmentData);
+        
+        // Then, check request status
+        return fetch(`http://localhost/group_project_1.0/public/Learning_mat/viewrequest/${User_id}/${classId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((requestData) => {
+            console.log("Request data:", requestData);
+            
+            return fetchMaterials().then((materials) => {
+              const filteredMaterials = materials.filter((material) => {
+                return (enrollmentData.length > 0 && new Date(enrollmentData[0].Date) < new Date(material.Date)) || 
+                       (requestData && requestData.length > 0 && requestData[0].Status === 1);
+              });
+
+              const container = document.getElementById("materialsList");
+              container.innerHTML = ""; // Clear previous content
+
+              if (filteredMaterials.length === 0) {
+                container.innerHTML = "<p>No materials available for you.</p>";
+                return;
+              }
+
+              const groupedMaterials = filteredMaterials.reduce((acc, material) => {
+                acc[material.topic] = acc[material.topic] || [];
+                acc[material.topic].push(material);
+                return acc;
+              }, {});
+
+              container.innerHTML = Object.entries(groupedMaterials)
                 .map(
-                  (material) => `
-                    <div class="material-item">
-                      <p>Sub-topic: ${material.sub_topic}</p>
-                      <p>Description: ${material.Description}</p>
-                      <p>Date: ${material.Date}</p>
-                      <a href="${material.Url}" target="_blank">Download PDF</a>
-                      ${
-                        document.getElementById("user_role").value === "teacher"
-                          ? `
-                            <button class="delete-btn" onclick="deleteMaterial(${
-                              material.Mat_id
-                            })">Delete</button>
-                            <button class="update-btn" onclick="showUpdateForm(${
-                              material.Mat_id
-                            }, '${material.topic}', '${
-                              material.sub_topic
-                            }', '${material.Description.replace(
-                              /'/g,
-                              "\\'"
-                            )}')">Update</button>
-                          `
-                          : ""
-                      }
+                  ([topic, materials]) => `
+                    <div class="topic-section">
+                      <h2>${topic}</h2>
+                      <div class="materials-container">
+                        ${materials
+                          .map(
+                            (material) => `
+                              <div class="material-item">
+                                <p>Sub-topic: ${material.sub_topic}</p>
+                                <p>Description: ${material.Description}</p>
+                                <p>Date: ${material.Date}</p>
+                                <a href="${material.Url}" target="_blank">Download PDF</a>
+                              </div>
+                            `
+                          )
+                          .join("")}
+                      </div>
                     </div>
                   `
                 )
-                .join("")}
-            </div>
-          </div>
-        `
-      )
-      .join("");
-  });
+                .join("");
+            });
+          });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("An error occurred: " + error.message);
+      });
+  }
 }
+
+
 
 // Form submission handling
 document.addEventListener("DOMContentLoaded", () => {
@@ -220,3 +299,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+//request old materials
+function request() {
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/viewrequest/${User_id}/${classId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Request data:", data);
+      
+      // Check if data exists and has elements
+      if (data && data.length > 0 && data[0].Status === 0) {
+        alert("You have already requested old materials.");
+      } else {
+        return fetch(`http://localhost/group_project_1.0/public/Learning_mat/requestOldMat/${User_id}/${classId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((requestData) => {
+            alert("Request for old materials was successful!");
+            console.log("Response data:", requestData);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An error occurred: " + error.message);
+    });
+}

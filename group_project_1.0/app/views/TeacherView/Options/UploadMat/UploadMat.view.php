@@ -14,6 +14,10 @@
     <?php if ($_SESSION['Role'] == 'teacher') { ?>
         <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>
     <?php } ?>
+
+    <?php if ($_SESSION['Role'] == 'student') { ?>
+        <div id="request" onclick="request()">Request Old Material</div>
+    <?php } ?>
     
     <div id="overlay" onclick="hideOverlay()"></div>
     <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
@@ -61,6 +65,11 @@
     </div>
     
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php" ?>
+    <script>
+    const Role = "<?php echo $_SESSION['Role']; ?>";
+    const User_id = "<?php echo $_SESSION['User_id']; ?>";
+  </script>
+
      <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
 </body>
 </html>
