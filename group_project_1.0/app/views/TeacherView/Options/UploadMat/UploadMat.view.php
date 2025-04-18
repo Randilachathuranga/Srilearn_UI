@@ -13,6 +13,7 @@
     
     <?php if ($_SESSION['Role'] == 'teacher') { ?>
         <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>
+        <div id="ShowRequests" onclick="showRequests()">Old Material Requests</div>
     <?php } ?>
 
     <?php if ($_SESSION['Role'] == 'student') { ?>
@@ -63,6 +64,36 @@
     <div id="materialsList">
         <!-- Materials will be loaded here -->
     </div>
+
+
+
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
+
+    <div id="requestPopup" class="request-popup">
+  <div class="request-header">
+    <h3>Student Requests</h3>
+    <button class="close-button" onclick="closeRequestPopup()">×</button>
+  </div>
+  <div class="request-content">
+    <table id="requestsTable" class="requests-table">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="requestsTableBody">
+        <!-- Data will be populated here -->
+      </tbody>
+    </table>
+    <div id="noRequestsMessage" style="display:none;">No requests found.</div>
+    <div id="errorMessage" style="display:none;">An error occurred while fetching requests.</div>
+  </div>
+</div>
+
+
     
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php" ?>
     <script>
