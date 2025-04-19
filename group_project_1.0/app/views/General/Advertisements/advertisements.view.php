@@ -130,7 +130,8 @@ if ($_SESSION['User_id'] === 'Guest') {
                     <p>${record.Title}</p>
                     <h5>${record.Content}</h5>
                     <button onclick="handleDelete(${record.Ad_id})">Delete</button>
-                    <button onclick="handleUpdate(${record.Ad_id})">Update</button>
+                   <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
+
                 `;
                 container.appendChild(rec);
             });
@@ -169,6 +170,7 @@ function handleUpdate(ad) {
     const contentInput = document.getElementById('content');
     const postDateInput = document.getElementById('post_date');
     const subject = document.getElementById('subject');
+     
 
     form.classList.remove('hidden');
     moreFields.classList.remove('hidden');
@@ -177,7 +179,7 @@ function handleUpdate(ad) {
     titleInput.value = ad.Title;
     contentInput.value = ad.Content;
     postDateInput.value = ad.Post_date;
-    SubjectInput.value = ad.Subject;
+    subjectInput.value = ad.Subject;
 
     // Set Iseducation radio buttons
     if (ad.Iseducation === "1") {
