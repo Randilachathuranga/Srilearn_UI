@@ -77,15 +77,15 @@ function closePopup() {
   document.getElementById("payrollPopup").style.display = "none";
 }
 
-document.getElementById("payrollForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const payload = Object.fromEntries(formData.entries());
+// document.getElementById("payrollForm").addEventListener("submit", function (e) {
+//   e.preventDefault();
+//   const formData = new FormData(this);
+//   const payload = Object.fromEntries(formData.entries());
 
-  console.log("Submitting Payroll Request:", payload);
+//   console.log("Submitting Payroll Request:", payload);
 
-  closePopup();
-});
+//   closePopup();
+// });
 
 //submit
 document
@@ -150,6 +150,7 @@ document
         alert("Error checking request eligibility. Please try again.");
       });
 
+  });
     // Function to submit the payroll request
     function submitPayrollRequest(formData) {
       fetch(
@@ -175,4 +176,3 @@ document
       window.location.href =
         "http://localhost/group_project_1.0/public/ViewinstituteController";
     }
-  });
