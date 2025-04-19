@@ -213,8 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedInstitute = instituteDataMap[selectedName];
         const inst_id = selectedInstitute.Institute_ID; // Adjust this if your backend returns it under another key
         document.getElementById("inst_id").value = inst_id;
-      } else {
-        alert("Institute not found for this Address");
       }
     });
 
