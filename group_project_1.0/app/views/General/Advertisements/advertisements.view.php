@@ -280,7 +280,17 @@ async function handleInsert(event) {
      }
 
     function filterAds() {
-        // Optional: implement ad filtering logic here if needed
+        const selectedType = document.getElementById('adType').value;
+        const records = document.querySelectorAll('.record');
+
+        records.forEach(record => {
+            const isEducational = record.querySelector('input[name="Iseducation"]').value;
+            if (selectedType === 'all' || (selectedType === 'education' && isEducational === '1') || (selectedType === 'non-education' && isEducational === '0')) {
+                record.style.display = 'block';
+            } else {
+                record.style.display = 'none';
+            }
+        });
     }
 </script>
 

@@ -126,8 +126,8 @@ if ($_SESSION['User_id'] === 'Guest') {
                     rec.innerHTML = `
                         <p>${record.Title}</p>
                         <h5>${record.Content}</h5>
-                         <button onclick="handleDelete(${record.Ad_id})">Delete</button>
-                        <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
+                         <button class='delete' onclick="handleDelete(${record.Ad_id})">Delete</button>
+                        <button class='update' onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
                        
                     `;
                     container.appendChild(rec);
