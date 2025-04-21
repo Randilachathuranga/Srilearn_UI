@@ -89,12 +89,7 @@ if ($_SESSION['User_id'] === 'Guest') {
     </div>
 
     <div class="filters">
-        <label for="adType">Filter by Type:</label>
-        <select id="adType" onchange="filterAds()">
-            <option value="all">All</option>
-            <option value="education">Educational</option>
-            <option value="non-education">Non-Educational</option>
-        </select>
+       
 
         <?php 
     if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
@@ -126,6 +121,8 @@ if ($_SESSION['User_id'] === 'Guest') {
                     rec.innerHTML = `
                         <p>${record.Title}</p>
                         <h5>${record.Content}</h5>
+                        <p>${record.Post_date}</p>
+                       <p>${record.Subject}</p>
                          <button class='delete' onclick="handleDelete(${record.Ad_id})">Delete</button>
                         <button class='update' onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
                        

@@ -90,7 +90,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
     <div class="filters">
         <label for="adType">Filter by Type:</label>
-        <select id="adType" onchange="filterAds()">
+        <select id="adType">
             <option value="all">All</option>
             <option value="education">Educational</option>
             <option value="non-education">Non-Educational</option>
@@ -114,26 +114,55 @@ if ($_SESSION['User_id'] === 'Guest') {
     const User_id = "<?php echo $_SESSION['User_id']; ?>";
 
     document.addEventListener('DOMContentLoaded', () => {
+    const adTypeSelect = document.getElementById('adType');
+    const container = document.getElementById('adContainer');
+
+    // Initial fetch - all ads
+    fetchAds('all');
+
+    // Listen to filter changes
+    adTypeSelect.addEventListener('change', () => {
+        const selectedType = adTypeSelect.value;
+        fetchAds(selectedType);
+    });
+
+    function fetchAds(type) {
         fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
             .then(response => response.json())
             .then(data => {
-                const container = document.getElementById('adContainer');
                 container.innerHTML = '';
-                data.forEach(record => {
+
+                // Filter based on selected type
+                const filtered = data.filter(record => {
+                    if (type === 'education') return record.Iseducation === '1';
+                    if (type === 'non-education') return record.Iseducation === '0';
+                    return true; // 'all'
+                });
+
+                if (filtered.length === 0) {
+                    container.innerHTML = '<p>No advertisements found.</p>';
+                    return;
+                }
+
+                filtered.forEach(record => {
                     const rec = document.createElement('div');
                     rec.className = 'record';
                     rec.innerHTML = `
                         <p>${record.Title}</p>
                         <h5>${record.Content}</h5>
-                       
+                        <p>${record.Post_date}</p>
+                        <p>${record.Subject}</p>
+                        <input type="hidden" name="Iseducation" value="${record.Iseducation}">
                     `;
                     container.appendChild(rec);
                 });
             })
             .catch(error => {
                 console.error('Fetch error:', error);
+                container.innerHTML = '<p>Error loading advertisements.</p>';
             });
-    });
+    }
+});
 
     async function handleDelete(id) {
         if (!confirm("Are you sure you want to delete this advertisement?")) return;
@@ -278,29 +307,7 @@ async function handleInsert(event) {
      function handleMyAds() {
          window.location.href = `http://localhost/group_project_1.0/public/Advertisements/viewmyads`;
      }
-     function filterAds() {
-    const selectedType = document.getElementById('adType').value;
-    const records = document.querySelectorAll('.record');
-
-    records.forEach(record => {
-        const isEducationalInput = record.querySelector('input[name="Iseducation"]');
-        if (!isEducationalInput) {
-            console.warn("Missing Iseducation field for record:", record);
-            return;
-        }
-
-        const isEducational = isEducationalInput.value;
-        if (
-            selectedType === 'all' ||
-            (selectedType === 'education' && isEducational === '1') ||
-            (selectedType === 'non-education' && isEducational === '0')
-        ) {
-            record.style.display = 'block';
-        } else {
-            record.style.display = 'none';
-        }
-    });
-}
+     
 
 
 </script>
