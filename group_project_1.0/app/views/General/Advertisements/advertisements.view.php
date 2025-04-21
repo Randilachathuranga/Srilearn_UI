@@ -278,20 +278,31 @@ async function handleInsert(event) {
      function handleMyAds() {
          window.location.href = `http://localhost/group_project_1.0/public/Advertisements/viewmyads`;
      }
+     function filterAds() {
+    const selectedType = document.getElementById('adType').value;
+    const records = document.querySelectorAll('.record');
 
-    function filterAds() {
-        const selectedType = document.getElementById('adType').value;
-        const records = document.querySelectorAll('.record');
+    records.forEach(record => {
+        const isEducationalInput = record.querySelector('input[name="Iseducation"]');
+        if (!isEducationalInput) {
+            console.warn("Missing Iseducation field for record:", record);
+            return;
+        }
 
-        records.forEach(record => {
-            const isEducational = record.querySelector('input[name="Iseducation"]').value;
-            if (selectedType === 'all' || (selectedType === 'education' && isEducational === '1') || (selectedType === 'non-education' && isEducational === '0')) {
-                record.style.display = 'block';
-            } else {
-                record.style.display = 'none';
-            }
-        });
-    }
+        const isEducational = isEducationalInput.value;
+        if (
+            selectedType === 'all' ||
+            (selectedType === 'education' && isEducational === '1') ||
+            (selectedType === 'non-education' && isEducational === '0')
+        ) {
+            record.style.display = 'block';
+        } else {
+            record.style.display = 'none';
+        }
+    });
+}
+
+
 </script>
 
 
