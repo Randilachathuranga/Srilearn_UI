@@ -16,6 +16,13 @@ class Advertisements extends Controller {
         echo json_encode($allads);
     }
 
+    public function viewid($id) {
+        header('Content-Type: application/json');
+
+        $model = new AdvertisementModel();
+        $allads = $model->where(['Ad_id'=>$id]);
+        echo json_encode($allads);
+    }
 
 
     // API: Delete specific ad
@@ -40,7 +47,7 @@ class Advertisements extends Controller {
             'User_id' => $inputData['User_id'],
             'Title' => $inputData['Title'],
             'Content' => $inputData['Content'],
-            'Post_data' => $inputData['Post_data'],
+            'Post_date' => $inputData['Post_date'],
             'Iseducation' => $inputData['Iseducation'],
             'Subject' => $inputData['Subject']
         ];
@@ -60,9 +67,10 @@ class Advertisements extends Controller {
     
     public function myupdateapi($id) {
         checkloginstatus();
+    
         // Get JSON input from the request body
         $jsonData = file_get_contents("php://input");
-        $data = json_decode($jsonData, true);
+        $data = json_decode($jsonData, true); // decode as associative array
     
         // Check for decoding errors
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -70,16 +78,26 @@ class Advertisements extends Controller {
             return;
         }
     
-        // Proceed with updating using $id and $data
+        // Prepare data for update
+        $pass_data = [
+            'Title'       => $data['Title'] ?? null,
+            'Content'     => $data['Content'] ?? null,
+            'Post_date'   => $data['Post_date'] ?? null,
+            'Iseducation' => $data['Iseducation'] ?? '0',
+            'Subject'     => $data['Subject'] ?? null
+        ];
+    
+        // Proceed with updating
         $model = new AdvertisementModel();
-        $updated = $model->update($id, $data, 'Ad_id');
-        
+        $updated = $model->update($id, $pass_data, 'Ad_id');
+    
         if ($updated) {
-            echo json_encode(['success' => 'Advertistment updated successfully']);
+            echo json_encode(['success' => 'Advertisement updated successfully']);
         } else {
-            echo json_encode(['error' => 'Failed to update blog']);
+            echo json_encode(['error' => 'Failed to update advertisement']);
         }
-    } 
+    }
+    
 
     
   

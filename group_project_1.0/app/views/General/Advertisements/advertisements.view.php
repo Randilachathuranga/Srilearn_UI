@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Load appropriate NavBar
 if ($_SESSION['User_id'] === 'Guest') {
     require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
@@ -13,15 +15,11 @@ if ($_SESSION['User_id'] === 'Guest') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
-
     <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    
+
     <style>
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
 
         .form-container {
             margin: 30px;
@@ -41,8 +39,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 <div class="form-container hidden" id="adFormContainer">
     <h1 class="title">Submit Advertisement</h1>
     <form id="adForm" class="ad-form" method="POST">
-        
-        <!-- Step 1: Ad Type Selection -->
+
         <div class="form-group">
             <label>Advertisement Type</label>
             <div class="radio-group">
@@ -57,7 +54,6 @@ if ($_SESSION['User_id'] === 'Guest') {
             </div>
         </div>
 
-        <!-- Step 2: Additional Fields (Initially Hidden) -->
         <div id="moreFields" class="hidden">
             <div class="form-group">
                 <label for="title">Advertisement Title</label>
@@ -84,15 +80,14 @@ if ($_SESSION['User_id'] === 'Guest') {
     </form>
 </div>
 
+<!-- Main Container -->
 <div class="container">
     <h1 class="title">Advertisements</h1>
 
-    <!-- Banner Section -->
     <div class="banner">
         <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
     </div>
 
-    <!-- Filters Section -->
     <div class="filters">
         <label for="adType">Filter by Type:</label>
         <select id="adType" onchange="filterAds()">
@@ -103,7 +98,11 @@ if ($_SESSION['User_id'] === 'Guest') {
 
         <?php 
         if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
-            echo '<div class="create-button"><button onclick="handleClick()">Create Your Own Advertisement</button></div>';
+            echo '
+            <div class="create-button">
+                <button onclick="handleClick()">Create Your Own Advertisement</button>
+                <button onclick="handleMyAds()">My Advertisement</button>
+            </div>';
         }
         ?>
     </div>
@@ -115,80 +114,72 @@ if ($_SESSION['User_id'] === 'Guest') {
     const User_id = "<?php echo $_SESSION['User_id']; ?>";
 
     document.addEventListener('DOMContentLoaded', () => {
-    // Load advertisements from the server
-    fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(data => {
-            const container = document.getElementById('adContainer');
-            data.forEach(record => {
-                const rec = document.createElement('div');
-                rec.className = 'record';
-                rec.innerHTML = `
-                    <p>${record.Title}</p>
-                    <h5>${record.Content}</h5>
-                    <button onclick="handleDelete(${record.Ad_id})">Delete</button>
-                   <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
-
-                `;
-                container.appendChild(rec);
+        fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('adContainer');
+                container.innerHTML = '';
+                data.forEach(record => {
+                    const rec = document.createElement('div');
+                    rec.className = 'record';
+                    rec.innerHTML = `
+                        <p>${record.Title}</p>
+                        <h5>${record.Content}</h5>
+                        <button onclick="handleDelete(${record.Ad_id})">Delete</button>
+                        <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
+                    `;
+                    container.appendChild(rec);
+                });
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
             });
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-});
+    });
 
-// Handle ad deletion
-async function handleDelete(id) {
-    try {
+    async function handleDelete(id) {
         if (!confirm("Are you sure you want to delete this advertisement?")) return;
 
-        const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
-            method: 'DELETE'
-        });
+        try {
+            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
+                method: 'DELETE'
+            });
 
-        if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            const result = await response.json();
+            if (response.ok) {
+                alert("Advertisement deleted successfully!");
+                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+            } else {
+                alert(result.error || 'Deletion failed.');
+            }
+        } catch (error) {
+            console.error("Delete error:", error);
         }
-
-        const data = await response.json();
-        console.log("Delete successful:", data);
-        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'; // Refresh page
-
-    } catch (error) {
-        console.error("Error deleting item:", error);
     }
-}
 
-// Handle update
-function handleUpdate(ad) {
+    function handleUpdate(ad) {
     const form = document.getElementById('adFormContainer');
     const titleInput = document.getElementById('title');
     const contentInput = document.getElementById('content');
     const postDateInput = document.getElementById('post_date');
-    const subject = document.getElementById('subject');
-     
+    const subjectInput = document.getElementById('Subject');
+    const moreFields = document.getElementById('moreFields');
 
     form.classList.remove('hidden');
     moreFields.classList.remove('hidden');
+    form.scrollIntoView({ behavior: 'smooth' });
 
-    // Set form values
+    // Pre-fill form fields
     titleInput.value = ad.Title;
     contentInput.value = ad.Content;
     postDateInput.value = ad.Post_date;
     subjectInput.value = ad.Subject;
 
-    // Set Iseducation radio buttons
     if (ad.Iseducation === "1") {
         document.getElementById('educational').checked = true;
     } else {
         document.getElementById('non_educational').checked = true;
     }
 
-    // Change submit behavior for update
     const adForm = document.getElementById('adForm');
     adForm.onsubmit = async function (e) {
         e.preventDefault();
@@ -196,11 +187,13 @@ function handleUpdate(ad) {
         const formData = new FormData(adForm);
         const formObject = Object.fromEntries(formData.entries());
 
-        // Add Iseducation manually based on radio
+        // Forcefully set Iseducation based on radio button
         formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
 
+        console.log("dddddd", formObject); // Debug log
+
         try {
-            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/updateapi/${ad.Ad_id}`, {
+            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -223,51 +216,53 @@ function handleUpdate(ad) {
     };
 }
 
-// Handle form submission for inserting a new advertisement
-async function handleInsert(event) {
-    event.preventDefault();
 
-    const form = document.getElementById('adForm');
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries());
+    async function handleInsert(event) {
+        event.preventDefault();
 
-    // Additional values
-    formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
-    formObject.User_id = User_id; // Make sure this variable is defined globally
+        const form = document.getElementById('adForm');
+        const formData = new FormData(form);
+        const formObject = Object.fromEntries(formData.entries());
+        formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+        formObject.User_id = User_id;
+        console.log("ssss",formObject);
 
-    console.log("User ID:", formObject.User_id);
-    console.log("Full form data:", formObject);
+        const pass_data = {
+            'User_id' : formObject.User_id,
+            'Title': formObject.Title,
+            'Content': formObject.Content,
+            'Post_date':formObject.Post_date,
+            'Iseducation': formObject.Iseducation,
+            'Subject':formObject.Subject
+        }   
 
-    try {
-        const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formObject)
-        });
+        try {
+            const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pass_data)
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if (response.ok && result.message === 'Advertisement created successfully') {
-            alert('Advertisement created successfully!');
-            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-        } else {
-            alert(result.error || result.message || 'Failed to create advertisement.');
+            if (response.ok && result.message === 'Advertisement created successfully') {
+                alert('Advertisement created successfully!');
+                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+            } else {
+                alert(result.error || result.message || 'Failed to create advertisement.');
+            }
+        } catch (error) {
+            console.error('Error inserting advertisement:', error);
         }
-    } catch (error) {
-        console.error('Error inserting advertisement:', error);
-        window.location.href = 'http://localhost/group_project_1.0/public/Advertisements'
     }
-}
 
-// Handle clicking "Create Advertisement" button
-function handleClick() {
+    function handleClick() {
         const formContainer = document.getElementById('adFormContainer');
         formContainer.classList.remove('hidden');
         formContainer.scrollIntoView({ behavior: 'smooth' });
 
-        // Show extra fields when ad_type is selected
         const adTypeRadios = document.querySelectorAll('input[name="ad_type"]');
         adTypeRadios.forEach(radio => {
             radio.addEventListener('change', () => {
@@ -275,17 +270,20 @@ function handleClick() {
             });
         });
 
-        // Attach submit handler
         const adForm = document.getElementById('adForm');
-        adForm.removeEventListener('submit', handleInsert); // Avoid duplicate listeners
+        adForm.removeEventListener('submit', handleInsert);
         adForm.addEventListener('submit', handleInsert);
-    }</script>
+    }
+
+    // function handleMyAds() {
+    //     window.location.href = 'http://localhost/group_project_1.0/public/';
+    // }
+
+    function filterAds() {
+        // Optional: implement ad filtering logic here if needed
+    }
+</script>
+
+
 </body>
 </html>
-
-<?php
-// Include footer if user is not sysadmin
-if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
-    require 'C:/xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
-}
-?>
