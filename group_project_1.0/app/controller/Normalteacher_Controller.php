@@ -1,0 +1,29 @@
+<?php
+
+class Normalteacher_Controller extends Controller
+{
+    public function index() {
+        $model = new Normalteacher();
+        checkAccess('teacher');
+        $this->View('InstituteView/viewspecificteacher_class/Specificteacherclass'); 
+    }
+
+    public function findmyinstitutes($N_id){
+        $model = new Normalteacher();
+
+        $t1 = $model->table;
+        $t2 = $model->table2;
+        $joinCondition = $model->joinCondition;
+        
+        $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['N_id' => $N_id]);
+
+        if (empty($class)) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No classes found for the given P_id.']);
+            return;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($class, JSON_PRETTY_PRINT);
+    }
+}  

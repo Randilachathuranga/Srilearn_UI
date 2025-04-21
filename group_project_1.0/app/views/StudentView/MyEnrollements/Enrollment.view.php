@@ -34,11 +34,34 @@
         document.addEventListener('DOMContentLoaded', fetchAllClasses);
 
         function fetchAllClasses() {
-            fetch('http://localhost/group_project_1.0/public/Enrollment/api/')
-                .then(response => response.ok ? response.json() : Promise.reject('Failed to load'))
-                .then(data => renderClasses(data || [])) // Ensure data is an array
-                .catch(error => console.error('Error fetching all classes:', error));
+    const individualURL = 'http://localhost/group_project_1.0/public/Enrollment/allindividual';
+    const instituteURL = 'http://localhost/group_project_1.0/public/Enrollment/allinstitute';
+
+    Promise.all([
+        fetch(individualURL).then(res => res.ok ? res.json() : []),
+        fetch(instituteURL).then(res => res.ok ? res.json() : [])
+    ])
+    .then(([individualData, instituteData]) => {
+        if (individualData.length > 0 && instituteData.length > 0) {
+            // Both have data
+            renderClasses([...individualData, ...instituteData]);
+        } else if (individualData.length > 0) {
+            // Only individual has data
+            renderClasses(individualData);
+        } else if (instituteData.length > 0) {
+            // Only institute has data
+            renderClasses(instituteData);
+        } else {
+            // No data in either
+            console.log("No classes found in either category.");
         }
+    })
+    .catch(error => {
+        console.error('Error fetching class data:', error);
+    });
+}
+
+
 
         function renderClasses(classes) {
             const container = document.getElementById('classes-container');
@@ -52,23 +75,36 @@
             classes.forEach(record => {
     const rec = document.createElement('div');
     rec.className = 'record';
-    rec.innerHTML = `
-        <h2>Subject: ${record.Subject}</h2>
-        <h3>Grade: ${record.Grade}</h3>
-        <p>Type: ${record.Type}</p>
-        <p>Max Student: ${record.Max_std}</p>
-        <h5>Fee: ${record.fee}</h5>
-        ${record.Isdiscountavail === 1 ? '<p class="free-card-msg">You have a free card for this class</p>' : ''}
-        <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
-        <button onclick="viewShedule(${record.Class_id})">Schedule</button> <br><br>
-        <button onclick="viewMat(${record.Class_id})">Learning Materials</button> <br><br>
-        <button onclick="viewASS(${record.Class_id})">Assingments</button>
+rec.innerHTML = `
+    <h2>Subject: ${record.Subject}</h2>
+    <h5>Teacher: ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
+    <h3>Grade: ${record.Grade}</h3>
+    <p>Type: ${record.Type}</p>
+    <p>Max Student: ${record.Max_std}</p>
+    <p>Address: ${record.Location}</p>
+    <h5>Fee: ${record.fee}</h5>
+    ${record.Isdiscountavail === 1 
+        ? '<p class="free-card-msg">You have a free card for this class</p>' 
+        : `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`}
+    <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
+    <button onclick="viewShedule(${record.Class_id})">Schedule</button><br><br>
+    <button onclick="viewMat(${record.Class_id})">Learning Materials</button><br><br>
+    <button onclick="viewASS(${record.Class_id})">Assignments</button>
+    <button onclick="chatwithteacher(${record.User_id})">Chat with teacher</button>
+`;
 
-    `;
-    container.appendChild(rec);
-});
+container.appendChild(rec);
+            });
 
         }
+
+        function chatwithteacher(reciever_id) {
+        window.location.href = `Chat/mychat/${reciever_id}`;
+    }
+    function payclassfee(classid) {
+        
+        window.location.href = `Payment/classfee/${classid}`;
+    }
 
         function deleteEnrollment(id) {
             alert("Are you sure you want to leave this class?");

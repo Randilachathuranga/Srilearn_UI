@@ -20,6 +20,8 @@ class Myclassmodel{
     public $table3 = 'instituteteacher_class';
     public $joinCondition3 = "class.class_id = instituteteacher_class.InstClass_id";
 
+    public $table4 = 'normal_teacher';
+
     //columns for insert into class table and individual class table
     public $ColumnsforT1=[
         'Type','Subject','Grade','Max_std','fee'
@@ -27,6 +29,10 @@ class Myclassmodel{
 
     protected $ColumnsforT2 = [
         'IndClass_id', 'P_id', 'Location', 'Start_date', 'End_date'
+    ];
+
+    protected $ColumnsforT3 = [
+        'InstClass_id', 'N_id', 'Location', 'Start_date', 'End_date','Hall_number'
     ];
 
     public $joinCondition = "class.class_id = individual_class.IndClass_id";
@@ -184,6 +190,67 @@ public function insertclass($data1, $data2) {
         return true;
     } catch (Exception $e) {
         error_log("Error inserting data into `individual_class`: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+// Insert a class and associated institute class data
+public function insertinstituteclass($data1, $data2) {
+    $filteredData1 = [];
+    if (!empty($this->ColumnsforT1)) {
+        foreach ($data1 as $key => $value) {
+            if (in_array($key, $this->ColumnsforT1)) {
+                $filteredData1[$key] = $value;
+            }
+        }
+    }
+    if (empty($filteredData1)) {
+        error_log("No valid data to insert for table: class");
+        return false;
+    }
+
+    $keys1 = array_keys($filteredData1);
+    $query1 = "INSERT INTO class (" . implode(", ", $keys1) . ") VALUES (:" . implode(", :", $keys1) . ")";
+    try {
+        $this->duiquery($query1, $filteredData1);
+    } catch (Exception $e) {
+        error_log("Error inserting data into `class`: " . $e->getMessage());
+        return false;
+    }
+
+    $class_ID = (int) $this->getLastInsertId($filteredData1, []);
+    if (!$class_ID) {
+        error_log("Error retrieving `class_id` after insert");
+        return false;
+    }
+
+    $filteredData2 = [
+        'InstClass_id' => $class_ID
+    ];
+
+    if (!empty($this->ColumnsforT3)) {
+        foreach ($data2 as $key => $value) {
+            if (in_array($key, $this->ColumnsforT3)) {
+                $filteredData2[$key] = $value;
+            }
+        }
+    }
+
+    if (empty($filteredData2)) {
+        error_log("No valid data to insert for table: individual_class");
+        return false;
+    }
+
+    $instituteClassData = ['InstClass_id' => $class_ID];
+
+    try {
+        $this->duiquery("INSERT INTO institute_class (InstClass_id) VALUES (:InstClass_id)", $instituteClassData);
+        $query4 = "INSERT INTO instituteteacher_class (" . implode(", ", array_keys($filteredData2)) . ") VALUES (:" . implode(", :", array_keys($filteredData2)) . ")";
+        $this->duiquery($query4, $filteredData2);
+        return true;
+    } catch (Exception $e) {
+        error_log("Error inserting into related tables: " . $e->getMessage());
         return false;
     }
 }

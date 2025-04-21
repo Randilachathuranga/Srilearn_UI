@@ -4,7 +4,7 @@ class Institute_teacher extends Controller{
 
         public function index() {
             $model1 = new Usermodel();
-            $model2 = new Normalteachermodel();
+            $model2 = new Normalteacher();
             $model3 = new User_subjectmodel();
             $this->View('InstituteView/InstituteTeachers/MyTeachers'); 
         }
@@ -12,9 +12,12 @@ class Institute_teacher extends Controller{
 
         //veiw my all teachers
         public function My_teachers($INST_id) {
-            $model = new myteachersviewmodel();
-        
-            $result = $model->where(['InstClass_id' => $INST_id]);
+            $model = new Normalteacher();
+            $tables =['normal_teacher','teacher','user'];
+            $join_conditions = ['normal_teacher.N_id = teacher.Teach_id', 'teacher.Teach_id = user.User_id'];
+            $data =['normal_teacher.Institute_ID' => $INST_id];
+            $datanot=[];
+            $result = $model->InnerJoinwhereMultiple($tables,$join_conditions,$data,$datanot);
         
             if (empty($result)) {
                 http_response_code(404); // Not Found
@@ -28,7 +31,7 @@ class Institute_teacher extends Controller{
 
         //delete my teachers
         public function deleteTeacher($N_ID) {
-            $model = new Normalteachermodel();
+            $model = new Normalteacher();
             
             $result = $model->delete($N_ID);
 

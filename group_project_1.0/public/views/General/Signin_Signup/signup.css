@@ -10,11 +10,11 @@ body {
     background: linear-gradient(to right, #4a90e2, #003d99); /* Light to Dark Blue */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100%;
+    align-items: flex-start; /* Align items to the top */
     min-height: 100vh;
     color: #fff;
-    overflow: hidden;
+    overflow-y: auto; /* Allows vertical scrolling */
+    padding: 20px; /* Adding padding to ensure content doesn't touch edges */
 }
 
 /* Adding animated gradient background */
@@ -41,10 +41,7 @@ body::before {
     padding: 25px;
     animation: fadeIn 1s ease-in-out;
     backdrop-filter: blur(10px); /* Frosted glass effect */
-}
-
-.container h1{
-    text-align: center;
+    overflow: hidden; /* Prevents content overflow */
 }
 
 /* Form Wrapper */
@@ -163,8 +160,6 @@ button:active {
     transform: scale(0.98);
 }
 
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -217,6 +212,7 @@ button:active {
         transform: translateX(5px);
     }
 }
+
 p {
     margin-top: 20px;
     font-size: 1rem;

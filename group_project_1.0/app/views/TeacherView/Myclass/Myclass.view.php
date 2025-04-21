@@ -34,6 +34,7 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
+<button onclick="reqpaymentind()">Request Payment</button>
 
 </div>
 
@@ -73,19 +74,32 @@
 <option value="Sinhala">Sinhala</option>
 <option value="Tamil">Tamil</option>
 
-    <!-- Add more options as needed -->
 </select>
-            <div class="create-row">
+<div class="create-row">
+            <div>
+                 <label for="Institute_name">Institute</label>
+                     <select id="Institute_name" name="Institute_name" required>
+                    <option value="" disabled selected>Select Institute</option>
+                    <option value="None">None</option>
+                     <!-- Dynamically populated institutes will go here -->
+                    </select>
+                    </div>
+
                 <div>
-                    <label for="Fee">Fee</label>
-                    <input type="number" id="Fee" name="Fee" required>
-                </div>
-                <div>
-                    <label for="Location">Address</label>
-                    <input type="text" id="Location" name="Location" required>
+                    <label for="Type">Type</label>
+                    <select id="Type" name="Type" required>
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Institute">Institute</option>
+                    </select>
                 </div>
             </div>
+
             <div class="create-row">
+            <div>
+                    <label for="Hallnumber">Hall number</label>
+                    <input type="text" id="Hallnumber" name="Hallnumber" required>
+                </div>
                 <div>
                     <label for="Grade">Grade</label>
                     <input type="number" id="Grade" name="Grade" required>
@@ -97,6 +111,18 @@
             </div>
             <div class="create-row">
                 <div>
+                    <label for="Fee">Fee</label>
+                    <input type="number" id="Fee" name="Fee" required>
+                </div>
+                
+                <div>
+                    <label for="Location">Address</label>
+                    <input type="text" id="Location" name="Location" required>
+                </div>
+            </div>
+            
+            <div class="create-row">
+                <div>
                     <label for="Start_date">Start Date</label>
                     <input type="date" id="Start_date" name="Start_date" required>
                 </div>
@@ -105,25 +131,7 @@
                     <input type="date" id="End_date" name="End_date" required>
                 </div>
             </div>
-            <div class="create-row">
-                <div>
-                    <label for="Institute_name">Institute</label>
-                    <select id="Institute_name" name="Institute_name" required>
-                        <option value="" disabled selected>Select Institute</option>
-                        <option value="None">None</option>
-                        <option value="Institute1">Institute1</option>
-                        <option value="Institute2">Institute2</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="Type">Type</label>
-                    <select id="Type" name="Type" required>
-                        <option value="" disabled selected>Select Type</option>
-                        <option value="Individual">Individual</option>
-                        <option value="Institute">Institute</option>
-                    </select>
-                </div>
-            </div>
+            
             <button type="submit" class="submit-button">Submit</button>
             <button type="button" onclick="closePopup()" class="close-button">Close</button>
         </form>
@@ -197,6 +205,8 @@
         </div> 
         
       </div>
+
+      
      
       <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
@@ -230,7 +240,7 @@
         <div class="button-container">
             <button onclick="UploadMat(getClassId())" class="buttons">Upload Learning materials</button>
             <button onclick="UploadASS(getClassId())" class="buttons">Upload Assignments marks</button>
-            <button onclick="view()" class="buttons">View Institute</button>
+            <button onclick="viewinst(getClassId())" class="buttons">View Institute</button>
             <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard(getClassId())" class="buttons">Issue free cards</button>
             <!-- <button onclick="reqPay()" class="buttons">Request payrolls</button> -->
@@ -239,7 +249,39 @@
     </div>
 </div>
 
+<script>
+     var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
+    function reqpaymentind(){
+       
 
+      fetch(`http://localhost/group_project_1.0/public/Payment/reqpaymentind`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userID })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+        .then(data => {
+            if (data.success) {
+            alert('Monthly payment request sent successfully!');
+            location.reload(); // Reload the page to see updated data
+          
+       } else {
+            alert('Failed to send monthly payment request.');
+            }
+        })  
+        .catch(error => {
+          console.error('There was an error!', error);
+    });
+    
+    }
+</script>
 
 
     <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->

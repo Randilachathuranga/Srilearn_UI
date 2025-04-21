@@ -44,32 +44,53 @@ trait Model {
         return $this->query($query, $data);
     }
 
-    // public function InnerJoinwhereMultiple($tables, $joinConditions, $data = [], $data_not = []) {
-    //     if (count($tables) < 2 || count($joinConditions) < count($tables) - 1) {
-    //         throw new Exception("Insufficient join conditions for given tables.");
-    //     }
-    //     $query = "SELECT * FROM {$tables[0]}";
-    //     // Add each JOIN
-    //     for ($i = 1; $i < count($tables); $i++) {
-    //         $query .= " INNER JOIN {$tables[$i]} ON {$joinConditions[$i - 1]}";
-    //     }
-    //     $query .= " WHERE ";
-    //     // Conditions: equal
-    //     foreach ($data as $key => $value) {
-    //         $query .= "$key = :$key AND ";
-    //     }
-    //     // Conditions: not equal
-    //     foreach ($data_not as $key => $value) {
-    //         $query .= "$key != :$key AND ";
-    //     }
-    //     // Trim trailing AND
-    //     $query = rtrim($query, " AND ");
-    //     // Limit + Offset
-    //     $query .= " LIMIT $this->limit OFFSET $this->offset";
-    //     // Merge data
-    //     $params = array_merge($data, $data_not);
-    //     return $this->query($query, $params);
-    // }
+    public function InnerJoinwhereMultiple($tables, $joinConditions, $data = [], $data_not = []) {
+        if (count($tables) < 2 || count($joinConditions) < count($tables) - 1) {
+            throw new Exception("Insufficient join conditions for given tables.");
+        }
+    
+        $query = "SELECT * FROM {$tables[0]}";
+    
+        // Add INNER JOINs
+        for ($i = 1; $i < count($tables); $i++) {
+            $query .= " INNER JOIN {$tables[$i]} ON {$joinConditions[$i - 1]}";
+        }
+    
+        $conditions = [];
+    
+        // Add equal conditions
+        foreach ($data as $key => $value) {
+            $paramKey = str_replace('.', '_', $key); // Convert table.column to table_column
+            $conditions[] = "$key = :$paramKey";
+        }
+    
+        // Add NOT equal conditions
+        foreach ($data_not as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key != :$paramKey";
+        }
+    
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+    
+        // Limit + Offset
+        $query .= " LIMIT $this->limit OFFSET $this->offset";
+    
+        // Merge params with keys adjusted
+        $params = [];
+        foreach ($data as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $params[$paramKey] = $value;
+        }
+        foreach ($data_not as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $params[$paramKey] = $value;
+        }
+    
+        return $this->query($query, $params);
+    }
+    
     
     
     // Find all records from the table
@@ -163,4 +184,33 @@ trait Model {
             return false;
         }
     }
+
+    public function deletewhere($conditions) {
+        // Start building the query with the DELETE statement
+        $query = "DELETE FROM $this->table WHERE ";
+    
+        // Prepare the condition strings and data array
+        $data = [];
+        $conditionStrings = [];
+    
+        // Loop through the conditions and build the WHERE clause
+        foreach ($conditions as $column => $value) {
+            $conditionStrings[] = "$column = :$column"; // Add the condition for each column
+            $data[$column] = $value; // Add the corresponding value to the data array
+        }
+    
+        // Join the conditions with "AND" and append to the query
+        $query .= implode(' AND ', $conditionStrings);
+    
+        try {
+            $this->duiquery($query, $data); // Execute the query
+            return true;
+        } catch (Exception $e) {
+            if (defined('DEBUG')) {
+                echo "Delete failed: " . $e->getMessage();
+            }
+            return false;
+        }
+    }
+    
 }

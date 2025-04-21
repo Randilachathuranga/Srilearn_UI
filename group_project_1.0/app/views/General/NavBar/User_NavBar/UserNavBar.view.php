@@ -60,7 +60,7 @@
             <a href="http://localhost/group_project_1.0/public/Enrollment"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Classes</a>
         <?php
         }elseif($_SESSION['Role']=='institute') { ?>
-           <a href="#"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Our Classes</a>
+           <a href="http://localhost/group_project_1.0/public/Institute/classes"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Our Classes</a>
         <?php
         }
         ?> 
@@ -116,7 +116,7 @@
             <a href="http://localhost/group_project_1.0/public/Enrollment"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Classes</a>
         <?php
         }elseif($_SESSION['Role']=='institute') { ?>
-           <a href="#"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Our Classes</a>
+           <a href="http://localhost/group_project_1.0/public/Institute/classes"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Our Classes</a>
         <?php
         }
         ?> 
