@@ -101,7 +101,7 @@ if ($_SESSION['User_id'] === 'Guest') {
             echo '
             <div class="create-button">
                 <button onclick="handleClick()">Create Your Own Advertisement</button>
-                <button onclick="handleMyAds()">My Advertisement</button>
+                <button onclick="handleMyAds()">My Advertisements</button>
             </div>';
         }
         ?>
