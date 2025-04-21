@@ -82,7 +82,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
 <!-- Main Container -->
 <div class="container">
-    <h1 class="title">Advertisements</h1>
+    <h1 class="title">My Advertisements</h1>
 
     <div class="banner">
         <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
