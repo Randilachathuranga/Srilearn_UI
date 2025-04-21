@@ -41,10 +41,6 @@
         <input type="text" id="bankdetails" name="bankdetails" placeholder="Account number and all other stuff" required>
       </div>
 
-      <div class="form-group">
-        <label for="Amount">Amount:</label>
-        <input type="text" id="Amount" name="Amount" placeholder="Amount" required>
-      </div>
 
       <div class="popup-buttons">
         <button type="submit">Submit</button>

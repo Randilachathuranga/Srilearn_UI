@@ -6,7 +6,7 @@ const handleSubmit = () => {
       
       const formData = new FormData(this);
       
-      fetch(`http://localhost/group_project_1.0/public/ContactUS/send/1`, {
+      fetch(`http://localhost/group_project_1.0/public/ContactUS/send`, {
           method: 'POST',
           body: formData
       })

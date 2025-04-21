@@ -8,52 +8,68 @@ class Enrollment extends Controller
 
     public function post($classid)
     {
-        // Instantiate the model
+        // Instantiate the models
         $model = new Enrollmodel();
+        $paymentmodel = new Paymentmodel();
     
-        // Set the response type to JSON
+        // Set response header
         header('Content-Type: application/json');
     
-        // Prepare input data
-        $inputData = [
-            'Date' => date("Y-m-d"),
-            'Stu_id' => $_SESSION['User_id'] ?? null, // Safely get the session user ID
-            'Class_id' => $classid,
-            'Isdiscountavail' => 0
-        ];
+        // Get user ID and fee from session safely
+        $userId = $_SESSION['User_id'] ?? null;
+        $fee = $_SESSION['fee'] ?? null;
     
-        // Check if the user is logged in
-        if (empty($inputData['Stu_id'])) {
-            http_response_code(401); // Unauthorized
+        // Check if user is logged in
+        if (!$userId) {
+            http_response_code(401);
             echo json_encode(['error' => 'User not logged in. Please log in to enroll.']);
             return;
         }
     
-        // Check if the user is already enrolled in the class
-        $isEnrolled = $model->checkisEnrolled($inputData['Stu_id'], $inputData['Class_id']);
-    
-        if ($isEnrolled) {
-            http_response_code(403); // Forbidden
+        // Check if already enrolled
+        if ($model->checkisEnrolled($userId, $classid)) {
+            http_response_code(403);
             echo json_encode(['error' => 'You are already enrolled in this class.']);
             return;
         }
     
+        // Prepare enrollment data
+        $enrollData = [
+            'Date' => date("Y-m-d"),
+            'Stu_id' => $userId,
+            'Class_id' => $classid,
+            'Isdiscountavail' => 0
+        ];
+    
+        // Prepare payment data (only if fee is available)
+        $paymentData = [
+            'User_id' => $userId,
+            'Amount' => $fee,
+            'Date' => date('Y-m-d'),
+            'Type' => 'Enrollment',
+            'classID' => $classid,
+            'Sub_id' => null
+        ];
+    
         try {
-            // Insert the enrollment data using the model
-            $enroll = $model->insert($inputData);
+            // Insert enrollment
+            $enroll = $model->insert($enrollData);
+    
+            // Insert payment (only if fee is set)
+            
+                $paymentmodel->insert($paymentData);
+            
     
             if ($enroll) {
-                // Send success response
-                http_response_code(200); // OK
-                echo json_encode(['message' => 'Enrolled successfully', 'data' => $enroll]);
+                http_response_code(200);
+                //echo json_encode(['message' => 'Enrolled successfully', 'data' => $enroll]);
+                redirect('Enrollment');
             } else {
-                // Send failure response
-                http_response_code(500); // Internal Server Error
-                echo json_encode(['message' => 'Could not enroll. Please try again later.']);
+                http_response_code(500);
+                echo json_encode(['error' => 'Enrollment failed. Please try again later.']);
             }
         } catch (Exception $e) {
-            // Catch and log any errors
-            http_response_code(500); // Internal Server Error
+            http_response_code(500);
             echo json_encode(['error' => 'An error occurred while enrolling.', 'details' => $e->getMessage()]);
         }
     }
@@ -102,10 +118,10 @@ public function allinstitute(){
     $model= new StudentModel();
     header('Content-Type: application/json');
     try {
-        $tables2 =['class','instituteteacher_class','enrollment'];
-        $join_conditions2 = ['class.Class_id = instituteteacher_class.InstClass_id','enrollment.Class_id=class.Class_id'];
+        $tables2 =['enrollment','instituteteacher_class','class','user'];
+        $join_conditions2 = ['enrollment.Class_id=instituteteacher_class.InstClass_id','instituteteacher_class.InstClass_id=class.Class_id','instituteteacher_class.N_id=user.User_id'];
 
-        $data2 =['enrollment.Stu_id' =>$_SESSION['User_id']];
+        $data2 =['enrollment.Stu_id' =>$_SESSION['User_id'],'class.Type'=>'Institute'];
         $datanot=[];
         $institute = $model->InnerJoinwhereMultiple($tables2,$join_conditions2,$data2,$datanot);
         if ($institute) {
@@ -137,6 +153,55 @@ public function allinstitute(){
     } catch (Exception $e) {
         // Error handling in case of an exception
         echo json_encode(['error' => 'An error occurred while fetching blogs.', 'details' => $e->getMessage()]);
+    }
+}
+
+public function payfee($classid)
+{
+    $model=new Classmodel();
+    $paymentmodel = new Paymentmodel();
+    $rec=$model->first(['Class_id'=>$classid]);
+
+    // Set response header
+    header('Content-Type: application/json');
+
+    // Validate user session
+    $userId = $_SESSION['User_id'] ?? null;
+    if (!$userId) {
+        http_response_code(401);
+        echo json_encode(['error' => 'User not logged in. Please log in to subscribe.']);
+        return;
+    }
+
+    // Prepare payment details
+    $paymentData = [
+        'User_id' => $userId,
+        'Amount' => $rec->fee,
+        'Date' => date('Y-m-d'),
+        'Type' => 'Classfee',
+        'classID' =>$classid,
+        'Sub_id' => null,
+    ];
+
+    try {
+        // Insert subscription
+        $inserted = $paymentmodel->insert($paymentData);
+
+        if ($inserted) {
+            http_response_code(200);
+            echo json_encode(['message' => 'Subscribed successfully', 'data' => $inserted]);
+            redirect('Enrollment');
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Failed to subscribe.']);
+        }
+
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode([
+            'error' => 'An error occurred while processing your subscription.',
+            'details' => $e->getMessage()
+        ]);
     }
 }
 }

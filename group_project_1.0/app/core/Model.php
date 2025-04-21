@@ -184,4 +184,33 @@ trait Model {
             return false;
         }
     }
+
+    public function deletewhere($conditions) {
+        // Start building the query with the DELETE statement
+        $query = "DELETE FROM $this->table WHERE ";
+    
+        // Prepare the condition strings and data array
+        $data = [];
+        $conditionStrings = [];
+    
+        // Loop through the conditions and build the WHERE clause
+        foreach ($conditions as $column => $value) {
+            $conditionStrings[] = "$column = :$column"; // Add the condition for each column
+            $data[$column] = $value; // Add the corresponding value to the data array
+        }
+    
+        // Join the conditions with "AND" and append to the query
+        $query .= implode(' AND ', $conditionStrings);
+    
+        try {
+            $this->duiquery($query, $data); // Execute the query
+            return true;
+        } catch (Exception $e) {
+            if (defined('DEBUG')) {
+                echo "Delete failed: " . $e->getMessage();
+            }
+            return false;
+        }
+    }
+    
 }

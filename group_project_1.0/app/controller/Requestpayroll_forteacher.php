@@ -34,51 +34,8 @@ class Requestpayroll_forteacher extends Controller
 //    }
 
    //insert payroll request data for payroll_request table
-   public function insertpayrollrequest($classId)
-{
-    $model = new payroll_request();
-    header('Content-Type: application/json');
-    
-    // Get raw POST data and decode it
-    $data = json_decode(file_get_contents('php://input'), true); 
 
-    // Check if JSON data is valid
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        echo json_encode(['error' => 'Invalid JSON data.']);
-        return;
-    }
-
-    try {
-        // Prepare the data to insert
-        $query = "INSERT INTO {$model->table} (Institute_ID, N_id, InstClass_id, currentdate, bankdetails, Amount, stateis) 
-                  VALUES (:Institute_ID, :N_id, :InstClass_id, :currentdate, :bankdetails, :Amount,:stateis)";
-
-        $dataToInsert = [
-            'Institute_ID' => $data['Institute_ID'],
-            'N_id' => $data['N_id'],
-            'InstClass_id' => $classId,
-            'currentdate' => $data['current_date'],
-            'bankdetails' => $data['bankdetails'],
-            'Amount' => $data['Amount'],
-            'stateis' => 1 // Set the default state value as 1
-        ];
-
-        // Execute the query using the duiquery method
-        $result = $model->duiquery($query, $dataToInsert);
-
-        // Check if the result was successful
-        if ($result) {
-            echo json_encode(['message' => 'Payroll request submitted successfully.']);
-        } else {
-            echo json_encode(['error' => 'Failed to submit payroll request.']);
-        }
-
-    } catch (Exception $e) {
-        echo json_encode(['error' => 'An error occurred while submitting the payroll request.', 'details' => $e->getMessage()]);
-    }
-}
-
-    public function checkmyrequest($N_id,$InstClass_id)
+    /*public function checkmyrequest($N_id,$InstClass_id)
     {
         $model = new payroll_request();
         header('Content-Type: application/json');
@@ -95,6 +52,94 @@ class Requestpayroll_forteacher extends Controller
             echo json_encode(['error' => 'An error occurred while fetching materials.', 'details' => $e->getMessage()]);
         }
 
+    }*/
+    
+    public function insertpayrollrequest()
+    {
+        header('Content-Type: application/json');
+    
+        // Get raw POST data and decode it
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo json_encode(['error' => 'Invalid JSON data.']);
+            return;
+        }
+    
+        try {
+            $model = new Payroll_requestmodel();
+            $paymentmodel = new Paymentmodel();
+            $temp=160;
+            // Fetch all records for the given class
+            $allrecs = $paymentmodel->findall(); 
+            // Calculate total for current month
+            $totalAmount = 0;
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+            $filteredRecs = array_filter($allrecs, function($rec) use ($data) {
+                return isset($rec->classID) && $rec->classID == $data['InstClass_id'];
+            });
+    
+            foreach ($filteredRecs as $record) {
+                $recordMonth = date('m', strtotime($record->Date));
+                $recordYear = date('Y', strtotime($record->Date));
+            
+                if ($recordMonth == $currentMonth && $recordYear == $currentYear) {
+                    $totalAmount += $record->Amount;
+                }
+            }
+            /////////////////////////
+            
+    
+            // Prepare the data to insert
+            $dataToInsert = [
+                'Institute_ID'  => $data['Institute_ID'],
+                'N_id'          => $data['N_id'],
+                'InstClass_id'  => $data['InstClass_id'],
+                'currentdate'   => $data['current_date'],
+                'bankdetails'   => $data['bankdetails'],
+                'Amount'        => $totalAmount, // use calculated amount
+                'stateis'       => 0
+            ];
+    
+            // Fetch existing requests with stateis = 0
+            $existingRecords = $model->where([
+                'N_id'          => $data['N_id'],
+                'InstClass_id'  => $data['InstClass_id'],
+            ]);
+    
+            $alreadyExists = false;
+            if (is_array($existingRecords) || is_object($existingRecords)) {
+                foreach ($existingRecords as $record) {
+                    $recordDate = date('Y-m', strtotime($record->currentdate));
+                    if ($recordDate === "$currentYear-$currentMonth") {
+                        $alreadyExists = true;
+                        break;
+                    }
+                }
+            }
+    
+            if (!$alreadyExists) {
+                $result = $model->insert($dataToInsert);
+                if ($result) {
+                    echo json_encode(['message' => 'Payroll request submitted successfully.']);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Failed to insert payroll request.']);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'The payroll request already exists for this month.']);
+            }
+    
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'error' => 'An error occurred while submitting the payroll request.',
+                'details' => $e->getMessage()
+            ]);
+        }
     }
-
+    
+    
 }

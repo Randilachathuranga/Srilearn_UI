@@ -26,15 +26,16 @@
     <h2>Get in touch with us</h2>
     <div class="user-info">
       <img src="../../../../../group_project_1.0/public//views/General/Contactform/contactform 1.png" alt="Profile Image" class="avatar">
-      <p>Hi, I'm Amanda. Need help? Use the form below or email me at <a href="mailto:hello@california_golfclub.org">hello@california_golfclub.org</a>.</p>
+      <p>Hi, I'm Amanda. Need help? Use the form below or email me at <b>srilearnofficial@gmail.com.</b></p>
     </div>
     
     <form id="contactForm">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Name" required>
       
       <label for="email">Email</label>
       <input type="email" id="email" name="email" placeholder="Email" required>
+      
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="Subject" required>
       
       <label for="message">Message</label>
       <textarea id="message" name="message" placeholder="Message" required></textarea>

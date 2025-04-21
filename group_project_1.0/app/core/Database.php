@@ -32,7 +32,7 @@ trait Database {
             if (defined('DEBUG') && DEBUG) {
                 echo "Query failed: " . $e->getMessage();
             }
-            return false;
+            return 'Error: ' . $e->getMessage(); 
         }
     }
 

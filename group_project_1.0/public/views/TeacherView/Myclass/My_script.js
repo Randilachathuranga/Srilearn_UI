@@ -180,10 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = fullName;
         option.textContent = fullName;
         instituteSelect.appendChild(option);
-
+  
         // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
-        // document.getElementById("inst_id").value = institute.Institute_ID;
       });
     } catch (error) {
       console.error("Error fetching institutes:", error);

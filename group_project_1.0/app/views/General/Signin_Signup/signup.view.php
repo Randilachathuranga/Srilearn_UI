@@ -90,20 +90,47 @@
                     </select>
                 </div>
                 <div class="input-wrapper">
-                    <label for="role">Role:</label>
-                    <select id="role" name="Role" required>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="institute">Institute</option>
-                    </select>
-                </div>
+    <label for="role">Role:</label>
+    <select id="role" name="Role" required>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="institute">Institute</option>
+    </select>
+</div>
             </div>
 
-            <div class="form-group">
-                <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="signin">Sign In</a></p>
-            </div>
-        </form>
-    </div>
+<div class="form-group" id="link-container" style="display: none;">
+    <label for="link">Provide a Valid link with required Documents:</label>
+    <input type="text" id="link" name="Link" >
+</div>
+
+<div class="form-group">
+    <button type="submit" id="btn-sb">Sign Up</button>
+    <p>Already have an account? <a href="signin">Sign In</a></p>
+</div>
+
+<script>
+    document.getElementById('role').addEventListener('change', function() {
+        var role = this.value;
+        var linkInputContainer = document.getElementById('link-container'); // Container for the link input
+        var submitbuttontxt=document.getElementById('btn-sb'); // Submit button text
+
+        // Show the link input if the role is 'teacher', otherwise hide it
+        if (role === 'teacher') {
+            linkInputContainer.style.display = 'block';
+            submitbuttontxt.innerHTML="Request Signup"; // Change the button text to "Sign Up as Teacher"
+        } else {
+            linkInputContainer.style.display = 'none';
+            submitbuttontxt.innerHTML="Sign Up"; // Change the button text back to "Sign Up"
+        }
+    });
+
+    // Trigger the change event on page load to handle the initial state
+    window.addEventListener('load', function() {
+        document.getElementById('role').dispatchEvent(new Event('change'));
+    });
+</script>
+
+
 </body>
 </html>

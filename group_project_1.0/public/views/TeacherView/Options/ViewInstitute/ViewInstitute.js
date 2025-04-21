@@ -47,6 +47,7 @@ fetchClassData();
 
 function requestPayroll() {
   const popup = document.getElementById("payrollPopup");
+  const form = document.getElementById("payrollForm");
 
   // Prefill values
   fetch(
@@ -56,7 +57,8 @@ function requestPayroll() {
     .then((data) => {
       const item = data[0];
 
-      document.getElementById("Institute_ID").value = item.inst_id;
+      // document.getElementById("Institute_ID").value = item.inst_id;
+      document.getElementById("Institute_ID").value = item.Institute_ID;
       document.getElementById("N_id").value = item.N_id;
       document.getElementById("InstClass_id").value = item.InstClass_id;
 
@@ -77,102 +79,57 @@ function closePopup() {
   document.getElementById("payrollPopup").style.display = "none";
 }
 
-// document.getElementById("payrollForm").addEventListener("submit", function (e) {
-//   e.preventDefault();
-//   const formData = new FormData(this);
-//   const payload = Object.fromEntries(formData.entries());
+document.getElementById("payrollForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const payload = Object.fromEntries(formData.entries());
 
-//   console.log("Submitting Payroll Request:", payload);
+  console.log("Submitting Payroll Request:", payload);
 
-//   closePopup();
-// });
+  closePopup();
+});
 
 //submit
-document
-  .getElementById("payrollForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    // Assign the form values to an object (key-value pairs)
-    const formValues = {
-      Institute_ID: document.getElementById("Institute_ID").value,
-      N_id: document.getElementById("N_id").value,
-      InstClass_id: document.getElementById("InstClass_id").value,
-      current_date: document.getElementById("current_date").value,
-      bankdetails: document.getElementById("bankdetails").value,
-      Amount: document.getElementById("Amount").value,
-    };
-
-    console.log("Form Values:", formValues);
-
-    // First check if the teacher can submit a new request
-    fetch(
-      `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/checkmyrequest/${formValues.N_id}/${formValues.InstClass_id}`
-    )
-      .then((response) => response.json())
-      .then((checkData) => {
-        console.log("Check Result:", checkData);
-
-        // If no previous request exists or data is empty, allow submission
-        if (!checkData.length) {
-          submitPayrollRequest(formValues);
-          return;
-        }
-
-        // Fix: Compare dates properly - assuming current_date is a timestamp or date string
-        const lastRequestDate = new Date(checkData[0].currentdate);
-        const currentDate = new Date(formValues.current_date);
-        const daysDifference = Math.floor(
-          (currentDate - lastRequestDate) / (1000 * 60 * 60 * 24)
-        );
-
-        // If the check indicates the teacher can submit a new request (30 days have passed)
-        if (daysDifference >= 30) {
-          submitPayrollRequest(formValues);
-        } else {
-          // Show message why the teacher can't submit a new request
-          const submit = document.querySelector(
-            '#payrollForm button[type="submit"]'
-          );
-          submit.disabled = true; // Disable the submit button
-          submit.style.cursor = "not-allowed"; // Change cursor to indicate disabled state
-          alert(
-            `You cannot submit a new payroll request at this time. You must wait 30 days between requests. (${
-              30 - daysDifference
-            } days remaining)`
-          );
-          window.location.href =
-            "http://localhost/group_project_1.0/public/ViewinstituteController";
-        }
-      })
-      .catch((error) => {
-        console.error("Error checking request eligibility:", error);
-        alert("Error checking request eligibility. Please try again.");
-      });
-
+document.getElementById("payrollForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+ 
+  // Assign the form values to an object (key-value pairs)
+  const formValues = {
+    "Institute_ID": document.getElementById("Institute_ID").value,
+    "N_id": document.getElementById("N_id").value,
+    "InstClass_id": document.getElementById("InstClass_id").value,
+    "current_date": document.getElementById("current_date").value,
+    "bankdetails": document.getElementById("bankdetails").value
+    
+  };
+ 
+  console.log("Form Values:", formValues);
+ 
+  fetch('http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formValues),
+  })
+    .then(async (response) => {
+      const data = await response.json();
+  
+      if (!response.ok) {
+        // Server responded with an error code
+        throw new Error(data.error || "Unexpected error occurred.");
+      }
+  
+      // Success
+      alert(data.message || "Payroll request submitted successfully");
+      closePopup();
+    })
+    .catch((error) => {
+      console.log('HOOOOOOO')
+      console.error("Caught error:", error.message || error);
+      alert(error.message || "Error submitting payroll request.");
+    });
+  
+  
   });
-    // Function to submit the payroll request
-    function submitPayrollRequest(formData) {
-      fetch(
-        `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest/${formData.InstClass_id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData), // Send the form data as JSON
-        }
-      )
-        .then((response) => response.json()) // Assuming the server responds with JSON
-        .then((data) => {
-          console.log("Response Data:", data); // Handle response data
-          alert(data.message || "Payroll request submitted successfully");
-          closePopup();
-        })
-        .catch((error) => {
-          console.error("Error:", error); // Handle any errors
-          alert("Error submitting payroll request. Please try again.");
-        });
-      window.location.href =
-        "http://localhost/group_project_1.0/public/ViewinstituteController";
-    }
+
