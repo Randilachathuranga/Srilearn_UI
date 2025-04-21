@@ -97,14 +97,15 @@ if ($_SESSION['User_id'] === 'Guest') {
         </select>
 
         <?php 
-        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
-            echo '
-            <div class="create-button">
-                <button onclick="handleClick()">Create Your Own Advertisement</button>
-                <button onclick="handleMyAds()">My Advertisement</button>
-            </div>';
-        }
-        ?>
+    if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+        echo '
+        <div class="create-button">
+            <button onclick="handleClick()">Create Your Own Advertisement</button>
+           
+        </div>';
+    }
+?>
+
     </div>
 
     <div id="adContainer" class="ad-container"></div>
