@@ -5,7 +5,7 @@ class Subscriptionmodel{
 
     protected $table = 'subscription';
     protected $allowedColumns = [
-        'ID','P_id','Type','Start_data','End_data'
+        'ID','P_id','Type','Star_data','End_data'
     ];
 
 }

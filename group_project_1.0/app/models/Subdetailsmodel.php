@@ -5,7 +5,7 @@ class Subdetailsmodel{
 
     protected $table = 'subdetails';
     protected $allowedColumns = [
-        'Type ','Isjobavail','Ispayavail','Isadavail','	Duration'
+        'Type ','Isjobavail','Ispayavail','Isadavail','	Duration','Price','UserType'
     ];
 
 }

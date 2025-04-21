@@ -33,6 +33,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Action</th>
+                    <th>Chat</th>
                 </tr>
             </thead>
             <tbody id="studentsTableBody">

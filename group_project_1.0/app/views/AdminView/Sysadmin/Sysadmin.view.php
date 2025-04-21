@@ -22,7 +22,11 @@
         <button onclick="viewAnnouncements()">View Announcements</button>
         <button onclick="viewBlogs()">View Blogs</button>
         <button onclick="viewAds()">View Advertisements</button>
+        <button onclick="viewpayreq()">Payment Requests</button>
+        <button onclick="viewsignupreq()">SignUp Requests</button>
+        <button onclick="Analyze()">Payment Analytics</button>
         <button onclick="logout()">Logout</button>
+       
     </nav>
 
     <div class="main-content">
@@ -242,6 +246,13 @@
             window.location.href = 'Announcement/index';
         }
 
+        function viewpayreq(){
+            window.location.href = 'Sysadmin/paymentreq';
+        }
+
+        function viewsignupreq(){
+            window.location.href = 'Sysadmin/signupre';
+        } 
         function viewAnnouncements() {
             window.location.href = 'Announcement/viewann';
         }
@@ -265,6 +276,10 @@
 
         // Redraw graph on window resize
         window.addEventListener('resize', drawGraph);
+
+        function Analyze() {
+            window.location.href = 'Sysadmin/paymentreview';
+        }
     </script>
 </body>
 </html>

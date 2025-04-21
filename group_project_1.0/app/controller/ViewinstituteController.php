@@ -14,11 +14,12 @@ class ViewinstituteController extends Controller
         header('Content-Type: application/json');
         try {
         
-        $tables = ['instituteteacher_class', 'user'];
+        $tables = ['instituteteacher_class', 'normal_teacher', 'user'];
 
         $joinConditions = [
-        'instituteteacher_class.inst_id = user.User_id'
-     ];
+        'instituteteacher_class.N_id = normal_teacher.N_id',
+        'normal_teacher.Institute_ID = user.User_id'
+        ];
 
     $data = [
     'instituteteacher_class.InstClass_id' => $Class_id

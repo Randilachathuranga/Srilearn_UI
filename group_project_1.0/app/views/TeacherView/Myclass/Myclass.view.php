@@ -34,6 +34,7 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
+<button onclick="reqpaymentind()">Request Payment</button>
 
 </div>
 
@@ -205,6 +206,8 @@
         </div> 
         
       </div>
+
+      
      
       <label for="classLocation">Address</label>
       <input type="text" id="classLocation" name="classLocation" required />
@@ -247,7 +250,39 @@
     </div>
 </div>
 
+<script>
+     var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
+    function reqpaymentind(){
+       
 
+      fetch(`http://localhost/group_project_1.0/public/Payment/reqpaymentind`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userID })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+        .then(data => {
+            if (data.success) {
+            alert('Monthly payment request sent successfully!');
+            location.reload(); // Reload the page to see updated data
+          
+       } else {
+            alert('Failed to send monthly payment request.');
+            }
+        })  
+        .catch(error => {
+          console.error('There was an error!', error);
+    });
+    
+    }
+</script>
 
 
     <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->

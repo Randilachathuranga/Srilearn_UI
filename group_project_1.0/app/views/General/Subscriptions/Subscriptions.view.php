@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscription Plans</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Subscriptions/SubStyles.css">
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Subscriptions/Subscription.css">
     <style>
         .hidden {
             display: none;
@@ -67,13 +67,14 @@
     planCard.innerHTML = `
         <h2 class="plan-title">${title}</h2>
         <div class="plan-price price-amount">$${price}</div>
-        <div class="pic"><img src="../../../../../group_project_1.0/public/views/General/Subscriptions/subscription.webp"></div>
-        <div class="plan-duration">${plan.Duration.trim()}</div>
+        <div class="pic"><img src="../../../../../group_project_1.0/public/views/General/Subscriptions/subscription.jpeg"></div>
+        <div class="plan-duration">${plan.Duration} months</div>
+
         <ul class="plan-features">
             ${features.map(f => `<li>${f}</li>`).join("")}
         </ul>
         <h1>${plan.Type}</h1>
-        <button class="subscribe-btn" onclick="alert('${title} plan added to cart')">Subscribe Now</button>
+        <button class="subscribe-btn" onclick="handlepayment(${plan.Type})">Subscribe Now</button>
         <div class="plan-description">
         </div>
     `;
@@ -87,7 +88,11 @@
         }
 
  
-        
+        function handlepayment(planType) {
+           
+            window.location.href = `http://localhost/group_project_1.0/public/Payment/subscibe/${planType}`;
+            
+        }
 
         function togglePlans() {
             const teacherPlans = document.getElementById('teacher-plans');
