@@ -82,7 +82,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
 <!-- Main Container -->
 <div class="container">
-    <h1 class="title">Advertisements</h1>
+    <h1 class="title">My Advertisements</h1>
 
     <div class="banner">
         <img src="/group_project_1.0/public/views/General/Advertisements/advertisement.jpg" alt="Banner Image">
@@ -97,14 +97,15 @@ if ($_SESSION['User_id'] === 'Guest') {
         </select>
 
         <?php 
-        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
-            echo '
-            <div class="create-button">
-                <button onclick="handleClick()">Create Your Own Advertisement</button>
-                <button onclick="handleMyAds()">My Advertisements</button>
-            </div>';
-        }
-        ?>
+    if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+        echo '
+        <div class="create-button">
+            <button onclick="handleClick()">Create Your Own Advertisement</button>
+           
+        </div>';
+    }
+?>
+
     </div>
 
     <div id="adContainer" class="ad-container"></div>
@@ -114,7 +115,7 @@ if ($_SESSION['User_id'] === 'Guest') {
     const User_id = "<?php echo $_SESSION['User_id']; ?>";
 
     document.addEventListener('DOMContentLoaded', () => {
-        fetch('http://localhost/group_project_1.0/public/Advertisements/viewall')
+        fetch('http://localhost/group_project_1.0/public/Advertisements/myads')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('adContainer');
@@ -125,6 +126,8 @@ if ($_SESSION['User_id'] === 'Guest') {
                     rec.innerHTML = `
                         <p>${record.Title}</p>
                         <h5>${record.Content}</h5>
+                         <button class='delete' onclick="handleDelete(${record.Ad_id})">Delete</button>
+                        <button class='update' onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
                        
                     `;
                     container.appendChild(rec);
@@ -146,7 +149,7 @@ if ($_SESSION['User_id'] === 'Guest') {
             const result = await response.json();
             if (response.ok) {
                 alert("Advertisement deleted successfully!");
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements/viewmyads';
             } else {
                 alert(result.error || 'Deletion failed.');
             }
@@ -204,7 +207,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
             if (response.ok) {
                 alert('Advertisement updated successfully!');
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements/viewmyads';
             } else {
                 alert(result.error || 'Update failed.');
             }
@@ -276,33 +279,12 @@ async function handleInsert(event) {
     }
 
      function handleMyAds() {
-         window.location.href = `http://localhost/group_project_1.0/public/Advertisements/viewmyads`;
+         window.location.href = `http://localhost/group_project_1.0/public/Advertisements/myads/`;
      }
-     function filterAds() {
-    const selectedType = document.getElementById('adType').value;
-    const records = document.querySelectorAll('.record');
 
-    records.forEach(record => {
-        const isEducationalInput = record.querySelector('input[name="Iseducation"]');
-        if (!isEducationalInput) {
-            console.warn("Missing Iseducation field for record:", record);
-            return;
-        }
-
-        const isEducational = isEducationalInput.value;
-        if (
-            selectedType === 'all' ||
-            (selectedType === 'education' && isEducational === '1') ||
-            (selectedType === 'non-education' && isEducational === '0')
-        ) {
-            record.style.display = 'block';
-        } else {
-            record.style.display = 'none';
-        }
-    });
-}
-
-
+    function filterAds() {
+        // Optional: implement ad filtering logic here if needed
+    }
 </script>
 
 
