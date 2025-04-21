@@ -1,0 +1,2 @@
+ <button onclick="handleDelete(${record.Ad_id})">Delete</button>
+                        <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>

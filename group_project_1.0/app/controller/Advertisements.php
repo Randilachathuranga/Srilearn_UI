@@ -16,12 +16,15 @@ class Advertisements extends Controller {
         echo json_encode($allads);
     }
 
-    public function viewid($id) {
+    public function myads() {
         header('Content-Type: application/json');
-
+        $id=$_SESSION['User_id'];
         $model = new AdvertisementModel();
-        $allads = $model->where(['Ad_id'=>$id]);
+        $allads = $model->where(['User_id'=>$id]);
         echo json_encode($allads);
+    }
+    public function viewmyads(){
+        $this->view('General/Advertisements/myadvertisements');
     }
 
 
@@ -53,11 +56,11 @@ class Advertisements extends Controller {
         ];
             try {
                 $add = $model->insert($data);
-                if ($add) {
-                    echo json_encode(['message' => 'Advertisement created successfully', 'data' => $add]);
+                if (!($add)) {
+                    echo json_encode(['success' => 'Advertisement created successfully', 'data' => $add]);
                     header("Location:http://localhost/group_project_1.0/public/Advertisements");
                 } else {
-                    echo json_encode(['message' => 'Could not insert the advertisement']);
+                    echo json_encode(['success' => 'Could not insert the advertisement']);
                 }
             } catch (Exception $e) {
                 echo json_encode(['error' => 'An error occurred while creating the advertisement.', 'details' => $e->getMessage()]);
@@ -97,6 +100,8 @@ class Advertisements extends Controller {
             echo json_encode(['error' => 'Failed to update advertisement']);
         }
     }
+
+    
     
 
     

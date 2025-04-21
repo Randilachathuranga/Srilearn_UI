@@ -125,8 +125,7 @@ if ($_SESSION['User_id'] === 'Guest') {
                     rec.innerHTML = `
                         <p>${record.Title}</p>
                         <h5>${record.Content}</h5>
-                        <button onclick="handleDelete(${record.Ad_id})">Delete</button>
-                        <button onclick='handleUpdate(${JSON.stringify(record)})'>Update</button>
+                       
                     `;
                     container.appendChild(rec);
                 });
@@ -217,46 +216,47 @@ if ($_SESSION['User_id'] === 'Guest') {
 }
 
 
-    async function handleInsert(event) {
-        event.preventDefault();
+async function handleInsert(event) {
+    event.preventDefault();
 
-        const form = document.getElementById('adForm');
-        const formData = new FormData(form);
-        const formObject = Object.fromEntries(formData.entries());
-        formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
-        formObject.User_id = User_id;
-        console.log("ssss",formObject);
+    const form = document.getElementById('adForm');
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries());
+    formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+    formObject.User_id = User_id;
+    console.log("ssss", formObject);
 
-        const pass_data = {
-            'User_id' : formObject.User_id,
-            'Title': formObject.Title,
-            'Content': formObject.Content,
-            'Post_date':formObject.Post_date,
-            'Iseducation': formObject.Iseducation,
-            'Subject':formObject.Subject
-        }   
+    const pass_data = {
+        'User_id': formObject.User_id,
+        'Title': formObject.Title,
+        'Content': formObject.Content,
+        'Post_date': formObject.Post_date,
+        'Iseducation': formObject.Iseducation,
+        'Subject': formObject.Subject
+    };
 
-        try {
-            const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(pass_data)
-            });
+    try {
+        const response = await fetch('http://localhost/group_project_1.0/public/Advertisements/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pass_data)
+        });
 
-            const result = await response.json();
+        const result = await response.json();
 
-            if (response.ok && result.message === 'Advertisement created successfully') {
-                alert('Advertisement created successfully!');
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-            } else {
-                alert(result.error || result.message || 'Failed to create advertisement.');
-            }
-        } catch (error) {
-            console.error('Error inserting advertisement:', error);
+        
+        if (response.ok) {
+            alert('Advertisement created successfully!');
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+        } else {
+            alert(result.error || result.message || 'Failed to create advertisement.');
         }
+    } catch (error) {
+        console.error('Error inserting advertisement:', error);
     }
+}
 
     function handleClick() {
         const formContainer = document.getElementById('adFormContainer');
@@ -275,9 +275,9 @@ if ($_SESSION['User_id'] === 'Guest') {
         adForm.addEventListener('submit', handleInsert);
     }
 
-    // function handleMyAds() {
-    //     window.location.href = 'http://localhost/group_project_1.0/public/';
-    // }
+     function handleMyAds() {
+         window.location.href = `http://localhost/group_project_1.0/public/Advertisements/viewmyads`;
+     }
 
     function filterAds() {
         // Optional: implement ad filtering logic here if needed
