@@ -1,101 +1,96 @@
 /* General Page Styles */
 body {
-    background-color: #f8f9fa;
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', Arial, sans-serif;
-    font-size: 18px;
-    color: #030457; /* Consistent text color */
-}
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
 
 /* Banner Image */
 .banner {
-    width: 80%; /* Set the width to 80% */
-    margin: 0 auto; /* Center the banner horizontally */
+    width: 80%;
+    margin: 0 auto;
 }
 
 .banner img {
-    width: 100%; /* Ensure the image fills the banner container */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Ensure it behaves like a block element */
-    object-fit: cover; /* Ensure the image covers the space */
-    max-height: 350px; /* Optional: control the maximum height of the banner */
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 350px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Header Section */
 h1 {
     text-align: center;
     color: #030457;
-    margin: 20px 0;
-    font-size: 2rem;
-    margin-top: 100px;
+    margin: 80px 0 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
 }
 
 /* Page Container */
 #container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 25px;
     padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    margin-top: 20px;
-    height: 500px;
-
+    max-width: 1100px;
+    margin: 0 auto 40px;
 }
 
-/* Blog Entry Styling */
+/* Blog Entry Card */
 .record {
-    background: #e8f0f1;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-    transform: scale(1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    text-align: center; /* Centering the content inside the cards */
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .record:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .record h2 {
-    margin: 0 0 10px;
     color: #007BFF;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
 }
 
 .record p {
-    margin: 10px 0;
-    color: #555;
+    color: #444;
     font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 .record h5 {
     font-size: 0.9rem;
-    color: #777;
+    color: #666;
 }
 
 /* Buttons */
 button {
     display: inline-block;
-    margin: 10px 5px 0;
-    padding: 10px 20px;
+    margin: 10px 6px 0;
+    padding: 10px 22px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: #007BFF;
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     background-color: #0056b3;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 button:active {
@@ -103,45 +98,45 @@ button:active {
     transform: scale(0.95);
 }
 
-/* Delete Button Styling */
+/* Delete Button */
 button.delete {
-    background-color: #d9534f; /* Red */
-    color: white;
+    background-color: #e53935;
 }
 
 button.delete:hover {
-    background-color: #c9302c; /* Dark Red */
+    background-color: #c62828;
 }
 
 button.delete:active {
-    background-color: #ac2925; /* Even darker red */
+    background-color: #b71c1c;
 }
 
-/* Update Form */
+/* Form Section */
 form {
-    margin-top: 20px;
-    padding: 15px;
+    margin-top: 30px;
+    padding: 20px;
+    background: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #fafafa;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
     animation: fadeIn 0.5s ease-in-out;
 }
 
 form label {
-    font-weight: bold;
+    font-weight: 600;
     color: #333;
 }
 
 form input,
 form textarea {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 16px;
     transition: border-color 0.3s ease;
 }
 
@@ -154,6 +149,7 @@ form textarea:focus {
 form button {
     align-self: flex-end;
     background-color: #28a745;
+    font-size: 16px;
 }
 
 form button:hover {
@@ -179,7 +175,31 @@ form button:active {
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+        margin-top: 60px;
+    }
+
+    .record h2 {
+        font-size: 1.3rem;
+    }
+
+    .record p {
+        font-size: 0.95rem;
+    }
+
+    button {
+        padding: 8px 18px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .record {
+        padding: 15px;
     }
 
     .record h2 {
@@ -191,30 +211,7 @@ form button:active {
     }
 
     button {
-        padding: 8px 16px;
+        padding: 7px 16px;
         font-size: 13px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .record {
-        padding: 10px;
-    }
-
-    .record h2 {
-        font-size: 1.1rem;
-    }
-
-    .record p {
-        font-size: 0.85rem;
-    }
-
-    button {
-        padding: 6px 12px;
-        font-size: 12px;
     }
 }
