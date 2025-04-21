@@ -12,7 +12,7 @@ async function fetchClassData() {
 
   try {
     const response = await fetch(
-      `http://localhost/group_project_1.0/public/ViewinstituteController/viewmyinstitute/${classId}`
+      `http://localhost/group_project_1.0/public/ViewinstituteController/viewclassinstitute/${classId}`
     );
     if (!response.ok) throw new Error("Failed to fetch data");
 
@@ -51,7 +51,7 @@ function requestPayroll() {
 
   // Prefill values
   fetch(
-    `http://localhost/group_project_1.0/public/ViewinstituteController/viewmyinstitute/${classId}`
+    `http://localhost/group_project_1.0/public/ViewinstituteController/viewclassinstitute/${classId}`
   )
     .then((response) => response.json())
     .then((data) => {
