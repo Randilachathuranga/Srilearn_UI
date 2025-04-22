@@ -7,15 +7,15 @@ class Advertisements extends Controller {
         $this->view('General/Advertisements/advertisements');
     }
 
+    //view all adds
     public function viewall() {
         header('Content-Type: application/json');
-
         $model = new AdvertisementModel();
         $allads = $model->findall();
-
         echo json_encode($allads);
     }
 
+    //view my all adds
     public function myads() {
         header('Content-Type: application/json');
         $id=$_SESSION['User_id'];
@@ -23,6 +23,8 @@ class Advertisements extends Controller {
         $allads = $model->where(['User_id'=>$id]);
         echo json_encode($allads);
     }
+
+    //my adds page
     public function viewmyads(){
         $this->view('General/Advertisements/myadvertisements');
     }
@@ -30,22 +32,16 @@ class Advertisements extends Controller {
 
     // API: Delete specific ad
     public function deleteapi($id) {
-        // $this->requireTeacherOrInstitute();
-
         $model = new AdvertisementModel;
-
         $deleteadd = $model->delete($id,'Ad_id');
         echo json_encode($deleteadd);
     }
 
-  
-
+  //create a add
     public function post() {
         $model = new AdvertisementModel();
         header('Content-Type: application/json');
-    
         $inputData = json_decode(file_get_contents('php://input'), true); // Decode incoming JSON
-    
         $data = [
             'User_id' => $inputData['User_id'],
             'Title' => $inputData['Title'],
@@ -65,9 +61,9 @@ class Advertisements extends Controller {
             } catch (Exception $e) {
                 echo json_encode(['error' => 'An error occurred while creating the advertisement.', 'details' => $e->getMessage()]);
             }
- 
     }
     
+    // API: Update specific ad
     public function myupdateapi($id) {
         checkloginstatus();
     

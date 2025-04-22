@@ -69,7 +69,7 @@
         <?php } ?> 
 
         <?php if ($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher" ) { ?>
-        <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
+        <a href="http://localhost/group_project_1.0/public/Advertisements/viewmyads"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <?php } ?> 
 
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>

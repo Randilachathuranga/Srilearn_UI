@@ -110,7 +110,10 @@ if ($_SESSION['User_id'] === 'Guest') {
     <div id="adContainer" class="ad-container"></div>
 </div>
 
+
+
 <script>
+
     const User_id = "<?php echo $_SESSION['User_id']; ?>";
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -164,85 +167,91 @@ if ($_SESSION['User_id'] === 'Guest') {
     }
 });
 
-    async function handleDelete(id) {
-        if (!confirm("Are you sure you want to delete this advertisement?")) return;
 
-        try {
-            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
-                method: 'DELETE'
-            });
 
-            const result = await response.json();
-            if (response.ok) {
-                alert("Advertisement deleted successfully!");
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-            } else {
-                alert(result.error || 'Deletion failed.');
-            }
-        } catch (error) {
-            console.error("Delete error:", error);
-        }
-    }
+//     async function handleDelete(id) {
+//         if (!confirm("Are you sure you want to delete this advertisement?")) return;
 
-    function handleUpdate(ad) {
-    const form = document.getElementById('adFormContainer');
-    const titleInput = document.getElementById('title');
-    const contentInput = document.getElementById('content');
-    const postDateInput = document.getElementById('post_date');
-    const subjectInput = document.getElementById('Subject');
-    const moreFields = document.getElementById('moreFields');
+//         try {
+//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
+//                 method: 'DELETE'
+//             });
 
-    form.classList.remove('hidden');
-    moreFields.classList.remove('hidden');
-    form.scrollIntoView({ behavior: 'smooth' });
+//             const result = await response.json();
+//             if (response.ok) {
+//                 alert("Advertisement deleted successfully!");
+//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+//             } else {
+//                 alert(result.error || 'Deletion failed.');
+//             }
+//         } catch (error) {
+//             console.error("Delete error:", error);
+//         }
+//     }
 
-    // Pre-fill form fields
-    titleInput.value = ad.Title;
-    contentInput.value = ad.Content;
-    postDateInput.value = ad.Post_date;
-    subjectInput.value = ad.Subject;
 
-    if (ad.Iseducation === "1") {
-        document.getElementById('educational').checked = true;
-    } else {
-        document.getElementById('non_educational').checked = true;
-    }
 
-    const adForm = document.getElementById('adForm');
-    adForm.onsubmit = async function (e) {
-        e.preventDefault();
 
-        const formData = new FormData(adForm);
-        const formObject = Object.fromEntries(formData.entries());
+//     function handleUpdate(ad) {
+//     const form = document.getElementById('adFormContainer');
+//     const titleInput = document.getElementById('title');
+//     const contentInput = document.getElementById('content');
+//     const postDateInput = document.getElementById('post_date');
+//     const subjectInput = document.getElementById('Subject');
+//     const moreFields = document.getElementById('moreFields');
 
-        // Forcefully set Iseducation based on radio button
-        formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+//     form.classList.remove('hidden');
+//     moreFields.classList.remove('hidden');
+//     form.scrollIntoView({ behavior: 'smooth' });
 
-        console.log("dddddd", formObject); // Debug log
+//     // Pre-fill form fields
+//     titleInput.value = ad.Title;
+//     contentInput.value = ad.Content;
+//     postDateInput.value = ad.Post_date;
+//     subjectInput.value = ad.Subject;
 
-        try {
-            const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formObject)
-            });
+//     if (ad.Iseducation === "1") {
+//         document.getElementById('educational').checked = true;
+//     } else {
+//         document.getElementById('non_educational').checked = true;
+//     }
 
-            const result = await response.json();
+//     const adForm = document.getElementById('adForm');
+//     adForm.onsubmit = async function (e) {
+//         e.preventDefault();
 
-            if (response.ok) {
-                alert('Advertisement updated successfully!');
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-            } else {
-                alert(result.error || 'Update failed.');
-            }
-        } catch (error) {
-            console.error('Update error:', error);
-            alert('Something went wrong while updating.');
-        }
-    };
-}
+//         const formData = new FormData(adForm);
+//         const formObject = Object.fromEntries(formData.entries());
+
+//         // Forcefully set Iseducation based on radio button
+//         formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+
+//         console.log("dddddd", formObject); // Debug log
+
+//         try {
+//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
+//                 method: 'PUT',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(formObject)
+//             });
+
+//             const result = await response.json();
+
+//             if (response.ok) {
+//                 alert('Advertisement updated successfully!');
+//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+//             } else {
+//                 alert(result.error || 'Update failed.');
+//             }
+//         } catch (error) {
+//             console.error('Update error:', error);
+//             alert('Something went wrong while updating.');
+//         }
+//     };
+// }
+
 
 
 async function handleInsert(event) {
@@ -308,8 +317,6 @@ async function handleInsert(event) {
          window.location.href = `http://localhost/group_project_1.0/public/Advertisements/viewmyads`;
      }
      
-
-
 </script>
 
 
