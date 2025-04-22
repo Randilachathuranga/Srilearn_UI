@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Myprofile/Myprofile.css">
+    <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css">
+
 </head>
 <body>
 <?php 
@@ -77,6 +79,15 @@
     </div>
 </div>
 
+/* <div class="popup-overlay hidden" id="popupOverlay"></div>
+<div class="popup hidden" id="popupBox">
+    <p class="popup-message" id="popupMessage"></p>
+    <div class="popup-buttons">
+        <button class="ok-btn" id="popupOkBtn">OK</button>
+        <button class="cancel-btn" id="popupCancelBtn" onclick="closePopup()">Cancel</button>
+    </div>
+</div> */
+
 <script>
     const userId = <?php echo json_encode($_SESSION['User_id']); ?>;
     const data = {};
@@ -144,16 +155,18 @@
             const result = await response.json();
             if (result.success && result.newSrc) {
                 document.getElementById('userImage').src = result.newSrc;
-                alert('Image uploaded successfully!');
+                showPopup('Image uploaded successfully!', true);
             } else {
-                alert(result.message || 'Image upload failed.');
+                showPopup('Image upload failed.', true);
             }
         } catch (error) {
             console.error('Image upload error:', error);
-            alert('An error occurred. Please try again.');
+            showPopup('An error occurred. Please try again.', false);
         }
     });
 </script>
+<script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script>
+
 </body>
 </html>
 

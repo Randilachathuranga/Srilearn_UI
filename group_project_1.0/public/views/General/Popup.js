@@ -42,6 +42,9 @@ function closePopup() {
 }
 
 {
+  /* <script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script> */
+}
+{
   /* <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css"> */
 }
 

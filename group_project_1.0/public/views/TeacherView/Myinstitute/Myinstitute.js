@@ -117,23 +117,30 @@ function closePopup() {
   document.getElementById("popupForm").style.display = "none";
 }
 
-
 function Leave(Institute_ID) {
-    const confirmLeave = confirm("Are you sure you want to leave this institute?");
-    if (!confirmLeave) return;
-
-    fetch(`http://localhost/group_project_1.0/public/Normalteacher_Controller/leaveinstitute/${Userid}/${Institute_ID}`)
-        .then(response => {
-            if (!response.ok) throw new Error("Failed to leave institute");
-            return response.json();
+  showPopup(
+    "Are you sure you want to delete this advertisement?",
+    null,
+    async () => {
+      fetch(
+        `http://localhost/group_project_1.0/public/Normalteacher_Controller/leaveinstitute/${Userid}/${Institute_ID}`
+      )
+        .then((response) => {
+          if (!response.ok) throw new Error("Failed to leave institute");
+          return response.json();
         })
-        .then(data => {
-            console.log("Leave response:", data);
-            alert(data.message || "You have left the institute.");
-            location.reload(); // Reload to reflect the change
+        .then((data) => {
+          console.log("Leave response:", data);
+          showPopup("You have left the institute.", true);
+          location.reload(); // Reload to reflect the change
         })
-        .catch(error => {
-            console.error("Error leaving institute:", error);
-            alert("Something went wrong while trying to leave the institute.");
+        .catch((error) => {
+          console.error("Error leaving institute:", error);
+          showPopup(
+            "Something went wrong while trying to leave the institute.",
+            false
+          );
         });
+    }
+  );
 }
