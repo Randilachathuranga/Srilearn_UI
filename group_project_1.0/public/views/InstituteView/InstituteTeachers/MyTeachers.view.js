@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = "<p>Loading...</p>";
 
     try {
-      const response = await fetch(`Institute_teacher/My_teachers/${userId}`);
+      const response = await fetch(Institute_teacher/My_teachers/${userId});
 
       if (!response.ok) {
         if (response.status === 403) {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(card);
       });
     } catch (error) {
-      container.innerHTML = `<p class="error">${error.message}</p>`;
+      container.innerHTML = <p class="error">${error.message}</p>;
       console.error("Fetch error:", error);
     }
   };
@@ -64,6 +64,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function removeTeacher(teacherId) {
-  alert(`Remove functionality not implemented yet for Teacher ID: ${teacherId}`);
+  // alert(Remove functionality not implemented yet for Teacher ID: ${teacherId});
 }
-

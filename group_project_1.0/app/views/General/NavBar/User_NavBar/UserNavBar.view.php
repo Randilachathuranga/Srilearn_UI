@@ -135,7 +135,7 @@
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
 
         <?php if ($_SESSION['Role'] == "institute") { ?>
-            <a href=""><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Our Teachers</a>
+            <a href="http://localhost/group_project_1.0/public/Institute_teacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Our Teachers</a>
         <?php } ?>
 
         <?php if ($_SESSION['Role'] == "institute" ) { ?>
