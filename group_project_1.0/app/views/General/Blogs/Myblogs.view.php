@@ -68,7 +68,6 @@
         } else {
             console.error("User ID not found in session.");
         }
-        
 
         // Function to toggle the visibility of the update form
         function toggleUpdateForm(blogId) {
