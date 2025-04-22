@@ -16,22 +16,9 @@ if ($_SESSION['User_id'] === 'Guest') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
     <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
+    <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-        .hidden { display: none; }
-
-        .form-container {
-            margin: 30px;
-            padding: 20px;
-            border: 2px solid #ccc;
-            background-color: #f9f9f9;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
 
@@ -106,6 +93,18 @@ if ($_SESSION['User_id'] === 'Guest') {
     <div id="adContainer" class="ad-container"></div>
 </div>
 
+<div class="popup-overlay hidden" id="popupOverlay"></div>
+<div class="popup hidden" id="popupBox">
+    <p class="popup-message" id="popupMessage"></p>
+    <div class="popup-buttons">
+        <button class="ok-btn" id="popupOkBtn">OK</button>
+        <button class="cancel-btn" id="popupCancelBtn" onclick="closePopup()">Cancel</button>
+    </div>
+</div>
+
+
+
+
 <script>
     const User_id = "<?php echo $_SESSION['User_id']; ?>";
 
@@ -136,22 +135,36 @@ if ($_SESSION['User_id'] === 'Guest') {
     });
 
     async function handleDelete(id) {
-        if (!confirm("Are you sure you want to delete this advertisement?")) return;
-
+    showPopup("Are you sure you want to delete this advertisement?", null, async () => {
         try {
             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
                 method: 'DELETE'
             });
 
             const result = await response.json();
+
             if (response.ok) {
-                alert("Advertisement deleted successfully!");
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements/viewmyads';
+                showPopup("Advertisement deleted successfully!", true);
             } else {
-                alert(result.error || 'Deletion failed.');
+                showPopup(result.error || "Deletion failed.", false);
             }
         } catch (error) {
             console.error("Delete error:", error);
+            showPopup("Something went wrong while deleting.", false);
+        }
+    });
+}
+
+
+    function closePopup() {
+        const popupBox = document.getElementById('popupBox');
+        const popupOverlay = document.getElementById('popupOverlay');
+
+        popupBox.style.display = 'none';
+        popupOverlay.style.display = 'none';
+
+        if (document.getElementById('popupMessage').textContent.includes('successfully')) {
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements/viewmyads';
         }
     }
 
@@ -203,17 +216,17 @@ if ($_SESSION['User_id'] === 'Guest') {
             const result = await response.json();
 
             if (response.ok) {
-                alert('Advertisement updated successfully!');
-                window.location.href = 'http://localhost/group_project_1.0/public/Advertisements/viewmyads';
+                showPopup('Advertisement updated successfully!', true);
             } else {
-                alert(result.error || 'Update failed.');
+                showPopup(result.error || 'Update failed.', false);
             }
         } catch (error) {
             console.error('Update error:', error);
-            alert('Something went wrong while updating.');
+            showPopup('Something went wrong while updating.', false);
         }
     };
 }
+
 
 
 async function handleInsert(event) {
@@ -246,17 +259,19 @@ async function handleInsert(event) {
 
         const result = await response.json();
 
-        
+        showPopup('Advertisement created successfully!', true);
+
         if (response.ok) {
-            alert('Advertisement created successfully!');
-            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+            showPopup('Advertisement created successfully!', true);
         } else {
-            alert(result.error || result.message || 'Failed to create advertisement.');
+            showPopup(result.error || result.message || 'Failed to create advertisement.', false);
         }
     } catch (error) {
         console.error('Error inserting advertisement:', error);
+        showPopup('Something went wrong while creating advertisement.', false);
     }
 }
+
 
     function handleClick() {
         const formContainer = document.getElementById('adFormContainer');
@@ -279,11 +294,9 @@ async function handleInsert(event) {
          window.location.href = `http://localhost/group_project_1.0/public/Advertisements/myads/`;
      }
 
-    function filterAds() {
-        // Optional: implement ad filtering logic here if needed
-    }
 </script>
 
+<script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script>
 
 </body>
 </html>
