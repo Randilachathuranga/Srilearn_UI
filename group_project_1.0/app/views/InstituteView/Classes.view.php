@@ -43,6 +43,8 @@
               <p><strong>Grade:</strong> ${record.Grade}</p>
               <p><strong>Max Students:</strong> ${record.Max_std}</p>
               <p><strong>Fee:</strong> Rs.${record.fee}</p>
+                <p><strong>Date:</strong> ${record.Def_Date}</p>
+              <p><strong>Time:</strong> Rs.${record.Def_Time}</p>
               <div class="btn-group">
                 <button onclick="viewStudents(${record.InstClass_id})">View Students</button>
                 <button  onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
