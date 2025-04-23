@@ -120,7 +120,9 @@
                     <label for="Location">Address</label>
                     <input type="text" id="Location" name="Location" required>
                 </div>
+                
             </div>
+            
             
             <div class="create-row">
                 <div>
@@ -130,6 +132,17 @@
                 <div>
                     <label for="End_date">End date</label>
                     <input type="date" id="End_date" name="End_date" required>
+                </div>
+            </div>
+
+            <div class="create-row">
+                <div>
+                    <label for="Date">Class Date</label>
+                    <input type="text" id="Date" name="Date" placeholder="Monday" required>
+                </div>
+                <div>
+                    <label for="Time">Class Time</label>
+                    <input type="time" id="Time" name="Time" required>
                 </div>
             </div>
             
@@ -207,6 +220,17 @@
         
       </div>
 
+      <div class="create-row">
+                <div>
+                    <label for="Date_">Class Date</label>
+                    <input type="text" id="Date_" name="Date_" placeholder="Monday" required>
+                </div>
+                <div>
+                    <label for="Time_">Class Time</label>
+                    <input type="time" id="Time_" name="Time_" required>
+                </div>
+            </div>
+
       
      
       <label for="classLocation">Address</label>
@@ -230,12 +254,13 @@
         
         <img id="classImage" src="" alt="Class Image" />
         <div class="class-details">
-            <p><strong>Date:</strong> <span id="classdate"></span></p>
             <p><strong>Type:</strong> <span id="classType"></span></p>
             <p><strong>Fee:</strong> <span id="classFee"></span></p>
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>Hall no:</strong> <span id="Hall_no"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
+            <p><strong>Date:</strong> <span id="Date"></span></p>
+            <p><strong>Time:</strong> <span id="Time"></span></p>
             <p><span id="classid" style="display: none;"></span></p>
         </div>
         <div class="button-container">

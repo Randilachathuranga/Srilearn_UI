@@ -75,7 +75,10 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 </div>
 
 
-
+<script>
+    const user_id = "<?php echo $_SESSION['User_id']; ?>";
+    const user_role = "<?php echo $_SESSION['Role']; ?>";
+  </script>
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadASS/script.js"></script>
 </body>
 </html>
