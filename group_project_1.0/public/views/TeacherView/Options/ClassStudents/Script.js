@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const searchTerm = searchInput.value.toLowerCase().trim();
         filterStudents(searchTerm);
     });
-    function renderStudentsTable(students, userRole) {
+    function renderStudentsTable(students) {
         const studentsTableBody = document.getElementById("studentsTableBody");
         
         if (!studentsTableBody) {
@@ -68,31 +68,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 row.appendChild(cell);
             });
             
+
+            
             // Create "Remove" button cell
             const removeCell = document.createElement("td");
             const removeButton = document.createElement("button");
             removeButton.textContent = "Remove";
-            removeButton.className = "btn-danger";
+            removeButton.className = "btn-danger"; // Assuming you have your own danger class
             removeButton.addEventListener("click", function() {
                 removeStudent(student.Enrollment_id);
             });
             
             removeCell.appendChild(removeButton);
             row.appendChild(removeCell);
-            
-            // Only create "Send Message" button if the user is a teacher
-            if (Role === "teacher") {
-                const chatCell = document.createElement("td");
-                const chatButton = document.createElement("button");
-                chatButton.textContent = "Send Message";
-                chatButton.className = "btn-chat";
-                chatButton.addEventListener("click", function() {
-                    chatredirect(student.Stu_id);
-                });
-                
-                chatCell.appendChild(chatButton);
-                row.appendChild(chatCell);
-            }
+                        // Create "Send Message" button cell
+                        const chatCell = document.createElement("td");
+                        const chatButton = document.createElement("button");
+                        chatButton.textContent = "Send Message";
+                        chatButton.className = "btn-chat"; // Using only your custom class
+                        chatButton.addEventListener("click", function() {
+                            chatredirect(student.Stu_id,); // Pass student ID to the function
+                        });
+                        
+                        chatCell.appendChild(chatButton);
+                        row.appendChild(chatCell);
+
             
             studentsTableBody.appendChild(row);
         });

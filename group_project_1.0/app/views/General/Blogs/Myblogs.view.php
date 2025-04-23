@@ -101,50 +101,27 @@
             
             // Convert form data to JSON
             const data = {
-            Title: formData.get('Title'),
-            Content: formData.get('Content')
+                Title: formData.get('Title'),
+                Content: formData.get('Content')
             };
             console.log(data);
             fetch(`http://localhost/group_project_1.0/public/Blog/myupdateapi/${blogId}`, {
-            method: 'POST', // Change to 'POST' for sending data
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data) // Send the data as a JSON string
+                method: 'POST', // Change to 'POST' for sending data
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data) // Send the data as a JSON string
             })
             .then(response => {
-            if (!response.ok) throw new Error('Update failed');
-            return response.json();
+                if (!response.ok) throw new Error('Update failed');
+                return response.json();
             })
             .then(() => {
-            location.reload();
+                location.reload();
             })
             .catch(error => {
-            console.error('Error updating record:', error);
+                console.error('Error updating record:', error);
             });
-        }
-
-        // Function to pre-fill the update form with existing data
-        function toggleUpdateForm(blogId) {
-            const form = document.getElementById(`updateForm-${blogId}`);
-            const recordDiv = form.parentElement;
-
-            // Pre-fill the form with existing data
-            const titleElement = recordDiv.querySelector('h2');
-            const contentElement = recordDiv.querySelector('p');
-
-            if (titleElement && contentElement) {
-                const title = titleElement.textContent.replace('Title: ', '');
-                const content = contentElement.textContent.replace('Content: ', '');
-
-                form.querySelector('input[name="Title"]').value = title;
-                form.querySelector('textarea[name="Content"]').value = content;
-            } else {
-                console.error('Unable to find title or content elements for pre-filling the form.');
-            }
-
-            // Toggle form visibility
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>
