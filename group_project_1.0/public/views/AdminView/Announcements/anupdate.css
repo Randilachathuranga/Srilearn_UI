@@ -117,3 +117,26 @@ textarea.form-input {
         font-size: 1.1rem;
     }
 }
+/* Additional Styling for Error Messages */
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    text-align: left;
+}
+
+/* Success Message Styling */
+.success-message {
+    color: #28a745;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Disabled Button State */
+.form-button:disabled {
+    background: #b3d9ff;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}

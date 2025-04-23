@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Announcement</title>
-    <link rel="stylesheet" href="../../../../../public/views/AdminView/Announcements/anupdate.css">
+    <link rel="stylesheet" href="/group_project_1.0/public/views/AdminView/Announcements/anupdate.css"> <!-- Link to the CSS file -->
 </head>
 <body>
     <?php

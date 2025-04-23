@@ -22,11 +22,21 @@ if ($_SESSION['User_id'] === 'Guest') {
         .hidden { display: none; }
 
         .form-container {
-            margin: 30px;
-            padding: 20px;
-            border: 2px solid #ccc;
-            background-color: #f9f9f9;
-        }
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-width: 90%;
+    z-index: 1001;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    padding: 20px;
+}
+
+
+
 
         .form-group {
             margin-bottom: 15px;
@@ -167,90 +177,6 @@ if ($_SESSION['User_id'] === 'Guest') {
     }
 });
 
-
-
-//     async function handleDelete(id) {
-//         if (!confirm("Are you sure you want to delete this advertisement?")) return;
-
-//         try {
-//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
-//                 method: 'DELETE'
-//             });
-
-//             const result = await response.json();
-//             if (response.ok) {
-//                 alert("Advertisement deleted successfully!");
-//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-//             } else {
-//                 alert(result.error || 'Deletion failed.');
-//             }
-//         } catch (error) {
-//             console.error("Delete error:", error);
-//         }
-//     }
-
-
-
-
-//     function handleUpdate(ad) {
-//     const form = document.getElementById('adFormContainer');
-//     const titleInput = document.getElementById('title');
-//     const contentInput = document.getElementById('content');
-//     const postDateInput = document.getElementById('post_date');
-//     const subjectInput = document.getElementById('Subject');
-//     const moreFields = document.getElementById('moreFields');
-
-//     form.classList.remove('hidden');
-//     moreFields.classList.remove('hidden');
-//     form.scrollIntoView({ behavior: 'smooth' });
-
-//     // Pre-fill form fields
-//     titleInput.value = ad.Title;
-//     contentInput.value = ad.Content;
-//     postDateInput.value = ad.Post_date;
-//     subjectInput.value = ad.Subject;
-
-//     if (ad.Iseducation === "1") {
-//         document.getElementById('educational').checked = true;
-//     } else {
-//         document.getElementById('non_educational').checked = true;
-//     }
-
-//     const adForm = document.getElementById('adForm');
-//     adForm.onsubmit = async function (e) {
-//         e.preventDefault();
-
-//         const formData = new FormData(adForm);
-//         const formObject = Object.fromEntries(formData.entries());
-
-//         // Forcefully set Iseducation based on radio button
-//         formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
-
-//         console.log("dddddd", formObject); // Debug log
-
-//         try {
-//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(formObject)
-//             });
-
-//             const result = await response.json();
-
-//             if (response.ok) {
-//                 alert('Advertisement updated successfully!');
-//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-//             } else {
-//                 alert(result.error || 'Update failed.');
-//             }
-//         } catch (error) {
-//             console.error('Update error:', error);
-//             alert('Something went wrong while updating.');
-//         }
-//     };
-// }
 
 
 

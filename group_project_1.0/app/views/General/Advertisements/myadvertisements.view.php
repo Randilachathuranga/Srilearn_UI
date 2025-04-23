@@ -19,6 +19,28 @@ if ($_SESSION['User_id'] === 'Guest') {
     <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <style>
+        .hidden { display: none; }
+
+        .form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-width: 90%;
+    z-index: 1001;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    padding: 20px;
+}
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -155,6 +177,27 @@ if ($_SESSION['User_id'] === 'Guest') {
     });
 }
 
+function showPopup(message, shouldRedirect = false, onConfirmCallback = null) {
+    const popupBox = document.getElementById('popupBox');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupOkBtn = document.getElementById('popupOkBtn');
+
+    popupMessage.textContent = message;
+    popupBox.style.display = 'block';
+    popupOverlay.style.display = 'block';
+
+    // Handle the OK button click
+    popupOkBtn.onclick = function () {
+        if (onConfirmCallback) {
+            onConfirmCallback();
+        }
+        closePopup();
+    };
+
+    redirectAfterPopup = shouldRedirect;
+}
+
 
     function closePopup() {
         const popupBox = document.getElementById('popupBox');
@@ -198,11 +241,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
         const formData = new FormData(adForm);
         const formObject = Object.fromEntries(formData.entries());
-
-        // Forcefully set Iseducation based on radio button
         formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
-
-        console.log("dddddd", formObject); // Debug log
 
         try {
             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
@@ -216,7 +255,17 @@ if ($_SESSION['User_id'] === 'Guest') {
             const result = await response.json();
 
             if (response.ok) {
+                // Hide the form and reset
+                form.classList.add('hidden');
+                moreFields.classList.add('hidden');
+                adForm.reset();
+
                 showPopup('Advertisement updated successfully!', true);
+
+                // Wait a bit for user to read the message, then refresh
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // 1 second delay before reload
             } else {
                 showPopup(result.error || 'Update failed.', false);
             }
@@ -229,6 +278,7 @@ if ($_SESSION['User_id'] === 'Guest') {
 
 
 
+
 async function handleInsert(event) {
     event.preventDefault();
 
@@ -237,7 +287,6 @@ async function handleInsert(event) {
     const formObject = Object.fromEntries(formData.entries());
     formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
     formObject.User_id = User_id;
-    console.log("ssss", formObject);
 
     const pass_data = {
         'User_id': formObject.User_id,
@@ -259,9 +308,12 @@ async function handleInsert(event) {
 
         const result = await response.json();
 
-        showPopup('Advertisement created successfully!', true);
-
         if (response.ok) {
+            // ✅ Close the form
+            document.getElementById('adFormContainer').classList.add('hidden');
+            document.getElementById('moreFields').classList.add('hidden');
+            form.reset();
+
             showPopup('Advertisement created successfully!', true);
         } else {
             showPopup(result.error || result.message || 'Failed to create advertisement.', false);
@@ -271,6 +323,7 @@ async function handleInsert(event) {
         showPopup('Something went wrong while creating advertisement.', false);
     }
 }
+
 
 
     function handleClick() {
@@ -286,8 +339,7 @@ async function handleInsert(event) {
         });
 
         const adForm = document.getElementById('adForm');
-        adForm.removeEventListener('submit', handleInsert);
-        adForm.addEventListener('submit', handleInsert);
+        adForm.onsubmit = handleInsert;
     }
 
      function handleMyAds() {
@@ -296,7 +348,4 @@ async function handleInsert(event) {
 
 </script>
 
-<script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script>
 
-</body>
-</html>
