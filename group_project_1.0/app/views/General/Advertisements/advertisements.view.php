@@ -17,7 +17,6 @@ if ($_SESSION['User_id'] === 'Guest') {
     <title>Advertisements</title>
     <link rel="stylesheet" href="/group_project_1.0/public/views/General/Advertisements/advertisement.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css">
 
     <style>
         .hidden { display: none; }
@@ -110,16 +109,8 @@ if ($_SESSION['User_id'] === 'Guest') {
 
     <div id="adContainer" class="ad-container"></div>
 </div>
-<div class="popup-overlay hidden" id="popupOverlay"></div>
-<div class="popup hidden" id="popupBox">
-    <p class="popup-message" id="popupMessage"></p>
-    <div class="popup-buttons">
-        <button class="ok-btn" id="popupOkBtn">OK</button>
-        <button class="cancel-btn" id="popup_CancelBtn" onclick="Popupclose()">Cancel</button>
-    </div>
-</div> 
 
-<script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script> 
+
 
 <script>
 
@@ -178,6 +169,90 @@ if ($_SESSION['User_id'] === 'Guest') {
 
 
 
+//     async function handleDelete(id) {
+//         if (!confirm("Are you sure you want to delete this advertisement?")) return;
+
+//         try {
+//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/deleteapi/${id}`, {
+//                 method: 'DELETE'
+//             });
+
+//             const result = await response.json();
+//             if (response.ok) {
+//                 alert("Advertisement deleted successfully!");
+//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+//             } else {
+//                 alert(result.error || 'Deletion failed.');
+//             }
+//         } catch (error) {
+//             console.error("Delete error:", error);
+//         }
+//     }
+
+
+
+
+//     function handleUpdate(ad) {
+//     const form = document.getElementById('adFormContainer');
+//     const titleInput = document.getElementById('title');
+//     const contentInput = document.getElementById('content');
+//     const postDateInput = document.getElementById('post_date');
+//     const subjectInput = document.getElementById('Subject');
+//     const moreFields = document.getElementById('moreFields');
+
+//     form.classList.remove('hidden');
+//     moreFields.classList.remove('hidden');
+//     form.scrollIntoView({ behavior: 'smooth' });
+
+//     // Pre-fill form fields
+//     titleInput.value = ad.Title;
+//     contentInput.value = ad.Content;
+//     postDateInput.value = ad.Post_date;
+//     subjectInput.value = ad.Subject;
+
+//     if (ad.Iseducation === "1") {
+//         document.getElementById('educational').checked = true;
+//     } else {
+//         document.getElementById('non_educational').checked = true;
+//     }
+
+//     const adForm = document.getElementById('adForm');
+//     adForm.onsubmit = async function (e) {
+//         e.preventDefault();
+
+//         const formData = new FormData(adForm);
+//         const formObject = Object.fromEntries(formData.entries());
+
+//         // Forcefully set Iseducation based on radio button
+//         formObject.Iseducation = document.getElementById('educational').checked ? "1" : "0";
+
+//         console.log("dddddd", formObject); // Debug log
+
+//         try {
+//             const response = await fetch(`http://localhost/group_project_1.0/public/Advertisements/myupdateapi/${ad.Ad_id}`, {
+//                 method: 'PUT',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(formObject)
+//             });
+
+//             const result = await response.json();
+
+//             if (response.ok) {
+//                 alert('Advertisement updated successfully!');
+//                 window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+//             } else {
+//                 alert(result.error || 'Update failed.');
+//             }
+//         } catch (error) {
+//             console.error('Update error:', error);
+//             alert('Something went wrong while updating.');
+//         }
+//     };
+// }
+
+
 
 async function handleInsert(event) {
     event.preventDefault();
@@ -211,9 +286,11 @@ async function handleInsert(event) {
 
         
         if (response.ok) {
-            showPopup('Advertisement created successfully!', true);
-            // window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-        } 
+            alert('Advertisement created successfully!');
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+        } else {
+            alert(result.error || result.message || 'Failed to create advertisement.');
+        }
     } catch (error) {
         console.error('Error inserting advertisement:', error);
     }

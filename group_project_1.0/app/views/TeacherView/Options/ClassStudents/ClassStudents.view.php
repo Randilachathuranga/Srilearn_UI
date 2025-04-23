@@ -33,9 +33,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Action</th>
-                    <?php if ($_SESSION['Role'] === 'teacher'): ?>
-                        <th>Chat</th>
-                    <?php endif; ?>
+                    <th>Chat</th>
                 </tr>
             </thead>
             <tbody id="studentsTableBody">
@@ -43,13 +41,9 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
             </tbody>
         </table>
     </div>
-    <script>
-    const Role = "<?php echo $_SESSION['Role']; ?>";
-  </script>
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/ClassStudents/Script.js"></script>
 </body>
 </html>
-
 
 <?php
  include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"

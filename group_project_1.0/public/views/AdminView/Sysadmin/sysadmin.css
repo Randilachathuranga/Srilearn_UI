@@ -11,7 +11,7 @@
     --primary-light: #3b82f6;
     --primary-dark: #1e40af;
     --surface: #ffffff;
-    --background: #e2e4ec;
+    --background: #e2ece5;
     --text: #1e293b;
     --text-light: #64748b;
     --border: #e2e8f0;
@@ -24,6 +24,8 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header Styling */
@@ -68,23 +70,20 @@ h1 {
     color: var(--surface);
 }
 
-/* Side Menu */
+/* Sidebar Menu */
 .side-menu {
     position: fixed;
-    left: -300px;
+    left: -250px;  /* Initially hidden */
     top: 0;
-    width: 300px;
+    width: 250px;
     height: 100%;
     background-color: var(--surface);
-    color: var(--text);
-    padding: 2rem;
-    transition: transform 0.3s ease;
+    transition: left 0.3s ease;  /* Smooth transition */
     z-index: 1000;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .side-menu.visible {
-    transform: translateX(300px);
+    left: 0;  /* Slide in when toggled */
 }
 
 .side-menu button {
@@ -106,67 +105,100 @@ h1 {
     color: var(--surface);
 }
 
-/* Main Content */
-.main-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.5rem;
+/* Close Button for Sidebar */
+.close-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 2rem;
+    cursor: pointer;
 }
 
-/* Action Buttons */
-.top-buttons {
+.close-menu:hover {
+    color: var(--primary-light);
+}
+
+/* Stats Container for Pie Chart and Counts */
+.stats-container {
+    background-color: var(--surface);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease;
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.stats-chart {
+    width: 40%; /* Adjusted smaller pie chart */
+}
+
+.stats-info {
+    width: 55%;
+}
+
+.stats-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stats-info .stat-item {
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.stats-info .stat-item span {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Add space between the buttons and table */
+.top-buttons {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
 }
 
 .top-buttons button {
-    background: var(--primary);
+    background: #4285f4;
     border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
     border-radius: 0.5rem;
-    color: var(--surface);
+    color: #fff;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
 }
 
 .top-buttons button:hover {
-    background: var(--primary-light);
-}
-
-/* Graph Container */
-.graph-container {
-    background-color: var(--surface);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    transition: transform 0.2s ease;
-}
-
-.graph-container label {
-    font-size: 50px; /* Adjust the font size as needed */
-}
-.graph-container:hover {
-    transform: translateY(-2px);
+    background: #357ae8;
 }
 
 /* Table Styling */
 .data-table {
-    width: 100%;
+    width: 80%; /* Adjusted table width */
     background-color: var(--surface);
     border-radius: 0.75rem;
     overflow: hidden;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     border-collapse: separate;
     border-spacing: 0;
+    margin: 0 auto; /* Center the table */
 }
 
 .data-table caption {
@@ -192,10 +224,15 @@ h1 {
     border-bottom: 1px solid var(--border);
 }
 
+.data-table tr {
+    margin-bottom: 8px;
+}
+
 .data-table tr:hover {
     background-color: var(--background);
 }
 
+/* Button Styling */
 .data-table button {
     background: var(--primary);
     border: none;
@@ -207,10 +244,28 @@ h1 {
     color: var(--surface);
     cursor: pointer;
     transition: all 0.2s ease;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.data-table .update-btn {
+    background: #007bff;
+}
+
+.data-table .delete-btn {
+    background: #ff2e00;
 }
 
 .data-table button:hover {
     background: var(--primary-light);
+}
+
+.data-table .update-btn:hover {
+    background: #0056b3;
+}
+
+.data-table .delete-btn:hover {
+    background: #c10000;
 }
 
 /* Responsive Design */
@@ -248,52 +303,13 @@ h1 {
         padding: 0.75rem 1rem;
         font-size: 0.875rem;
     }
-    
+
     body {
         padding: 0 10px;
     }
-}
 
-/* Clean Scrollbar */
-body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-light) var(--background);
-}
-
-body::-webkit-scrollbar {
-    width: 8px;
-}
-
-body::-webkit-scrollbar-track {
-    background: var(--background);
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: var(--primary-light);
-    border-radius: 4px;
-}
-
-/* Additional Utility Classes */
-.text-primary {
-    color: var(--primary);
-}
-
-.bg-primary {
-    background-color: var(--primary);
-}
-
-.hidden {
-    display: none;
-}
-
-.flex {
-    display: flex;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.justify-between {
-    justify-content: space-between;
+    .graph-container, .stats-container {
+        width: 100%;
+        display: block;
+    }
 }

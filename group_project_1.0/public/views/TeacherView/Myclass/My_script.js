@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = fullName;
         option.textContent = fullName;
         instituteSelect.appendChild(option);
-
+  
         // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
       });
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("Institute_name")
     .addEventListener("change", function () {
       const selectedName = this.value;
-      console.log("sss", instituteDataMap[selectedName]);
+console.log("sss",instituteDataMap[selectedName]);
       if (selectedName !== "None" && instituteDataMap[selectedName]) {
         const selectedInstitute = instituteDataMap[selectedName];
         const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key

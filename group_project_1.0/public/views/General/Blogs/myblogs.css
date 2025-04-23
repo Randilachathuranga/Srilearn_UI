@@ -5,22 +5,23 @@ body {
     padding: 0;
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 18px;
-    color: #030457;
+    color: #030457; /* Consistent text color */
 }
 
 /* Banner Image */
 .banner {
-    width: 80%;
-    margin: 0 auto;
+    width: 80%; /* Set the width to 80% */
+    margin: 0 auto; /* Center the banner horizontally */
 }
 
 .banner img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    max-height: 350px;
+    width: 100%; /* Ensure the image fills the banner container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure it behaves like a block element */
+    object-fit: cover; /* Ensure the image covers the space */
+    max-height: 350px; /* Optional: control the maximum height of the banner */
 }
+
 
 /* Header Section */
 h1 {
@@ -34,13 +35,14 @@ h1 {
 /* Page Container */
 #container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Dynamic columns */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
     max-width: 1000px;
     margin: 0 auto;
     margin-top: 20px;
-    height: auto; /* Adjust height to content */
+    height: 500px;
+
 }
 
 /* Blog Entry Styling */
@@ -52,7 +54,7 @@ h1 {
     padding: 20px;
     transform: scale(1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    text-align: center;
+    text-align: center; /* Centering the content inside the cards */
 }
 
 .record:hover {
@@ -75,11 +77,6 @@ h1 {
 .record h5 {
     font-size: 0.9rem;
     color: #777;
-}
-
-/* Placeholder record to fill grid */
-.record.empty {
-    visibility: hidden;
 }
 
 /* Buttons */
@@ -108,16 +105,16 @@ button:active {
 
 /* Delete Button Styling */
 button.delete {
-    background-color: #d9534f;
+    background-color: #d9534f; /* Red */
     color: white;
 }
 
 button.delete:hover {
-    background-color: #c9302c;
+    background-color: #c9302c; /* Dark Red */
 }
 
 button.delete:active {
-    background-color: #ac2925;
+    background-color: #ac2925; /* Even darker red */
 }
 
 /* Update Form */
@@ -185,10 +182,6 @@ form button:active {
         font-size: 1.8rem;
     }
 
-    #container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
-    }
-
     .record h2 {
         font-size: 1.2rem;
     }
@@ -206,10 +199,6 @@ form button:active {
 @media screen and (max-width: 480px) {
     h1 {
         font-size: 1.5rem;
-    }
-
-    #container {
-        grid-template-columns: 1fr; /* 1 column on small screens */
     }
 
     .record {
