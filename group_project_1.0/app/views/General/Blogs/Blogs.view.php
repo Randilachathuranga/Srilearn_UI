@@ -20,7 +20,7 @@
     <title>My Blogs</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Blogs/Blogstyles.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Blogs/CreateBlogs/CreateBlogs.css">
-<style>
+<!-- <style>
     .pagination-container {
         display: flex;
         justify-content: center;
@@ -64,7 +64,7 @@
     .search-button:hover {
         background-color: #0056b3;
     }
-</style>
+</style> -->
 </head>
 <body>
 <?php $today = date("Y-m-d"); ?>
@@ -134,3 +134,4 @@
     require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
 }
     ?>
+    

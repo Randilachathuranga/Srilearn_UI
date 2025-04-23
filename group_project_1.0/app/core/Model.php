@@ -91,6 +91,57 @@ trait Model {
         return $this->query($query, $params);
     }
     
+    public function InnerJoinwhereMultiplewithlike($tables, $joinConditions, $data = [], $data_not = [], $data_like = []) {
+        if (count($tables) < 2 || count($joinConditions) < count($tables) - 1) {
+            throw new Exception("Insufficient join conditions for given tables.");
+        }
+    
+        $query = "SELECT * FROM {$tables[0]}";
+    
+        // Add INNER JOINs
+        for ($i = 1; $i < count($tables); $i++) {
+            $query .= " INNER JOIN {$tables[$i]} ON {$joinConditions[$i - 1]}";
+        }
+    
+        $conditions = [];
+    
+        // Equal conditions
+        foreach ($data as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key = :$paramKey";
+        }
+    
+        // NOT equal conditions
+        foreach ($data_not as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key != :$paramKey";
+        }
+    
+        // LIKE conditions
+        foreach ($data_like as $key => $value) {
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key LIKE :$paramKey";
+        }
+    
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+    
+        // Limit + Offset
+        $query .= " LIMIT $this->limit OFFSET $this->offset";
+    
+        // Bind parameters
+        $params = [];
+        foreach ([$data, $data_not, $data_like] as $group) {
+            foreach ($group as $key => $value) {
+                $paramKey = str_replace('.', '_', $key);
+                $params[$paramKey] = $group === $data_like ? "%$value%" : $value;
+            }
+        }
+    
+        return $this->query($query, $params);
+    }
+    
     
     
     // Find all records from the table

@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p><strong>Email:</strong> ${teacher.Email}</p>
             <p><strong>Subject:</strong> ${teacher.Subject}</p>
           </div>
-          <button class="remove-btn" onclick="removeTeacher(${teacher.Teacher_ID})">Remove</button>
+          <button class="remove-btn" onclick="removeTeacher(${teacher.Teach_id})">Remove</button>
         `;
 
         container.appendChild(card);
@@ -64,6 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function removeTeacher(teacherId) {
-  alert(`Remove functionality not implemented yet for Teacher ID: ${teacherId}`);
+  if (confirm("Are you sure you want to delete this record?")) {
+    fetch(
+      `http://localhost/group_project_1.0/public/Institute_teacher/deleteTeacher/${teacherId}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then((data) => {
+        alert("Record deleted successfully!");
+        location.reload();
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
 }
-
