@@ -98,7 +98,7 @@ if ($_SESSION['User_id'] === 'Guest') {
     <p class="popup-message" id="popupMessage"></p>
     <div class="popup-buttons">
         <button class="ok-btn" id="popupOkBtn">OK</button>
-        <button class="cancel-btn" id="popupCancelBtn" onclick="closePopup()">Cancel</button>
+        <button class="cancel-btn" id="popup_CancelBtn" onclick="Popupclose()">Cancel</button>
     </div>
 </div>
 

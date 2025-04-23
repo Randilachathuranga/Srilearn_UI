@@ -5,7 +5,7 @@ function showPopup(message, success, onConfirm = null) {
   const popupOverlay = document.getElementById("popupOverlay");
   const popupMessage = document.getElementById("popupMessage");
   const okBtn = document.getElementById("popupOkBtn");
-  const cancelBtn = document.getElementById("popupCancelBtn");
+  const cancelBtn = document.getElementById("popup_CancelBtn");
 
   popupMessage.textContent = message;
   popupMessage.style.color =
@@ -24,14 +24,14 @@ function showPopup(message, success, onConfirm = null) {
   }
 
   okBtn.onclick = function () {
-    closePopup();
+    Popupclose();
     if (typeof confirmCallback === "function") {
       confirmCallback();
     }
   };
 }
 
-function closePopup() {
+function Popupclose() {
   document.getElementById("popupBox").classList.add("hidden");
   document.getElementById("popupOverlay").classList.add("hidden");
 
@@ -54,7 +54,7 @@ function closePopup() {
     <p class="popup-message" id="popupMessage"></p>
     <div class="popup-buttons">
         <button class="ok-btn" id="popupOkBtn">OK</button>
-        <button class="cancel-btn" id="popupCancelBtn" onclick="closePopup()">Cancel</button>
+        <button class="cancel-btn" id="popup_CancelBtn" onclick="Popupclose()">Cancel</button>
     </div>
 </div> */
 }
