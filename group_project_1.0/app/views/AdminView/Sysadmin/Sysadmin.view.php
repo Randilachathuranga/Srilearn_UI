@@ -16,14 +16,7 @@
     </header>
 
     <!-- Sidebar Menu -->
-    <nav id="side-menu" class="side-menu">
-        <button class="close-menu" onclick="toggleMenu()">×</button>
-        <button onclick="postAnnouncement()">Post Announcements</button>
-        <button onclick="viewAnnouncements()">View Announcements</button>
-        <button onclick="viewBlogs()">View Blogs</button>
-        <button onclick="viewAds()">View Advertisements</button>
-        <button onclick="logout()">Logout</button>
-    </nav>
+   
 
     <!-- Main Content -->
     <div class="main-content">
