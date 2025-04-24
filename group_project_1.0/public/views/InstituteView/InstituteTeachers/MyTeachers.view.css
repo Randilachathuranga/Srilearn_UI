@@ -1,6 +1,6 @@
 /* General Page Styles */
 body {
-  background-color: #ffffff;
+  background-color: #f0f7ff;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -27,7 +27,7 @@ body {
 .header-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #030457;
+  color: #1e56a0;
   margin-bottom: 20px;
 }
 
@@ -59,16 +59,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e8f0f1;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(30, 86, 160, 0.1);
   padding: 20px;
   transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 4px solid #3498db;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(30, 86, 160, 0.2);
 }
 
 /* Card Details */
@@ -79,13 +80,13 @@ body {
 .card-details p {
   margin: 5px 0;
   font-size: 16px;
-  color: #333;
+  color: #2c3e50;
 }
 
 /* Remove Button */
 .remove-btn {
   padding: 10px 20px;
-  background-color: #e74c3c; /* Light red */
+  background-color: #1e56a0;
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -96,10 +97,10 @@ body {
 }
 
 .remove-btn:hover {
-  background-color: #c0392b; /* Dark red */
+  background-color: #164785;
   transform: scale(1.05);
 }
 
 .remove-btn:active {
-  background-color: #a93226; /* Darker red */
+  background-color: #0d2f5a;
 }

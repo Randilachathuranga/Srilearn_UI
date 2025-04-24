@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/ViewTeacher/ViewTeacher.css"> <!-- Link your CSS file -->
+    <!-- <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/ViewTeacher/ViewTeacher.css"> Link your CSS file -->
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/AllteachStyles.css">
 </head>
 <body>

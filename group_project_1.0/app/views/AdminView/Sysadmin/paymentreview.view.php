@@ -4,24 +4,31 @@
   <meta charset="UTF-8">
   <title>Payment Lookup</title>
   <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --primary-hover: #1e3a8a;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7fa;
+      background-color: #e2ece5;
       padding: 30px;
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background-color: #ffffff;
+      background-color:rgb(147, 197, 244);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
       text-align: center;
       margin-bottom: 30px;
+      color: var(--primary);
     }
 
     label {
@@ -29,6 +36,7 @@
       margin-top: 15px;
       margin-bottom: 8px;
       font-weight: bold;
+      color: var(--primary);
     }
 
     select {
@@ -36,24 +44,25 @@
       padding: 10px;
       margin-bottom: 20px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--primary-light);
       font-size: 16px;
     }
 
     button {
       width: 100%;
       padding: 14px;
-      background-color: #007bff;
+      background-color: var(--primary);
       color: #fff;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
       margin-bottom: 20px;
+      transition: background-color 0.2s;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: var(--primary-hover);
     }
 
     .result-section {
@@ -72,33 +81,34 @@
 
     th, td {
       padding: 12px 15px;
-      border: 1px solid #ddd;
+      border: 1px solid #e2e8f0;
       text-align: left;
     }
 
     th {
-      background-color: #007bff;
+      background-color: var(--primary);
       color: #fff;
     }
 
     tr:nth-child(even) {
-      background-color: #f2f2f2;
+      background-color: #f8fafc;
     }
 
     .section-title {
       font-size: 20px;
       margin: 25px 0 10px;
-      color: #333;
-      border-bottom: 2px solid #007bff;
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
       padding-bottom: 5px;
     }
 
     .no-data {
-      background-color: #ffe6e6;
+      background-color: #e2e8f0;
       padding: 10px;
       border-radius: 5px;
       margin-bottom: 20px;
-      border-left: 4px solid #ff4d4d;
+      border-left: 4px solid var(--primary);
+      color: var(--primary);
     }
   </style>
 </head>

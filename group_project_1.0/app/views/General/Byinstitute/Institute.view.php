@@ -72,7 +72,7 @@
     <!-- Popup form for institute details details -->
     <div id="popupForm" class="popup-form" style="display: none;">
   <div class="form-container">
-    <form id="blogForm">
+    <form id="blogForm" onclick="closePopup()">
       <div class="teacher-details">
         <img src="../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg" alt="Teacher Image" id="institute-image" class="teacher-image">
     
@@ -84,7 +84,7 @@
         <p><strong>District:</strong> <span id="institute-district"></span></p>
       </div>
     </form>
-    <button type="button" class="close-button" onclick="closePopup()"></button>
+    <button type="button" class="close-button" onclick="closePopup()">✕</button>
   </div>
 </div>
 
@@ -127,7 +127,7 @@
         <p id="inst_id" style="display: none;"></p>
 
         <button onclick="submitApply()" class="submit-button">Submit</button>
-        <button onclick="closeApply()" class="close-button"></button>
+        <!-- <button onclick="closeApply()" class="close-button">✕</button> -->
     </div>
 </div>
 

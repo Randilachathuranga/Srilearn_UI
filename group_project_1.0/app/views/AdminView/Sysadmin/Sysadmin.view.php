@@ -18,7 +18,7 @@
 
     <!-- Sidebar Menu -->
     <nav id="side-menu" class="side-menu">
-        <button class="close-menu" onclick="toggleMenu()">×</button>
+        <button class="close-menu" onclick="toggleMenu()">Close</button>
         <button onclick="postAnnouncement()">Post Announcements</button>
         <button onclick="viewAnnouncements()">View Announcements</button>
         <button onclick="viewBlogs()">View Blogs</button>

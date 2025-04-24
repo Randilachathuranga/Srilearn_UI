@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  background-color: #f8f9fa;
+  background-color: #e3f2fd;
   margin: 0;
   padding: 0;
 }
@@ -30,20 +30,20 @@ h1 {
   font-size: 4rem;
   font-weight: bold;
   margin: 0 20px;
-  color: #030457;
+  color: #1565c0;
 }
 
 /* Card Styles */
 .card {
   width: 300px;
   margin: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #bbdefb; */
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
   overflow: hidden;
   background-color: #ffffff;
   transition: transform 0.2s, box-shadow 0.2s;
-  color: #030457;
+  color: #1565c0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,22 +52,22 @@ h1 {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.2);
 }
 
 /* Center Image in Card */
 .card img {
   width: 100%;
-  height: auto; /* Adjust height automatically */
-  max-height: 180px; /* Limit max height */
-  object-fit: contain; /* Ensure the whole image fits within */
-  background-color: #f0f0f0; /* Add background color for padding */
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  background-color: #bbdefb;
 }
 
 .card-content {
   padding: 15px;
   width: 100%;
-  text-align: center; /* Center align text */
+  text-align: center;
 }
 
 .card-title {
@@ -81,7 +81,7 @@ h1 {
 }
 
 .card-button {
-  background-color: #030457;
+  background-color: #1565c0;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -91,7 +91,7 @@ h1 {
 }
 
 .card-button:hover {
-  background-color: #07098e;
+  background-color: #0d47a1;
 }
 
 /* Container for label, dropdown, and button */
@@ -106,36 +106,37 @@ h1 {
 /* Label styling */
 .dropdown-label {
   font-size: 1rem;
-  color: #333;
+  color: #1565c0;
   margin-bottom: 5px;
 }
 
 /* Wrapper for dropdown and button to align them horizontally */
 .dropdown-button-wrapper {
   display: flex;
-  gap: 10px; /* Space between dropdown and button */
+  gap: 10px;
 }
 
 /* Dropdown styling */
 .dropdown {
-  flex: 1; /* Takes up remaining space */
+  flex: 1;
   padding: 10px;
   font-size: 1rem;
   border-radius: 5px;
   appearance: none;
   cursor: pointer;
+  /* border: 1px solid #1565c0; */
 }
 
 /* Style for dropdown placeholder option */
 .dropdown option[disabled] {
-  color: #888;
+  color: #90caf9;
 }
 
 /* Search button styling */
 .search-button {
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #030457;
+  background-color: #1565c0;
   color: white;
   border: none;
   border-radius: 5px;
@@ -144,10 +145,8 @@ h1 {
 }
 
 .search-button:hover {
-  background-color: #060883;
+  background-color: #0d47a1;
 }
-
-
 
 /* Media Query for Tablets */
 @media (max-width: 768px) {
@@ -213,12 +212,11 @@ h1 {
   }
 }
 
-
 /* Layout for rows */
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 12px; /* Space between columns */
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -234,12 +232,13 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  color: #030457;
+  color: #1565c0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 }
 
 /* Form container styling */
@@ -249,9 +248,10 @@ h1 {
   border-radius: 15px;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 12px rgba(21, 101, 192, 0.2);
   text-align: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
 }
 
 /* Fade-in effect */
@@ -273,11 +273,11 @@ h1 {
   width: 100%;
   padding: 12px;
   margin-top: 4px;
-  border: 1.5px solid #030457;
+  border: 1.5px solid #1565c0;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 16px;
-  resize: vertical; /* Allows resizing of textarea */
+  resize: vertical;
 }
 
 /* Submit and close button styling */
@@ -288,7 +288,7 @@ h1 {
   border: none;
   border-radius: 25px;
   color: white;
-  background-color: #030457;
+  background-color: #1565c0;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
@@ -296,68 +296,30 @@ h1 {
 }
 
 .submit-button:hover {
-  background-color: #020347;
+  background-color: #0d47a1;
 }
-
 
 /* Responsive Styles */
 @media (min-width: 1024px) {
   .form-container {
-      width: 400px;
-      padding: 30px;
+    width: 400px;
+    padding: 30px;
   }
 }
 
 @media (max-width: 767px) {
   .form-row {
-      grid-template-columns: 1fr; /* Stack fields vertically on small screens */
+    grid-template-columns: 1fr;
   }
 
   input[type="text"], input[type="email"], input[type="tel"], textarea {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .submit-button, .close-button {
-      font-size: 14px;
-      padding: 10px;
+    font-size: 14px;
+    padding: 10px;
   }
-}
-
-
-/* Overlay for popup */
-.popup-form {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  color: #030457;
-  opacity: 1;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Form container styling */
-.form-container {
-  background-color: #ffffff;
-  padding: 25px 25px 35px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transform: scale(1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  position: relative;
 }
 
 /* Teacher Image and Institute Name Row */
@@ -374,8 +336,8 @@ h1 {
   height: 100px;
   border-radius: 12px;
   margin-right: 15px;
-  border: 4px solid #030457;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border: 4px solid #1565c0;
+  box-shadow: 0px 4px 10px rgba(21, 101, 192, 0.15);
 }
 
 /* Institute Name beside Image */
@@ -386,7 +348,7 @@ h1 {
 
 .institute-info p {
   margin: 0;
-  color: #030457;
+  color: #1565c0;
   font-weight: 600;
 }
 
@@ -398,24 +360,11 @@ h1 {
 
 .teacher-details p {
   font-size: 15px;
-  color: #030457;
+  color: #1565c0;
   margin: 8px 0;
   font-weight: 500;
-  border-bottom: 1px solid #e0e0e0;
+  /* border-bottom: 1px solid #bbdefb; */
   padding-bottom: 5px;
-}
-
-/* Form input styling */
-.form-container input[type="text"],
-.form-container textarea {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1.5px solid #030457;
-  border-radius: 8px;
-  box-sizing: border-box;
-  font-size: 16px;
-  resize: vertical; /* Allows resizing of textarea */
 }
 
 /* Close button with cross mark */
@@ -424,94 +373,22 @@ h1 {
   top: 10px;
   right: 10px;
   background: transparent;
-  color: #030457;
+  color: #1565c0;
   font-size: 24px;
   border: none;
   cursor: pointer;
   transition: color 0.3s;
+  z-index: 1001;
 }
 
 .close-button:hover {
-  color: #d32f2f;
+  color: #0d47a1;
 }
 
-.close-button::before {
-  content: "✕"; /* Cross mark */
-}
-
-/* Submit button styling */
-.submit-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 25px;
-  color: white;
-  background-color: #030457;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #020347;
-}
 
 /* Description textarea */
 #description {
   height: 150px;
-}
-
-/* Responsive Styles */
-/* For large screens and desktops */
-@media (min-width: 1024px) {
-  .form-container {
-      width: 450px;
-      padding: 30px;
-  }
-
-  #description {
-      height: 200px;
-  }
-}
-
-/* For tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .form-container {
-      width: 80%;
-      max-width: 500px;
-  }
-
-  #description {
-      height: 180px;
-  }
-}
-
-/* For phones */
-@media (max-width: 767px) {
-  .teacher-header {
-      flex-direction: column;
-      align-items: center;
-  }
-
-  .teacher-image {
-      margin-bottom: 10px;
-  }
-
-  .form-container {
-      width: 90%;
-      padding: 20px;
-  }
-
-  input[type="text"], textarea {
-      font-size: 14px;
-  }
-
-  .submit-button, .close-button {
-      font-size: 14px;
-      padding: 10px;
-  }
 }
 
 /* Styling for the Subject Dropdown */
@@ -519,25 +396,23 @@ h1 {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 1.5px solid #030457;
+  border: 1.5px solid #1565c0;
   border-radius: 8px;
   background-color: #ffffff;
-  appearance: none; /* Removes default browser styles */
+  appearance: none;
   cursor: pointer;
-  color: #333;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: #1565c0;
+  box-shadow: 0px 4px 8px rgba(21, 101, 192, 0.1);
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #subject:focus {
-  border-color: #060883;
-  box-shadow: 0px 0px 8px rgba(6, 8, 131, 0.5);
+  border-color: #0d47a1;
+  box-shadow: 0px 0px 8px rgba(21, 101, 192, 0.5);
   outline: none;
 }
 
 #subject option {
-  color: #333;
+  color: #1565c0;
   background-color: #ffffff;
 }
-
-

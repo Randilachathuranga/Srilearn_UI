@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #eef2f5;
+    background: #f0f7ff;
     margin: 0;
     padding: 20px;
   }
@@ -14,7 +14,7 @@ body {
   }
   
   .top-bar button {
-    background-color: #28a745;
+    background-color: #1e56a0;
     color: #fff;
     padding: 12px 24px;
     font-size: 16px;
@@ -25,7 +25,7 @@ body {
   }
   
   .top-bar button:hover {
-    background-color: #218838;
+    background-color: #164785;
   }
   
   #container {
@@ -39,9 +39,10 @@ body {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(30, 86, 160, 0.1);
     width: 320px;
     transition: transform 0.2s ease;
+    border-left: 4px solid #3498db;
   }
   
   .record:hover {
@@ -51,13 +52,13 @@ body {
   .record h3 {
     margin-top: 0;
     font-size: 20px;
-    color: #343a40;
+    color: #1e56a0;
   }
   
   .record p {
     margin: 6px 0;
     font-size: 15px;
-    color: #555;
+    color: #5a6268;
   }
   
   .btn-group {
@@ -74,27 +75,42 @@ body {
     font-size: 14px;
     cursor: pointer;
     color: #fff;
-    background-color: #007bff;
+    width: 120px;
     transition: background-color 0.3s ease;
   }
   
-  .record button:hover {
-    background-color: #0056b3;
+  /* View Students button - light blue */
+  .record button:nth-child(1) {
+    background-color: #90caf9;
   }
   
-  .record button.red {
-    background-color: #dc3545;
+  .record button:nth-child(1):hover {
+    background-color: #64b5f6;
   }
   
-  .record button.red:hover {
-    background-color: #a71d2a;
+  /* Pay Teacher button - dark blue */
+  .record button:nth-child(2) {
+    background-color: #1e56a0;
   }
   
-  .record button.blue {
-    background-color: #17a2b8;
+  .record button:nth-child(2):hover {
+    background-color: #164785;
   }
   
-  .record button.blue:hover {
-    background-color: #117a8b;
+  /* Delete button - red */
+  .record button:nth-child(3) {
+    background-color: #e74c3c;
   }
   
+  .record button:nth-child(3):hover {
+    background-color: #c0392b;
+  }
+  
+  /* Class Schedules button - gray */
+  .record button:nth-child(4) {
+    background-color: #90a4ae;
+  }
+  
+  .record button:nth-child(4):hover {
+    background-color: #78909c;
+  }
