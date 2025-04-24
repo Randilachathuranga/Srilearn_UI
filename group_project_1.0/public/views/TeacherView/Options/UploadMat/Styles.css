@@ -22,7 +22,7 @@ h1 {
 
 /* Upload button styles */
 #uploadMat,#request,#ShowRequests{
-  background-color: #3498db;
+  background-color: #000080;
   color: white;
   padding: 12px 24px;
   border-radius: 5px;
@@ -34,7 +34,8 @@ h1 {
 }
 
 #uploadMat:hover,#ShowRequests:hover,#request:hover {
-  background-color: #2980b9;
+  background-color: #000080;
+
 }
 
 /* Overlay styles */
@@ -92,7 +93,7 @@ h1 {
 }
 
 #uploadForm button {
-  background-color: #2ecc71;
+  background-color: #243eea;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -103,7 +104,7 @@ h1 {
 }
 
 #uploadForm button:hover {
-  background-color: #27ae60;
+  background-color: #243eea;
 }
 
 /* Materials list styles */
@@ -148,7 +149,7 @@ h1 {
 
 .material-item a {
   display: inline-block;
-  background-color: #3498db;
+  background-color: #000080;
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
@@ -158,7 +159,7 @@ h1 {
 }
 
 .material-item a:hover {
-  background-color: #2980b9;
+  background-color: #000080;
 }
 
 .material-item .delete-btn{
@@ -176,7 +177,7 @@ h1 {
 }
 
 .material-item .Update-btn{
-  background-color: #41df33;
+  background-color: #243eea;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -186,7 +187,7 @@ h1 {
 }
 
 .material-item .Update-btn:hover {
-  background-color: #0d9f23;
+  background-color: #243eea;
 }
 
 /* Responsive design */
@@ -266,7 +267,7 @@ h1 {
 
 #uploadForm button,
 #updateForm button {
-    background-color: #2ecc71;
+    background-color: #243eea;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -283,7 +284,7 @@ h1 {
 
 #uploadForm button:hover,
 #updateForm button:hover {
-    background-color: #27ae60;
+    background-color: #243eea;
 }
 
 #updateForm button[type="button"]:hover {
@@ -292,7 +293,7 @@ h1 {
 
 /* Update the material item styles */
 .material-item .update-btn {
-    background-color: #27ae60;
+    background-color: #243eea;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -397,7 +398,7 @@ h1 {
 }
 
 .approve-button {
-  background-color: #28a745;
+  background-color: #243eea;
   color: white;
 }
 
@@ -411,3 +412,41 @@ h1 {
   padding: 20px;
   color: #666;
 }
+/* ...existing code... */
+
+/* Modern Image Styling */
+.featured-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 30px auto;
+  display: block;
+  object-fit: cover;
+}
+
+.featured-image:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .featured-image {
+    max-width: 95%;
+    border-radius: 8px;
+  }
+}
+
+/* ...existing code... */

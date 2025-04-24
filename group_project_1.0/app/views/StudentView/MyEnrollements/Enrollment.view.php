@@ -101,10 +101,29 @@ container.appendChild(rec);
         function chatwithteacher(reciever_id) {
         window.location.href = `Chat/mychat/${reciever_id}`;
     }
+    
     function payclassfee(classid) {
-        
-        window.location.href = `Payment/classfee/${classid}`;
-    }
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkClassFee/${classid}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error); // Missed too many months
+            } else if (data.message) {
+                alert(data.message); // Already paid this month
+            } else if (data.warning) {
+                alert(data.warning); // Need to pay both months
+                window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
+            } else if (data.status === 'ok') {
+                window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
+            }
+        })
+        .catch(error => {
+            console.error('Error checking class fee:', error);
+            alert('Something went wrong. Please try again.');
+        });
+}
+
+
 
         function deleteEnrollment(id) {
             alert("Are you sure you want to leave this class?");

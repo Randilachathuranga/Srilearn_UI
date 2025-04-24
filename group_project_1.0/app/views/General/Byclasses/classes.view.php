@@ -142,7 +142,36 @@
             const rec = document.createElement('div');
             rec.className = 'record';
 
+            const subjectImages = {
+                Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
+                Agriculture: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
+                Art: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Art.jpeg",
+                BioSystemsTechnology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
+                Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+                Buddhism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
+                Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+                Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+                English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+                Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+                History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+                IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
+                BusinessStudies: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
+                Catholicism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
+                CivicEducation: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
+                Commerce: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
+                Drama: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
+                Engineering: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
+                Geography: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg",
+                Health: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg",
+                Science: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
+                Sinhala: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+                Tamil: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+            };
+
+            const subjectImage = subjectImages[record.Subject] || "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/default.png";
+            
             rec.innerHTML = `
+                <img src="${subjectImage}" alt="${record.Subject}" class="subject-image">
                 <h2>Subject: ${record.Subject}</h2>
                 <h5>Teacher : ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
                 <h3>Grade: ${record.Grade}</h3>
@@ -171,13 +200,30 @@
     }
 
     function proceedtopayment(classID, subject, teacher, fee) {
-        const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
-        url.searchParams.set('classID', classID);
-        url.searchParams.set('subject', subject);
-        url.searchParams.set('teacher', teacher);
-        url.searchParams.set('fee', fee);
-        window.location.href = url.toString();
-    }
+    // First check if already enrolled
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkEnrollment?classID=${classID}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Error checking enrollment');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            // If not enrolled, proceed to payment
+            const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
+            url.searchParams.set('classID', classID);
+            url.searchParams.set('subject', subject);
+            url.searchParams.set('teacher', teacher);
+            url.searchParams.set('fee', fee);
+            window.location.href = url.toString();
+        })
+        .catch(error => {
+            // Show error in alert
+            alert(error.message);
+        });
+}
 
     function handleEnrollment(classId) {
         fetch(`http://localhost/group_project_1.0/public/Enrollment/post/${classId}`, {

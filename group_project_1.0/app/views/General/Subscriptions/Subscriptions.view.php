@@ -102,8 +102,25 @@
         }
 
         function handlepayment(planType) {
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkSubscription/${planType}`)
+        .then(response => {
+            if (response.status === 403) {
+                return response.json().then(data => {
+                    alert(data.error); // Show alert if already subscribed
+                    throw new Error(data.error);
+                });
+            }
+            return response.json(); // or just continue
+        })
+        .then(() => {
+            // Now proceed to subscription if no error
             window.location.href = `http://localhost/group_project_1.0/public/Payment/subscibe/${planType}`;
-        }
+        })
+        .catch(error => {
+            console.error('Subscription check failed:', error);
+        });
+}
+
     </script>
 </body>
 </html>

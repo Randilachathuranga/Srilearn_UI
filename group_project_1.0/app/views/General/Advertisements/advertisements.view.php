@@ -191,7 +191,7 @@ if ($_SESSION['User_id'] === 'Guest') {
         </select>
 
         <?php 
-        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+        if (isset($_SESSION['Role']) && (($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')&&$_SESSION['isadavail'] === 1)) { 
             echo '
             <div class="create-button">
                 <button onclick="handleClick()">Create Your Own Advertisement</button>

@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const chatCell = document.createElement("td");
                 const chatButton = document.createElement("button");
                 chatButton.textContent = "Send Message";
-                chatButton.className = "btn-chat";
+                chatButton.className = "btn-message";
                 chatButton.addEventListener("click", function() {
                     chatredirect(student.Stu_id);
                 });

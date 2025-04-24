@@ -9,6 +9,31 @@ $secretkey = 'sk_test_51RCnSJ2Ktn6PclayNmLuTjaGOIO5fQ0gDldxrnfOT5b6lfv1lKYffZmaD
 class Payment extends Controller
 {
 
+    public function checkSubscription($Type) {
+        $subdetailmodel = new Subdetailsmodel();
+        $sub = new Subscriptionmodel();
+        $userId = $_SESSION['User_id'];
+    
+        $result = $subdetailmodel->query("SELECT * FROM subdetails WHERE Type = ?", [$Type]);
+        $row = $result[0] ?? null;
+    
+        if (!$row) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Subscription type not found.']);
+            return;
+        }
+    
+        $existingSubscription = $sub->first(['P_id' => $userId]);
+        if ($existingSubscription && $existingSubscription->End_data > date('Y-m-d')) {
+            http_response_code(403);
+            echo json_encode(['error' => 'You are already subscribed.']);
+            return;
+        }
+    
+        echo json_encode(['status' => 'ok']);
+    }
+    
+
     public function subscibe($Type) {
        
         $subdetailmodel = new Subdetailsmodel();
@@ -24,7 +49,7 @@ class Payment extends Controller
             return;
         }
         $existingSubscription = $sub->first(['P_id' => $userId]);
-        if ($existingSubscription) {
+        if ($existingSubscription && $existingSubscription->End_data > date('Y-m-d')) {
             http_response_code(403);
             echo json_encode(['error' => 'You are already subscribed.']);
             return;
@@ -66,6 +91,73 @@ class Payment extends Controller
             exit();
         }
     }
+
+    public function checkClassFee($classid) {
+        $paymentmodel = new Paymentmodel();
+        $enrollmodel = new Enrollmodel();
+        $userId = $_SESSION['User_id'] ?? null;
+    
+        header('Content-Type: application/json');
+    
+        if (!$userId) {
+            http_response_code(401);
+            echo json_encode(['error' => 'User not logged in.']);
+            return;
+        }
+    
+        // Check enrollment date
+        $enrollment = $enrollmodel->first(['Stu_id' => $userId, 'Class_id' => $classid]);
+        if (!$enrollment) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Enrollment not found.']);
+            return;
+        }
+    
+        $enrollDate = new DateTime($enrollment->Date);
+        $currentDate = new DateTime();
+        $previousMonthDate = (clone $currentDate)->modify('-1 month');
+        $twoMonthsAgoDate = (clone $currentDate)->modify('-2 months');
+    
+        // Fetch payments
+        $payments = $paymentmodel->where([
+            'User_id' => $userId,
+            'classID' => $classid,
+            'Type' => 'Classfee'
+        ]);
+    
+        $paidMonths = [];
+        foreach ($payments as $payment) {
+            $paidMonth = date('Y-m', strtotime($payment->Date));
+            $paidMonths[] = $paidMonth;
+        }
+    
+        $currentMonth = $currentDate->format('Y-m');
+        $previousMonth = $previousMonthDate->format('Y-m');
+        $twoMonthsAgo = $twoMonthsAgoDate->format('Y-m');
+    
+        $enrolledBeforePrevMonth = $enrollDate < $previousMonthDate;
+    
+        // Logic
+        if (in_array($currentMonth, $paidMonths)) {
+            echo json_encode(['message' => 'You have already paid the class fee for this month.']);
+            return;
+        }
+    
+        if ($enrolledBeforePrevMonth && !in_array($previousMonth, $paidMonths)) {
+            if (!in_array($twoMonthsAgo, $paidMonths)) {
+                echo json_encode(['error' => 'You have missed more than one month of payment. Please contact your institute or teacher.']);
+                return;
+            } else {
+                echo json_encode(['warning' => 'Previous month fee is also due. You need to pay for both months.']);
+                return;
+            }
+        }
+    
+        echo json_encode(['status' => 'ok']); // Eligible to proceed with payment
+    }
+    
+
+    
     public function classfee($classid) {
         $class = new Classmodel();
         $paymentmodel = new Paymentmodel();
@@ -200,6 +292,53 @@ class Payment extends Controller
         }
         
     }
+
+    public function checkinstpayreq() {
+        $model = new Reqinstpaymodel();
+        $id = $_SESSION['User_id'];
+        
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+        
+        $data = [
+            'inst_id' => $id
+        ];
+        
+        $results = $model->where($data);
+        
+        $foundCurrentMonth = false;
+        $currentMonthRecord = null;
+        
+        if ($results) {
+            foreach ($results as $record) {
+                $recordDate = strtotime($record->date);
+                $recordMonth = date('m', $recordDate);
+                $recordYear = date('Y', $recordDate);
+                
+                if ($recordMonth == $currentMonth && $recordYear == $currentYear) {
+                    $foundCurrentMonth = true;
+                    $currentMonthRecord = $record;
+                    break;
+                }
+            }
+        }
+        
+        if ($foundCurrentMonth) {
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Payment request already exists for this month.',
+                'data' => $currentMonthRecord
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error', 
+                'message' => 'No payment request found for this month for this instructor.'
+            ]);
+        }
+    }
+
+
+
     public function requestMonthlyPayment() {
         $model=new Reqinstpaymodel();
         $id = $_SESSION['User_id'];

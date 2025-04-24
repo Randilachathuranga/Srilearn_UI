@@ -94,30 +94,64 @@
     console.log("Class ID stored in sessionStorage:", Class_id);
 }
 
+  
+    //
     function requestMonthlyPayment() {
-      fetch(`http://localhost/group_project_1.0/public/Payment/requestMonthlyPayment`, {
+    // First check if a payment request already exists for this month
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userID })
-      })
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      })
-      .then(data => {
-        if (data.success) {
-          alert('Monthly payment request sent successfully!');
-          location.reload();
-        } else {
-          alert('Failed to send monthly payment request.');
+        headers: {
+            'Content-Type': 'application/json'
         }
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
-    }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            // Payment request already exists for this month
+            alert(data.message);
+        } else {
+            // No payment request for this month, proceed with creating one
+            createPaymentRequest();
+        }
+    })
+    .catch(error => {
+        console.error('There was an error checking payment request status!', error);
+    });
+}
 
-
+function createPaymentRequest() {
+    fetch(`http://localhost/group_project_1.0/public/Payment/requestMonthlyPayment`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userID })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Monthly payment request sent successfully!');
+            location.reload(); // Reload the page to see updated data
+        } else {
+            alert('Failed to send monthly payment request.');
+        }
+    })
+    .catch(error => {
+        console.error('There was an error creating payment request!', error);
+    });
+}
+    
+    //
     function viewclassschedules(Class_id) {
     sessionStorage.setItem("class_id", Class_id);
     window.location.href =
