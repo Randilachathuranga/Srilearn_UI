@@ -70,20 +70,23 @@ h1 {
     color: var(--surface);
 }
 
-/* Sidebar Menu */
+/* Side Menu */
 .side-menu {
     position: fixed;
-    left: -250px;  /* Initially hidden */
+    left: -300px;
     top: 0;
-    width: 250px;
+    width: 300px;
     height: 100%;
     background-color: var(--surface);
-    transition: left 0.3s ease;  /* Smooth transition */
+    color: var(--text);
+    padding: 2rem;
+    transition: transform 0.3s ease;
     z-index: 1000;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .side-menu.visible {
-    left: 0;  /* Slide in when toggled */
+    transform: translateX(300px);
 }
 
 .side-menu button {
@@ -107,9 +110,47 @@ h1 {
 
 /* Close Button for Sidebar */
 .close-menu {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
+    height: 10rem; /* Match the height of other side menu buttons */
+    width: 2.5rem; /* Adjust width to maintain square shape */
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1rem; /* Adjust font size for consistency */
+    cursor: pointer;
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+.close-menu:hover {
+    color: var(--primary-light);
+}
+.close-menu {
+    top: 10px;
+    right: 10px;
+    height: 6.5rem; /* Increased height */
+    width: 2.5rem; /* Added width for centering */
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex; /* Added flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+.close-menu:hover {
+    color: var(--primary-light);
+}
+.close-menu {
+    top: 10px;
+    right: 10px;
+    height: 0;
     background: none;
     border: none;
     color: var(--text);
@@ -122,26 +163,39 @@ h1 {
 }
 
 /* Stats Container for Pie Chart and Counts */
+/* Stats Container for Pie Chart and Counts */
 .stats-container {
     background-color: var(--surface);
     border-radius: 0.75rem;
     padding: 1.5rem;
+    margin: 0 auto;
     margin-bottom: 1.5rem;
+    margin-left: 5%;  /* Reduce space from the left (adjust this percentage as needed) */
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    transition: transform 0.2s ease;
+    width: 100%;  /* Increase width of the container (adjust this percentage as needed) */
+    height: 100%;
+    max-width: 800px; 
+    max-height: 550px; /* Optional: ensures it doesn't grow too wide */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 70%;
-    margin: 0 auto;
 }
 
+/* Container for both chart and info */
+.stats-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    height: 500px;
+}
+
+/* Chart and Info Styling */
 .stats-chart {
-    width: 40%; /* Adjusted smaller pie chart */
+    width: 50%;
 }
 
 .stats-info {
-    width: 55%;
 }
 
 .stats-info h3 {
@@ -154,7 +208,19 @@ h1 {
     font-size: 1.5rem;
     color: var(--text);
 }
+.stats-container {
+    height: 400px; /* Adjusted height */
+    margin: 0 auto; /* Centers the container horizontally */
+    display: flex;
+    flex-grow: 3; /* Further increases the chart's size */
+    flex-shrink: 1; /* Ensures it shrinks properly if needed */
+    justify-content: center;
+    align-items: center; /* Centers the content vertically */
+}
 
+.stats-chart {
+    width: 500%; /* Increased size of the chart */
+}
 .stats-info .stat-item span {
     font-weight: bold;
     color: var(--primary);
@@ -185,12 +251,12 @@ h1 {
 }
 
 .top-buttons button:hover {
-    background: #357ae8;
+    background: #0e5ddb;
 }
 
 /* Table Styling */
 .data-table {
-    width: 80%; /* Adjusted table width */
+    width: 80%;
     background-color: var(--surface);
     border-radius: 0.75rem;
     overflow: hidden;
@@ -198,7 +264,7 @@ h1 {
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     border-collapse: separate;
     border-spacing: 0;
-    margin: 0 auto; /* Center the table */
+    margin: 0 auto;
 }
 
 .data-table caption {
@@ -222,10 +288,6 @@ h1 {
     padding: 1rem 1.5rem;
     color: var(--text);
     border-bottom: 1px solid var(--border);
-}
-
-.data-table tr {
-    margin-bottom: 8px;
 }
 
 .data-table tr:hover {
@@ -291,7 +353,7 @@ h1 {
     }
 
     .side-menu {
-        width: 250px;
+        width: 10px;
     }
 
     .side-menu.visible {
