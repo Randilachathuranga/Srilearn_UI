@@ -90,13 +90,23 @@
             const rec = document.createElement('div');
             rec.className = 'record';
             rec.innerHTML = `
-              <h3>Class ID: ${record.InstClass_id}</h3>
-              <p>Teacher ID: ${record.N_id}</p>
-              <h5>Location: ${record.Location}</h5>
-              <h5>Hall: ${record.Hall_number}</h5>
-              <button onclick="viewstudents(${record.InstClass_id})">View Students</button>
-              <button onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
-              <button onclick="handleDelete(${record.InstClass_id})">Delete</button>
+              <h2 ><strong>Subject:</strong> ${record.Subject}</h2>
+              <h3>${record.F_name} ${record.L_name}</h3>
+              <p><strong>Location:</strong> ${record.Location}</p>
+              <p><strong>Hall:</strong> ${record.Hall_number}</p>
+              <p><strong>Start Date:</strong> ${record.Start_date}</p>
+              <p><strong>End Date:</strong> ${record.End_date}</p>
+              <p><strong>Grade:</strong> ${record.Grade}</p>
+              <p><strong>Max Students:</strong> ${record.Max_std}</p>
+              <p><strong>Fee:</strong> Rs.${record.fee}</p>
+                <p><strong>Date:</strong> ${record.Def_Date}</p>
+              <p><strong>Time:</strong> Rs.${record.Def_Time}</p>
+              <div class="btn-group">
+                <button onclick="viewStudents(${record.InstClass_id})">View Students</button>
+                <button  onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
+                <button class="red" onclick="handleDelete(${record.InstClass_id})">Delete</button>
+                <button  onclick="viewclassschedules(${record.InstClass_id})">Class Shedules</button>
+              </div>
             `;
             container.appendChild(rec);
           });
