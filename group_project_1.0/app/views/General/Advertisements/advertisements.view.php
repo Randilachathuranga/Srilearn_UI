@@ -203,6 +203,14 @@ if ($_SESSION['User_id'] === 'Guest') {
 
     <div id="adContainer" class="ad-container"></div>
 </div>
+<div class="popup-overlay hidden" id="popupOverlay"></div>
+<div class="popup hidden" id="popupBox">
+    <p class="popup-message" id="popupMessage"></p>
+    <div class="popup-buttons">
+        <button class="ok-btn" id="popupOkBtn">OK</button>
+        <button class="cancel-btn" id="popup_CancelBtn" onclick="Popupclose()">Cancel</button>
+    </div>
+</div> 
 
 <script src="/group_project_1.0/public/views/General/Popup.js"></script> 
 
