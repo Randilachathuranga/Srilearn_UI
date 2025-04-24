@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
 </head>
 <body>
+    
     <!-- Header with Menu Button -->
     <header>
         <button id="menu-button" class="menu-button" onclick="toggleMenu()">☰</button>
@@ -16,12 +17,23 @@
     </header>
 
     <!-- Sidebar Menu -->
-   
+    <nav id="side-menu" class="side-menu">
+        <button class="close-menu" onclick="toggleMenu()">×</button>
+        <button onclick="postAnnouncement()">Post Announcements</button>
+        <button onclick="viewAnnouncements()">View Announcements</button>
+        <button onclick="viewBlogs()">View Blogs</button>
+        <button onclick="viewAds()">View Advertisements</button>
+        <button onclick="viewpayreq()">Payment Requests</button>
+        <button onclick="viewsignupreq()">SignUp Requests</button>
+        <button onclick="Analyze()">Payment Analytics</button>
+        <button onclick="logout()">Logout</button>
+    </nav>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Stats Container for Pie Chart and Counts -->
-        <div id="stats-container" class="stats-container">
+  <!-- Main Content -->
+<div class="main-content">
+    <!-- Stats Container for Pie Chart and Counts -->
+    <div id="stats-container" class="stats-container">
+        <div class="stats-content">
             <div class="stats-chart">
                 <canvas id="statsChart"></canvas>
             </div>
@@ -32,6 +44,9 @@
                 <div class="stat-item">Institutes: <span id="institutes-count">0</span></div>
             </div>
         </div>
+    </div>
+</div>
+
 
         <!-- Navigation Buttons for Tables -->
         <nav class="top-buttons">
@@ -192,8 +207,8 @@
                     tbody.innerHTML = '';
                     data.forEach(record => {
                         const row = document.createElement('tr');
-                        row.innerHTML = ` 
-                            <td>${record.User_id}</td>
+                        row.innerHTML =  
+                            `<td>${record.User_id}</td>
                             <td>${record.F_name}</td>
                             <td>${record.L_name}</td>
                             <td>${record.Email}</td>
@@ -208,7 +223,7 @@
                     });
                     document.getElementById(tableId).style.display = 'table';
                 })
-                .catch(error => console.error(`Error fetching ${tableId} data:`, error));
+                .catch(error => console.error('Error fetching data:', error));
         }
 
         // Handle button clicks for displaying data
@@ -243,6 +258,39 @@
         // Redirect to the update form
         function goToUpdateForm(userId) {
             window.location.href = `Sysadmin/update/${userId}`;
+        }
+
+        // Side menu actions
+        function postAnnouncement() {
+            window.location.href = 'Announcement/index';
+        }
+
+        function viewpayreq(){
+            window.location.href = 'Sysadmin/paymentreq';
+        }
+
+        function viewsignupreq(){
+            window.location.href = 'Sysadmin/signupre';
+        }
+
+        function viewAnnouncements() {
+            window.location.href = 'Announcement/viewann';
+        }
+
+        function viewAds() {
+            window.location.href = 'Advertisements';
+        }
+
+        function viewBlogs() {
+            window.location.href = 'Blog';
+        }
+
+        function logout() {
+            window.location.href = 'Signout';
+        }
+
+        function Analyze() {
+            window.location.href = 'Sysadmin/paymentreview';
         }
 
         // Initialize the page
