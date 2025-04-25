@@ -42,7 +42,6 @@
                                 <h2>Title: ${record.Title}</h2>
                                 <p>Content: ${record.Content}</p>
                                 <h5>Date: ${record.Post_date}</h5>
-                                <h5>Likes: ${record.Likes}</h5>
                                 <button onclick="handleDelete(${record.Blog_id})">Delete</button>
                                 <button onclick="toggleUpdateForm(${record.Blog_id})">Update</button>
                                 
@@ -81,10 +80,11 @@
 
         // Function to handle blog deletion
         function handleDelete(blogId) {
+            if (confirm('Are you sure you want to delete this blog?')) {
             fetch(`http://localhost/group_project_1.0/public/Blog/mydeleteapi/${blogId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
                 }
             })
             .then(() => {
@@ -93,6 +93,7 @@
             .catch(error => {
                 console.error('Error deleting record:', error);
             });
+            }
         }
 
         // Function to handle blog update

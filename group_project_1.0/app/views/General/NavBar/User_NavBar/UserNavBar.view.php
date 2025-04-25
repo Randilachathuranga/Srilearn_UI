@@ -64,7 +64,7 @@
         <?php
         }
         ?> 
-        <?php if ($_SESSION['Role'] == "student" || $_SESSION['Role'] == "teacher" ) { ?>
+        <?php if ($_SESSION['Role'] == "teacher" ) { ?>
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <?php } ?> 
 
@@ -124,7 +124,7 @@
         <?php
         }
         ?> 
-        <?php if ($_SESSION['Role'] == "student" || $_SESSION['Role'] == "teacher" ) { ?>
+        <?php if ($_SESSION['Role'] == "teacher" ) { ?>
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <?php } ?> 
 

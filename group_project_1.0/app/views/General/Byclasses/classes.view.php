@@ -200,30 +200,13 @@
     }
 
     function proceedtopayment(classID, subject, teacher, fee) {
-    // First check if already enrolled
-    fetch(`http://localhost/group_project_1.0/public/Payment/checkEnrollment?classID=${classID}`)
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => {
-                    throw new Error(data.error || 'Error checking enrollment');
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            // If not enrolled, proceed to payment
-            const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
-            url.searchParams.set('classID', classID);
-            url.searchParams.set('subject', subject);
-            url.searchParams.set('teacher', teacher);
-            url.searchParams.set('fee', fee);
-            window.location.href = url.toString();
-        })
-        .catch(error => {
-            // Show error in alert
-            alert(error.message);
-        });
-}
+        const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
+        url.searchParams.set('classID', classID);
+        url.searchParams.set('subject', subject);
+        url.searchParams.set('teacher', teacher);
+        url.searchParams.set('fee', fee);
+        window.location.href = url.toString();
+    }
 
     function handleEnrollment(classId) {
         fetch(`http://localhost/group_project_1.0/public/Enrollment/post/${classId}`, {

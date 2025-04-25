@@ -4,7 +4,7 @@ session_start();
 // Load appropriate NavBar
 if ($_SESSION['User_id'] === 'Guest') {
     require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
-} elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+} else if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
     require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
 }
 ?>

@@ -241,7 +241,7 @@
 
         // Handle delete of a record
         function handleDelete(userId, tableId) {
-            fetch(`sysadmin/deleteapi/${userId}, { method: 'DELETE' }`)
+            fetch(`http://localhost/group_project_1.0/public/sysadmin/deleteapi/${userId}`)
                 .then(response => {
                     if (!response.ok) throw new Error('Failed to delete');
                     return response.json();
@@ -251,6 +251,7 @@
                     if (tableId === 'student-table') handleStudents();
                     else if (tableId === 'teacher-table') handleTeachers();
                     else if (tableId === 'institute-table') handleInstitutes();
+                    window.location.reload(); // Reload the page to reflect changes
                 })
                 .catch(error => console.error('Error deleting record:', error));
         }

@@ -366,9 +366,9 @@ class Payment extends Controller
         $allResults = array_merge($enrollmentResults ?: [], $classFeeResults ?: []);
     
         // Filter by current month
-        $currentMonth = date('Y-m'); // Example: 2025-04
-        $filtered = array_filter($allResults, function ($record) use ($currentMonth) {
-            return isset($record->Date) && strpos($record->Date, $currentMonth) === 0;
+        $previousMonth = date('Y-m', strtotime('-1 month')); // Gets previous month (e.g., 2025-03 if current is 2025-04)
+        $filtered = array_filter($allResults, function ($record) use ($previousMonth) {
+            return isset($record->Date) && strpos($record->Date, $previousMonth) === 0;
         });
     
         // Calculate total amount

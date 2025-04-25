@@ -185,15 +185,15 @@ form textarea:focus {
 
 form button {
     align-self: flex-end;
-    background-color: #28a745;
+    background-color: #0d47a1;
 }
 
 form button:hover {
-    background-color: #218838;
+    background-color: #0d47a1;
 }
 
 form button:active {
-    background-color: #1e7e34;
+    background-color: #0d47a1;
 }
 
 /* Animations */

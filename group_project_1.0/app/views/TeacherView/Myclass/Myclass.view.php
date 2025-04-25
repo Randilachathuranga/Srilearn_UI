@@ -34,7 +34,7 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
-<button onclick="reqpaymentind()">Request Payment</button>
+<button class="create-blog-button" onclick="reqpaymentind()">Request Payment</button>
 
 </div>
 
