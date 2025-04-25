@@ -32,6 +32,7 @@ async function fetchClassData() {
       <div><span class="label">Phone Number:</span> ${item.Phone_number}</div>
         <div><span class="label">District:</span> ${item.District}</div>
       <div><span class="label">Address:</span> ${item.Address}</div>
+      <div><button onclick="Viewpendingreq(${classId})" class="pending">Pending Requests</button></div>
     `;
 
     // If everything succeeded, show the button
@@ -44,6 +45,14 @@ async function fetchClassData() {
 }
 
 fetchClassData();
+
+function Viewpendingreq(classId){
+  window.location.href=`http://localhost/group_project_1.0/public/Requestpayroll_forteacher/viewclassreq/${classId}` 
+}
+
+
+
+
 
 function requestPayroll() {
   const popup = document.getElementById("payrollPopup");

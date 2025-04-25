@@ -1,190 +1,184 @@
-/* General Reset */
+/* Modern Professional Signup Form CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #4a90e2, #003d99); /* Light to Dark Blue */
+    background: linear-gradient(135deg, #0077b6, #00b4d8);
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align items to the top */
+    align-items: center;
     min-height: 100vh;
-    color: #fff;
-    overflow-y: auto; /* Allows vertical scrolling */
-    padding: 20px; /* Adding padding to ensure content doesn't touch edges */
+    color: #333;
+    padding: 20px;
 }
 
-/* Adding animated gradient background */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at top left, #4a90e2, #003d99);
-    z-index: -1;
-    animation: backgroundMove 8s linear infinite;
-    transform: rotate(0deg);
-}
-
-/* Centering the container */
 .container {
     width: 100%;
     max-width: 800px;
-    background: rgba(255, 255, 255, 0.25); /* More transparent for elegance */
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    padding: 25px;
-    animation: fadeIn 1s ease-in-out;
-    backdrop-filter: blur(10px); /* Frosted glass effect */
-    overflow: hidden; /* Prevents content overflow */
-}
-
-/* Form Wrapper */
-.form-wrapper {
-    text-align: center;
-}
-
-.form-wrapper h1 {
-    margin-bottom: 20px;
-    font-weight: 700;
-    font-size: 2.5rem;
-    color: #ffffff;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Error Messages */
-.error-messages {
-    background-color: rgba(255, 0, 0, 0.1);
-    color: #ff4444;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border-left: 4px solid #ff4444;
-    animation: shake 0.5s ease-in-out;
-}
-
-/* Form Groups */
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.double-field {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.input-wrapper {
-    width: 48%; /* Ensure the fields occupy 48% of the width */
-}
-
-/* Label Styling */
-.form-group label {
-    display: block;
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-/* Input and Select Styling */
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
-    outline: none;
-    background: rgba(255, 255, 255, 0.85);
-    font-size: 1rem;
-    color: #333;
-    transition: all 0.3s ease-in-out;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border: 1px solid #4a90e2;
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
-}
-
-/* Placeholder Styling */
-.form-group input::placeholder {
-    color: #888;
-    font-style: italic;
-}
-
-/* Button Styling */
-button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(to right, #003d99, #4a90e2); /* Gradient button */
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    animation: fadeIn 0.5s ease-out;
     position: relative;
     overflow: hidden;
 }
 
-button::before {
+.container::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: skewX(-45deg);
-    transition: left 0.4s ease;
-    z-index: 1;
+    height: 8px;
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
 }
 
-button:hover::before {
-    left: 100%;
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #0077b6;
+    font-weight: 600;
+    font-size: 2.2rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    border-radius: 3px;
+}
+
+.error-messages {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    border-left: 4px solid #d32f2f;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.double-field {
+    display: flex;
+    gap: 20px;
+}
+
+.input-wrapper {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #0077b6;
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+    background-color: white;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #0077b6, #00b4d8);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
 }
 
 button:hover {
-    background: linear-gradient(to right, #4a90e2, #003d99); /* Invert colors on hover */
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #0067a6, #0094c8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2);
 }
 
 button:active {
-    transform: scale(0.98);
+    transform: translateY(0);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        padding: 20px;
-    }
+#subject-group {
+    background-color: #f5f9ff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e1e8f0;
+    margin-top: 15px;
+}
 
-    .form-wrapper h1 {
-        font-size: 2rem;
-    }
+#subject-group label {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    color: #444;
+    cursor: pointer;
+}
 
-    .input-wrapper {
-        width: 100%; /* Stack inputs vertically on smaller screens */
-    }
+#subject-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    accent-color: #0077b6;
+}
 
-    .double-field {
-        flex-direction: column;
-    }
+p {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+a {
+    color: #0077b6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #005a8c;
+    text-decoration: underline;
 }
 
 /* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -192,50 +186,37 @@ button:active {
     }
 }
 
-@keyframes backgroundMove {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
-}
-
-p {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #fff; /* White text for visibility */
-    text-align: center;
-}
-
-/* Link Styling */
-a {
-    color: #4a90e2; /* Bright blue color for the link */
-    text-decoration: none; /* Remove underline */
-    font-weight: bold; /* Make the link text bold */
-    transition: color 0.3s ease; /* Smooth transition on hover */
-}
-
-a:hover {
-    color: #003d99; /* Darker blue on hover */
-    text-decoration: underline; /* Underline on hover */
-}
-
-/* Mobile Responsiveness */
+/* Responsive Design */
 @media (max-width: 768px) {
-    p {
-        font-size: 0.9rem; /* Slightly smaller text for mobile */
+    .container {
+        padding: 30px 20px;
+    }
+    
+    .double-field {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        padding: 25px 15px;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+    
+    button {
+        padding: 12px;
     }
 }

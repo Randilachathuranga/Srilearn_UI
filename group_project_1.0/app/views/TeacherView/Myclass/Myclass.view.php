@@ -34,7 +34,10 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
-<button class="create-blog-button" onclick="reqpaymentind()">Request Payment</button>
+<?php if (!empty($_SESSION['Ispayavail']) && $_SESSION['Ispayavail'] != 0): ?>
+    <button onclick="reqpaymentind()">Request Payment</button>
+<?php endif; ?>
+
 
 </div>
 

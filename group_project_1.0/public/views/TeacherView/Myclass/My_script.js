@@ -259,6 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("date and time", table1.Def_Date,table1.Def_Time)
     const institute = formData.get("Institute_name");
+    console.log("id ekd = ", table3);
     if (
       institute == "None" &&
       table1.Type == "Individual" &&

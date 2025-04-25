@@ -4,7 +4,7 @@ class Tempusermodel {
     protected $table = 'temp_users';
     protected $allowedColumns = [
         'F_name', 'L_name', 'Email', 'District',
-        'Phone_number', 'Address', 'Password', 'URL'
+        'Phone_number', 'Address', 'Password', 'URL','Subject'
     ];
     
     public function get_email($data) {
@@ -57,14 +57,16 @@ class Tempusermodel {
             $this->errors['url'] = "URL is required";
         }
         
-        if(!empty($data['URL']) && !filter_var($data['URL'], FILTER_VALIDATE_URL)) {
-            $this->errors['url-1'] = 'Enter a valid URL';
+       // if(!empty($data['URL']) && !filter_var($data['URL'], FILTER_VALIDATE_URL)) {
+       //     $this->errors['url-1'] = 'Enter a valid URL';
+       // }
+        if(empty($data['Subject'])) {
+            $this->errors['subject'] = "At least one subject is required";
         }
-        
         if(empty($this->errors)) {
             return true;
         }
         
-        return false;
+        echo json_encode($this->errors);
     }
 }

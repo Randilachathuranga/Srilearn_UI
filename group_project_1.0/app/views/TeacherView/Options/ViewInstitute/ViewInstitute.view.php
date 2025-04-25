@@ -16,7 +16,7 @@
     <div id="error" class="error"></div>
 
     <div class="button-container" style="display: none; justify-content: center; margin-top: 20px;">
-  <button onclick="requestPayroll()" class="payroll-button">Request Payroll</button>
+  <!-- <button onclick="requestPayroll()" class="payroll-button">Request Payroll</button> -->
 </div>
 
   </div>

@@ -86,6 +86,10 @@
     function handleDelete(classId) {
       console.log('Deleting class with ID:', classId);
     }
+function viewpayments(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href=`http://localhost/group_project_1.0/public/Requestpayroll_forteacher/viewclassreq/${Class_id}`;
+}
 
     function viewStudents(Class_id) {
     sessionStorage.setItem("class_id", Class_id);

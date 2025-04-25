@@ -21,6 +21,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
                 class="search-input"
             >
             <button id="searchButton" class="search-button">Search</button>
+            <button id="removedstdButton" class="show-removed" onclick="showdeletedstd()">Show removed Students</button>
         </div>
 
         <table class="students-table">
@@ -47,6 +48,18 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
     const Role = "<?php echo $_SESSION['Role']; ?>";
   </script>
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/ClassStudents/Script.js"></script>
+    <div id="reasonPopup" style="display: none; position: fixed; top: 0; left: 0; 
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); 
+  justify-content: center; align-items: center; z-index: 9999;">
+  <div style="background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; width: 90%;">
+    <h3>Reason for Removal</h3>
+    <textarea id="removalReason" rows="4" style="width: 100%;"></textarea>
+    <div style="margin-top: 10px; text-align: right;">
+      <button onclick="submitRemoval()" style="margin-right: 10px;">Submit</button>
+      <button onclick="closePopup()">Cancel</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 

@@ -32,6 +32,11 @@ body::before {
     text-align: center;
     color:darkblue;
 }
+.f-pword{
+    align-items: center;
+    text-align: center;
+    color:darkblue;
+}
 /* Centering the container */
 .container {
     width: 100%;
