@@ -458,6 +458,22 @@ class Payment extends Controller
      }
 
 
+     //For enable disable payment request button
+     public function Show_paymetnReqbutton() {
+        $sub = new Subscriptionmodel();
+        $userId = $_SESSION['User_id'];
+    
+        $existingSubscription = $sub->first(['P_id' => $userId]);
+        if ($existingSubscription && $existingSubscription->End_data > date('Y-m-d')) {
+            
+            echo json_encode($existingSubscription);
+            return;
+        }else{
+            echo json_encode(['message' => 'Not found data']);
+        }
+    }
+
+
     
     
 }

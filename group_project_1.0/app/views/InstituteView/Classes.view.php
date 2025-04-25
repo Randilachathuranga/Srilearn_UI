@@ -1,6 +1,6 @@
 <?php
-        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
-    ?>
+    require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <div class="top-bar">
+  <div class="top-bar" id="payment-button-container" style="display: none;">
     <button onclick="requestMonthlyPayment()">Request Monthly Payment</button>
   </div>
 
@@ -23,6 +23,36 @@
     var userRole = "<?php echo $_SESSION['role'] ?? ''; ?>";
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Check payment request status first
+      checkPaymentRequestStatus();
+      
+      // Then load class data
+      loadClassData();
+    });
+    
+    function checkPaymentRequestStatus() {
+  fetch('http://localhost/group_project_1.0/public/payment/Show_paymetnReqbutton')
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      if (data.message === 'Not found data') {
+        // If no active subscription data found, SHOW the button
+        document.getElementById('payment-button-container').style.display = 'none';
+      } else {
+        // If subscription data exists, HIDE the button
+        document.getElementById('payment-button-container').style.display = 'block';
+      }
+    })
+    .catch(error => {
+      console.error('Error checking payment request status:', error);
+      // Default to showing the button in case of error
+      document.getElementById('payment-button-container').style.display = 'none';
+    });
+}
+    
+    function loadClassData() {
       fetch(`http://localhost/group_project_1.0/public/Institute/classapi/${userID}`)
         .then(response => {
           if (!response.ok) throw new Error('Network response was not ok');
@@ -43,20 +73,20 @@
               <p><strong>Grade:</strong> ${record.Grade}</p>
               <p><strong>Max Students:</strong> ${record.Max_std}</p>
               <p><strong>Fee:</strong> Rs.${record.fee}</p>
-                <p><strong>Date:</strong> ${record.Def_Date}</p>
+              <p><strong>Date:</strong> ${record.Def_Date}</p>
               <p><strong>Time:</strong> Rs.${record.Def_Time}</p>
               <div class="btn-group">
                 <button onclick="viewStudents(${record.InstClass_id})">View Students</button>
-                <button  onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
+                <button onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
                 <button class="red" onclick="handleDelete(${record.InstClass_id})">Delete</button>
-                <button  onclick="viewclassschedules(${record.InstClass_id})">Class Shedules</button>
+                <button onclick="viewclassschedules(${record.InstClass_id})">Class Shedules</button>
               </div>
             `;
             container.appendChild(rec);
           });
         })
         .catch(error => console.error('There was an error!', error));
-    });
+    }
 
     function payteacher(id) {
       fetch(`http://localhost/group_project_1.0/public/Institute/payfee/${id}`, {
@@ -88,83 +118,78 @@
     }
 
     function viewStudents(Class_id) {
-    sessionStorage.setItem("class_id", Class_id);
-    window.location.href =
-    "http://localhost/group_project_1.0/public/ClassStudents";
-    console.log("Class ID stored in sessionStorage:", Class_id);
-}
+      sessionStorage.setItem("class_id", Class_id);
+      window.location.href = "http://localhost/group_project_1.0/public/ClassStudents";
+      console.log("Class ID stored in sessionStorage:", Class_id);
+    }
 
-  
-    //
     function requestMonthlyPayment() {
-    // First check if a payment request already exists for this month
-    fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.status === 'success') {
-            // Payment request already exists for this month
-            alert(data.message);
-        } else {
-            // No payment request for this month, proceed with creating one
-            createPaymentRequest();
-        }
-    })
-    .catch(error => {
-        console.error('There was an error checking payment request status!', error);
-    });
-}
+      // First check if a payment request already exists for this month
+      fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.status === 'success') {
+              // Payment request already exists for this month
+              alert(data.message);
+          } else {
+              // No payment request for this month, proceed with creating one
+              createPaymentRequest();
+          }
+      })
+      .catch(error => {
+          console.error('There was an error checking payment request status!', error);
+      });
+    }
 
-function createPaymentRequest() {
-    fetch(`http://localhost/group_project_1.0/public/Payment/requestMonthlyPayment`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userID })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Monthly payment request sent successfully!');
-            location.reload(); // Reload the page to see updated data
-        } else {
-            alert('Failed to send monthly payment request.');
-        }
-    })
-    .catch(error => {
-        console.error('There was an error creating payment request!', error);
-    });
-}
+    function createPaymentRequest() {
+      fetch(`http://localhost/group_project_1.0/public/Payment/requestMonthlyPayment`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userID })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.success) {
+              alert('Monthly payment request sent successfully!');
+              location.reload(); // Reload the page to see updated data
+          } else {
+              alert('Failed to send monthly payment request.');
+          }
+      })
+      .catch(error => {
+          console.error('There was an error creating payment request!', error);
+      });
+    }
     
-    //
     function viewclassschedules(Class_id) {
-    sessionStorage.setItem("class_id", Class_id);
-    window.location.href =
-    "http://localhost/group_project_1.0/public/ClassShcedules";
-    console.log("Class ID stored in sessionStorage:", Class_id);
-}
+      sessionStorage.setItem("class_id", Class_id);
+      window.location.href = "http://localhost/group_project_1.0/public/ClassShcedules";
+      console.log("Class ID stored in sessionStorage:", Class_id);
+    }
   </script>
-   <script>
+  <script>
     const Role = "<?php echo $_SESSION['teacher']; ?>";
   </script>
 </body>
 </html>
 
 <?php
-        require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
-        ?>
+    require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
+?>

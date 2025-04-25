@@ -34,7 +34,10 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
-<button onclick="reqpaymentind()">Request Payment</button>
+
+<div class="top-bar" id="payment-button-container" style="display: none;">
+    <button onclick="requestMonthlyPayment()">Request Monthly Payment</button>
+  </div>
 
 </div>
 
@@ -276,6 +279,40 @@
 </div>
 
 <script>
+
+    //enable disable payemnt req button
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check payment request status first
+      checkPaymentRequestStatus();
+      
+      // Then load class data
+      loadClassData();
+    });
+    
+    function checkPaymentRequestStatus() {
+  fetch('http://localhost/group_project_1.0/public/payment/Show_paymetnReqbutton')
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      if (data.message === 'Not found data') {
+        // If no active subscription data found, SHOW the button
+        document.getElementById('payment-button-container').style.display = 'none';
+      } else {
+        // If subscription data exists, HIDE the button
+        document.getElementById('payment-button-container').style.display = 'block';
+      }
+    })
+    .catch(error => {
+      console.error('Error checking payment request status:', error);
+      // Default to showing the button in case of error
+      document.getElementById('payment-button-container').style.display = 'none';
+    });
+}
+
+
+
      var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
      function reqpaymentind() {
     // First check if a payment request already exists for this month
@@ -331,6 +368,65 @@ function createPaymentRequest() {
         console.error('There was an error creating payment request!', error);
     });
 }
+
+
+
+
+//request payments
+function requestMonthlyPayment() {
+      // First check if a payment request already exists for this month
+      fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.status === 'success') {
+              // Payment request already exists for this month
+              alert(data.message);
+          } else {
+              // No payment request for this month, proceed with creating one
+              createPaymentRequest();
+          }
+      })
+      .catch(error => {
+          console.error('There was an error checking payment request status!', error);
+      });
+    }
+
+    function createPaymentRequest() {
+      fetch(`http://localhost/group_project_1.0/public/Payment/requestMonthlyPayment`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userID })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.success) {
+              alert('Monthly payment request sent successfully!');
+              location.reload(); // Reload the page to see updated data
+          } else {
+              alert('Failed to send monthly payment request.');
+          }
+      })
+      .catch(error => {
+          console.error('There was an error creating payment request!', error);
+      });
+    }
 </script>
 
 
