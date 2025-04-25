@@ -93,6 +93,7 @@ class Chat extends Controller{
             'message' => 'Method Not Allowed'
         ]);
     }
+       
 
     
     

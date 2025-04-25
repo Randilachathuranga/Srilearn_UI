@@ -5,4 +5,9 @@ class Teacher extends Controller{
         $this->view("General/Home/Home");
     }
 
+    public function requestpayroll(){
+        checkAccess('teacher');
+        
+
+    }
 }

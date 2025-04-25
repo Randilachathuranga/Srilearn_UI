@@ -9,8 +9,10 @@ class ClassStudents extends Controller
 
     public function viewstudents($Class_id){
         $model = new Enrollmodel();
-
-        $quaryforview = $model->InnerJoinwhere('user','enrollment','user.User_id = enrollment.Stu_id',['Class_id' => $Class_id]);
+        $data = [
+            'class.Class_id' => $Class_id
+            ];
+        $quaryforview = $model->InnerJoinwhereMultiple(['user','enrollment','class'],['user.User_id=enrollment.Stu_id','enrollment.Class_id=class.Class_id'],$data,[]);
 
         if (empty($quaryforview)) {
             http_response_code(404);

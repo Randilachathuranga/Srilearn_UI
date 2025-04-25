@@ -24,7 +24,7 @@ class Myclassmodel{
 
     //columns for insert into class table and individual class table
     public $ColumnsforT1=[
-        'Type','Subject','Grade','Max_std','fee','Def_Date','Def_Time'
+        'Type','Subject','Grade','Max_std','fee'
     ];
 
     protected $ColumnsforT2 = [

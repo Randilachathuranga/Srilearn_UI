@@ -16,8 +16,6 @@ async function Updateclass(event, Class_id) {
     Grade: formData.get("classGrade"),
     fee: parseInt(formData.get("classfee"), 10),
     Max_std: parseInt(formData.get("classMax_std"), 10),
-    Date: formData.get("Date_"),
-    Time: formData.get("Time_")
   };
 
   const table2 = {

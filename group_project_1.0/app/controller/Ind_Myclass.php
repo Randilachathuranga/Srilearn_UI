@@ -124,8 +124,6 @@ class Ind_Myclass extends Controller{
             'Grade' => $data['table1']['Grade'] ?? null,
             'Max_std' => $data['table1']['Max_std'] ?? null,
             'fee' => $data['table1']['fee'] ?? null,
-            'Def_Date' => $data['table1']['Date'] ?? null,
-            'Def_Time' => $data['table1']['Time'] ?? null,
         ];
         $table2_data = [
             'Location' => $data['table2']['Location'] ?? null,
@@ -179,8 +177,6 @@ class Ind_Myclass extends Controller{
                 'Grade' => $data['table1']['Grade'] ?? null,
                 'Max_std' => $data['table1']['Max_std'] ?? null,
                 'fee' => $data['table1']['fee'] ?? null,
-                'Def_Date' => $data['table1']['Def_Date'] ?? null,
-                'Def_Time' => $data['table1']['Def_Time'] ?? null,
             ];
             $table2_data = [
                 'P_id' => $P_id,
@@ -228,8 +224,6 @@ public function CreateinstituteclassApi($N_id) {
         'Grade' => $data['table1']['Grade'] ?? null,
         'Max_std' => $data['table1']['Max_std'] ?? null,
         'fee' => $data['table1']['fee'] ?? null,
-        'Def_Date' => $data['table1']['Def_Date'] ?? null,
-        'Def_Time' => $data['table1']['Def_Time'] ?? null,
     ];
     
     $table2_data = [

@@ -66,6 +66,7 @@ function displayTeachers(page) {
       <div class="card-content">
         <h3>${teacher.F_name} ${teacher.L_name}</h3>
         <p>Subject: ${teacher.Subject}</p>
+        <p>Phone: ${teacher.Phone_number}</p>
         <p>Email: ${teacher.Email || "N/A"}</p>
         <button class="card-button" onclick="Viewteacher(${
           teacher.User_id
@@ -221,9 +222,12 @@ function Viewteacher(userId) {
       ).textContent = `${teacher.F_name} ${teacher.L_name}`;
       document.getElementById("teacher-subject").textContent =
         teacher.Subject || "N/A";
+      document.getElementById("teacher-phone").textContent =
+        teacher.Phone_number || "N/A";
       document.getElementById("teacher-email").textContent =
         teacher.Email || "N/A";
-
+      document.getElementById("teacher-address").textContent =
+        teacher.Address || "N/A";
       document.getElementById("teacher-district").textContent =
         teacher.District || "N/A";
 

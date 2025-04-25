@@ -43,13 +43,12 @@
               <p><strong>Grade:</strong> ${record.Grade}</p>
               <p><strong>Max Students:</strong> ${record.Max_std}</p>
               <p><strong>Fee:</strong> Rs.${record.fee}</p>
-                <p><strong>Date:</strong> ${record.Def_Date}</p>
-              <p><strong>Time:</strong> Rs.${record.Def_Time}</p>
               <div class="btn-group">
                 <button onclick="viewStudents(${record.InstClass_id})">View Students</button>
-                <button  onclick="payteacher(${record.InstClass_id})">Pay Teacher</button>
+               
                 <button class="red" onclick="handleDelete(${record.InstClass_id})">Delete</button>
                 <button  onclick="viewclassschedules(${record.InstClass_id})">Class Shedules</button>
+                <button onclick='viewpayments(${record.InstClass_id})'>View Payments</button>
               </div>
             `;
             container.appendChild(rec);
@@ -86,6 +85,10 @@
     function handleDelete(classId) {
       console.log('Deleting class with ID:', classId);
     }
+function viewpayments(Class_id) {
+  sessionStorage.setItem("class_id", Class_id);
+  window.location.href=`http://localhost/group_project_1.0/public/Requestpayroll_forteacher/viewclassreq/${Class_id}`;
+}
 
     function viewStudents(Class_id) {
     sessionStorage.setItem("class_id", Class_id);

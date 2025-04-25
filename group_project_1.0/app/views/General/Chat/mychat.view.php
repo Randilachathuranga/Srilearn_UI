@@ -6,93 +6,49 @@
   <title>Chat Messages</title>
   <style>
     body {
-      font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: #e6eef5; /* Light blue background */
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
       margin: 0;
       padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .chat-container {
-      width: 100%;
-      height: 100vh;
-      margin: 0 auto;
-      background: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-      background-size: contain;
-      padding: 0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       border-radius: 8px;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .chat-header {
-      display: flex;
-      align-items: center;
-      background: #1a75ff; /* Blue */
-      color: white;
-      padding: 16px 24px;
-      height: 70px;
-    }
-
-    .header-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #005ce6; /* Darker blue */
-      margin-right: 20px;
-    }
-
-    .header-info {
-      flex-grow: 1;
-    }
-
-    .header-name {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 500;
-    }
-
-    .header-status {
-      margin: 0;
-      font-size: 15px;
-      opacity: 0.8;
     }
 
     .messages-container {
-      flex: 1;
+      max-height: 500px;
       overflow-y: auto;
-      padding: 24px;
+      margin-bottom: 20px;
     }
 
     .record {
+      background-color: #e9f5ff;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      width: 80%;
       position: relative;
-      margin-bottom: 16px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-      width: 60%; /* Reduced width for desktop */
-      max-width: 600px;
     }
 
     .record.sent {
-      background-color: #cce6ff; /* Light blue */
-      border-right: none;
+      background-color: #e1f7e1;
+      border-right: 4px solid #2ecc71;
       align-self: flex-end;
       margin-left: auto;
-      border-top-right-radius: 0;
     }
 
     .record.received {
-      background-color: white;
-      border-left: none;
+      border-left: 4px solid #3498db;
       align-self: flex-start;
       margin-right: auto;
-      border-top-left-radius: 0;
     }
 
     .record h3 {
@@ -102,78 +58,65 @@
     }
 
     .record p {
-      margin: 8px 0;
+      margin: 5px 0;
       font-size: 16px;
-      line-height: 1.5;
-      color: #303030;
+      color: #222;
       word-wrap: break-word;
     }
 
     .record h5 {
       margin: 0;
-      font-size: 13px;
-      color: #8c8c8c;
+      font-size: 12px;
+      color: #999;
       text-align: right;
     }
 
     .message-form {
       display: flex;
-      background: #e6eef5; /* Light blue */
-      padding: 16px 24px;
-      margin-top: 0;
-      border-top: none;
-      height: 80px;
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
     }
 
     .message-input {
       flex: 1;
-      padding: 15px 20px;
-      border: none;
-      border-radius: 24px;
-      background: white;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
       font-size: 16px;
       resize: none;
     }
 
-    .message-input:focus {
-      outline: none;
-    }
-
     .submit-btn {
-      width: 50px;
-      height: 50px;
-      background-color: #1a75ff; /* Blue */
+      padding: 12px 24px;
+      background-color: #3498db;
       color: white;
       border: none;
-      border-radius: 50%;
-      margin-left: 16px;
+      border-radius: 4px;
+      margin-left: 10px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      padding: 0;
+      font-size: 16px;
     }
 
     .submit-btn:hover {
-      background-color: #005ce6; /* Darker blue */
+      background-color: #2980b9;
     }
 
     .edit-btn {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background-color: #1a75ff; /* Blue */
+      top: 10px;
+      right: 10px;
+      background-color: #f39c12;
       color: white;
       border: none;
       border-radius: 4px;
-      padding: 6px 10px;
-      font-size: 13px;
+      padding: 4px 8px;
+      font-size: 12px;
       cursor: pointer;
     }
 
     .edit-btn:hover {
-      background-color: #005ce6; /* Darker blue */
+      background-color: #e67e22;
     }
 
     .modal {
@@ -191,23 +134,22 @@
 
     .modal-content {
       background-color: white;
-      padding: 30px;
-      border-radius: 12px;
-      width: 50%;
-      max-width: 700px;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 500px;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .modal-header h3 {
       margin: 0;
-      color: #1a75ff; /* Blue */
-      font-size: 20px;
+      color: #333;
     }
 
     .close-modal {
@@ -224,59 +166,39 @@
     }
 
     .edit-input {
-      padding: 16px;
+      padding: 12px;
       border: 1px solid #ddd;
-      border-radius: 10px;
+      border-radius: 4px;
       font-size: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       resize: none;
-      min-height: 120px;
-    }
-
-    .edit-input:focus {
-      outline: none;
-      border-color: #1a75ff; /* Blue */
+      min-height: 100px;
     }
 
     .edit-submit {
       padding: 12px 24px;
-      background-color: #1a75ff; /* Blue */
+      background-color: #2ecc71;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
       align-self: flex-end;
     }
 
     .edit-submit:hover {
-      background-color: #005ce6; /* Darker blue */
-    }
-
-    /* Add send icon to button */
-    .submit-btn::after {
-      content: "➤";
-      transform: rotate(90deg);
-      display: inline-block;
+      background-color: #27ae60;
     }
   </style>
 </head>
 <body>
 
   <div class="chat-container" id="container">
-    <div class="chat-header">
-      <div class="header-avatar"></div>
-      <div class="header-info">
-        <h2 class="header-name">Chat Contact</h2>
-        <p class="header-status">online</p>
-      </div>
-    </div>
-    
     <div class="messages-container" id="messages-container"></div>
 
     <form class="message-form" id="message-form">
-      <textarea class="message-input" id="message-input" placeholder="Type a message" required></textarea>
-      <button type="submit" class="submit-btn"></button>
+      <textarea class="message-input" id="message-input" placeholder="Type your message here..." required></textarea>
+      <button type="submit" class="submit-btn">Send</button>
     </form>
   </div>
 

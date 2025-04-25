@@ -45,23 +45,32 @@ document.addEventListener("DOMContentLoaded", () => {
           );
           const submissionCount = submissions.length;
 
-            card.innerHTML = `
-            <div class="assignment-number">${assignment.Ass_name}</div>
-            <div class="card-buttons">
-              ${role === "teacher" ? `
-              <button class="view-btn" data-assignment-id="${assignment.Ass_id}">View</button>
-              <button class="delete-btn" data-assignment-id="${assignment.Ass_id}">Delete</button>
+          card.innerHTML = `
+          <div class="assignment-number">
+              ${assignment.Ass_name}
+          </div>
+          <div class="card-buttons">
+              ${
+                role === "teacher"
+                  ? `
+                  <button class="view-btn" data-assignment-id="${assignment.Ass_id}">View Assignment</button>
+                  <button class="delete-btn" data-assignment-id="${assignment.Ass_id}">Delete Assignment</button>
+              `
+                  : ""
+              }
               <div class="search-section">
-                <input type="number" class="STU_id" id="STU_id_${assignment.Ass_id}" placeholder="Student ID" />
-                <button class="search-btn" data-assignment-id="${assignment.Ass_id}">Search</button>
+                  <input type="number" class="STU_id" id="STU_id_${
+                    assignment.Ass_id
+                  }" placeholder="Enter Student ID" />
+                  <button class="search-btn" data-assignment-id="${
+                    assignment.Ass_id
+                  }">Search</button>
               </div>
-              ` : role === "student" ? `
-              <div class="search-section">
-                <button class="search-btn" data-assignment-id="${assignment.Ass_id}">View Marks</button>
-              </div>
-              ` : ""}
-              <div id="result_${assignment.Ass_id}" class="result-container"></div>
-            </div>`;
+              <div id="result_${
+                assignment.Ass_id
+              }" class="result-container"></div>
+          </div>
+      `;
 
           assignmentsContainer.appendChild(card);
         });
@@ -225,14 +234,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Search Marks Function
   window.My_Marks = function (assId) {
-
+    const studentId = document.getElementById(`STU_id_${assId}`).value;
     const result = document.getElementById(`result_${assId}`);
 
-    let studentId;
-    if (role === 'teacher') {
-      studentId = document.getElementById(`STU_id_${assId}`).value;
-    } else if (role === 'student') {
-      studentId = user_id;
+    if (!studentId) {
+      showAlert("Please enter a valid Student ID", "error");
+      return;
     }
 
     fetch(

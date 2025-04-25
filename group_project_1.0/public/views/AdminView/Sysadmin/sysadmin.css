@@ -11,7 +11,7 @@
     --primary-light: #3b82f6;
     --primary-dark: #1e40af;
     --surface: #ffffff;
-    --background: #e2ece5;
+    --background: #e2e4ec;
     --text: #1e293b;
     --text-light: #64748b;
     --border: #e2e8f0;
@@ -24,8 +24,6 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     padding: 0 20px;
-    display: flex;
-    flex-direction: column;
 }
 
 /* Header Styling */
@@ -108,163 +106,67 @@ h1 {
     color: var(--surface);
 }
 
-/* Close Button for Sidebar */
-.close-menu {
-    top: 10px;
-    right: 10px;
-    height: 10rem; /* Match the height of other side menu buttons */
-    width: 2.5rem; /* Adjust width to maintain square shape */
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 1rem; /* Adjust font size for consistency */
-    cursor: pointer;
-    display: flex; /* Flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-}
-
-.close-menu:hover {
-    color: var(--primary-light);
-}
-.close-menu {
-    top: 10px;
-    right: 10px;
-    height: 6.5rem; /* Increased height */
-    width: 2.5rem; /* Added width for centering */
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 2rem;
-    cursor: pointer;
-    display: flex; /* Added flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-}
-
-.close-menu:hover {
-    color: var(--primary-light);
-}
-.close-menu {
-    top: 10px;
-    right: 10px;
-    height: 0;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 2rem;
-    cursor: pointer;
-}
-
-.close-menu:hover {
-    color: var(--primary-light);
-}
-
-/* Stats Container for Pie Chart and Counts */
-/* Stats Container for Pie Chart and Counts */
-.stats-container {
-    background-color: var(--surface);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
+/* Main Content */
+.main-content {
+    max-width: 1400px;
     margin: 0 auto;
-    margin-bottom: 1.5rem;
-    margin-left: 5%;  /* Reduce space from the left (adjust this percentage as needed) */
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    width: 100%;  /* Increase width of the container (adjust this percentage as needed) */
-    height: 100%;
-    max-width: 800px; 
-    max-height: 550px; /* Optional: ensures it doesn't grow too wide */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 1.5rem;
 }
 
-/* Container for both chart and info */
-.stats-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    height: 500px;
-}
-
-/* Chart and Info Styling */
-.stats-chart {
-    width: 50%;
-}
-
-.stats-info {
-}
-
-.stats-info h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.stats-info .stat-item {
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-    color: var(--text);
-}
-.stats-container {
-    height: 400px; /* Adjusted height */
-    margin: 0 auto; /* Centers the container horizontally */
-    display: flex;
-    flex-grow: 3; /* Further increases the chart's size */
-    flex-shrink: 1; /* Ensures it shrinks properly if needed */
-    justify-content: center;
-    align-items: center; /* Centers the content vertically */
-}
-
-.stats-chart {
-    width: 500%; /* Increased size of the chart */
-}
-.stats-info .stat-item span {
-    font-weight: bold;
-    color: var(--primary);
-}
-
-/* Add space between the buttons and table */
+/* Action Buttons */
 .top-buttons {
-    margin-top: 15px;
-    margin-bottom: 15px;
     display: flex;
-    gap: 12px;
-    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .top-buttons button {
-    background: #4285f4;
+    background: var(--primary);
     border: none;
-    padding: 0.5rem 1.25rem;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     border-radius: 0.5rem;
-    color: #fff;
+    color: var(--surface);
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.5rem;
 }
 
 .top-buttons button:hover {
-    background: #0e5ddb;
+    background: var(--primary-light);
+}
+
+/* Graph Container */
+.graph-container {
+    background-color: var(--surface);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease;
+}
+
+.graph-container label {
+    font-size: 50px; /* Adjust the font size as needed */
+}
+.graph-container:hover {
+    transform: translateY(-2px);
 }
 
 /* Table Styling */
 .data-table {
-    width: 80%;
+    width: 100%;
     background-color: var(--surface);
     border-radius: 0.75rem;
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     border-collapse: separate;
     border-spacing: 0;
-    margin: 0 auto;
 }
 
 .data-table caption {
@@ -294,7 +196,6 @@ h1 {
     background-color: var(--background);
 }
 
-/* Button Styling */
 .data-table button {
     background: var(--primary);
     border: none;
@@ -306,28 +207,10 @@ h1 {
     color: var(--surface);
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 100%;
-    margin-bottom: 0.5rem;
-}
-
-.data-table .update-btn {
-    background: #007bff;
-}
-
-.data-table .delete-btn {
-    background: #ff2e00;
 }
 
 .data-table button:hover {
     background: var(--primary-light);
-}
-
-.data-table .update-btn:hover {
-    background: #0056b3;
-}
-
-.data-table .delete-btn:hover {
-    background: #c10000;
 }
 
 /* Responsive Design */
@@ -353,7 +236,7 @@ h1 {
     }
 
     .side-menu {
-        width: 10px;
+        width: 250px;
     }
 
     .side-menu.visible {
@@ -365,13 +248,52 @@ h1 {
         padding: 0.75rem 1rem;
         font-size: 0.875rem;
     }
-
+    
     body {
         padding: 0 10px;
     }
+}
 
-    .graph-container, .stats-container {
-        width: 100%;
-        display: block;
-    }
+/* Clean Scrollbar */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-light) var(--background);
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--primary-light);
+    border-radius: 4px;
+}
+
+/* Additional Utility Classes */
+.text-primary {
+    color: var(--primary);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
 }

@@ -1,5 +1,5 @@
 <?php 
- include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php";
+include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php";
 ?>
 
 <!DOCTYPE html>
@@ -81,11 +81,12 @@
     </div>
 </div>
 
-<!-- Insert user role from PHP into JavaScript -->
+<!-- Inject user role into JS -->
 <script>
     const userRole = "<?php echo $_SESSION['Role'] ?? ''; ?>";
 </script>
 
+<!-- Main Script -->
 <script>
     document.addEventListener('DOMContentLoaded', fetchAllClasses);
     document.getElementById("subject").addEventListener("change", fetchFilteredClasses);
@@ -109,7 +110,6 @@
     function fetchFilteredClasses() {
         const subject = document.getElementById("subject").value;
         const grade = document.getElementById("grade").value;
-        let combinedResults = [];
 
         const fetchUrl1 = fetch(`http://localhost/group_project_1.0/public/Student/viewindividual/${subject}/${grade}`)
             .then(response => response.ok ? response.json() : []);
@@ -119,8 +119,7 @@
 
         Promise.all([fetchUrl1, fetchUrl2])
             .then(([data1, data2]) => {
-                if (Array.isArray(data1)) combinedResults = combinedResults.concat(data1);
-                if (Array.isArray(data2)) combinedResults = combinedResults.concat(data2);
+                const combinedResults = [...(Array.isArray(data1) ? data1 : []), ...(Array.isArray(data2) ? data2 : [])];
                 renderClasses(combinedResults);
             })
             .catch(error => {
@@ -129,7 +128,21 @@
             });
     }
 
-    function renderClasses(classes) {
+    async function hasteachsubbedpayment(classId) {
+        try {
+            const response = await fetch(`http://localhost/group_project_1.0/public/Subscriptions/hassubbedteachpayment/${classId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!response.ok) throw new Error('Failed to check teacher subscription payment');
+            return await response.json();
+        } catch (error) {
+            console.error('Error checking teacher payment:', error);
+            return false;
+        }
+    }
+
+    async function renderClasses(classes) {
         const container = document.getElementById('classes-container');
         container.innerHTML = "";
 
@@ -138,20 +151,22 @@
             return;
         }
 
-        classes.forEach(record => {
+        for (const record of classes) {
+            let ispayavail = 1;
+            if (record.Type === "Individual") {
+                ispayavail = await hasteachsubbedpayment(record.Class_id);
+            }
+
             const rec = document.createElement('div');
             rec.className = 'record';
 
             rec.innerHTML = `
                 <h2>Subject: ${record.Subject}</h2>
-                <h5>Teacher : ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
+                <h5>Teacher: ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
                 <h3>Grade: ${record.Grade}</h3>
                 <p>Type: ${record.Type}</p>
                 <p>Address: ${record.Location}</p>
-                <p>Subject: ${record.Subject}</p>
                 <h5>Fee: ${record.fee}</h5>
-                <p>Date: ${record.Def_Date}</p>
-                <p>Time: ${record.Def_Time}</p>
             `;
 
             if (userRole === 'student') {
@@ -160,42 +175,51 @@
                 btn.onclick = () => proceedtopayment(
                     record.Class_id,
                     record.Subject,
-                    `${record.F_name} ${record.L_name}`,
-                    record.fee
+                    `${record.F_name || ''} ${record.L_name || ''}`.trim(),
+                    record.fee,
+                    ispayavail
                 );
                 rec.appendChild(btn);
             }
 
             container.appendChild(rec);
-        });
+        }
     }
 
-    function proceedtopayment(classID, subject, teacher, fee) {
-        const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
-        url.searchParams.set('classID', classID);
-        url.searchParams.set('subject', subject);
-        url.searchParams.set('teacher', teacher);
-        url.searchParams.set('fee', fee);
-        window.location.href = url.toString();
-    }
+    function proceedtopayment(classID, subject, teacher, fee, ispayavail) {
+        if (ispayavail == 1) {
+            const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
+            url.searchParams.set('classID', classID);
+            url.searchParams.set('subject', subject);
+            url.searchParams.set('teacher', teacher);
+            url.searchParams.set('fee', fee);
+            window.location.href = url.toString();
+        } else {
+            const recordData = {
+                classID: classID,
+                subject: subject,
+                teacher: teacher,
+                fee: fee
+            };
 
-    function handleEnrollment(classId) {
-        fetch(`http://localhost/group_project_1.0/public/Enrollment/post/${classId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            alert(data.error || data.message || 'Enrollment status unknown.');
-            window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
-        })
-        .catch(error => {
-            console.error('Error during enrollment:', error);
-            alert('Could not complete enrollment. You are already enrolled to this class.');
-        });
+            fetch(`http://localhost/group_project_1.0/public/Enrollment/postfree`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(recordData)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                alert(data.error || data.message || 'Enrollment status unknown.');
+                window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
+            })
+            .catch(error => {
+                console.error('Error during enrollment:', error);
+                alert('Could not complete enrollment. You are already enrolled in this class.');
+            });
+        }
     }
 </script>
 

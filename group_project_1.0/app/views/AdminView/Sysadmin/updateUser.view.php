@@ -40,45 +40,42 @@
         <div class="form-group">
             <label for="district" class="form-label">District:</label>
             <select id="district" name="District" class="form-select" placeholder =<?php echo $user->District ?>required>
-            <option value="Colombo">Colombo</option>
-<option value="Gampaha">Gampaha</option>
-<option value="Kalutara">Kalutara</option>
-<option value="Kandy">Kandy</option>
-<option value="Matale">Matale</option>
-<option value="Nuwara Eliya">Nuwara Eliya</option>
-<option value="Galle">Galle</option>
-<option value="Hambantota">Hambantota</option>
-<option value="Matara">Matara</option>
-<option value="Jaffna">Jaffna</option>
-<option value="Kilinochchi">Kilinochchi</option>
-<option value="Mannar">Mannar</option>
-<option value="Vavuniya">Vavuniya</option>
-<option value="Mullaitivu">Mullaitivu</option>
-<option value="Batticaloa">Batticaloa</option>
-<option value="Ampara">Ampara</option>
-<option value="Trincomalee">Trincomalee</option>
-<option value="Anuradhapura">Anuradhapura</option>
-<option value="Polonnaruwa">Polonnaruwa</option>
-<option value="Kurunegala">Kurunegala</option>
-<option value="Puttalam">Puttalam</option>
-<option value="Rathnapura">Rathnapura</option>
-<option value="Kegalle">Kegalle</option>
-<option value="Badulla">Badulla</option>
-<option value="Moneragala">Moneragala</option>
-<option value="Mullaitivu">Mullaitivu</option>
-
+                <option value="District1">District1</option>
+                <option value="District2">District2</option>
+                <option value="District3">District3</option>
+                <option value="District4">District4</option>
+                <option value="District5">District5</option>
+                <option value="District6">District6</option>
+                <option value="District7">District7</option>
+                <option value="District8">District8</option>
+                <option value="District9">District9</option>
+                <option value="District10">District10</option>
+                <option value="District11">District11</option>
+                <option value="District12">District12</option>
+                <option value="District13">District13</option>
+                <option value="District14">District14</option>
+                <option value="District15">District15</option>
+                <option value="District16">District16</option>
+                <option value="District17">District17</option>
+                <option value="District18">District18</option>
+                <option value="District19">District19</option>
+                <option value="District20">District20</option>
+                <option value="District21">District21</option>
+                <option value="District22">District22</option>
+                <option value="District23">District23</option>
+                <option value="District24">District24</option>
+                <option value="District25">District25</option>
             </select>
         </div>
 
         <div class="form-group">
-    <label for="role" class="form-label">Role:</label>
-    <select id="role" name="Role" class="form-select" disabled>
-        <option value="student" <?php echo ($user->Role == 'student') ? 'selected' : ''; ?>>Student</option>
-        <option value="teacher" <?php echo ($user->Role == 'teacher') ? 'selected' : ''; ?>>Teacher</option>
-        <option value="institute" <?php echo ($user->Role == 'institute') ? 'selected' : ''; ?>>Institute</option>
-    </select>
-</div>
-
+            <label for="role" class="form-label">Role:</label>
+            <select id="role" name="Role" placeholder =<?php echo $user->Role?>class="form-select" required>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="institute">Institute</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <button type="submit" class="submit-btn">Update</button>

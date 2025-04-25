@@ -10,13 +10,20 @@ class Signup extends Controller {
                 // Validate user data
                 if ($User->validate($_POST) && $User->get_email($_POST['Email'])) {
                     // If valid, insert user data into User model
+                    $hashedPassword = password_hash($_POST['Password'], PASSWORD_DEFAULT);
+                    $_POST['Password'] = $hashedPassword; // Hash the password before storing
                     $User->insert($_POST);
                     // Redirect to signin page
                     redirect('signin');
                 }
             }
+
+          
             // Handling teacher registration
             else if ($_POST['Role'] == "teacher") {
+                // Get subjects as comma-separated string
+                $subjects = isset($_POST['Subject']) ? implode(',', $_POST['Subject']) : '';
+            
                 // Map form fields to database fields
                 $data = [
                     'F_name' => $_POST['F_name'],
@@ -25,17 +32,21 @@ class Signup extends Controller {
                     'District' => $_POST['District'],
                     'Phone_number' => $_POST['Phone_number'],
                     'Address' => $_POST['Address'],
-                    'Password' => $_POST['Password'],
-                    'URL' => $_POST['Link'] // Map 'Link' to 'URL'
+                    'Password' =>password_hash($_POST['Password'], PASSWORD_DEFAULT),
+                    'URL' => $_POST['Link'], // Map 'Link' to 'URL'
+                    'Subject' => $subjects, // Comma-separated subject list
                 ];
+             
                 
                 // Validate Tempuser data
-                if ($Tempuser->validate($data) && $Tempuser->get_email($_POST['Email'])) {
+               if ($Tempuser->validate($data)) {
                     // If valid, insert teacher data into Tempuser model
                     $Tempuser->insert($data);
                     // Redirect to signin page
                     redirect('signin');
                 }
+        
+            
             }
         }
         

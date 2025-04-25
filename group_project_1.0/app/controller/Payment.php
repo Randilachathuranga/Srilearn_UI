@@ -66,6 +66,48 @@ class Payment extends Controller
             exit();
         }
     }
+    
+    public function checkpayment($id) {
+        // Load the model
+        $model = new Paymentmodel();
+    
+        // Get the current user ID from the session
+        $userId = $_SESSION['User_id'];
+    $dat=[
+        'ClassID' => $id,
+        'User_id' => $userId,
+        'Type' => 'Classfee'
+    ];
+    
+        // Fetch all payments of type 'Classfee' for the current class and user
+        $payments = $model->where($dat);
+        
+    
+        // Get the current month and year
+        $currentMonth = date('m'); // e.g., "04"
+        $currentYear = date('Y');  // e.g., "2025"
+        $currentDateFormatted = "$currentYear-$currentMonth";
+    
+        // Check if any payment matches the current month and year
+        foreach ($payments as $payment) {
+            $paymentDate = date('Y-m', strtotime($payment->Date));
+            if ($paymentDate === $currentDateFormatted) {
+                // User has paid this month
+                echo json_encode(true);
+                return;
+            }
+        }
+    
+        // If no payment was made this month
+        echo json_encode(false);
+
+
+        
+    }
+    
+    
+
+
     public function classfee($classid) {
         $class = new Classmodel();
         $paymentmodel = new Paymentmodel();
@@ -259,64 +301,89 @@ class Payment extends Controller
         }
      }
 
-     public function reqpaymentind() {
-        $model=new Reqinstpaymodel();
-        $id = $_SESSION['User_id'];
-        $paymentmodel = new Paymentmodel();
-    
-        $tables = ['all_payments', 'individual_class'];
-        $join_conditions = ['all_payments.ClassID = individual_class.IndClass_id'];
-        $datanot = [];
-    
-        // First query for Enrollment
-        $dataEnrollment = [
-            'all_payments.Type' => 'Enrollment',
-            'individual_class.P_id' => $id
-        ];
-        $enrollmentResults = $paymentmodel->InnerJoinwhereMultiple($tables, $join_conditions, $dataEnrollment, $datanot);
-    
-        // Second query for Classfee
-        $dataClassFee = [
-            'all_payments.Type' => 'Classfee',
-            'individual_class.P_id' => $id
-        ];
-        $classFeeResults = $paymentmodel->InnerJoinwhereMultiple($tables, $join_conditions, $dataClassFee, $datanot);
-    
-        // Merge results
-        $allResults = array_merge($enrollmentResults ?: [], $classFeeResults ?: []);
-    
-        // Filter by current month
-        $currentMonth = date('Y-m'); // Example: 2025-04
-        $filtered = array_filter($allResults, function ($record) use ($currentMonth) {
-            return isset($record->Date) && strpos($record->Date, $currentMonth) === 0;
-        });
-    
-        // Calculate total amount
-        $totalAmount = array_reduce($filtered, function ($carry, $record) {
-            return $carry + (float)$record->Amount;
-        }, 0);
-    
-        // Final output
-        $response = [
-            'records' => array_values($filtered), // Reset array keys
-            'total_amount' => $totalAmount
-        ];
-        $data = [
-            'inst_id' => $id,
-            'date' => date('Y-m-d'),
-            'time' => date('H:i:s'),
-            'amount' => $response['total_amount'], // <-- cast to int
-            'status' => 0
-        ];
+     public function reqpaymentind()
+{
+    $model = new Reqinstpaymodel();
+    $paymentmodel = new Paymentmodel();
+    $id = $_SESSION['User_id'] ?? null;
 
-        $res=$model->insert(data: $data);
-        if ($res === true) {   
-            echo json_encode(['success' => true,  'message' => 'Payment request sent successfully.']);
-           
-        } else {
-            echo json_encode(['success' => false,'val'=>$response, 'message' => 'Failed to send payment request.']);
+    if (!$id) {
+        echo json_encode(['success' => false, 'message' => 'User not logged in.']);
+        return;
+    }
+
+    // Check if a payment request already exists for this month
+    $existingRequests = $model->where(['inst_id' => $id]);
+    $currentMonth = date('Y-m');
+
+    $filteredRequests = array_filter($existingRequests, function ($record) use ($currentMonth) {
+        return isset($record->date) && strpos($record->date, $currentMonth) === 0;
+    });
+
+    if (!empty($filteredRequests)) {
+        echo json_encode(['success' => false,'values'=>$filteredRequests, 'message' => 'Payment request already sent for this month.']);
+        return;
+    }
+
+    // Prepare for data fetch
+    $tables = ['all_payments', 'individual_class'];
+    $join_conditions = ['all_payments.ClassID = individual_class.IndClass_id'];
+    $datanot = [];
+
+    // Fetch both Enrollment and Classfee payments
+    $conditions = [
+        ['all_payments.Type' => 'Enrollment', 'individual_class.P_id' => $id],
+        ['all_payments.Type' => 'Classfee',   'individual_class.P_id' => $id]
+    ];
+
+    $allResults = [];
+
+    foreach ($conditions as $cond) {
+        $result = $paymentmodel->InnerJoinwhereMultiple($tables, $join_conditions, $cond, $datanot);
+        if (!empty($result)) {
+            $allResults = array_merge($allResults, $result);
         }
-     }
+    }
+
+    // Filter results for the current month
+    $filteredPayments = array_filter($allResults, function ($record) use ($currentMonth) {
+        return isset($record->Date) && strpos($record->Date, $currentMonth) === 0;
+    });
+
+    $totalAmount = array_reduce($filteredPayments, function ($carry, $record) {
+        return $carry + (float)($record->Amount ?? 0);
+    }, 0);
+
+    if ($totalAmount <= 0) {
+        echo json_encode(['success' => false, 'message' => 'No payments to request for this month.']);
+        return;
+    }
+
+    // Insert payment request
+    $insertData = [
+        'inst_id' => $id,
+        'date' => date('Y-m-d'),
+        'time' => date('H:i:s'),
+        'amount' => $totalAmount,
+        'status' => 0
+    ];
+
+    $res = $model->insert($insertData);
+
+    if ($res === true) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Payment request sent successfully.',
+            'total_amount' => $totalAmount
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to send payment request.',
+            'total_amount' => $totalAmount
+        ]);
+    }
+}
 
 
     

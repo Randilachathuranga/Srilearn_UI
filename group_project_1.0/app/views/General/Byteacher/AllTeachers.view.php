@@ -75,8 +75,10 @@
         <!-- Teacher info fields -->
         <p><strong>Name:</strong> <span id="teacher-name"></span></p>
         <p><strong>Subject:</strong> <span id="teacher-subject"></span></p>
+        <p><strong>Phone number:</strong> <span id="teacher-phone"></span></p>
         <p><strong>Email:</strong> <span id="teacher-email"></span></p>
         <p><strong>My Institutes:</strong> <span id="teacher-institute"></span></p>
+        <p><strong>My Address:</strong> <span id="teacher-address"></span></p>
         <p><strong>District:</strong> <span id="teacher-district"></span></p>
       </div>
     </form>

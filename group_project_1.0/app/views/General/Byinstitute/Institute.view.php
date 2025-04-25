@@ -121,7 +121,7 @@
 
         <div class="form-group">
             <label for="qualifications">Qualifications</label>
-            <textarea id="qualifications" name="qualifications" rows="4" required placeholder="Enter your qualifications, description, and any relevant links"></textarea>
+            <textarea id="qualifications" name="qualifications" rows="4" required></textarea>
         </div>
 
         <p id="inst_id" style="display: none;"></p>
