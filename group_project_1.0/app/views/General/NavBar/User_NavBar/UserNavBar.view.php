@@ -17,8 +17,8 @@
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">Search Hub</a>
             <div class="dropdown-content" id="dropdown-menu">
-                <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher">By Teachers</a>
-                <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute">By Institutes</a>
+                <a href="http://localhost/group_project_1.0/public/By_teacher">By Teachers</a>
+                <a href="http://localhost/group_project_1.0/public/By_institute">By Institutes</a>
                 <a href="http://localhost/group_project_1.0/public/Student/classes">Classes</a>
             </div>
         </div>
@@ -76,10 +76,14 @@
 
         <?php if ($_SESSION['Role'] == "institute") { ?>
             <a href="http://localhost/group_project_1.0/public/Institute_teacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Our Teachers</a>
-        <?php } ?>  
+        <?php } ?> 
+        
+        <?php if ($_SESSION['Role'] == "institute" ) { ?>
+        <a href="http://localhost/group_project_1.0/public/Jobrollcontroller"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Jobroll applications</a>
+        <?php } ?> 
         
         <?php if ($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher") { ?>
-        <a href="http://localhost/group_project_1.0/public/Subscriptions/Subscriptions"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
+        <a href="http://localhost/group_project_1.0/public/Subscriptions"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
         <?php } ?> 
 
     </div>
@@ -100,8 +104,8 @@
     </div>
     <div class="nav-links">
         <a href="http://localhost/group_project_1.0/public/<?php echo htmlspecialchars($_SESSION['Role']); ?>"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/Home.png">Home</a>
-        <a href="http://localhost/group_project_1.0/public/GeneralController/loadteacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
-        <a href="http://localhost/group_project_1.0/public/GeneralController/loadinstitute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">By Institute</a>
+        <a href="http://localhost/group_project_1.0/public/By_teacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/teacher.png">By Teacher</a>
+        <a href="http://localhost/group_project_1.0/public/By_institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">By Institute</a>
         <a href="http://localhost/group_project_1.0/public/Student/classes"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">classes</a>
         <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar /icon/ads.png">Advertisements</a>
         <a href="http://localhost/group_project_1.0/public/Blog"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">Blogs</a>
@@ -131,11 +135,15 @@
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
 
         <?php if ($_SESSION['Role'] == "institute") { ?>
-            <a href="http://localhost/group_project_1.0/public/Institute_teacher"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Our Teachers</a>
+            <a href=""><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Our Teachers</a>
         <?php } ?>
 
+        <?php if ($_SESSION['Role'] == "institute" ) { ?>
+        <a href="http://localhost/group_project_1.0/public/Jobrollcontroller"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">Jobroll applications</a>
+        <?php } ?> 
+
         <?php if ($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher") { ?>
-        <a href="http://localhost/group_project_1.0/public/Subscriptions/Subscriptions"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
+        <a href="http://localhost/group_project_1.0/public/Subscriptions"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/subscription.png">Subscriptions</a>
         <?php } ?> 
         
     </div>

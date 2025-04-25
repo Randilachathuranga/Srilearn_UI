@@ -73,6 +73,69 @@ class Enrollment extends Controller
             echo json_encode(['error' => 'An error occurred while enrolling.', 'details' => $e->getMessage()]);
         }
     }
+    public function postfree()
+    {
+        header('Content-Type: application/json');
+        $model = new Enrollmodel();
+    
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Method not allowed']);
+            return;
+        }
+    
+        // Read input
+        $input = json_decode(file_get_contents("php://input"), true);
+    
+        if (!is_array($input)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid input data.']);
+            return;
+        }
+    
+        $userId = $_SESSION['User_id'] ?? null;
+        $classId = $input['classID'] ?? null;
+    
+        if (!$userId || !$classId) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing required data.']);
+            return;
+        }
+    
+        // Check if already enrolled
+        if ($model->checkisEnrolled($userId, $classId)) {
+            http_response_code(403);
+            echo json_encode(['error' => 'You are already enrolled in this class.']);
+            return;
+        }
+    
+        // Prepare enrollment data
+        $enrollData = [
+            'Date' => date("Y-m-d"),
+            'Stu_id' => $userId,
+            'Class_id' => $classId,
+            'Isdiscountavail' => 0
+        ];
+    
+        try {
+            $enroll = $model->insert($enrollData);
+    
+            if ($enroll) {
+                http_response_code(200);
+                echo json_encode(['message' => 'Enrolled successfully']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['error' => 'Enrollment failed.']);
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'error' => 'An error occurred during enrollment.',
+                'details' => $e->getMessage()
+            ]);
+        }
+    }
+    
     
 
  public function api(){
@@ -134,27 +197,72 @@ public function allinstitute(){
     }
 }
 
- public function mydeleteapi($id) {
-        
-    $model = new Enrollmodel();
-    header('Content-Type: application/json');
+public function mydeleteapi($id) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Read raw JSON input
+        $input = json_decode(file_get_contents("php://input"), true);
 
-    // Fetch blogs for the given user ID
-    try {
-        $enroll = $model->delete($id,'Enrollment_id');
-        
-        if ($enroll) {
-            // Return blogs as JSON
-            echo json_encode($enroll);
-        } else {
-            // Handle case where no blogs were found
-            echo json_encode(['message' => 'No blogs found for this user.']);
+        show($input);
+        $delusermodel = new Removedstdmodel();
+        $model = new Enrollmodel();
+        header('Content-Type: application/json');
+
+        try {
+            // Fetch the enrollment record
+            $rec = $model->where(['Enrollment_id' => $id]);
+            show($rec);
+            if (!$rec) {
+                echo json_encode(['error' => 'Enrollment record not found.']);
+                return;
+            }
+
+            // Delete the enrollment
+           
+
+            
+            // Prepare data for removed student log
+            $data = [
+                'past_std' => $id,   
+                'Stu_id' => $rec[0]->Stu_id,
+                'Class_id' => $rec[0]->Class_id,
+                'Rem_Date' => $input['Rem_Date'],
+                'Reason' => $input['Reason']
+            ];
+            show($data);
+            $fetch = $delusermodel->insert($data);
+            if ($fetch) {
+            $enroll = $model->delete($id, 'Enrollment_id');
+            } else {
+                echo json_encode(['error' => 'Failed to log removed student.']);
+                return;
+            }
+            if ($enroll) {
+                echo json_encode(['status' => 'success', 'message' => 'Student removed successfully.']);
+            } else {
+                echo json_encode(['error' => 'Failed to delete student.']);
+            }
+
+        } catch (Exception $e) {
+            echo json_encode([
+                'error' => 'An error occurred while processing.',
+                'details' => $e->getMessage()
+            ]);
         }
-    } catch (Exception $e) {
-        // Error handling in case of an exception
-        echo json_encode(['error' => 'An error occurred while fetching blogs.', 'details' => $e->getMessage()]);
+    } else {
+        echo json_encode(['error' => 'Invalid request method.']);
     }
 }
+
+public function getAlldeleted($id){
+    $model = new Removedstdmodel();
+    $data = $model->where(['Class_id' =>$id ]);
+    echo json_encode($data);
+}
+
+public function deletedstudents($Class_id){
+    $this->view('TeacherView/Options/ClassStudents/DeletedStudents',['Class_id' => $Class_id]);
+}
+
 
 public function payfee($classid)
 {

@@ -232,6 +232,7 @@ public function CreateinstituteclassApi($N_id) {
         'Start_date' => $data['table3']['Start_date'] ?? null,
         'End_date' => $data['table3']['End_date'] ?? null,
         'Hall_number' => $data['table3']['Hall_number'] ?? null,
+        'inst_id' => $data['table3']['inst_id'] ?? null,
     ];
     
     if (empty(array_filter($table1_data)) || empty(array_filter($table2_data))) {

@@ -34,6 +34,16 @@
                     <button type="submit" class="btn">Sign In</button>
                     <p>Don't have an account? <a href="http://localhost/group_project_1.0/public/Signup">Sign Up</a></p>
                     <div class="guest"><a  href="guest">Log in as a Guest</a></div>
+                    <?php 
+                if (!empty($data['errors'])) {
+                    foreach ($data['errors'] as $error) {
+                        if (stripos($error, "Wrong password") !== false) {
+                        echo '<div class="f-pword"><a href="http://localhost/group_project_1.0/public/ForgotPassword">Forgot Password?</a></div>';
+                        break;
+                }
+            }
+        }
+    ?>
                  </div>
                 </div>
             </form>

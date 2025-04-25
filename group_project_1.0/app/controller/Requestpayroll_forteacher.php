@@ -69,12 +69,13 @@ class Requestpayroll_forteacher extends Controller
         try {
             $model = new Payroll_requestmodel();
             $paymentmodel = new Paymentmodel();
-            $temp=160;
+            
             // Fetch all records for the given class
             $allrecs = $paymentmodel->findall(); 
             // Calculate total for current month
             $totalAmount = 0;
             $currentMonth = date('m');
+            $prevMonth = date('m', strtotime('first day of last month'));
             $currentYear = date('Y');
             $filteredRecs = array_filter($allrecs, function($rec) use ($data) {
                 return isset($rec->classID) && $rec->classID == $data['InstClass_id'];
@@ -84,7 +85,7 @@ class Requestpayroll_forteacher extends Controller
                 $recordMonth = date('m', strtotime($record->Date));
                 $recordYear = date('Y', strtotime($record->Date));
             
-                if ($recordMonth == $currentMonth && $recordYear == $currentYear) {
+                if ($recordMonth == $prevMonth && $recordYear == $currentYear) {
                     $totalAmount += $record->Amount;
                 }
             }
@@ -138,6 +139,27 @@ class Requestpayroll_forteacher extends Controller
                 'error' => 'An error occurred while submitting the payroll request.',
                 'details' => $e->getMessage()
             ]);
+        }
+    }
+
+    public function viewclassreq($id){
+        $this->view('TeacherView/Options/ViewInstitute/Viewpayments',['id'=> $id]);
+    }
+
+    public function payments($classid){
+        $model=new Payroll_requestmodel();
+        header('Content-Type: application/json');
+
+        try {
+            $id=$_SESSION['User_id'];
+            $result = $model->where(['InstClass_id' => $classid]);
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                echo json_encode(['message' => 'No payroll request found for this class ID.']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'An error occurred while fetching payroll requests.', 'details' => $e->getMessage()]);
         }
     }
     

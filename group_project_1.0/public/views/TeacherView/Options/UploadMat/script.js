@@ -1,15 +1,9 @@
-// Constants and utility functions
-const API_BASE_URL = "http://localhost/group_project_1.0/public/Learning_mat";
 const classId = sessionStorage.getItem("class_id");
-
-// Templates
-const topicTemplate = document.getElementById("topic-template");
-const materialTemplate = document.getElementById("material-template");
 
 // Form handling functions
 function showUploadForm() {
   document.getElementById("uploadForm").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay").style.display = "block"; //background blur
 }
 
 function hideUploadForm() {
@@ -17,16 +11,17 @@ function hideUploadForm() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function showUpdateForm(material) {
+// Modified this function to accept individual properties rather than a complete object
+function showUpdateForm(matId, topic, subTopic, description) {
   const updateForm = document.getElementById("updateForm");
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay").style.display = "block"; //background blur
   updateForm.style.display = "block";
 
   // Populate form with existing data
-  document.getElementById("update_mat_id").value = material.Mat_id;
-  document.getElementById("update_topic").value = material.topic;
-  document.getElementById("update_sub_topic").value = material.sub_topic;
-  document.getElementById("update_Description").value = material.Description;
+  document.getElementById("update_mat_id").value = matId;
+  document.getElementById("update_topic").value = topic;
+  document.getElementById("update_sub_topic").value = subTopic;
+  document.getElementById("update_Description").value = description;
 }
 
 function hideUpdateForm() {
@@ -43,7 +38,9 @@ function hideOverlay() {
 // API functions
 async function fetchMaterials() {
   try {
-    const response = await fetch(`${API_BASE_URL}/viewMat/${classId}`);
+    const response = await fetch(
+      `http://localhost/group_project_1.0/public/Learning_mat/viewMat/${classId}`
+    );
     if (!response.ok) {
       if (response.status === 404) {
         console.error("No materials found for this class.");
@@ -59,16 +56,20 @@ async function fetchMaterials() {
   }
 }
 
-async function deleteMat(matId) {
+async function deleteMaterial(matId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/deleteMat/${matId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost/group_project_1.0/public/Learning_mat/deleteMat/${matId}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await response.json();
 
     if (data.message) {
       alert(data.message);
-      window.location.href = API_BASE_URL;
+      window.location.href =
+        "http://localhost/group_project_1.0/public/Learning_mat";
     } else {
       throw new Error(data.error || "Unexpected response from server");
     }
@@ -78,71 +79,148 @@ async function deleteMat(matId) {
   }
 }
 
-// UI rendering functions
-function renderMaterialItem(material) {
-  const materialNode = materialTemplate.content.cloneNode(true);
-  
-  // Corrected role retrieval
-  const Role = document.getElementById("user_role").value;
 
-  materialNode.querySelector(".sub-topic").textContent = `Sub-topic: ${material.sub_topic}`;
-  materialNode.querySelector(".description").textContent = `Description: ${material.Description}`;
-  materialNode.querySelector(".date").textContent = `Date: ${material.Date}`;
 
-  const downloadLink = materialNode.querySelector(".download-link");
-  downloadLink.href = material.Url;
-  downloadLink.textContent = "Download PDF";
+// Direct DOM manipulation functions without templates
+function displayMaterials() {
+  if (Role == 'teacher') {
+    const container = document.getElementById("materialsList");
+    container.innerHTML = ""; // Clear previous content
 
-  if (Role === "teacher") {
-    const deleteBtn = materialNode.querySelector(".delete-btn");
-    deleteBtn.onclick = () => deleteMat(material.Mat_id);
+    fetchMaterials().then((materials) => {
+      if (materials.length === 0) {
+        container.innerHTML = "<p>No materials found for this class.</p>";
+        return;
+      }
 
-    const updateBtn = materialNode.querySelector(".update-btn");
-    updateBtn.onclick = () => showUpdateForm(material);
+      const groupedMaterials = materials.reduce((acc, material) => {
+        acc[material.topic] = acc[material.topic] || [];
+        acc[material.topic].push(material);
+        return acc;
+      }, {});
+
+      container.innerHTML = Object.entries(groupedMaterials)
+        .map(
+          ([topic, materials]) => `
+            <div class="topic-section">
+              <h2>${topic}</h2>
+              <div class="materials-container">
+                ${materials
+                  .map(
+                    (material) => `
+                      <div class="material-item">
+                        <p>Sub-topic: ${material.sub_topic}</p>
+                        <p>Description: ${material.Description}</p>
+                        <p>Date: ${material.Date}</p>
+                        <a href="${material.Url}" target="_blank">Download PDF</a>
+                        ${
+                          document.getElementById("user_role").value === "teacher"
+                            ? `
+                              <button class="delete-btn" onclick="deleteMaterial(${
+                                material.Mat_id
+                              })">Delete</button>
+                              <button class="update-btn" onclick="showUpdateForm(${
+                                material.Mat_id
+                              }, '${material.topic}', '${
+                                material.sub_topic
+                              }', '${material.Description.replace(
+                                /'/g,
+                                "\\'"
+                              )}')">Update</button>
+                            `
+                            : ""
+                        }
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `
+        )
+        .join("");
+    });
+  } else if (Role == 'student') {
+    // First, check enrollment date
+    fetch(`http://localhost/group_project_1.0/public/Learning_mat/checkenrolldate/${User_id}/${classId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((enrollmentData) => {
+        console.log("Enrollment data:", enrollmentData);
+        
+        // Then, check request status
+        return fetch(`http://localhost/group_project_1.0/public/Learning_mat/viewrequest/${User_id}/${classId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((requestData) => {
+            console.log("Request data:", requestData);
+            
+            return fetchMaterials().then((materials) => {
+              const filteredMaterials = materials.filter((material) => {
+                return (enrollmentData.length > 0 && new Date(enrollmentData[0].Date) < new Date(material.Date)) || 
+                       (requestData && requestData.length > 0 && requestData[0].Status === 1);
+              });
+
+              const container = document.getElementById("materialsList");
+              container.innerHTML = ""; // Clear previous content
+
+              if (filteredMaterials.length === 0) {
+                container.innerHTML = "<p>No materials available for you.</p>";
+                return;
+              }
+
+              const groupedMaterials = filteredMaterials.reduce((acc, material) => {
+                acc[material.topic] = acc[material.topic] || [];
+                acc[material.topic].push(material);
+                return acc;
+              }, {});
+
+              container.innerHTML = Object.entries(groupedMaterials)
+                .map(
+                  ([topic, materials]) => `
+                    <div class="topic-section">
+                      <h2>${topic}</h2>
+                      <div class="materials-container">
+                        ${materials
+                          .map(
+                            (material) => `
+                              <div class="material-item">
+                                <p>Sub-topic: ${material.sub_topic}</p>
+                                <p>Description: ${material.Description}</p>
+                                <p>Date: ${material.Date}</p>
+                                <a href="${material.Url}" target="_blank">Download PDF</a>
+                              </div>
+                            `
+                          )
+                          .join("")}
+                      </div>
+                    </div>
+                  `
+                )
+                .join("");
+            });
+          });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("An error occurred: " + error.message);
+      });
   }
-
-  return materialNode;
 }
 
-function renderTopicSection(topic, materials) {
-  const topicNode = topicTemplate.content.cloneNode(true);
 
-  topicNode.querySelector(".topic-title").textContent = topic;
-  const materialsContainer = topicNode.querySelector(".materials-container");
-
-  materials.forEach((material) => {
-    materialsContainer.appendChild(renderMaterialItem(material));
-  });
-
-  return topicNode;
-}
-
-async function renderMaterialsList() {
-  const container = document.getElementById("materialsList");
-  container.innerHTML = ""; // Clear previous content
-
-  const materials = await fetchMaterials();
-
-  if (materials.length === 0) {
-    container.innerHTML = "<p>No materials found for this class.</p>";
-    return;
-  }
-
-  // Group materials by topic
-  const groupedMaterials = materials.reduce((acc, material) => {
-    (acc[material.topic] = acc[material.topic] || []).push(material);
-    return acc;
-  }, {});
-
-  // Render each topic section
-  Object.entries(groupedMaterials).forEach(([topic, materials]) => {
-    container.appendChild(renderTopicSection(topic, materials));
-  });
-}
 
 // Form submission handling
 document.addEventListener("DOMContentLoaded", () => {
-  renderMaterialsList();
+  displayMaterials();
 
   // Upload form handling
   const uploadForm = document.getElementById("uploadForm");
@@ -153,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const response = await fetch(
-          `${API_BASE_URL}/insertLearningMat/${classId}`,
+          `http://localhost/group_project_1.0/public/Learning_mat/insertLearningMat/${classId}`,
           {
             method: "POST",
             body: formData,
@@ -168,7 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result.message) {
           alert(result.message);
           hideUploadForm();
-          window.location.href = API_BASE_URL;
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Learning_mat";
         } else {
           throw new Error(result.error || "Unexpected response from server");
         }
@@ -190,10 +269,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const matId = document.getElementById("update_mat_id").value;
 
       try {
-        const response = await fetch(`${API_BASE_URL}/updateMat/${matId}`, {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          `http://localhost/group_project_1.0/public/Learning_mat/updateMat/${matId}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -203,7 +285,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result.message) {
           alert(result.message);
           hideUpdateForm();
-          window.location.href = API_BASE_URL;
+          window.location.href =
+            "http://localhost/group_project_1.0/public/Learning_mat";
         } else {
           throw new Error(result.error || "Unexpected response from server");
         }
@@ -216,3 +299,138 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+//request old materials
+function request() {
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/viewrequest/${User_id}/${classId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Request data:", data);
+      
+      // Check if data exists and has elements
+      if ((data && data.length > 0 && data[0].Status === 0) || (data && data.length > 0 && data[0].Status === 1)) {
+        alert("You have already requested old materials.");
+      } else {
+        return fetch(`http://localhost/group_project_1.0/public/Learning_mat/requestOldMat/${User_id}/${classId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((requestData) => {
+            alert("Request for old materials was successful!");
+            console.log("Response data:", requestData);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An error occurred: " + error.message);
+    });
+}
+
+
+function showRequests() {
+  document.getElementById("overlay").style.display = "block";
+  const popup = document.getElementById('requestPopup');
+  const tableBody = document.getElementById('requestsTableBody');
+  const noRequestsMessage = document.getElementById('noRequestsMessage');
+  const errorMessage = document.getElementById('errorMessage');
+  const requestsTable = document.getElementById('requestsTable');
+  tableBody.innerHTML = '';
+  noRequestsMessage.style.display = 'none';
+  errorMessage.style.display = 'none';
+  requestsTable.style.display = 'none';
+  tableBody.innerHTML = `
+    <tr><td colspan="3" style="text-align:center;">Loading...</td></tr>
+  `;
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/allrequests/${classId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(requests => {
+      console.log("Fetched Requests:", requests);
+      tableBody.innerHTML = ''; // Clear loading message
+
+      if (!Array.isArray(requests) || requests.length === 0) {
+        noRequestsMessage.style.display = 'block';
+      } else {
+        requestsTable.style.display = 'table';
+
+        requests.forEach(request => {
+          const row = document.createElement('tr');
+
+          const id = request.Stu_id;
+          const Name = request.F_name + " " + request.L_name || 'Unknown';
+          const status = request.Status === 0 ? 'Pending' : 'Approved';
+          const request_id = request.ID;
+
+          row.innerHTML = `
+            <td>${id}</td>
+            <td>${Name}</td>
+            <td>
+              <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+            </td>
+            <td>
+              ${status === 'Pending' ? `
+                <button class="action-button approve-button" onclick="updateRequestStatus(${request_id})">Approve</button>
+              ` : ''}
+            </td>
+          `;
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      popup.style.display = "block";
+    })
+    .catch(error => {
+      console.error("Error fetching requests:", error.message);
+      console.log("Requested URL:", fetchURL);
+      errorMessage.style.display = 'block';
+      popup.style.display = "block";
+    });
+}
+
+
+
+function closeRequestPopup() {
+  document.getElementById('requestPopup').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+}
+
+
+
+function updateRequestStatus(requestId) {
+ if(confirm("Are you sure you want to approve this request?")) {
+  fetch(`http://localhost/group_project_1.0/public/Learning_mat/acceptrequest/${requestId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: status })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      showRequests();
+    } else {
+      alert('Failed to update status: ' + data.message);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while updating the status');
+  });
+ }
+}

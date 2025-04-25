@@ -212,3 +212,332 @@ h1 {
     font-size: 1.3rem;
   }
 }
+
+
+/* Layout for rows */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 12px; /* Space between columns */
+  margin-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Overlay for popup */
+.popup-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #030457;
+}
+
+/* Form container styling */
+.form-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Fade-in effect */
+.popup-form {
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Form input styling */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="tel"],
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  border: 1.5px solid #030457;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  resize: vertical; /* Allows resizing of textarea */
+}
+
+/* Submit and close button styling */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  background-color: #030457;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #020347;
+}
+
+
+/* Responsive Styles */
+@media (min-width: 1024px) {
+  .form-container {
+      width: 400px;
+      padding: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .form-row {
+      grid-template-columns: 1fr; /* Stack fields vertically on small screens */
+  }
+
+  input[type="text"], input[type="email"], input[type="tel"], textarea {
+      font-size: 14px;
+  }
+
+  .submit-button, .close-button {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+
+
+/* Overlay for popup */
+.popup-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #030457;
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Form container styling */
+.form-container {
+  background-color: #ffffff;
+  padding: 25px 25px 35px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
+}
+
+/* Teacher Image and Institute Name Row */
+.teacher-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Teacher Image */
+.teacher-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  margin-right: 15px;
+  border: 4px solid #030457;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Institute Name beside Image */
+.institute-info {
+  text-align: left;
+  font-size: 18px;
+}
+
+.institute-info p {
+  margin: 0;
+  color: #030457;
+  font-weight: 600;
+}
+
+/* Teacher Details */
+.teacher-details {
+  text-align: left;
+  padding-top: 15px;
+}
+
+.teacher-details p {
+  font-size: 15px;
+  color: #030457;
+  margin: 8px 0;
+  font-weight: 500;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+/* Form input styling */
+.form-container input[type="text"],
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1.5px solid #030457;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  resize: vertical; /* Allows resizing of textarea */
+}
+
+/* Close button with cross mark */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  color: #030457;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #d32f2f;
+}
+
+.close-button::before {
+  content: "✕"; /* Cross mark */
+}
+
+/* Submit button styling */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  background-color: #030457;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #020347;
+}
+
+/* Description textarea */
+#description {
+  height: 150px;
+}
+
+/* Responsive Styles */
+/* For large screens and desktops */
+@media (min-width: 1024px) {
+  .form-container {
+      width: 450px;
+      padding: 30px;
+  }
+
+  #description {
+      height: 200px;
+  }
+}
+
+/* For tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .form-container {
+      width: 80%;
+      max-width: 500px;
+  }
+
+  #description {
+      height: 180px;
+  }
+}
+
+/* For phones */
+@media (max-width: 767px) {
+  .teacher-header {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .teacher-image {
+      margin-bottom: 10px;
+  }
+
+  .form-container {
+      width: 90%;
+      padding: 20px;
+  }
+
+  input[type="text"], textarea {
+      font-size: 14px;
+  }
+
+  .submit-button, .close-button {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+
+/* Styling for the Subject Dropdown */
+#subject {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #030457;
+  border-radius: 8px;
+  background-color: #ffffff;
+  appearance: none; /* Removes default browser styles */
+  cursor: pointer;
+  color: #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#subject:focus {
+  border-color: #060883;
+  box-shadow: 0px 0px 8px rgba(6, 8, 131, 0.5);
+  outline: none;
+}
+
+#subject option {
+  color: #333;
+  background-color: #ffffff;
+}
+
+

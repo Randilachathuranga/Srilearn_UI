@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +8,20 @@
 </head>
 <body>
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php" ?>
-
+    
     <h1>Class Materials</h1>
-    <?php 
-                if ($_SESSION['Role'] == 'teacher') { 
-                    echo '    <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>';
-                }
-    ?>
+    
+    <?php if ($_SESSION['Role'] == 'teacher') { ?>
+        <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>
+        <div id="ShowRequests" onclick="showRequests()">Old Material Requests</div>
+    <?php } ?>
+
+    <?php if ($_SESSION['Role'] == 'student') { ?>
+        <div id="request" onclick="request()">Request Old Material</div>
+    <?php } ?>
+    
     <div id="overlay" onclick="hideOverlay()"></div>
-
- <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
-
-
+    <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
     
     <!-- Upload Form -->
     <form id="uploadForm" enctype="multipart/form-data" method="POST">
@@ -38,8 +39,9 @@
         <input type="file" id="pdf" name="pdf" accept=".pdf" required>
         
         <button type="submit">Upload</button>
+        <button type="button" onclick="hideUploadForm()">Cancel</button>
     </form>
-
+    
     <!-- Update Form -->
     <form id="updateForm" enctype="multipart/form-data" method="POST">
         <input type="hidden" id="update_mat_id" name="Mat_id">
@@ -58,33 +60,47 @@
         <button type="submit">Update</button>
         <button type="button" onclick="hideUpdateForm()">Cancel</button>
     </form>
-
+    
     <div id="materialsList">
-        <!-- Template for material items -->
-        <template id="topic-template">
-            <div class="topic-section">
-                <h2 class="topic-title"></h2>
-                <div class="materials-container"></div>
-            </div>
-        </template>
-
-        <template id="material-template">
-            <div class="material-item">
-                <p class="sub-topic"></p>
-                <p class="description"></p>
-                <p class="date"></p>
-                <a class="download-link" target="_blank">Download PDF</a>
-                <?php 
-                if ($_SESSION['Role'] == 'teacher') { 
-                    echo '<button class="delete-btn">Delete</button>';
-                    echo '<button class="update-btn">Update</button>';
-                }
-    ?>
-            </div>
-        </template>
+        <!-- Materials will be loaded here -->
     </div>
 
+
+
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
+
+    <div id="requestPopup" class="request-popup">
+  <div class="request-header">
+    <h3>Student Requests</h3>
+    <button class="close-button" onclick="closeRequestPopup()">×</button>
+  </div>
+  <div class="request-content">
+    <table id="requestsTable" class="requests-table">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="requestsTableBody">
+        <!-- Data will be populated here -->
+      </tbody>
+    </table>
+    <div id="noRequestsMessage" style="display:none;">No requests found.</div>
+    <div id="errorMessage" style="display:none;">An error occurred while fetching requests.</div>
+  </div>
+</div>
+
+
+    
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php" ?>
-    <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
+    <script>
+    const Role = "<?php echo $_SESSION['Role']; ?>";
+    const User_id = "<?php echo $_SESSION['User_id']; ?>";
+  </script>
+
+     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/script.js"></script>
 </body>
 </html>

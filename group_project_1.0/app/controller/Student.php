@@ -38,9 +38,8 @@ class Student extends StudentController
              // Error handling in case of an exception
              echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
          }
- 
      }
-
+     
      
     public function viewindividual($subject, $grade)
     {
@@ -142,9 +141,6 @@ class Student extends StudentController
             echo json_encode(['error' => 'An error occurred while fetching classes.', 'details' => $e->getMessage()]);
         }
     }
-
-
-
     /**
      * API for viewing classes (JSON).
      *

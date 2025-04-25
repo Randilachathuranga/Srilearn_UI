@@ -34,7 +34,10 @@
 
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
-<button onclick="reqpaymentind()">Request Payment</button>
+<?php if (!empty($_SESSION['Ispayavail']) && $_SESSION['Ispayavail'] != 0): ?>
+    <button onclick="reqpaymentind()">Request Payment</button>
+<?php endif; ?>
+
 
 </div>
 
@@ -100,6 +103,7 @@
                     <label for="Hallnumber">Hall number</label>
                     <input type="text" id="Hallnumber" name="Hallnumber" required>
                 </div>
+                    <input type="hidden" id="inst_id" name="inst_id" required>
                 <div>
                     <label for="Grade">Grade</label>
                     <input type="number" id="Grade" name="Grade" required>
@@ -251,7 +255,31 @@
 
 <script>
      var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
-    function reqpaymentind(){
+
+function hasinstsubbed(id){
+    return fetch(`http://localhost/group_project_1.0/public/Subscriptions/hassubbedinst/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+           
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to send message');
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            console.error('Error sending message:', error);
+          });
+    }
+    
+    
+    
+    
+    
+    
+     function reqpaymentind(){
        
 
       fetch(`http://localhost/group_project_1.0/public/Payment/reqpaymentind`, {

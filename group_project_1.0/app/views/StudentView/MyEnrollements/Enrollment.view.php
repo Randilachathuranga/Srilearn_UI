@@ -30,6 +30,58 @@
     </div>
 
     <script>
+    function haspaid(id) {
+    return fetch(`http://localhost/group_project_1.0/public/Payment/checkpayment/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+           
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to send message');
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            console.error('Error sending message:', error);
+          });
+}
+function hasteachsubbed(id) {
+    return fetch(`http://localhost/group_project_1.0/public/Subscriptions/hassubbedteach/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+           
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to send message');
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            console.error('Error sending message:', error);
+          });
+}
+function hasinstsubbed(id){
+    return fetch(`http://localhost/group_project_1.0/public/Subscriptions/hassubbedinst/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+           
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to send message');
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            console.error('Error sending message:', error);
+          });
+}
+
         // Fetch all enrolled classes initially
         document.addEventListener('DOMContentLoaded', fetchAllClasses);
 
@@ -61,42 +113,88 @@
     });
 }
 
+async function hasteachsubbedpayment(classId) {
+    return fetch(`http://localhost/group_project_1.0/public/Subscriptions/hassubbedteachpayment/${classId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to send message');
+            return response.json();
+          })
+          .then(data => data)
+          .catch(error => {
+            console.error('Error sending message:', error);
+          });
+}
 
+async function renderClasses(classes) {
+    const container = document.getElementById('classes-container');
+    container.innerHTML = ""; // Clear existing content
 
-        function renderClasses(classes) {
-            const container = document.getElementById('classes-container');
-            container.innerHTML = ""; // Clear existing content
+    if (!classes || classes.length === 0) {
+        container.innerHTML = "<p>No enrollments found.</p>";
+        return;
+    }
 
-            if (!classes || classes.length === 0) {
-                container.innerHTML = "<p>No enrollments found.</p>";
-                return;
-            }
+    for (const record of classes) {
+        const paid = await haspaid(record.Class_id);
 
-            classes.forEach(record => {
-    const rec = document.createElement('div');
-    rec.className = 'record';
-rec.innerHTML = `
-    <h2>Subject: ${record.Subject}</h2>
-    <h5>Teacher: ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
-    <h3>Grade: ${record.Grade}</h3>
-    <p>Type: ${record.Type}</p>
-    <p>Max Student: ${record.Max_std}</p>
-    <p>Address: ${record.Location}</p>
-    <h5>Fee: ${record.fee}</h5>
-    ${record.Isdiscountavail === 1 
-        ? '<p class="free-card-msg">You have a free card for this class</p>' 
-        : `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`}
-    <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
-    <button onclick="viewShedule(${record.Class_id})">Schedule</button><br><br>
-    <button onclick="viewMat(${record.Class_id})">Learning Materials</button><br><br>
-    <button onclick="viewASS(${record.Class_id})">Assignments</button>
-    <button onclick="chatwithteacher(${record.User_id})">Chat with teacher</button>
-`;
+        let substatus = false;
+        let subpayment = true;
 
-container.appendChild(rec);
-            });
-
+        if (record.Type === "Individual") {
+            substatus = await hasteachsubbed(record.Class_id);
+            subpayment = await hasteachsubbedpayment(record.Class_id);
+        } else {
+            substatus = await hasinstsubbed(record.Class_id);
+            
         }
+
+        console.log("Paid:", paid);
+        console.log("Subbed:", substatus);
+        console.log("Subpayment:", subpayment);
+
+        const rec = document.createElement('div');
+        rec.className = 'record';
+
+        let payButtonHtml = '';
+        if (record.Type === "Individual") {
+            if (record.Isdiscountavail !== 1 && subpayment && substatus) {
+                payButtonHtml = `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`;
+            } else if (record.Isdiscountavail === 1) {
+                payButtonHtml = '<p class="free-card-msg">You have a free card for this class</p>';
+            }
+        } else {
+            if (record.Isdiscountavail !== 1 && substatus) {
+                payButtonHtml = `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`;
+            } else if (record.Isdiscountavail === 1) {
+                payButtonHtml = '<p class="free-card-msg">You have a free card for this class</p>';
+            }
+        }
+
+        rec.innerHTML = `
+            <h2>Subject: ${record.Subject}</h2>
+            <h5>Teacher: ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
+            <h3>Grade: ${record.Grade}</h3>
+            <p>Type: ${record.Type}</p>
+            <p>Max Student: ${record.Max_std}</p>
+            <p>Address: ${record.Location}</p>
+            <h5>Fee: ${record.fee}</h5>
+            ${payButtonHtml}
+            <button onclick="deleteEnrollment(${record.Enrollment_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Leave</button>
+            <button onclick="viewShedule(${record.Class_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Schedule</button><br><br>
+            <button onclick="viewMat(${record.Class_id})" ${!(paid||!(subpayment))? 'disabled' : ''}>Learning Materials</button><br><br>
+            <button onclick="viewASS(${record.Class_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Assignments</button>
+            ${substatus ? `<button onclick="chatwithteacher(${record.User_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Chat with teacher</button>` : ''}
+        `;
+
+        container.appendChild(rec);
+    }
+}
+
+
+
 
         function chatwithteacher(reciever_id) {
         window.location.href = `Chat/mychat/${reciever_id}`;

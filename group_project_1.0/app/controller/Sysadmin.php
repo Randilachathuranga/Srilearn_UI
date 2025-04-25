@@ -174,92 +174,104 @@ class Sysadmin extends Controller {
    // At top of file (with other includes)
 
 
-public function approvessu($reqId) {
-    $model = new Tempusermodel();
-    $usermodel = new Usermodel();
+   public function approvessu($reqId) {
+    $tempUserModel = new Tempusermodel();
+    $userModel = new Usermodel();
+    $teacherModel = new Teachermodel();
+
     checkAccess('sysadmin');
     header('Content-Type: application/json');
 
     try {
         // Fetch the request record
-        $rec = $model->first(['req_id' => $reqId]);
+        $tempUser = $tempUserModel->first(['req_id' => $reqId]);
 
-        if (!$rec) {
+        if (!$tempUser) {
             http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => 'Signup request not found.']);
             return;
         }
 
-        // Convert object to associative array
-        $recArray = (array) $rec;
+        // Get subjects and split into array
+        $subjectString = $tempUser->Subject ?? '';
+        $subjects = array_filter(array_map('trim', explode(',', $subjectString))); // Clean array
 
-        // Set role
-        $recArray['Role'] = 'teacher';
+        // Prepare user data for insertion
+        $userData = (array) $tempUser;
+        $userData['Role'] = 'teacher';
+        unset($userData['req_id'], $userData['URL']);
 
-        // Remove unnecessary fields
-        unset($recArray['req_id'], $recArray['URL']);
+        // Insert new teacher user
+        $inserted = $userModel->insert($userData);
+        $newUser = $userModel->first(['Email' => $userData['Email']]);
 
-        // Attempt to insert into main user table
-        $newrec = $usermodel->insert($recArray);
-
-        if ($newrec) {
-            // Delete the temp record after successful insert
-            $deleted = $model->delete($reqId, 'req_id');
-
-            if ($deleted) {
-                // Send approval email
-                $emailSent = false;
-                $mailError = '';
-                
-                try {
-                    $mail = new PHPMailer(true);
-                    $mail->isSMTP();
-                    $mail->Host       = 'smtp.gmail.com';
-                    $mail->SMTPAuth   = true;
-                    $mail->Username   = 'srilearnofficial@gmail.com';
-                    $mail->Password   = 'lqpdnlzfauvbvjrd';
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port       = 587;
-
-                    $mail->setFrom('srilearnofficial@gmail.com', 'SriLearn Admin');
-                    $mail->addAddress('abdulraheempsn@gmail.com', $recArray['Name']); // Use user's actual email
-                    
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Your SriLearn Account Has Been Approved';
-                    $mail->Body    = '<h3>Your account has been approved!</h3><p>You can now login to SriLearn using your credentials.</p>';
-                    
-                    $emailSent = $mail->send();
-                } catch (Exception $e) {
-                    $mailError = $e->getMessage();
-                }
-
-                $response = [
-                    'status' => 'success', 
-                    'message' => 'Signup request approved and removed from queue.'
-                ];
-                
-                if (!$emailSent) {
-                    $response['email_status'] = 'failed';
-                    $response['email_error'] = $mailError;
-                } else {
-                    $response['email_status'] = 'sent';
-                }
-                
-                echo json_encode($response);
-            } else {
-                http_response_code(500);
-                echo json_encode([
-                    'status' => 'warning', 
-                    'message' => 'Signup approved, but failed to remove the original request.'
-                ]);
-            }
-        } else {
+        if (!$inserted || !$newUser) {
             http_response_code(500);
-            echo json_encode([
-                'status' => 'error', 
-                'message' => 'Failed to approve signup request. Insertion failed.'
+            echo json_encode(['status' => 'error', 'message' => 'Failed to insert new user record.']);
+            return;
+        }
+
+        // Insert subjects into teacher table
+        foreach ($subjects as $sub) {
+            $teacherModel->insert([
+                'Teach_id' => $newUser->User_id,
+                'Ratings' => 5,
+                'Subject' => $sub,
+                'Ispremium' => 0
             ]);
         }
+
+        // Delete the temp request
+        $deleted = $tempUserModel->delete($reqId, 'req_id');
+
+        if (!$deleted) {
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'warning',
+                'message' => 'User approved, but failed to remove the signup request.'
+            ]);
+            return;
+        }
+
+        // Attempt to send confirmation email
+        $emailSent = false;
+        $mailError = '';
+
+        try {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'srilearnofficial@gmail.com';
+            $mail->Password   = 'lqpdnlzfauvbvjrd';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            $mail->setFrom('srilearnofficial@gmail.com', 'SriLearn Admin');
+            $mail->addAddress($newUser->Email, $newUser->F_name); // Use actual email and name
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Your SriLearn Account Has Been Approved';
+            $mail->Body    = '<h3>Your account has been approved!</h3><p>You can now login to SriLearn using your credentials.</p>';
+
+            $emailSent = $mail->send();
+        } catch (Exception $e) {
+            $mailError = $e->getMessage();
+        }
+
+        // Build success response
+        $response = [
+            'status' => 'success',
+            'message' => 'Signup request approved and user added.',
+            'email_status' => $emailSent ? 'sent' : 'failed'
+        ];
+
+        if (!$emailSent) {
+            $response['email_error'] = $mailError;
+        }
+
+        echo json_encode($response);
+
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode([
@@ -269,6 +281,7 @@ public function approvessu($reqId) {
         ]);
     }
 }
+
     
 
     public function reject($reqId) {        

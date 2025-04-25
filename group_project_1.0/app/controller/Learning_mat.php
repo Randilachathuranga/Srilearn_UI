@@ -167,6 +167,96 @@ class Learning_mat extends Controller
         }
     }
 
+public function checkenrolldate($User_id, $Class_id) {
+    $model = new Enrollmodel();
+    header('Content-Type: application/json');
+    $tables = [
+        'user','enrollment'
+    ];
+    $joincondition = [
+        'user.User_id = enrollment.Stu_id'
+    ];
+    $data = [
+        'user.User_id' => $User_id,
+        'enrollment.Class_id' => $Class_id
+    ];
+    $result = $model->InnerJoinwhereMultiple($tables, $joincondition, $data, []);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
+public function requestOldMat($User_id,$Class_id) {
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $data = [
+        'Stu_id' => $User_id,
+        'Class_id' => $Class_id,
+        'Status' => '0'
+    ];
+    $result = $model->insert($data);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
+public function viewrequest($User_id,$Class_id){
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $result = $model->where(['Stu_id' => $User_id, 'Class_id' => $Class_id]);
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'No materials found for this class ID.']);
+    }
+}
+
+public function allrequests($Class_id)
+    {
+        $model = new Request_oldmat();
+        header('Content-Type: application/json');
+        try {
+
+            $tables = [
+                'user', 'request_oldmat'
+            ];
+
+            $joincondition = [
+                'user.User_id = request_oldmat.Stu_id'
+            ];
+            $data = [
+                'request_oldmat.Class_id' => $Class_id,
+            ];
+
+            $materials = $model->InnerJoinwhereMultiple($tables, $joincondition, $data, []);
+
+            if ($materials) {
+                echo json_encode($materials);
+            } else {
+                echo json_encode(['message' => 'No materials found for this class ID.']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'An error occurred while fetching materials.', 'details' => $e->getMessage()]);
+        }
+    }
+
+public function acceptrequest($request_id) {
+    $model = new Request_oldmat();
+    header('Content-Type: application/json');
+    $data = [
+        'Status' => '1'
+    ];
+    $result = $model->update($request_id, $data, 'ID');
+    if ($result) {
+        echo json_encode(['success' => 'Request accepted successfully.']);
+    } else {
+        echo json_encode(['message' => 'Failed to accept the request.']);
+    }
+}
 
 }
 ?>

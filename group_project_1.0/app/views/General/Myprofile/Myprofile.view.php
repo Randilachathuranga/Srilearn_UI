@@ -14,62 +14,67 @@
 <div class="container">
     <h1>User Profile</h1>
 
-    <!-- Profile Image -->
-    <div class="profile-image">
-        <form id="imageForm" enctype="multipart/form-data">
-            <input type="hidden" id="userId" value="<?php echo $_SESSION['User_id']; ?>">
-            <label for="image">Upload Image:</label>
-            <input type="file" name="image" id="image" accept="image/*" required>
-        </form>
-        <!-- Preview uploaded image -->
-        <img id="userImage" src="" alt="User Image">
+    <!-- Card Layout with Profile Image and Data -->
+    <div class="card-container">
+        <!-- Left Side - Profile Image -->
+        <div class="card-image">
+            <img id="userImage" src="" alt="User Image">
+            <form id="imageForm" enctype="multipart/form-data">
+                <input type="hidden" id="userId" value="<?php echo $_SESSION['User_id']; ?>">
+                <label for="image">Upload Image</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+            </form>
+        </div>
+        
+        <!-- Right Side - User Data -->
+        <div class="card-data">
+            <!-- Profile Form -->
+            <form id="profileForm" action="#" method="POST">
+                <div class="form-group double-field">
+                    <div class="input-wrapper">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="F_name" disabled>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="L_name" disabled>
+                    </div>
+                </div>
+                <div class="form-group double-field">
+                    <!-- <div class="input-wrapper">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="Email" disabled>
+                    </div> -->
+                    <div class="input-wrapper">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="tel" id="phone_number" name="Phone_number" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="Address" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="district">District:</label>
+                    <select id="district" name="District" disabled>
+                        <!-- District Options -->
+                        <?php
+                        $districts = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
+                        foreach ($districts as $district) {
+                            echo "<option value='$district'>$district</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-buttons">
+                    <button type="button" id="editButton">Edit</button>
+                    <button type="submit" id="updateButton" disabled>Update</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <!-- Profile Form -->
-    <form id="profileForm" action="#" method="POST">
-        <div class="form-group double-field">
-            <div class="input-wrapper">
-                <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="F_name" disabled>
-            </div>
-            <div class="input-wrapper">
-                <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="L_name" disabled>
-            </div>
-        </div>
-        <div class="form-group double-field">
-            <div class="input-wrapper">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="Email" disabled>
-            </div>
-            <div class="input-wrapper">
-                <label for="phone_number">Phone Number:</label>
-                <input type="tel" id="phone_number" name="Phone_number" disabled>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="Address" disabled>
-        </div>
-        <div class="form-group">
-            <label for="district">District:</label>
-            <select id="district" name="District" disabled>
-                <!-- District Options -->
-                <?php
-                $districts = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
-                foreach ($districts as $district) {
-                    echo "<option value='$district'>$district</option>";
-                }
-                ?>
-            </select>
-        </div>
-
-        <!-- Buttons -->
-        <div class="form-buttons">
-            <button type="button" id="editButton">Edit</button>
-            <button type="submit" id="updateButton" disabled>Update</button>
-        </div>
-    </form>
 </div>
 
 <script>
@@ -89,7 +94,7 @@
                 // Populate form with data
                 document.getElementById('first_name').value = data.F_name || '';
                 document.getElementById('last_name').value = data.L_name || '';
-                document.getElementById('email').value = data.Email || '';
+                // document.getElementById('email').value = data.Email || '';
                 document.getElementById('phone_number').value = data.Phone_number || '';
                 document.getElementById('address').value = data.Address || '';
                 document.getElementById('district').value = data.District || '';
@@ -104,8 +109,6 @@
         document.getElementById('updateButton').disabled = false;
     });
 
-
-
     // Fetch and display user image
     document.addEventListener('DOMContentLoaded', () => {
         fetch(`http://localhost/group_project_1.0/public//Profile/view_image/${userId}`)
@@ -114,7 +117,7 @@
                 if (result.length > 0 && result[0].Src) {
                     console.log(result);
                     document.getElementById('userImage').src = result[0].Src;
-                }else{
+                } else {
                     document.getElementById('userImage').src = '../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg';
                 }
             })
@@ -122,7 +125,6 @@
                 document.getElementById('userImage').src = '../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg';
             });
     });
-
 
     // Handle image upload
     // Automatically handle image upload on file selection
@@ -151,7 +153,6 @@
             alert('An error occurred. Please try again.');
         }
     });
-
 </script>
 </body>
 </html>

@@ -79,31 +79,8 @@ class Institute extends Controller{
     
         try {
             $model = new Payroll_requestmodel();
-    
-            // Fetch all pending payrolls for the class
-            $records = $model->where([
-                'InstClass_id' => $id,
-                'stateis' => 0
-            ]);
-    
-            $currentMonth = date('m');
-            $currentYear = date('Y');
-            $targetRecord = null;
-    
-            if (is_array($records) || is_object($records)) {
-                foreach ($records as $record) {
-                    $recordMonth = date('m', strtotime($record->currentdate));
-                    $recordYear = date('Y', strtotime($record->currentdate));
-                    if ($recordMonth === $currentMonth && $recordYear === $currentYear) {
-                        $targetRecord = $record;
-                        break;
-                    }
-                }
-            }
-    
-            if ($targetRecord) {
-                $updated = $model->update(
-                    $targetRecord->Id,
+            $updated = $model->update(
+                    $id,
                     [
                         'stateis' => 1,
                         'issue_date' => date('Y-m-d')
@@ -117,10 +94,7 @@ class Institute extends Controller{
                     http_response_code(500);
                     echo json_encode(['status' => 'error', 'message' => 'Failed to update the payment request.']);
                 }
-            } else {
-                http_response_code(400);
-                echo json_encode(['status' => 'error', 'message' => 'No pending request found for this month.']);
-            }
+            
     
         } catch (Exception $e) {
             http_response_code(500);
@@ -131,6 +105,39 @@ class Institute extends Controller{
             ]);
         }
     }
+    public function rejectfee($id) {
+        header('Content-Type: application/json');
+    
+        try {
+            $model = new Payroll_requestmodel();
+            $updated = $model->update(
+                    $id,
+                    [
+                        'stateis' => -1,
+                        'issue_date' => date('Y-m-d')
+                    ],
+                    'Id'
+                );
+    
+                if ($updated) {
+                    echo json_encode(['status' => 'success', 'message' => 'Monthly payment request sent successfully.']);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to update the payment request.']);
+                }
+            
+    
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Server error occurred.',
+                'details' => $e->getMessage()
+            ]);
+        }
+
+    }
+    
     
     
     
