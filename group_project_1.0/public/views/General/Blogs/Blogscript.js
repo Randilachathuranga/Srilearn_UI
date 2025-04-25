@@ -154,3 +154,4 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = 'Blog/myblogs';
   };
 });
+

@@ -241,7 +241,7 @@
 
         // Handle delete of a record
         function handleDelete(userId, tableId) {
-            fetch(`sysadmin/deleteapi/${userId}`, { method: 'DELETE' })
+            fetch(`sysadmin/deleteapi/${userId}, { method: 'DELETE' }`)
                 .then(response => {
                     if (!response.ok) throw new Error('Failed to delete');
                     return response.json();

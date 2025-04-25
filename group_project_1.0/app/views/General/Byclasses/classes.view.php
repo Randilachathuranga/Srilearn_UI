@@ -150,6 +150,8 @@
                 <p>Address: ${record.Location}</p>
                 <p>Subject: ${record.Subject}</p>
                 <h5>Fee: ${record.fee}</h5>
+                <p>Date: ${record.Def_Date}</p>
+                <p>Time: ${record.Def_Time}</p>
             `;
 
             if (userRole === 'student') {

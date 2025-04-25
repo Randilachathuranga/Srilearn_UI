@@ -30,14 +30,20 @@ class Institute_teacher extends Controller{
         }
 
         //delete my teachers
-        public function deleteTeacher($N_ID) {
+        public function deleteTeacher($N_ID){
             $model = new Normalteacher();
-            
-            $result = $model->delete($N_ID);
-
-            if(empty($result)) {
-                http_response_code(404); echo json_encode(['error'=> '']);}
-
+            header('Content-Type: application/json');
+            try {
+                $delid = $model->delete($N_ID,'N_ID');
+                
+                if ($delid) {
+                    echo json_encode($delid);
+                } else {
+                    echo json_encode(['message' => 'Not found']);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['error' => 'An error occurred while fetching user.', 'details' => $e->getMessage()]);
+            }
         }
         
         
