@@ -42,7 +42,7 @@ class Signin extends Controller {
                 }
     
                 // Verify password (replace with password_verify in production)
-                if ($password == $row->Password) {
+                if (password_verify($password, $row->Password)) {
                     // Set session variables
                     $_SESSION['User_id'] = $row->User_id;
                     $_SESSION['Role'] = $row->Role;

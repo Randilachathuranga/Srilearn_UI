@@ -221,3 +221,29 @@ h1 {
         width: 100%;
     }
 }
+
+.btn-chat {
+    background-color: #007BFF; /* Bootstrap primary blue */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-chat:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .btn-chat:active {
+    background-color: #00408d; /* Even darker when clicked */
+  }
+  
+  .btn-chat:disabled {
+    background-color: #a0c5f7;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  

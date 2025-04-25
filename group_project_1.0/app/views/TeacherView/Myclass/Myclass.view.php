@@ -35,7 +35,7 @@
 </form>
 <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
 <?php if (!empty($_SESSION['Ispayavail']) && $_SESSION['Ispayavail'] != 0): ?>
-    <button onclick="reqpaymentind()">Request Payment</button>
+    <button class="create-blog-button" onclick="reqpaymentind()">Request Payment</button>
 <?php endif; ?>
 
 
@@ -299,6 +299,7 @@
             // Payment request already exists for this month
             alert(data.message);
         } else {
+
             // No payment request for this month, proceed with creating one
             createPaymentRequest();
         }

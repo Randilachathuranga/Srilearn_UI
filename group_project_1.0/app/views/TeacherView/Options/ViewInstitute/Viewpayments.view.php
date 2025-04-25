@@ -77,7 +77,9 @@
 </head>
 <body>
   <h1>All Payment Requests</h1>
-  <div id="container"></div>
+  <div id="container">
+    
+  </div>
 
   <script>
     const classid = <?= json_encode($classid) ?>;
@@ -104,9 +106,9 @@
             const stateText = record.stateis === 1 ? 'Approved' : (record.stateis === -1 ? 'Rejected' : 'Pending');
             const statusClass = record.stateis === 1 ? 'approved' : (record.stateis === -1 ? 'rejected' : 'pending');
 
-            const actionsHtml = record.stateis === 0 ? `
-              <button class="approve-btn" onclick="handleApproval(${record.Id})">Approve</button>
-              <button class="reject-btn" onclick="handleRejection(${record.Id})">Reject</button>
+            const actionsHtml = record.stateis === 0 ? ` 
+              <button class="approve-btn" onclick="handleApproval(${record.Id}, this)">Approve</button>
+              <button class="reject-btn" onclick="handleRejection(${record.Id}, this)">Reject</button>
             ` : '';
 
             rec.innerHTML = `
@@ -129,7 +131,7 @@
         });
     });
 
-    function handleApproval(id) {
+    function handleApproval(id, button) {
       fetch(`http://localhost/group_project_1.0/public/Institute/payfee/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -143,7 +145,9 @@
         }
         if (data.status === 'success') {
           alert('✅ Monthly payment request sent successfully!');
-          location.reload();
+          button.closest('.record').querySelector('.status').textContent = 'Approved';
+          button.closest('.record').querySelector('.status').classList.add('approved');
+          button.closest('.actions').innerHTML = ''; // Remove buttons after approval
         } else {
           alert(`❌ Failed: ${data.message}`);
         }
@@ -154,7 +158,7 @@
       });
     }
 
-    function handleRejection(id) {
+    function handleRejection(id, button) {
       fetch(`http://localhost/group_project_1.0/public/Institute/rejectfee/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -168,7 +172,9 @@
         }
         if (data.status === 'success') {
           alert('❌ Monthly payment request rejected');
-          location.reload();
+          button.closest('.record').querySelector('.status').textContent = 'Rejected';
+          button.closest('.record').querySelector('.status').classList.add('rejected');
+          button.closest('.actions').innerHTML = ''; // Remove buttons after rejection
         } else {
           alert(`❌ Failed: ${data.message}`);
         }

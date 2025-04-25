@@ -34,9 +34,9 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Action</th>
-                    <?php if ($_SESSION['Role'] === 'teacher'): ?>
-                        <th>Chat</th>
-                    <?php endif; ?>
+                    <th id="chatHeader" style="display: none;">Chat</th>
+
+
                 </tr>
             </thead>
             <tbody id="studentsTableBody">

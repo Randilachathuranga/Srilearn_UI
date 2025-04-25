@@ -187,6 +187,7 @@
     console.log("ad:", Isadavail);
     const ischatavail = <?= json_encode($_SESSION['ischatavail']) ?>;
     console.log("cjat:", ischatavail);
+    console.log('thoperole eka:', <?= json_encode($_SESSION['Role']) ?>);
   fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/MyinstituteClass/${teachid}`)
     .then(response => {
       if (!response.ok) throw new Error('Failed to fetch class data');

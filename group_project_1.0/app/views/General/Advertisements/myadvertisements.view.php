@@ -204,12 +204,12 @@ if ($_SESSION['User_id'] === 'Guest') {
     </div>
 
     <div class="filters">
-        <?php 
-        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+    <?php 
+        if (isset($_SESSION['Role']) && (($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')&&$_SESSION['Isadavail'] === 1)) { 
             echo '
             <div class="create-button">
                 <button onclick="handleClick()">Create Your Own Advertisement</button>
-                <button onclick="window.location.href=\'http://localhost/group_project_1.0/public/Advertisements\'">View All Advertisements</button>
+                <button onclick="handleMyAds()">My Advertisements</button>
             </div>';
         }
         ?>

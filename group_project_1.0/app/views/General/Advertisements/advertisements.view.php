@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 // Load appropriate NavBar
 if ($_SESSION['User_id'] === 'Guest') {
@@ -191,7 +191,7 @@ if ($_SESSION['User_id'] === 'Guest') {
         </select>
 
         <?php 
-        if (isset($_SESSION['Role']) && (($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')&&$_SESSION['isadavail'] === 1)) { 
+        if (isset($_SESSION['Role']) && (($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')&&($_SESSION['Isadavail'] === 1))) { 
             echo '
             <div class="create-button">
                 <button onclick="handleClick()">Create Your Own Advertisement</button>
