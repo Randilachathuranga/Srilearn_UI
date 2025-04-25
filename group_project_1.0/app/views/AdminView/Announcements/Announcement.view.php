@@ -24,9 +24,11 @@
     <!-- Header Section -->
     <header class="header">
         <br><br><br><br><br>
-        <h1>System Announcements</h1>
-    </header>
-
+        <div class="header-container">
+    <h1 class="header-title">System Announcements</h1>
+    
+    <img src="../../../../../group_project_1.0/public/views/General/Announcements/Ann.png" alt="Class Image" class="class-image">
+</div>
     <!-- Container for Announcements -->
     <div id="container" class="container"></div>
 

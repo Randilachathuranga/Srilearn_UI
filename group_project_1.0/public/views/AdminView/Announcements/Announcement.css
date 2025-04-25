@@ -1,6 +1,6 @@
 /* General Page Styles */
 body {
-  background-color: #f8f9fa;
+  background-color: #e3f2fd; /* Light blue background */
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -25,14 +25,39 @@ body {
 }
 
 .header h1 {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: bold;
-  color: #030457;
+  color: #0d47a1; /* Dark blue */
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px; /* Reduce the margin */
+    padding: 10px; /* Reduce the padding */
+    margin-top: 0px; /* Reduce the gap between the header and the top */
+}
+
+/* Header Image */
+.header-container img {
+    width: 55%; /* Make the image smaller */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 10px; /* Add a small gap below the image */
+}
+
+.header-title {
+    font-size: 8rem;
+    font-weight: bold;
+    color: #0d47a1; /* Dark blue */
+    margin-bottom: 20px;
 }
 
 /* Announcement Cards Section */
 .record {
-  background-color: #e8f0f1;
+  background-color: #bbdefb; /* Light blue for cards */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -43,6 +68,7 @@ body {
   box-sizing: border-box; /* Ensures padding does not overflow */
   margin-left: auto; /* Center the card horizontally */
   margin-right: auto; /* Center the card horizontally */
+  border: 1px solid #90caf9; /* Blue border */
 }
 
 .record:hover {
@@ -52,25 +78,25 @@ body {
 
 .record h3 {
   font-size: 1.5rem;
-  color: #1a237e;
+  color: #1565c0; /* Medium blue */
   margin: 10px 0;
 }
 
 .record p {
   font-size: 1rem;
-  color: #555;
+  color: #1976d2; /* Blue text */
   margin: 10px 0;
 }
 
 .record h5 {
   font-size: 0.9rem;
-  color: #888;
+  color: #2196f3; /* Light blue */
   margin-top: 10px;
 }
 
 .record button {
   padding: 10px 20px;
-  background-color: #1a237e;
+  background-color: #1565c0; /* Primary blue */
   color: white;
   border: none;
   border-radius: 5px;
@@ -81,12 +107,12 @@ body {
 }
 
 .record button:hover {
-  background-color: #0056b3;
+  background-color: #1976d2; /* Lighter blue on hover */
   transform: scale(1.05);
 }
 
 .record button:active {
-  background-color: #004094;
+  background-color: #0d47a1; /* Darker blue when active */
 }
 
 /* Flex Layout for Mobile Devices */
@@ -153,3 +179,10 @@ body {
     font-size: 0.9rem; /* Adjust button size for very small screens */
   }
 }
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }

@@ -15,7 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>My Blogs</h1>
+    <div class="header-container">
+        <h1 class="header-title">My Blogs</h1>
+        <img src="../../../../../group_project_1.0/public/views/General/Blogs/blogs1.png" alt="Blogs Banner" class="banner-image">
+    </div>
     <div id="container"></div> 
 
     <script>
@@ -56,6 +59,7 @@
                                     </label>
                                     <br>
                                     <button type="submit">Save Changes</button>
+                                    <button type="button" onclick="cancelUpdate(${record.Blog_id})">Cancel</button> <!-- Cancel button -->
                                 </form>
                             `;
                             container.appendChild(rec);
@@ -145,6 +149,12 @@
 
             // Toggle form visibility
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Function to cancel the update and hide the form
+        function cancelUpdate(blogId) {
+            const form = document.getElementById(`updateForm-${blogId}`);
+            form.style.display = 'none'; // Hide the form
         }
     </script>
 </body>

@@ -84,13 +84,15 @@ rec.innerHTML = `
     <p>Address: ${record.Location}</p>
     <h5>Fee: ${record.fee}</h5>
     ${record.Isdiscountavail === 1 
-        ? '<p class="free-card-msg">You have a free card for this class</p>' 
+        ? '<button class="free-card-msg">You have a free card for this class</button>' 
         : `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`}
-    <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
-    <button onclick="viewShedule(${record.Class_id})">Schedule</button><br><br>
-    <button onclick="viewMat(${record.Class_id})">Learning Materials</button><br><br>
-    <button onclick="viewASS(${record.Class_id})">Assignments</button>
-    <button onclick="chatwithteacher(${record.User_id})">Chat with teacher</button>
+    <div class="button-container">
+        <button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>
+        <button onclick="viewShedule(${record.Class_id})">Schedule</button>
+        <button onclick="viewMat(${record.Class_id})">Learning Materials</button>
+        <button onclick="viewASS(${record.Class_id})">Assignments</button>
+        <button onclick="chatwithteacher(${record.User_id})">Chat with teacher</button>
+    </div>
 `;
 
 container.appendChild(rec);

@@ -1,6 +1,6 @@
 /* General Page Styles */
 body {
-    background-color: #f8f9fa;
+    background-color: #e3f2fd; /* Light blue background */
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -24,13 +24,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 40px 0 20px 0; /* Adjust margin for visibility */
+    margin: 40px 0 20px 0;
 }
 
 .header-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #030457;
+    color: #0d47a1; /* Darker blue for header */
     margin-bottom: 20px;
 }
 
@@ -54,15 +54,16 @@ body {
     max-width: 1200px;
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Display two containers per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
 .record {
-    background-color: #e8f0f1;
+    background-color: #bbdefb; /* Light blue for cards */
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    border: 1px solid #90caf9; /* Blue border */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -73,11 +74,12 @@ body {
 
 .record h2, .record h3, .record p, .record h5 {
     margin: 5px 0;
+    color: #1565c0; /* Medium blue text */
 }
 
 .record button {
     padding: 10px 20px;
-    background-color: #1a237e;
+    background-color: #1565c0; /* Primary blue */
     color: white;
     border: none;
     border-radius: 5px;
@@ -87,14 +89,50 @@ body {
 }
 
 .record button:hover {
-    background-color: #0056b3;
+    background-color: #0d47a1; /* Lighter blue on hover */
     transform: scale(1.05);
 }
 
 .record button:active {
-    background-color: #004094;
+    background-color: #0d47a1; /* Darker blue when active */
 }
 
-.record .free-card-msg{
-    color: rgb(207, 7, 7);
+.record .free-card-msg {
+    color: white; /* Change text color to white */
+    background-color: #4caf50; /* Green background for the button */
+    padding: 10px 20px; /* Add padding for better appearance */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add rounded corners */
+    font-size: 1rem; /* Ensure consistent font size */
+    text-align: center; /* Center the text */
+    display: inline-block; /* Ensure it behaves like a button */
+    cursor: pointer; /* Add pointer cursor for interactivity */
+}
+
+.record .free-card-msg:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+}
+
+/* Ensure all buttons have the same size */
+.record button {
+    width: 48%;
+    text-align: center;
+    padding: 10px 5px;
+    box-sizing: border-box;
+    margin: 10px 1%;
+    display: inline-block;
+}
+
+.record .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.record .button-container button {
+    flex: 1 1 calc(50% - 10px);
+    box-sizing: border-box;
+    text-align: center;
+    margin: 5px 0;
 }

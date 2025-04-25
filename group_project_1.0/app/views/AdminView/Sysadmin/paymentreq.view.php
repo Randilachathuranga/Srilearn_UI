@@ -7,15 +7,15 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f2f5;
+      background: #e3f2fd;
       margin: 0;
       padding: 20px;
     }
 
     h2 {
       margin-top: 40px;
-      color: #333;
-      border-left: 6px solid #007bff;
+      color: #1565c0;
+      border-left: 6px solid #1565c0;
       padding-left: 10px;
     }
 
@@ -24,64 +24,107 @@
       flex-wrap: wrap;
       gap: 20px;
       justify-content: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .section {
       margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .section-header {
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
+      margin-bottom: 20px;
     }
 
     .record {
-      background-color: #fff;
+      background-color: #bbdefb;
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      width: 300px;
+      box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
+      width: 250px; /* Reduced from 300px */
       transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
     }
 
     .record:hover {
       transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(21, 101, 192, 0.2);
     }
 
     .record h3 {
-      color: #333;
+      color: #1565c0;
       margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 1rem; /* Slightly reduced */
     }
 
     .record p, .record h5 {
-      margin: 5px 0;
+      margin: 4px 0;
+      color: #1565c0;
+      font-size: 0.85rem; /* Slightly reduced */
+    }
+
+    .button-container {
+      display: flex;
+      gap: 8px; /* Reduced from 10px */
+      margin-top: 8px; /* Reduced from 10px */
     }
 
     .record button {
-      margin-top: 10px;
-      margin-right: 10px;
-      padding: 6px 12px;
+      flex: 1;
+      padding: 6px; /* Reduced from 8px */
       border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 11px; /* Reduced from 12px */
+      text-transform: uppercase;
+      color: white;
     }
 
-    .record button:hover {
-      background-color: #0056b3;
+    .record button.approve {
+      background-color: #1565c0;
+    }
+
+    .record button.reject {
+      background-color: #dc3545;
+    }
+
+    .record button.approve:hover {
+      background-color: #0d47a1;
+    }
+
+    .record button.reject:hover {
+      background-color: #c82333;
     }
 
     .empty-message {
       font-style: italic;
-      color: #888;
+      color: #1565c0;
+      text-align: center;
+      width: 100%;
     }
   </style>
 </head>
 <body>
 
   <div class="section" id="institute-section">
-    <h2>Institute Payment Requests</h2>
+    <div class="section-header">
+      <h2>Institute Payment Requests</h2>
+    </div>
     <div class="container" id="institute-container"></div>
   </div>
 
   <div class="section" id="teacher-section">
-    <h2>Teacher Payment Requests</h2>
+    <div class="section-header">
+      <h2>Teacher Payment Requests</h2>
+    </div>
     <div class="container" id="teacher-container"></div>
   </div>
 
@@ -117,8 +160,10 @@
               <h5>Request Date: ${record.date}</h5>
               <h5>Request Time: ${record.time}</h5>
               <h5>Role: ${record.Role}</h5>
-              <button onclick="handleApprove(${record.req_id})">Approve</button>
-              <button onclick="handleReject(${record.req_id})">Reject</button>
+              <div class="button-container">
+                <button class="approve" onclick="handleApprove(${record.req_id})">Approve</button>
+                <button class="reject" onclick="handleReject(${record.req_id})">Reject</button>
+              </div>
             `;
 
             if (record.Role === 'institute') {
@@ -140,8 +185,8 @@
         })
         .catch(error => {
           console.error('There was an error!', error);
-          document.getElementById('institute-container').innerHTML = `<p style="color:red;">Failed to load institute requests.</p>`;
-          document.getElementById('teacher-container').innerHTML = `<p style="color:red;">Failed to load teacher requests.</p>`;
+          document.getElementById('institute-container').innerHTML = `<p style="color:#1565c0;">Failed to load institute requests.</p>`;
+          document.getElementById('teacher-container').innerHTML = `<p style="color:#1565c0;">Failed to load teacher requests.</p>`;
         });
     });
 
@@ -153,7 +198,7 @@
       .then(data => {
         if (data.status === 'success') {
           alert('Payment request approved successfully!');
-          location.reload(); // Reload the page to see updated requests
+          location.reload();
         } else {
           alert('Failed to approve payment request.');
         }
@@ -169,7 +214,7 @@
       .then(data => {
         if (data.status === 'success') {
           alert('Payment request rejected successfully!');
-          location.reload(); // Reload the page to see updated requests
+          location.reload();
         } else {
           alert('Failed to reject payment request.');
         }
