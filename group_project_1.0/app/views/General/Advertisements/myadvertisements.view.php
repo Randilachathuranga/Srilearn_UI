@@ -493,19 +493,9 @@ if ($_SESSION['User_id'] === 'Guest') {
             }
             
             const result = await response.json();
-            
-            if (result.success) {
-                showPopup('Advertisement created successfully!', true);
-                setTimeout(() => {
-                    fetchMyAds(); // Refresh the ads list
-                    // Reset form
-                    form.reset();
-                    document.getElementById('imagePreview').style.display = 'none';
-                    document.getElementById('moreFields').classList.add('hidden');
-                }, 1500);
-            } else {
-                showPopup(result.message || 'Failed to create advertisement', false);
-            }
+            alert('Advertisement submitted successfully!');
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+
         } catch (error) {
             console.error('Error inserting advertisement:', error);
             document.querySelector('.submit-btn').disabled = false;

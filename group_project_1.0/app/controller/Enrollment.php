@@ -321,4 +321,35 @@ public function payfee($classid)
         ]);
     }
 }
+
+function alreadyjoined($userId, $classId) {
+    $model = new Enrollmodel();
+    header('Content-Type: application/json');
+
+    $result =  $model->where(['Stu_id' => $userId , 'Class_id' => $classId]);
+
+    if ($result) {
+        echo json_encode($result);
+    } else {
+        echo json_encode(['message' => 'Not found data']);
+    }
+}
+
+
+public function leave($id){
+    $model = new Enrollmodel();
+    header('Content-Type: application/json');
+    try {
+        $delid = $model->delete($id,'Enrollment_id');
+        
+        if ($delid) {
+            echo json_encode($delid);
+        } else {
+            echo json_encode(['message' => 'Not found']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['error' => 'An error occurred while fetching user.', 'details' => $e->getMessage()]);
+    }
+}
+
 }

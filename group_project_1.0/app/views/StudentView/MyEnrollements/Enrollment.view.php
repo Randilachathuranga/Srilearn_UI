@@ -211,9 +211,7 @@ async function renderClasses(classes) {
             } else if (data.warning) {
                 alert(data.warning); // Need to pay both months
                 window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
-            } else if (data.status === 'ok') {
-                window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
-            }
+            } 
         })
         .catch(error => {
             console.error('Error checking class fee:', error);
@@ -224,19 +222,20 @@ async function renderClasses(classes) {
 
 
         function deleteEnrollment(id) {
-            alert("Are you sure you want to leave this class?");
-            fetch(`http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(() => {
-                location.reload(); // Reload the page to reflect the deletion
-            })
-            .catch(error => {
-                console.error('Error deleting record:', error);
-            });
+            if (confirm("Are you sure you want to leave this class?")) {
+                fetch(`http://localhost/group_project_1.0/public/Enrollment/leave/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(() => {
+                    location.reload(); // Reload the page to reflect the deletion
+                })
+                .catch(error => {
+                    console.error('Error deleting record:', error);
+                });
+            }
         }
 
         function viewShedule(Class_id){

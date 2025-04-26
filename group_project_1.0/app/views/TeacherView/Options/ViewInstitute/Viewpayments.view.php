@@ -111,7 +111,9 @@
 <body>
 
   <h1>All Payment Requests</h1>
-  <div id="container"></div>
+  <div id="container">
+    
+  </div>
 
   <script>
     const classid = <?= json_encode($classid) ?>;

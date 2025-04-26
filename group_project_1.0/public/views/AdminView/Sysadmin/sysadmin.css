@@ -322,7 +322,7 @@ h1 {
 }
 
 .top-buttons button {
-    background: var(--primary);
+    background: #4285f4;
     border: none;
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
@@ -352,7 +352,7 @@ h1 {
 }
 
 .data-table {
-    width: 100%;
+    width: 80%;
     background-color: var(--surface);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -401,6 +401,7 @@ h1 {
     background-color: rgba(67, 97, 238, 0.03);
 }
 
+/* Button Styling */
 .data-table button {
     border: none;
     padding: 0.5rem 1rem;
@@ -488,7 +489,6 @@ h1 {
     .data-table button {
         width: 100%;
     }
-}
 
 @media (max-width: 480px) {
     .menu-button {
@@ -516,4 +516,5 @@ h1 {
     .stat-icon {
         margin-bottom: 1rem;
     }
+}
 }

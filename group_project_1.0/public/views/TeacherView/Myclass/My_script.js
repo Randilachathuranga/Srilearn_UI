@@ -232,6 +232,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = event.target;
     const formData = new FormData(form);
 
+    const grade = parseInt(formData.get("Grade"), 10);
+    const maxStd = parseInt(formData.get("Max_std"), 10);
+    const fee = parseFloat(formData.get("Fee"));
+
+    let isValid = true;
+
+    if (isNaN(grade) || grade < 1 || grade > 13) {
+      alert("Grade must be a number between 1 and 13.");
+      isValid = false;
+    }
+
+    if (isNaN(maxStd) || maxStd <= 0) {
+      alert("Max students must be a positive number.");
+      isValid = false;
+    }
+
+    if (isNaN(fee) || fee < 0) {
+      alert("Fee cannot be a negative value.");
+      isValid = false;
+    }
+
+    // If not valid, stop the update
+    if (!isValid) {
+      return;
+    }
+
     const table1 = {
       Type: formData.get("Type"),
       Subject: formData.get("Subject"),
@@ -257,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inst_id: formData.get("inst_id"),
     };
 
-    console.log("date and time", table1.Def_Date,table1.Def_Time)
+    console.log("date and time", table1.Def_Date, table1.Def_Time);
     const institute = formData.get("Institute_name");
     console.log("id ekd = ", table3);
     if (
@@ -296,15 +322,13 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then((data) => {
           console.log("Schedule submitted successfully:", data);
-          alert("Schedule created successfully!");
+          alert("Class created successfully!");
           window.location.href =
             "http://localhost/group_project_1.0/public/Ind_Myclass";
         })
         .catch((error) => {
           console.error("Error submitting schedule:", error);
-          alert(
-            "There was an error submitting the schedule. Please try again."
-          );
+          alert("There was an error submitting the Class. Please try again.");
         });
     } else if (
       institute !== "None" &&
@@ -342,15 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then((data) => {
           console.log("Schedule submitted successfully:", data);
-          alert("Schedule created successfully!");
+          alert("Class created successfully!");
           window.location.href =
             "http://localhost/group_project_1.0/public/Ind_Myclass";
         })
         .catch((error) => {
           console.error("Error submitting schedule:", error);
-          alert(
-            "There was an error submitting the schedule. Please try again."
-          );
+          alert("There was an error submitting the Class. Please try again.");
         });
     } else {
       alert(
@@ -461,9 +483,9 @@ function showDetails(Class_id) {
       document.getElementById("maxstu").textContent =
         classDetail.Max_std || "N/A";
       document.getElementById("Date").textContent =
-      classDetail.Def_Date || "N/A";
-    document.getElementById("Time").textContent =
-      classDetail.Def_Time || "N/A";
+        classDetail.Def_Date || "N/A";
+      document.getElementById("Time").textContent =
+        classDetail.Def_Time || "N/A";
       document.getElementById("modalBackground").style.display = "block";
 
       console.log("Class Details:", classDetail);
@@ -546,9 +568,9 @@ function editclass(class_id) {
       document.getElementById("classLocation").value =
         classDetail.Location || classDetail.Hall_number || "";
 
-        document.getElementById("Date_").value =
+      document.getElementById("Date_").value =
         classDetail.Def_Date || classDetail.Def_Date || "";
-        document.getElementById("Time_").value =
+      document.getElementById("Time_").value =
         classDetail.Def_Time || classDetail.Def_Time || "";
 
       // Show the popup form

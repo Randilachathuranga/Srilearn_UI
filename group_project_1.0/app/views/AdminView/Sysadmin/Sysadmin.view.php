@@ -326,6 +326,7 @@
                     if (tableId === 'student-table') handleStudents();
                     else if (tableId === 'teacher-table') handleTeachers();
                     else if (tableId === 'institute-table') handleInstitutes();
+                    window.location.reload(); // Reload the page to reflect changes
                 })
                 .catch(error => console.error('Error deleting record:', error));
         }
