@@ -31,28 +31,28 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
             <label for="subject">Select Subject:</label>
             <select id="subject">
                 <option value="">--Select Subject--</option>
-                <option value="Buddhism">Buddhism</option>
-                <option value="Civics">Civics</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Dance">Dance</option>
-                <option value="Drama">Drama</option>
-                <option value="Eastern Music">Eastern Music</option>
-                <option value="English">English</option>
-                <option value="Geography">Geography</option>
-                <option value="Health">Health</option>
-                <option value="History">History</option>
-                <option value="ICT">ICT</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Pali">Pali</option>
-                <option value="Physical Education">Physical Education</option>
-                <option value="Physics">Physics</option>
-                <option value="Political Science">Political Science</option>
-                <option value="Religion">Religion</option>
-                <option value="Science">Science</option>
-                <option value="Sinhala">Sinhala</option>
-                <option value="Tamil">Tamil</option>
-                <option value="Technology">Technology</option>
-                <option value="Western Music">Western Music</option>
+                <option value="Accounting">Accounting</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Art">Art</option>
+<option value="BioSystemsTechnology">Bio Systems Technology</option>
+<option value="Biology">Biology</option>
+<option value="Buddhism">Buddhism</option>
+<option value="BusinessStudies">Business Studies</option>
+<option value="Catholicism">Catholicism</option>
+<option value="CivicEducation">Civic Education</option>
+<option value="Commerce">Commerce</option>
+<option value="Drama">Drama and Theatre</option>
+<option value="English">English</option>
+<option value="Engineering">Engineering Technology</option>
+<option value="Geography">Geography</option>
+<option value="Health">Health & Physical Education</option>
+<option value="History">History</option>
+<option value="ICT">ICT</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Physics">Physics</option>
+<option value="Science">Science</option>
+<option value="Sinhala">Sinhala</option>
+<option value="Tamil">Tamil</option>
             </select>
 
             <label for="grade">Select Grade:</label>
@@ -84,6 +84,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 <!-- Inject user role into JS -->
 <script>
     const userRole = "<?php echo $_SESSION['Role'] ?? ''; ?>";
+    const User_id = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
 </script>
 
 <!-- Main Script -->
@@ -147,7 +148,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
         container.innerHTML = "";
 
         if (!classes || classes.length === 0) {
-            container.innerHTML = "<p>No classes available for the selected filters.</p>";
+            container.innerHTML = "<p>Select both grade and subject or No classes available for the selected filters.</p>";
             return;
         }
 
@@ -218,39 +219,58 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
     }
 
     function proceedtopayment(classID, subject, teacher, fee, ispayavail) {
-        if (ispayavail == 1) {
-            const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
-            url.searchParams.set('classID', classID);
-            url.searchParams.set('subject', subject);
-            url.searchParams.set('teacher', teacher);
-            url.searchParams.set('fee', fee);
-            window.location.href = url.toString();
-        } else {
-            const recordData = {
-                classID: classID,
-                subject: subject,
-                teacher: teacher,
-                fee: fee
-            };
+        fetch(`http://localhost/group_project_1.0/public/Enrollment/alreadyjoined/${User_id}/${classID}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ classID: classID })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            if (data.length > 0) {
+                alert('You already joined this class.');
+            } else {
+                if (ispayavail == 1) {
+                    const url = new URL('http://localhost/group_project_1.0/public/Payment/enrollpayment');
+                    url.searchParams.set('classID', classID);
+                    url.searchParams.set('subject', subject);
+                    url.searchParams.set('teacher', teacher);
+                    url.searchParams.set('fee', fee);
+                    window.location.href = url.toString();
+                } else {
+                    const recordData = {
+                        classID: classID,
+                        subject: subject,
+                        teacher: teacher,
+                        fee: fee
+                    };
 
-            fetch(`http://localhost/group_project_1.0/public/Enrollment/postfree`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(recordData)
-            })
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                alert(data.error || data.message || 'Enrollment status unknown.');
-                window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
-            })
-            .catch(error => {
-                console.error('Error during enrollment:', error);
-                alert('Could not complete enrollment. You are already enrolled in this class.');
-            });
-        }
+                    fetch(`http://localhost/group_project_1.0/public/Enrollment/postfree`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(recordData)
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert(data.error || data.message || 'Enrollment status unknown.');
+                        window.location.href = 'http://localhost/group_project_1.0/public/Enrollment';
+                    })
+                    .catch(error => {
+                        console.error('Error during enrollment:', error);
+                        alert('Could not complete enrollment. You are already enrolled in this class.');
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error checking enrollment status:', error);
+            alert('Could not verify enrollment status.');
+        });
     }
 </script>
 

@@ -19,7 +19,7 @@ async function fetchClassData() {
     const data = await response.json();
     if (data.length === 0) {
       classInfoContainer.innerHTML = "<p>No class information found.</p>";
-      errorContainer.textContent = "This class hasn't institute";
+      errorContainer.textContent = "This class doesn't have an institute.";
       return;
     }
 
@@ -39,20 +39,16 @@ async function fetchClassData() {
     buttonContainer.style.display = "flex";
   } catch (error) {
     console.error("Error:", error);
-    errorContainer.textContent = "This class hasn't institute";
+    errorContainer.textContent = "This class doesn't have an institute.";
     buttonContainer.style.display = "none"; // Keep button hidden if error
   }
 }
 
 fetchClassData();
 
-function Viewpendingreq(classId){
-  window.location.href=`http://localhost/group_project_1.0/public/Requestpayroll_forteacher/viewclassreq/${classId}` 
+function Viewpendingreq(classId) {
+  window.location.href = `http://localhost/group_project_1.0/public/Requestpayroll_forteacher/viewclassreq/${classId}`;
 }
-
-
-
-
 
 function requestPayroll() {
   const popup = document.getElementById("payrollPopup");
@@ -99,46 +95,47 @@ document.getElementById("payrollForm").addEventListener("submit", function (e) {
 });
 
 //submit
-document.getElementById("payrollForm").addEventListener("submit", function (event) {
-  event.preventDefault();
- 
-  // Assign the form values to an object (key-value pairs)
-  const formValues = {
-    "Institute_ID": document.getElementById("Institute_ID").value,
-    "N_id": document.getElementById("N_id").value,
-    "InstClass_id": document.getElementById("InstClass_id").value,
-    "current_date": document.getElementById("current_date").value,
-    "bankdetails": document.getElementById("bankdetails").value
-    
-  };
- 
-  console.log("Form Values:", formValues);
- 
-  fetch('http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formValues),
-  })
-    .then(async (response) => {
-      const data = await response.json();
-  
-      if (!response.ok) {
-        // Server responded with an error code
-        throw new Error(data.error || "Unexpected error occurred.");
-      }
-  
-      // Success
-      alert(data.message || "Payroll request submitted successfully");
-      closePopup();
-    })
-    .catch((error) => {
-      console.log('HOOOOOOO')
-      console.error("Caught error:", error.message || error);
-      alert(error.message || "Error submitting payroll request.");
-    });
-  
-  
-  });
+document
+  .getElementById("payrollForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
+    // Assign the form values to an object (key-value pairs)
+    const formValues = {
+      Institute_ID: document.getElementById("Institute_ID").value,
+      N_id: document.getElementById("N_id").value,
+      InstClass_id: document.getElementById("InstClass_id").value,
+      current_date: document.getElementById("current_date").value,
+      bankdetails: document.getElementById("bankdetails").value,
+    };
+
+    console.log("Form Values:", formValues);
+
+    fetch(
+      "http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      }
+    )
+      .then(async (response) => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          // Server responded with an error code
+          throw new Error(data.error || "Unexpected error occurred.");
+        }
+
+        // Success
+        alert(data.message || "Payroll request submitted successfully");
+        closePopup();
+      })
+      .catch((error) => {
+        console.log("HOOOOOOO");
+        console.error("Caught error:", error.message || error);
+        alert(error.message || "Error submitting payroll request.");
+      });
+  });

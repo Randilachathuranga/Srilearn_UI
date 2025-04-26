@@ -47,7 +47,6 @@
               <p><strong>Time:</strong> Rs.${record.Def_Time}</p>
               <div class="btn-group">
                 <button onclick="viewStudents(${record.InstClass_id})">View Students</button>
-                <button class="red" onclick="handleDelete(${record.InstClass_id})">Delete</button>
                 <button  onclick="viewclassschedules(${record.InstClass_id})">Class Shedules</button>
                 <button  onclick="viewpayments(${record.InstClass_id})">View payments</button>
 
