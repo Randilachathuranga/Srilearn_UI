@@ -187,7 +187,11 @@
     console.log("ad:", Isadavail);
     const ischatavail = <?= json_encode($_SESSION['ischatavail']) ?>;
     console.log("cjat:", ischatavail);
-  fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/MyinstituteClass/${teachid}`)
+    console.log('thoperole eka:', <?= json_encode($_SESSION['Role']) ?>);
+    
+    console.log('hasinst:', <?= json_encode($_SESSION['hasinst']) ?>);
+
+    fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/MyinstituteClass/${teachid}`)
     .then(response => {
       if (!response.ok) throw new Error('Failed to fetch class data');
       return response.json();
@@ -195,19 +199,18 @@
     .then(data => {
       data.forEach(d => {
         const Values = {
-          "Institute_ID": d.ID,
+          "Institute_ID": d.inst_id,
           "N_id": d.N_id,
           "InstClass_id": d.InstClass_id,
           "current_date": date,
-          "bankdetails": "lol"
+          "bankdetails": "stored_in_db"
         };
 
         fetch('http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(Values),
+          },          body: JSON.stringify(Values),
         })
           .then(async (response) => {
             const resData = await response.json();

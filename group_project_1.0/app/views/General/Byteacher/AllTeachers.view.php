@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/ViewTeacher/ViewTeacher.css"> <!-- Link your CSS file -->
+    <!-- <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/ViewTeacher/ViewTeacher.css"> Link your CSS file -->
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/General/Byteacher/AllteachStyles.css">
 </head>
 <body>
@@ -75,10 +75,8 @@
         <!-- Teacher info fields -->
         <p><strong>Name:</strong> <span id="teacher-name"></span></p>
         <p><strong>Subject:</strong> <span id="teacher-subject"></span></p>
-        <p><strong>Phone number:</strong> <span id="teacher-phone"></span></p>
         <p><strong>Email:</strong> <span id="teacher-email"></span></p>
         <p><strong>My Institutes:</strong> <span id="teacher-institute"></span></p>
-        <p><strong>My Address:</strong> <span id="teacher-address"></span></p>
         <p><strong>District:</strong> <span id="teacher-district"></span></p>
       </div>
     </form>

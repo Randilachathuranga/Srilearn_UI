@@ -5,56 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Removed Students</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a; /* Dark blue background */
-            color: #f1f5f9; /* Light text */
-            padding: 20px;
-            margin: 0;
-        }
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc; /* Light background */
+    color: #1e293b; /* Dark blue-gray text */
+    padding: 20px;
+    margin: 0;
+}
 
-        h2 {
-            color: #ffffff;
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 8px;
-        }
+h2 {
+    color: #1e3a8a; /* Strong professional blue */
+    border-bottom: 2px solid #93c5fd; /* Light blue border */
+    padding-bottom: 8px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #1e293b; /* Slightly lighter than body */
-            border-radius: 8px;
-            overflow: hidden;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* White table background */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
 
-        th, td {
-            padding: 14px;
-            text-align: left;
-        }
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+}
 
-        th {
-            background-color: #334155; /* Header dark shade */
-            color: #ffffff;
-            font-weight: bold;
-        }
+th {
+    background-color: #3b82f6; /* Blue header */
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+}
 
-        td {
-            background-color: #0f172a;
-            border-bottom: 1px solid #334155;
-            color: #e2e8f0;
-        }
+td {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 14px;
+}
 
-        tr:hover td {
-            background-color: #1e293b; /* Hover effect */
-        }
+tr:hover td {
+    background-color: #f1f5f9; /* Soft hover effect */
+}
 
-        .no-data {
-            text-align: center;
-            font-style: italic;
-            color: #94a3b8;
-            background-color: #1e293b;
-        }
+.no-data {
+    text-align: center;
+    font-style: italic;
+    color: #64748b;
+    background-color: #ffffff;
+}
+
     </style>
 </head>
 <body>

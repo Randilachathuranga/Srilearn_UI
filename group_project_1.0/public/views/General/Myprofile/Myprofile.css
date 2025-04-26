@@ -1,12 +1,12 @@
 /* General Reset and Global Styles */
 :root {
-    --primary-blue: #0078d4;
-    --hover-blue: #005ea6;
-    --background-light: #f0f4f8;
+    --primary-blue: #1e90ff;
+    --hover-blue: #0066cc; 
+    --background-light: #f0f8ff;
     --white: #ffffff;
-    --text-dark: #333;
-    --border-light: #e0e6ed;
-    --disabled-gray: #f8f9fa;
+    --text-dark: #2c3e50;
+    --border-light: #b3d9ff;
+    --disabled-gray: #e6f2ff;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
     align-items: center;
     min-height: 100vh;
     line-height: 1.6;
-    background: linear-gradient(135deg, rgba(0, 120, 212, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(0, 102, 204, 0.05) 100%);
     padding: 20px;
 }
 
@@ -31,8 +31,8 @@ body {
     width: 100%;
     max-width: 600px;
     box-shadow: 
-        0 15px 35px rgba(0, 120, 212, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.05);
+        0 15px 35px rgba(30, 144, 255, 0.15),
+        0 5px 15px rgba(0, 102, 204, 0.1);
     border: 1px solid var(--border-light);
     transition: all 0.3s ease;
     margin-top: 130px;
@@ -42,8 +42,8 @@ body {
 
 .container:hover {
     box-shadow: 
-        0 20px 40px rgba(0, 120, 212, 0.15),
-        0 8px 20px rgba(0, 0, 0, 0.08);
+        0 20px 40px rgba(30, 144, 255, 0.2),
+        0 8px 20px rgba(0, 102, 204, 0.15);
     transform: translateY(-5px);
 }
 
@@ -69,16 +69,16 @@ body {
     object-fit: cover;
     border-radius: 16px;
     box-shadow: 
-        0 15px 30px rgba(0, 120, 212, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.05);
+        0 15px 30px rgba(30, 144, 255, 0.15),
+        0 5px 15px rgba(0, 102, 204, 0.1);
     transition: all 0.3s ease;
 }
 
 .profile-image img:hover {
     transform: scale(1.02);
     box-shadow: 
-        0 20px 35px rgba(0, 120, 212, 0.15),
-        0 8px 20px rgba(0, 0, 0, 0.08);
+        0 20px 35px rgba(30, 144, 255, 0.2),
+        0 8px 20px rgba(0, 102, 204, 0.15);
 }
 
 /* Form Styling */
@@ -94,7 +94,6 @@ body {
 .input-wrapper {
     flex: 1;
     margin-bottom: 10px;
-   
 }
 
 label {
@@ -122,7 +121,7 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--primary-blue);
-    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+    box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
 }
 
 input:disabled,
@@ -158,12 +157,12 @@ button {
 
 button:hover {
     background-color: var(--hover-blue);
-    box-shadow: 0 10px 20px rgba(0, 120, 212, 0.2);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
     transform: translateY(-2px);
 }
 
 button:disabled {
-    background-color: #cccccc;
+    background-color: var(--disabled-gray);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -206,7 +205,6 @@ button:disabled {
     animation: fadeIn 0.6s ease-out;
 }
 
-
 /* Profile Image Section */
 .profile-image {
     display: flex;
@@ -223,16 +221,16 @@ button:disabled {
     border-radius: 16px;
     border: 2px solid var(--primary-blue);
     box-shadow: 
-        0 15px 30px rgba(0, 120, 212, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.05);
+        0 15px 30px rgba(30, 144, 255, 0.15),
+        0 5px 15px rgba(0, 102, 204, 0.1);
     transition: all 0.3s ease;
 }
 
 .profile-image img:hover {
     transform: scale(1.02);
     box-shadow: 
-        0 20px 35px rgba(0, 120, 212, 0.15),
-        0 8px 20px rgba(0, 0, 0, 0.08);
+        0 20px 35px rgba(30, 144, 255, 0.2),
+        0 8px 20px rgba(0, 102, 204, 0.15);
 }
 
 .profile-image form {
@@ -261,7 +259,7 @@ button:disabled {
 
 .profile-image label:hover {
     background-color: var(--hover-blue);
-    box-shadow: 0 10px 20px rgba(0, 120, 212, 0.2);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
 }
 
 .profile-image button {
@@ -278,7 +276,7 @@ button:disabled {
 
 .profile-image button:hover {
     background-color: var(--hover-blue);
-    box-shadow: 0 10px 20px rgba(0, 120, 212, 0.2);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
 }
 
 .profile-image button:disabled {
@@ -303,15 +301,13 @@ button:disabled {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* Add these styles to your existing CSS file */
-
 /* Card Layout Container */
 .card-container {
     display: flex;
     background-color: var(--white);
     border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 120, 212, 0.1),
-                0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 15px 35px rgba(30, 144, 255, 0.15),
+                0 5px 15px rgba(0, 102, 204, 0.1);
     border: 1px solid var(--border-light);
     margin-bottom: 30px;
     transition: all 0.3s ease;
@@ -320,8 +316,8 @@ button:disabled {
 }
 
 .card-container:hover {
-    box-shadow: 0 20px 40px rgba(0, 120, 212, 0.15),
-                0 8px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(30, 144, 255, 0.2),
+                0 8px 20px rgba(0, 102, 204, 0.15);
     transform: translateY(-5px);
 }
 
@@ -346,7 +342,7 @@ button:disabled {
     border-radius: 12px;
     display: block;
     border: 2px solid var(--primary-blue);
-    box-shadow: 0 10px 20px rgba(0, 120, 212, 0.1);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.15);
     margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
@@ -383,7 +379,7 @@ button:disabled {
 
 .card-image label:hover {
     background-color: var(--hover-blue);
-    box-shadow: 0 10px 20px rgba(0, 120, 212, 0.2);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
 }
 
 /* Right Side - Data */

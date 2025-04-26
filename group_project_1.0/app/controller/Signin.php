@@ -28,6 +28,14 @@ class Signin extends Controller {
                 // Fetch joined data
                 $result = $Submodel->InnerJoinwhereMultiple($tables, $joinConditions, $filter, $notConditions);
                 echo json_encode($result);
+                $instmodel=new Normalteacher();
+                $count=$instmodel->where(['N_id'=>$row->User_id]);
+                if($count){
+                    $_SESSION['hasinst']=1;
+                }
+                else{
+                $_SESSION['hasinst']= 0;
+                }
                $currentDate = date('Y-m-d');
     
                 // Filter to find a valid subscription
@@ -42,7 +50,7 @@ class Signin extends Controller {
                 }
     
                 // Verify password (replace with password_verify in production)
-                if ($password == $row->Password) {
+                if (password_verify($password, $row->Password)) {
                     // Set session variables
                     $_SESSION['User_id'] = $row->User_id;
                     $_SESSION['Role'] = $row->Role;

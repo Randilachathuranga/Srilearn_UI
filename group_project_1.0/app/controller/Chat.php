@@ -67,7 +67,7 @@ class Chat extends Controller{
             // Read raw JSON input
             $input = json_decode(file_get_contents("php://input"), true);
             $senderId = $input['reciever_id'];
-            $input['message'] .= " (edited)";
+           
 
             unset($input['reciever_id']);
             if ($model->validate($input)) {

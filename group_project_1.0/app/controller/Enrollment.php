@@ -55,24 +55,33 @@ class Enrollment extends Controller
             // Insert enrollment
             $enroll = $model->insert($enrollData);
     
-            // Insert payment (only if fee is set)
-            
-                $paymentmodel->insert($paymentData);
-            
-    
             if ($enroll) {
+                // Insert payment
+                $paymentInsert = $paymentmodel->insert($paymentData);
+    
+                // Send success response
                 http_response_code(200);
-                //echo json_encode(['message' => 'Enrolled successfully', 'data' => $enroll]);
-                redirect('Enrollment');
+                // echo json_encode([
+                //     'message' => 'Enrolled successfully',
+                //     'enrollment' => $enrollData,
+                //     'payment' => $paymentInsert
+                // ]);
+    
+                // Optionally redirect after sending JSON (not recommended) - comment out:
+                 redirect('Enrollment');
             } else {
                 http_response_code(500);
                 echo json_encode(['error' => 'Enrollment failed. Please try again later.']);
             }
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode(['error' => 'An error occurred while enrolling.', 'details' => $e->getMessage()]);
+            echo json_encode([
+                'error' => 'An error occurred while enrolling.',
+                'details' => $e->getMessage()
+            ]);
         }
     }
+    
     public function postfree()
     {
         header('Content-Type: application/json');

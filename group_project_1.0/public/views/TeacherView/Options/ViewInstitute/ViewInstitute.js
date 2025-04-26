@@ -66,8 +66,8 @@ function requestPayroll() {
     .then((data) => {
       const item = data[0];
 
-       document.getElementById("Institute_ID").value = item.inst_id;
-      //document.getElementById("Institute_ID").value = item.Institute_ID;
+      // document.getElementById("Institute_ID").value = item.inst_id;
+      document.getElementById("Institute_ID").value = item.Institute_ID;
       document.getElementById("N_id").value = item.N_id;
       document.getElementById("InstClass_id").value = item.InstClass_id;
 

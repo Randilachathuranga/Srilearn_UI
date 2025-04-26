@@ -1,70 +1,97 @@
 /* General Page Styles */
 body {
-    background-color: #f8f9fa;
+    background-color: #e3f2fd; /* Light blue background */
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 18px;
-    color: #030457; /* Consistent text color */
+    color: #030457;
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  
+  .header-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #0d47a1; /* Darker blue for header */
+    margin-bottom: 20px;
+  }
+  
+/* Banner Image */
+.banner-image {
+    width: 50%; /* Reduced width */
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 2000px; /* Reduced max height */
+    margin-top: 20px;
+    border-radius: 8px;
 }
 
 /* Banner Image */
 .banner {
-    width: 80%; /* Set the width to 80% */
-    margin: 0 auto; /* Center the banner horizontally */
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .banner img {
-    width: 100%; /* Ensure the image fills the banner container */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Ensure it behaves like a block element */
-    object-fit: cover; /* Ensure the image covers the space */
-    max-height: 350px; /* Optional: control the maximum height of the banner */
+    width: 80%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 3500px;
 }
-
-
 /* Header Section */
 h1 {
     text-align: center;
-    color: #030457;
-    margin: 20px 0;
-    font-size: 2rem;
+    color: #0d47a1; /* Darker blue for header */
+    margin: 5px 0;
+    font-size: 3.5rem;
     margin-top: 100px;
 }
 
 /* Page Container */
 #container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Dynamic columns */
     gap: 20px;
     padding: 20px;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     margin-top: 20px;
-    height: 500px;
-
+    height: auto; /* Adjust height to content */
 }
 
 /* Blog Entry Styling */
 .record {
-    background: #e8f0f1;
+    background: #bbdefb; /* Light blue for cards */
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 20px;
     transform: scale(1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    text-align: center; /* Centering the content inside the cards */
+    text-align: center;
 }
 
 .record:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .record h2 {
     margin: 0 0 10px;
-    color: #007BFF;
+    color: #0d47a1; /* Dark blue text */
     font-size: 1.5rem;
 }
 
@@ -79,6 +106,11 @@ h1 {
     color: #777;
 }
 
+/* Placeholder record to fill grid */
+.record.empty {
+    visibility: hidden;
+}
+
 /* Buttons */
 button {
     display: inline-block;
@@ -86,7 +118,7 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #007BFF;
+    background-color: #1565c0; /* Primary blue */
     color: #fff;
     font-size: 14px;
     cursor: pointer;
@@ -94,27 +126,27 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #1976d2; /* Lighter blue on hover */
     transform: scale(1.1);
 }
 
 button:active {
-    background-color: #003f7f;
+    background-color: #1e88e5; /* Even lighter blue when active */
     transform: scale(0.95);
 }
 
 /* Delete Button Styling */
 button.delete {
-    background-color: #d9534f; /* Red */
+    background-color: #d9534f;
     color: white;
 }
 
 button.delete:hover {
-    background-color: #c9302c; /* Dark Red */
+    background-color: #c9302c;
 }
 
 button.delete:active {
-    background-color: #ac2925; /* Even darker red */
+    background-color: #ac2925;
 }
 
 /* Update Form */
@@ -153,15 +185,15 @@ form textarea:focus {
 
 form button {
     align-self: flex-end;
-    background-color: #28a745;
+    background-color: #0d47a1;
 }
 
 form button:hover {
-    background-color: #218838;
+    background-color: #0d47a1;
 }
 
 form button:active {
-    background-color: #1e7e34;
+    background-color: #0d47a1;
 }
 
 /* Animations */
@@ -179,7 +211,11 @@ form button:active {
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
+    }
+
+    #container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
     }
 
     .record h2 {
@@ -198,7 +234,11 @@ form button:active {
 
 @media screen and (max-width: 480px) {
     h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+    }
+
+    #container {
+        grid-template-columns: 1fr; /* 1 column on small screens */
     }
 
     .record {

@@ -12,9 +12,26 @@ class Institute extends Controller{
     public function classapi($instid){
         $instmodel=new Instteachclassmodel();
         header('Content-Type: application/json');
-        $rec=$instmodel->where(['inst_id'=>$instid]);
-        echo json_encode($rec);
+        // $rec=$instmodel->where(['inst_id'=>$instid]);
+
+        $tables = ['instituteteacher_class', 'class', 'user'];
+
+        $joinConditions = [
+        'instituteteacher_class.InstClass_id = class.Class_id',
+        'instituteteacher_class.N_id = user.User_id'
+     ];
+
+    $data = [
+    'instituteteacher_class.inst_id' => $instid
+    ];
+
+    $data_not = []; // if you have any != conditions
+
+    $result = $instmodel->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
+        echo json_encode($result);
     }
+
+
 
     public function viewstudents(){
      $this->view("InstituteView/Students");

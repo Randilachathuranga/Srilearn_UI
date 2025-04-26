@@ -194,11 +194,12 @@ class Sysadmin extends Controller {
 
         // Get subjects and split into array
         $subjectString = $tempUser->Subject ?? '';
-        $subjects = array_filter(array_map('trim', explode(',', $subjectString))); // Clean array
+        //$subjects = array_filter(array_map('trim', explode(',', $subjectString))); // Clean array
 
         // Prepare user data for insertion
         $userData = (array) $tempUser;
         $userData['Role'] = 'teacher';
+        //$userData['Password']=password_hash($userData['Password'], PASSWORD_DEFAULT);
         unset($userData['req_id'], $userData['URL']);
 
         // Insert new teacher user
@@ -212,14 +213,14 @@ class Sysadmin extends Controller {
         }
 
         // Insert subjects into teacher table
-        foreach ($subjects as $sub) {
+        
             $teacherModel->insert([
                 'Teach_id' => $newUser->User_id,
                 'Ratings' => 5,
-                'Subject' => $sub,
+                'Subject' => $subjectString,
                 'Ispremium' => 0
             ]);
-        }
+        
 
         // Delete the temp request
         $deleted = $tempUserModel->delete($reqId, 'req_id');
@@ -290,6 +291,7 @@ class Sysadmin extends Controller {
         header('Content-Type: application/json');
         if ($model->delete($reqId,'req_id')) {  // Use $userId here, as it's passed from the route
             echo json_encode(['status' => 'success', 'message' => 'Payment request rejected successfully!']);
+            
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to reject payment request.']);
         }
@@ -363,7 +365,77 @@ class Sysadmin extends Controller {
             http_response_code(405);
         }
     }
+    public function analaticsfordb()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            header('Content-Type: application/json');
+            
+            $model = new Reqinstpaymodel();
     
+            // Fetch all records where status = 1
+            $records = $model->where(['status' => 1]);
+    
+            if (!$records || !is_array($records)) {
+                echo json_encode(['status' => 'error', 'message' => 'No records found.']);
+                return;
+            }
+    
+            $monthlyTotals = [];
+    
+            foreach ($records as $rec) {
+                if (!isset($rec->amount) || !isset($rec->date)) {
+                    continue; // Skip invalid record
+                }
+    
+                $amount = (float) $rec->amount;
+                $date = $rec->date;
+    
+                // Parse the date, assuming it's stored in a standard format (like '2024-04-25')
+                $timestamp = strtotime($date);
+                if (!$timestamp) {
+                    continue; // Skip invalid dates
+                }
+    
+                $monthYear = date('Y-m', $timestamp); // e.g., '2024-04'
+    
+                if (!isset($monthlyTotals[$monthYear])) {
+                    $monthlyTotals[$monthYear] = 0;
+                }
+    
+                $monthlyTotals[$monthYear] += $amount;
+            }
+    
+            // Now, sort by month ascending
+            ksort($monthlyTotals);
+    
+            echo json_encode([
+                'status' => 'success',
+                'data' => $monthlyTotals
+            ]);
+        } else {
+            // If method is not POST
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        }
+    }
+    public function pendingpayment() {
+        $model = new Reqinstpaymodel();
+        $records = $model->where(['status' => 0]); // Added ->findAll()
+        $count = count($records);
+        
+        echo json_encode(['count' => $count]); // fixed array syntax
+    }
+    
+    public function pendingsignuppayment() {
+        $model = new Tempusermodel();
+        $records = $model->findAll();
+        $count = count($records);
+        
+        echo json_encode(['count' => $count]); // fixed array syntax
+    }
+    
+    
+    
+
 }
 
 

@@ -17,6 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Cards</title>
     <link rel="stylesheet" href="../../../../../group_project_1.0//public//views/TeacherView/Myinstitute/Myinstitute.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="./../../../../../group_project_1.0/public/views/General/Popup.css">
 </head>
 <body>
 <div class="header-container">
@@ -51,13 +52,22 @@
   </div>
 </div>
 
-
+<div class="popup-overlay hidden" id="popupOverlay"></div>
+<div class="popup hidden" id="popupBox">
+    <p class="popup-message" id="popupMessage"></p>
+    <div class="popup-buttons">
+        <button class="ok-btn" id="popupOkBtn">OK</button>
+        <button class="cancel-btn" id="popupCancelBtn" onclick="closePopup()">Cancel</button>
+    </div>
+</div> 
 
 <script>
   const Userid = "<?php echo $_SESSION['User_id']; ?>";
 </script>
 
     <script src="../../../../../group_project_1.0//public//views/TeacherView/Myinstitute/Myinstitute.js"></script> <!-- Link your JavaScript file -->
+    <script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script>
+
 </body>
 </html>
 

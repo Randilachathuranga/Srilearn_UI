@@ -6,49 +6,93 @@
   <title>Chat Messages</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #e6eef5; /* Light blue background */
       margin: 0;
       padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .chat-container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: white;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      height: 100vh;
+      margin: 0 auto;
+      background: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+      background-size: contain;
+      padding: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
       border-radius: 8px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      background: #1a75ff; /* Blue */
+      color: white;
+      padding: 16px 24px;
+      height: 70px;
+    }
+
+    .header-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #005ce6; /* Darker blue */
+      margin-right: 20px;
+    }
+
+    .header-info {
+      flex-grow: 1;
+    }
+
+    .header-name {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .header-status {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.8;
     }
 
     .messages-container {
-      max-height: 500px;
+      flex: 1;
       overflow-y: auto;
-      margin-bottom: 20px;
+      padding: 24px;
     }
 
     .record {
-      background-color: #e9f5ff;
-      margin-bottom: 15px;
-      padding: 10px 15px;
-      border-radius: 5px;
-      width: 80%;
       position: relative;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+      width: 60%; /* Reduced width for desktop */
+      max-width: 600px;
     }
 
     .record.sent {
-      background-color: #e1f7e1;
-      border-right: 4px solid #2ecc71;
+      background-color: #cce6ff; /* Light blue */
+      border-right: none;
       align-self: flex-end;
       margin-left: auto;
+      border-top-right-radius: 0;
     }
 
     .record.received {
-      border-left: 4px solid #3498db;
+      background-color: white;
+      border-left: none;
       align-self: flex-start;
       margin-right: auto;
+      border-top-left-radius: 0;
     }
 
     .record h3 {
@@ -58,65 +102,78 @@
     }
 
     .record p {
-      margin: 5px 0;
+      margin: 8px 0;
       font-size: 16px;
-      color: #222;
+      line-height: 1.5;
+      color: #303030;
       word-wrap: break-word;
     }
 
     .record h5 {
       margin: 0;
-      font-size: 12px;
-      color: #999;
+      font-size: 13px;
+      color: #8c8c8c;
       text-align: right;
     }
 
     .message-form {
       display: flex;
-      margin-top: 20px;
-      border-top: 1px solid #eee;
-      padding-top: 20px;
+      background: #e6eef5; /* Light blue */
+      padding: 16px 24px;
+      margin-top: 0;
+      border-top: none;
+      height: 80px;
     }
 
     .message-input {
       flex: 1;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 24px;
+      background: white;
       font-size: 16px;
       resize: none;
     }
 
+    .message-input:focus {
+      outline: none;
+    }
+
     .submit-btn {
-      padding: 12px 24px;
-      background-color: #3498db;
+      width: 50px;
+      height: 50px;
+      background-color: #1a75ff; /* Blue */
       color: white;
       border: none;
-      border-radius: 4px;
-      margin-left: 10px;
+      border-radius: 50%;
+      margin-left: 16px;
       cursor: pointer;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      padding: 0;
     }
 
     .submit-btn:hover {
-      background-color: #2980b9;
+      background-color: #005ce6; /* Darker blue */
     }
 
     .edit-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: #f39c12;
+      top: 12px;
+      right: 12px;
+      background-color: #1a75ff; /* Blue */
       color: white;
       border: none;
       border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 12px;
+      padding: 6px 10px;
+      font-size: 13px;
       cursor: pointer;
     }
 
     .edit-btn:hover {
-      background-color: #e67e22;
+      background-color: #005ce6; /* Darker blue */
     }
 
     .modal {
@@ -134,22 +191,23 @@
 
     .modal-content {
       background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 500px;
+      padding: 30px;
+      border-radius: 12px;
+      width: 50%;
+      max-width: 700px;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .modal-header h3 {
       margin: 0;
-      color: #333;
+      color: #1a75ff; /* Blue */
+      font-size: 20px;
     }
 
     .close-modal {
@@ -166,39 +224,59 @@
     }
 
     .edit-input {
-      padding: 12px;
+      padding: 16px;
       border: 1px solid #ddd;
-      border-radius: 4px;
+      border-radius: 10px;
       font-size: 16px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       resize: none;
-      min-height: 100px;
+      min-height: 120px;
+    }
+
+    .edit-input:focus {
+      outline: none;
+      border-color: #1a75ff; /* Blue */
     }
 
     .edit-submit {
       padding: 12px 24px;
-      background-color: #2ecc71;
+      background-color: #1a75ff; /* Blue */
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
       align-self: flex-end;
     }
 
     .edit-submit:hover {
-      background-color: #27ae60;
+      background-color: #005ce6; /* Darker blue */
+    }
+
+    /* Add send icon to button */
+    .submit-btn::after {
+      content: "➤";
+      transform: rotate(90deg);
+      display: inline-block;
     }
   </style>
 </head>
 <body>
 
   <div class="chat-container" id="container">
+    <div class="chat-header">
+      <div class="header-avatar"></div>
+      <div class="header-info">
+        <h2 class="header-name">Chat Contact</h2>
+        <p class="header-status">online</p>
+      </div>
+    </div>
+    
     <div class="messages-container" id="messages-container"></div>
 
     <form class="message-form" id="message-form">
-      <textarea class="message-input" id="message-input" placeholder="Type your message here..." required></textarea>
-      <button type="submit" class="submit-btn">Send</button>
+      <textarea class="message-input" id="message-input" placeholder="Type a message" required></textarea>
+      <button type="submit" class="submit-btn"></button>
     </form>
   </div>
 
@@ -268,7 +346,15 @@
       document.getElementById('edit-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const messageId = document.getElementById('edit-message-id').value;
-        const newMessage = document.getElementById('edit-message-input').value.trim();
+        let newMessage = document.getElementById('edit-message-input').value.trim();
+const tag = '(edited)';
+
+// Remove all instances of (edited), then trim
+newMessage = newMessage.replace(/\(edited\)/gi, '').trim();
+
+// Append a single (edited)
+newMessage += ' (edited)';
+
 
         if (newMessage) {
           fetch(`http://localhost/group_project_1.0/public/Chat/edit/${messageId}`, {
@@ -337,10 +423,15 @@
     }
 
     function openEditModal(messageId, messageText) {
-      document.getElementById('edit-message-id').value = messageId;
-      document.getElementById('edit-message-input').value = messageText;
-      document.getElementById('edit-modal').style.display = 'flex';
-    }
+  document.getElementById('edit-message-id').value = messageId;
+
+  // Remove (edited) from the message shown in the modal
+  const cleanMessage = messageText.replace(/\(edited\)/gi, '').trim();
+  document.getElementById('edit-message-input').value = cleanMessage;
+
+  document.getElementById('edit-modal').style.display = 'flex';
+}
+
 
     function escapeHtml(text) {
       return text

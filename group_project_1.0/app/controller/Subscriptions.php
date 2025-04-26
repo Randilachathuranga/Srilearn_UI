@@ -6,8 +6,9 @@
         if($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute'){
             $this->view('General/Subscriptions/Subscriptions');
         }
-        $this->view('Error');
-
+        else{
+        $this->view('General/Errorpage/Error404');
+        }
     }
 
     public function viewallsubdetails(){
@@ -30,7 +31,7 @@
         $tables = ['instituteteacher_class', 'subscription','subdetails'];
 
         $joinConditions = [
-        'instituteteacher_class.N_id = subscription.P_id',
+        'instituteteacher_class.inst_id = subscription.P_id',
         'subscription.Type = subdetails.Type'
         ];
 

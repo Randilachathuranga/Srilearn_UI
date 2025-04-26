@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  background-color: #f8f9fa;
+  background-color: #e3f2fd;
   margin: 0;
   padding: 0;
 }
@@ -32,20 +32,19 @@ h1 {
   font-size: 4rem;
   font-weight: bold;
   margin: 0 20px;
-  color: #030457;
+  color: #1565c0;
 }
 
 /* Card Styles */
 .card {
   width: 300px;
   margin: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
   overflow: hidden;
   background-color: #ffffff;
   transition: transform 0.2s, box-shadow 0.2s;
-  color: #030457;
+  color: #1565c0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,7 +53,7 @@ h1 {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.2);
 }
 
 /* Center Image in Card */
@@ -63,7 +62,7 @@ h1 {
   height: auto;
   max-height: 180px;
   object-fit: contain;
-  background-color: #f0f0f0;
+  background-color: #bbdefb;
 }
 
 .card-content {
@@ -83,7 +82,7 @@ h1 {
 }
 
 .card-button {
-  background-color: #030457;
+  background-color: #1565c0;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -93,7 +92,7 @@ h1 {
 }
 
 .card-button:hover {
-  background-color: #07098e;
+  background-color: #0d47a1;
 }
 
 /* Container for label, dropdown, and button */
@@ -107,7 +106,7 @@ h1 {
 
 .dropdown-label {
   font-size: 1rem;
-  color: #333;
+  color: #1565c0;
   margin-bottom: 5px;
 }
 
@@ -126,13 +125,13 @@ h1 {
 }
 
 .dropdown option[disabled] {
-  color: #888;
+  color: #90caf9;
 }
 
 .search-button {
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #030457;
+  background-color: #1565c0;
   color: white;
   border: none;
   border-radius: 5px;
@@ -141,14 +140,14 @@ h1 {
 }
 
 .search-button:hover {
-  background-color: #060883;
+  background-color: #0d47a1;
 }
 
 /* Next Button Styling */
 .next-button {
   padding: 10px 24px;
   font-size: 1rem;
-  background-color: #030457;
+  background-color: #1565c0;
   color: white;
   border: none;
   border-radius: 5px;
@@ -159,7 +158,7 @@ h1 {
 }
 
 .next-button:hover {
-  background-color: #060883;
+  background-color: #0d47a1;
 }
 
 /* Media Queries */
@@ -236,6 +235,7 @@ h1 {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .form-container {
@@ -243,7 +243,7 @@ h1 {
   width: 90%;
   max-width: 500px;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(21, 101, 192, 0.3);
   position: relative;
   padding: 30px;
   animation: fadeIn 0.3s ease-in-out;
@@ -271,22 +271,21 @@ h1 {
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #030457;
+  border: 4px solid #1565c0;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
 }
 
 .teacher-details p {
   width: 100%;
   margin: 10px 0;
   padding: 8px 0;
-  border-bottom: 1px solid #eee;
   color: #333;
   font-size: 16px;
 }
 
 .teacher-details strong {
-  color: #030457;
+  color: #1565c0;
   font-weight: 600;
   display: inline-block;
   width: 120px;
@@ -313,7 +312,7 @@ h1 {
   position: absolute;
   width: 20px;
   height: 3px;
-  background-color: #030457;
+  background-color: #1565c0;
   top: 50%;
   left: 50%;
 }
@@ -328,7 +327,7 @@ h1 {
 
 .close-button:hover::before,
 .close-button:hover::after {
-  background-color: #07098e;
+  background-color: #0d47a1;
 }
 
 /* Popup Responsive */
@@ -388,7 +387,7 @@ h1 {
 }
 
 .pagination-button {
-  background-color: #4CAF50; /* green */
+  background-color: #1565c0;
   color: white;
   padding: 10px 18px;
   border: none;
@@ -399,11 +398,11 @@ h1 {
 }
 
 .pagination-button:hover {
-  background-color: #45a049;
+  background-color: #0d47a1;
 }
 
 .pagination-button:disabled {
-  background-color: #ccc;
+  background-color: #bbdefb;
   color: #666;
   cursor: not-allowed;
 }
@@ -411,5 +410,5 @@ h1 {
 #pagination-status {
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: #1565c0;
 }

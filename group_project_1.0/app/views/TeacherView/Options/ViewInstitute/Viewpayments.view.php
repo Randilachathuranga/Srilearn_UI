@@ -1,4 +1,12 @@
-<?php $classid = $id; ?>
+<?php
+    if($_SESSION['User_id']=='Guest'){
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
+    } elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
+    }
+    $classid = $id;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,15 +14,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>All Payments</title>
   <style>
+    /* Ensure body has space for fixed header and footer */
     body {
       font-family: Arial, sans-serif;
       background-color: #f5f7fa;
-      padding: 20px;
+      margin: 0;
+      padding-top: 80px; /* Space for header */
+      padding-bottom: 60px; /* Space for footer */
     }
 
     h1 {
       text-align: center;
       color: #333;
+      margin-top: 0;
     }
 
     .record {
@@ -73,9 +85,31 @@
       background-color: #e74c3c;
       color: white;
     }
+
+    /* Optional: Add default styles for header/footer if they're fixed */
+    header, footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      z-index: 999;
+    }
+
+    header {
+      top: 0;
+      height: 60px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      bottom: 0;
+      height: 40px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
+
   <h1>All Payment Requests</h1>
   <div id="container"></div>
 
@@ -104,9 +138,9 @@
             const stateText = record.stateis === 1 ? 'Approved' : (record.stateis === -1 ? 'Rejected' : 'Pending');
             const statusClass = record.stateis === 1 ? 'approved' : (record.stateis === -1 ? 'rejected' : 'pending');
 
-            const actionsHtml = record.stateis === 0 ? `
-              <button class="approve-btn" onclick="handleApproval(${record.Id})">Approve</button>
-              <button class="reject-btn" onclick="handleRejection(${record.Id})">Reject</button>
+            const actionsHtml = record.stateis === 0 ? ` 
+              <button class="approve-btn" onclick="handleApproval(${record.Id}, this)">Approve</button>
+              <button class="reject-btn" onclick="handleRejection(${record.Id}, this)">Reject</button>
             ` : '';
 
             rec.innerHTML = `
@@ -129,7 +163,7 @@
         });
     });
 
-    function handleApproval(id) {
+    function handleApproval(id, button) {
       fetch(`http://localhost/group_project_1.0/public/Institute/payfee/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -143,7 +177,9 @@
         }
         if (data.status === 'success') {
           alert('✅ Monthly payment request sent successfully!');
-          location.reload();
+          button.closest('.record').querySelector('.status').textContent = 'Approved';
+          button.closest('.record').querySelector('.status').classList.add('approved');
+          button.closest('.actions').innerHTML = '';
         } else {
           alert(`❌ Failed: ${data.message}`);
         }
@@ -154,7 +190,7 @@
       });
     }
 
-    function handleRejection(id) {
+    function handleRejection(id, button) {
       fetch(`http://localhost/group_project_1.0/public/Institute/rejectfee/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -168,7 +204,9 @@
         }
         if (data.status === 'success') {
           alert('❌ Monthly payment request rejected');
-          location.reload();
+          button.closest('.record').querySelector('.status').textContent = 'Rejected';
+          button.closest('.record').querySelector('.status').classList.add('rejected');
+          button.closest('.actions').innerHTML = '';
         } else {
           alert(`❌ Failed: ${data.message}`);
         }
@@ -179,5 +217,10 @@
       });
     }
   </script>
+
 </body>
 </html>
+
+<?php
+  require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
+?>

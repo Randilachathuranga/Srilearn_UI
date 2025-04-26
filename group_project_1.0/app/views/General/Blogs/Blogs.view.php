@@ -41,29 +41,7 @@
         margin: 0 10px;
     }
 
-    .search-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    .search-input {
-        width: 300px;
-        padding: 10px;
-        margin-right: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-    .search-button {
-        padding: 10px 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .search-button:hover {
-        background-color: #0056b3;
-    }
+   
 </style>
 </head>
 <body>
@@ -134,3 +112,4 @@
     require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
 }
     ?>
+    

@@ -1,6 +1,6 @@
 /* General Page Styles */
 body {
-  background-color: #f8f9fa;
+  background-color: #e8f0fe;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -27,7 +27,7 @@ body {
 .header-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #030457;
+  color: #0d47a1;
   margin-bottom: 20px;
 }
 
@@ -39,7 +39,7 @@ body {
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 30px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(13, 71, 161, 0.2);
 }
 
 .banner-container img {
@@ -55,13 +55,14 @@ body {
   margin-bottom: 30px;
   width: 100%;
   max-width: 800px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(13, 71, 161, 0.15);
   border-radius: 10px;
+  border: 1px solid #bbdefb;
 }
 
 .filter-container h2 {
   font-size: 1.5rem;
-  color: #1a237e;
+  color: #1565c0;
   margin-bottom: 20px;
 }
 
@@ -73,14 +74,16 @@ body {
 .dropdown-container label {
   font-size: 1rem;
   margin: 10px 0 5px;
+  color: #1976d2;
 }
 
 .dropdown-container select {
   padding: 10px;
   font-size: 1rem;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #90caf9;
   margin-bottom: 15px;
+  background-color: #f5f9ff;
 }
 
 /* Classes Display Section */
@@ -96,32 +99,33 @@ body {
 .record {
   background-color: #ffffff;
   padding: 20px;
-  border-left: 6px solid #1a237e;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #1565c0;
+  box-shadow: 0 4px 16px rgba(13, 71, 161, 0.1);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .record:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 20px rgba(13, 71, 161, 0.2);
+  border-left: 6px solid #2196f3;
 }
 
 .record h2 {
-  color: #1a237e;
+  color: #1565c0;
   font-size: 1.4rem;
   margin-bottom: 10px;
 }
 
 .record h5, .record h3, .record p {
   margin: 8px 0;
-  color: #333;
+  color: #1976d2;
 }
 
 .record button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #1a237e;
+  background-color: #1976d2;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -131,10 +135,422 @@ body {
 }
 
 .record button:hover {
-  background-color: #0056b3;
+  background-color: #1565c0;
   transform: scale(1.05);
 }
 
 .record button:active {
-  background-color: #004094;
+  background-color: #0d47a1;
+}
+/* General Styles */
+body {
+  background-color: #e8eaf6;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+/* Container for the page content */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 50px auto 0;
+}
+
+/* Header styling */
+.header-container {
+  text-align: center;
+  margin: 40px 0 20px;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1a237e;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Banner Image */
+.banner-container {
+  width: 90%;
+  max-width: 1000px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 12px rgba(26, 35, 126, 0.2);
+  border: 2px solid #3f51b5;
+}
+
+.banner-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Filter Section */
+.filter-container {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(26, 35, 126, 0.15);
+  border-radius: 10px;
+  border: 1px solid #7986cb;
+}
+
+.filter-container h2 {
+  font-size: 1.5rem;
+  color: #283593;
+  margin-bottom: 20px;
+}
+
+.dropdown-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dropdown-container label {
+  display: block;
+  margin-bottom: 5px;
+  color: #283593;
+  font-weight: 500;
+}
+
+.dropdown-container select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 2px solid #7986cb;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+  background-color: #ffffff;
+  appearance: none;
+  cursor: pointer;
+}
+
+.dropdown-container select:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.3);
+}
+
+/* Classes Display Section */
+.classes-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.record {
+  background-color: #ffffff;
+  padding: 20px;
+  border-left: 6px solid #3f51b5;
+  box-shadow: 0 4px 16px rgba(26, 35, 126, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 350px;
+}
+
+.record:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+  border-left: 6px solid #1a237e;
+}
+
+.record h2 {
+  color: #283593;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.record h3 {
+  color: #3949ab;
+  font-size: 1.2rem;
+  margin: 8px 0;
+}
+
+.record h5 {
+  color: #3949ab;
+  font-size: 1rem;
+  margin: 8px 0;
+  font-weight: 600;
+}
+
+.record p {
+  margin: 8px 0;
+  color: #3949ab;
+}
+
+.record button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.record button:hover {
+  background-color: #1a237e;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(26, 35, 126, 0.3);
+}
+
+.record button:active {
+  background-color: #283593;
+}
+
+/* Subject Image */
+.subject-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Form Popup Styles */
+.popup-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #030457;
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-container {
+  background-color: #ffffff;
+  padding: 25px 25px 35px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="tel"],
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  border: 1.5px solid #030457;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  background-color: #030457;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #020347;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  color: #030457;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #d32f2f;
+}
+
+.close-button::before {
+  content: "✕";
+}
+
+/* Teacher Info Styles */
+.teacher-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.teacher-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  margin-right: 15px;
+  border: 4px solid #030457;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
+.institute-info {
+  text-align: left;
+  font-size: 18px;
+}
+
+.institute-info p {
+  margin: 0;
+  color: #030457;
+  font-weight: 600;
+}
+
+.teacher-details {
+  text-align: left;
+  padding-top: 15px;
+}
+
+.teacher-details p {
+  font-size: 15px;
+  color: #030457;
+  margin: 8px 0;
+  font-weight: 500;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+#description {
+  height: 150px;
+}
+
+/* Media Queries */
+/* For desktops */
+@media (min-width: 1024px) {
+  .form-container {
+    width: 450px;
+    padding: 30px;
+  }
+  
+  #description {
+    height: 200px;
+  }
+  
+  .record {
+    max-width: 300px;
+  }
+}
+
+/* For tablets */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .header-title {
+    font-size: 2.2rem;
+  }
+  
+  .form-container {
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  #description {
+    height: 180px;
+  }
+  
+  .record {
+    max-width: 320px;
+  }
+}
+
+/* For phones */
+@media (max-width: 767px) {
+  .header-title {
+    font-size: 1.8rem;
+  }
+  
+  .banner-container {
+    height: 200px;
+  }
+  
+  .teacher-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .teacher-image {
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+  
+  .form-container {
+    width: 90%;
+    padding: 20px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .dropdown-container {
+    flex-direction: column;
+  }
+  
+  input[type="text"], textarea, select {
+    font-size: 14px;
+  }
+  
+  .submit-button, .close-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  .record {
+    max-width: 100%;
+  }
 }

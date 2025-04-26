@@ -160,13 +160,13 @@ async function renderClasses(classes) {
 
         let payButtonHtml = '';
         if (record.Type === "Individual") {
-            if (record.Isdiscountavail !== 1 && subpayment && substatus) {
+            if (record.Isdiscountavail !== 1 && subpayment ) {
                 payButtonHtml = `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`;
             } else if (record.Isdiscountavail === 1) {
                 payButtonHtml = '<p class="free-card-msg">You have a free card for this class</p>';
             }
         } else {
-            if (record.Isdiscountavail !== 1 && substatus) {
+            if (record.Isdiscountavail !== 1 && subpayment) {
                 payButtonHtml = `<button onclick="payclassfee(${record.Class_id})">Pay Class Fee</button>`;
             } else if (record.Isdiscountavail === 1) {
                 payButtonHtml = '<p class="free-card-msg">You have a free card for this class</p>';
@@ -182,12 +182,12 @@ async function renderClasses(classes) {
             <p>Address: ${record.Location}</p>
             <h5>Fee: ${record.fee}</h5>
             ${payButtonHtml}
-            <button onclick="deleteEnrollment(${record.Enrollment_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Leave</button>
-            <button onclick="viewShedule(${record.Class_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Schedule</button><br><br>
-            <button onclick="viewMat(${record.Class_id})" ${!(paid||!(subpayment))? 'disabled' : ''}>Learning Materials</button><br><br>
-            <button onclick="viewASS(${record.Class_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Assignments</button>
-            ${substatus ? `<button onclick="chatwithteacher(${record.User_id})" ${!(paid||!(subpayment)) ? 'disabled' : ''}>Chat with teacher</button>` : ''}
-        `;
+            ${ (paid || !subpayment) ? `<button onclick="deleteEnrollment(${record.Enrollment_id})">Leave</button>` : '' }
+            ${ (paid || !subpayment) ? `<button onclick="viewShedule(${record.Class_id})">Schedule</button><br><br>` : '' }
+            ${ (paid || !subpayment) ? `<button onclick="viewMat(${record.Class_id})">Learning Materials</button><br><br>` : '' }
+            ${ (paid || !subpayment) ? `<button onclick="viewASS(${record.Class_id})">Assignments</button>` : '' }
+            ${ substatus && (paid || !subpayment) ? `<button onclick="chatwithteacher(${record.User_id})">Chat with teacher</button>` : '' }
+`;
 
         container.appendChild(rec);
     }
@@ -199,10 +199,29 @@ async function renderClasses(classes) {
         function chatwithteacher(reciever_id) {
         window.location.href = `Chat/mychat/${reciever_id}`;
     }
+    
     function payclassfee(classid) {
-        
-        window.location.href = `Payment/classfee/${classid}`;
-    }
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkClassFee/${classid}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error); // Missed too many months
+            } else if (data.message) {
+                alert(data.message); // Already paid this month
+            } else if (data.warning) {
+                alert(data.warning); // Need to pay both months
+                window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
+            } else if (data.status === 'ok') {
+                window.location.href = `http://localhost/group_project_1.0/public/Payment/classfee/${classid}`;
+            }
+        })
+        .catch(error => {
+            console.error('Error checking class fee:', error);
+            alert('Something went wrong. Please try again.');
+        });
+}
+
+
 
         function deleteEnrollment(id) {
             alert("Are you sure you want to leave this class?");

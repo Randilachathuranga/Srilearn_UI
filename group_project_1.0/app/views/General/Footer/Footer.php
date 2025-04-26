@@ -17,9 +17,8 @@
                 <br>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Advertisement</a></li>
+                    <li><a href="http://localhost/group_project_1.0/public/ContactUS">Contact</a></li>
+                    <li><a href="http://localhost/group_project_1.0/public/Advertisements">Advertisement</a></li>
 
                 </ul>
             </div>

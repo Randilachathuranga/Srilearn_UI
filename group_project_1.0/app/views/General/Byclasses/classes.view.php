@@ -160,13 +160,44 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
             const rec = document.createElement('div');
             rec.className = 'record';
 
+            const subjectImages = {
+                Accounting: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
+                Agriculture: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Agriculture.jpeg",
+                Art: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Art.jpeg",
+                BioSystemsTechnology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/B.jpeg",
+                Biology: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Bio.png",
+                Buddhism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Buddhism.webp",
+                Physics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+                Mathematics: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Maths.png",
+                English: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/English.png",
+                Chemistry: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/science.png",
+                History: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/History.png",
+                IT: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/It.png",
+                BusinessStudies: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/BusinessStudies.png",
+                Catholicism: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Catholicism.jpeg",
+                CivicEducation: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/CivicEducation.jpeg",
+                Commerce: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Commerce.png",
+                Drama: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Drama.jpeg",
+                Engineering: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Engineering.jpeg",
+                Geography: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Geography.jpeg",
+                Health: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/H.jpeg",
+                Science: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Science.jpeg",
+                Sinhala: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+                Tamil: "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
+            };
+
+            const subjectImage = subjectImages[record.Subject] || "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/default.png";
+            
             rec.innerHTML = `
+                <img src="${subjectImage}" alt="${record.Subject}" class="subject-image">
                 <h2>Subject: ${record.Subject}</h2>
                 <h5>Teacher: ${record.F_name || "N/A"} ${record.L_name || ""}</h5>
                 <h3>Grade: ${record.Grade}</h3>
                 <p>Type: ${record.Type}</p>
                 <p>Address: ${record.Location}</p>
                 <h5>Fee: ${record.fee}</h5>
+                <p>Date: ${record.Def_Date}</p>
+                <p>Time: ${record.Def_Time}</p>
             `;
 
             if (userRole === 'student') {

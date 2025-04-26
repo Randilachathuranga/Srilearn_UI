@@ -64,12 +64,12 @@
         <?php
         }
         ?> 
-        <?php if ($_SESSION['Role'] == "student" || $_SESSION['Role'] == "teacher" ) { ?>
+        <?php if ($_SESSION['Role'] == "teacher" ) { ?>
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <?php } ?> 
 
-        <?php if ($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher" ) { ?>
-        <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
+        <?php if (($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher") &&($_SESSION['Isadavail']==1 )) { ?>
+        <a href="http://localhost/group_project_1.0/public/Advertisements/viewmyads"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <?php } ?> 
 
         <a href="http://localhost/group_project_1.0/public/Blog/myblogs"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/blogs.png">My Blogs</a>
@@ -124,11 +124,11 @@
         <?php
         }
         ?> 
-        <?php if ($_SESSION['Role'] == "student" || $_SESSION['Role'] == "teacher" ) { ?>
+        <?php if ($_SESSION['Role'] == "teacher" ) { ?>
         <a href="http://localhost/group_project_1.0/public/My_Institute"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/school.png">My Institutes</a>
         <?php } ?> 
 
-        <?php if ($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher" ) { ?>
+        <?php if (($_SESSION['Role'] == "institute" || $_SESSION['Role'] == "teacher") &&($_SESSION['Isadavail']==1 )) { ?>
         <a href="http://localhost/group_project_1.0/public/Advertisements"><img src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/icon/ads.png">My Advertisements</a>
         <?php } ?> 
 
@@ -153,6 +153,7 @@
 </div>
 
 <div class="nav-background" id="navBackground" onclick="toggleMenu()"></div>
+
 
 
 <script src="../../../../../../group_project_1.0/public/views/General/NavBar/User_NavBar/UserNav.js"></script>

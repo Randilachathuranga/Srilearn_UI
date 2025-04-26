@@ -1,0 +1,7 @@
+updated the sysadmin approvessu function to hash the passwords
+fixed signup issue in signin page
+fixed forgot password and updated the update in forgot password controller
+updated the payment review view to add the report generation part added the library and the download pdf library code 
+signup view updated added districts and subjects
+changed systemadmin view and css completely
+added apis for systemadmin to retrieve counts

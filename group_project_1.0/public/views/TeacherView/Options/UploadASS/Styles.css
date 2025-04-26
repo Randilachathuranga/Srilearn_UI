@@ -23,7 +23,7 @@
 
 /* Create assignment button styles */
 .create-assignment-btn, .search-btn {
-  background-color: #4CAF50;
+  background-color: #000080;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -37,7 +37,7 @@
 }
 
 .create-assignment-btn:hover, .search-btn:hover {
-  background-color: #45a049;
+  background-color: #000080;
 }
 
 /* Assignments layout */
@@ -92,12 +92,12 @@
 }
 
 .view-btn {
-  background-color: #008CBA;
+  background-color: #000080;
   color: white;
 }
 
 .view-btn:hover {
-  background-color: #0078A0;
+  background-color: #000080;
 }
 
 .delete-btn {
@@ -251,7 +251,7 @@ th, td {
 }
 
 th {
-  background-color: #4CAF50;
+  background-color: #000080;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
@@ -263,7 +263,7 @@ tr:hover {
 
 /* Update Marks button */
 button {
-  background-color: #008CBA;
+  background-color: #000080;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -273,7 +273,7 @@ button {
 }
 
 button:hover {
-  background-color: #0078A0;
+  background-color: #000080;
 }
 
 .modal-content {
@@ -348,15 +348,15 @@ button:hover {
 }
 
 .table input.form-control:focus {
-  border-color: #80bdff;
+  border-color: #000080;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* Button styles */
 .btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #000080;
+  border-color: #000080;
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
@@ -364,6 +364,6 @@ button:hover {
 }
 
 .btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+  background-color: #000080;
+  border-color: #000080;
 }

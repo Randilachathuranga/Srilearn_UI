@@ -16,6 +16,12 @@ class Enrollmodel{
         return !empty($result); // Return true if the student is already enrolled
     }
 
+    public function checkisEnrolleddate($Stu_id, $Class_id)
+    {   
+        $results=$this->where(['stu_id'=>$Stu_id,'Class_id'=>$Class_id]);
+        return $results; // Return true if the student is already enrolled
+    }
+
    
 
 

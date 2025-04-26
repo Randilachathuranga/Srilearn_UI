@@ -102,7 +102,10 @@ h1 {
     background-color: #f2f2f2;
 }
 
-
+.students-table td {
+    padding: 15px;
+    color: #0d47a1;
+}
 
 .no-data {
     text-align: center;
@@ -136,34 +139,111 @@ h1 {
 .btn-danger:focus {
     box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
 }
-.btn-chat {
-    /* Your chat button styling */
-    background-color: #4CAF50; /* Example color */
+
+/* Message Button Styles */
+.btn-message {
+    background-color: #1976d2;
     color: white;
-    padding: 6px 12px;
     border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 600px) {
+.btn-message:hover {
+    background-color: #1565c0;
+}
+
+.btn-message:active {
+    background-color: #0d47a1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-message:focus {
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        margin: 120px 20px 50px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 100px 15px 40px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
     .search-container {
         flex-direction: column;
-        align-items: center;
+        gap: 10px;
     }
 
     .search-input {
         width: 100%;
-        margin-bottom: 10px;
+        max-width: none;
     }
 
     .students-table {
-        font-size: 14px;
+        display: block;
+        overflow-x: auto;
     }
-    
+
     .students-table th,
     .students-table td {
-        padding: 8px;
+        padding: 10px;
+        font-size: 14px;
     }
 }
 
+@media (max-width: 480px) {
+    .container {
+        margin: 80px 10px 30px;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+}
+
+.btn-chat {
+    background-color: #007BFF; /* Bootstrap primary blue */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-chat:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .btn-chat:active {
+    background-color: #00408d; /* Even darker when clicked */
+  }
+  
+  .btn-chat:disabled {
+    background-color: #a0c5f7;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  

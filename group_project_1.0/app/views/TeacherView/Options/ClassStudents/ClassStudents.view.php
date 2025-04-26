@@ -34,7 +34,9 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Action</th>
-                    <th>Chat</th>
+                    <th id="chatHeader" style="display: none;">Chat</th>
+
+
                 </tr>
             </thead>
             <tbody id="studentsTableBody">
@@ -42,6 +44,10 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
             </tbody>
         </table>
     </div>
+    <script>
+    const Role = "<?php echo $_SESSION['Role']; ?>";
+    sessionStorage.setItem("Rolee",Role);
+  </script>
     <script src="../../../../../../group_project_1.0/public/views/TeacherView/Options/ClassStudents/Script.js"></script>
     <div id="reasonPopup" style="display: none; position: fixed; top: 0; left: 0; 
   width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); 
@@ -57,6 +63,7 @@ include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/U
 </div>
 </body>
 </html>
+
 
 <?php
  include "C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php"

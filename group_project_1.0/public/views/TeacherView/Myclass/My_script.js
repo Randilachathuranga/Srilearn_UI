@@ -126,6 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <br>
               <p><h3>Address:</h3> ${classItem.Location}</p>
               <br>
+              <p>Date: ${classItem.Def_Date}</p>
+                <p>Time: ${classItem.Def_Time}</p>
+                <br>
               <p>Start date: ${classItem.Start_date || "N/A"}</p>
               <p>End date: ${classItem.End_date || "N/A"}</p>
               <br>
@@ -180,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = fullName;
         option.textContent = fullName;
         instituteSelect.appendChild(option);
-  
+
         // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
       });
@@ -193,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("Institute_name")
     .addEventListener("change", function () {
       const selectedName = this.value;
-console.log("sss",instituteDataMap[selectedName]);
+      console.log("sss", instituteDataMap[selectedName]);
       if (selectedName !== "None" && instituteDataMap[selectedName]) {
         const selectedInstitute = instituteDataMap[selectedName];
         const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key
@@ -235,6 +238,8 @@ console.log("sss",instituteDataMap[selectedName]);
       Grade: formData.get("Grade"),
       Max_std: parseInt(formData.get("Max_std"), 10),
       fee: parseFloat(formData.get("Fee")),
+      Def_Date: formData.get("Date"),
+      Def_Time: formData.get("Time"),
     };
     const table2 = {
       P_id: P_id,
@@ -252,6 +257,7 @@ console.log("sss",instituteDataMap[selectedName]);
       inst_id: formData.get("inst_id"),
     };
 
+    console.log("date and time", table1.Def_Date,table1.Def_Time)
     const institute = formData.get("Institute_name");
     console.log("id ekd = ", table3);
     if (
@@ -454,10 +460,10 @@ function showDetails(Class_id) {
         classDetail.fee || "N/A";
       document.getElementById("maxstu").textContent =
         classDetail.Max_std || "N/A";
-      document.getElementById("classdate").textContent = `${
-        classDetail.Start_date || "N/A"
-      } - ${classDetail.End_date || "N/A"}`;
-
+      document.getElementById("Date").textContent =
+      classDetail.Def_Date || "N/A";
+    document.getElementById("Time").textContent =
+      classDetail.Def_Time || "N/A";
       document.getElementById("modalBackground").style.display = "block";
 
       console.log("Class Details:", classDetail);
@@ -539,6 +545,11 @@ function editclass(class_id) {
         classDetail.End_date || "";
       document.getElementById("classLocation").value =
         classDetail.Location || classDetail.Hall_number || "";
+
+        document.getElementById("Date_").value =
+        classDetail.Def_Date || classDetail.Def_Date || "";
+        document.getElementById("Time_").value =
+        classDetail.Def_Time || classDetail.Def_Time || "";
 
       // Show the popup form
       document.getElementById("popupEditForm").style.display = "flex";

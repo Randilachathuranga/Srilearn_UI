@@ -1,0 +1,106 @@
+/* General Page Styles */
+body {
+  background-color: #f0f7ff;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+/* Page Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+/* Header Section */
+.header-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e56a0;
+  margin-bottom: 20px;
+}
+
+/* Banner Section */
+.banner-container {
+  width: 80%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.banner-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Teachers List */
+.teachers-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 20px; /* Space between cards */
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Teacher Card */
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(30, 86, 160, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 4px solid #3498db;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(30, 86, 160, 0.2);
+}
+
+/* Card Details */
+.card-details {
+  flex: 1;
+}
+
+.card-details p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+/* Remove Button */
+.remove-btn {
+  padding: 10px 20px;
+  background-color: #1e56a0;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.remove-btn:hover {
+  background-color: #164785;
+  transform: scale(1.05);
+}
+
+.remove-btn:active {
+  background-color: #0d2f5a;
+}

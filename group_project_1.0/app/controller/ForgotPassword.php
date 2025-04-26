@@ -126,8 +126,8 @@ public function changepword()
             ]);
             return;
         }
-
-        $password = $data['password'];
+       
+        $password = password_hash($data['password'], PASSWORD_DEFAULT);
         $email = $_SESSION['otp_email'];
 
         // Update password in database

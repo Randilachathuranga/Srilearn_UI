@@ -1,13 +1,13 @@
 /* CSS Variables for easier theming */
 :root {
-  --primary-color: #0e76a8;
-  --primary-hover-color: #084a6d;
-  --background-color: #f8f9fc;
+  --primary-color: #1565c0; /* Deeper blue */
+  --primary-hover-color: #0d47a1; /* Darker blue on hover */
+  --background-color: #e3f2fd; /* Light blue background */
   --form-bg-color: #fff;
-  --accent-bg-color: #eaf7ff;
-  --text-color: #2d2d2d;
-  --subtext-color: #666;
-  --border-color: #ccc;
+  --accent-bg-color: #bbdefb; /* Light blue accent */
+  --text-color: #0d47a1; /* Dark blue text */
+  --subtext-color: #1976d2; /* Medium blue text */
+  --border-color: #90caf9; /* Light blue border */
   --font-family: 'Arial', sans-serif;
 }
 
@@ -20,7 +20,6 @@
 }
 
 body {
-
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -37,20 +36,20 @@ body {
   flex-wrap: wrap;
   background-color: var(--form-bg-color);
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(13, 71, 161, 0.1); /* Blue tinted shadow */
   overflow: hidden;
   max-width: 900px;
-  margin: 50px auto; /* Center horizontally and add spacing */
-  padding: 20px; /* Optional: Internal padding */
+  margin: 50px auto;
+  padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-bottom: 50px; /* Space above the footer */
+  margin-bottom: 50px;
   margin-top: 130px;
   margin-bottom: 100px;
 }
 
 .contact-wrapper:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(13, 71, 161, 0.2); /* Blue tinted shadow */
 }
 
 /* Form section */
