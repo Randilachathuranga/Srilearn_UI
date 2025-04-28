@@ -8,7 +8,7 @@ class Enrollment extends Controller
 
     public function post($classid)
     {
-        // Instantiate the models
+        
         $model = new Enrollmodel();
         $paymentmodel = new Paymentmodel();
     
@@ -56,18 +56,12 @@ class Enrollment extends Controller
             $enroll = $model->insert($enrollData);
     
             if ($enroll) {
-                // Insert payment
+               
                 $paymentInsert = $paymentmodel->insert($paymentData);
     
                 // Send success response
                 http_response_code(200);
-                // echo json_encode([
-                //     'message' => 'Enrolled successfully',
-                //     'enrollment' => $enrollData,
-                //     'payment' => $paymentInsert
-                // ]);
-    
-                // Optionally redirect after sending JSON (not recommended) - comment out:
+              
                  redirect('Enrollment');
             } else {
                 http_response_code(500);
@@ -219,7 +213,7 @@ public function mydeleteapi($id) {
         try {
             // Fetch the enrollment record
             $rec = $model->where(['Enrollment_id' => $id]);
-            show($rec);
+            
             if (!$rec) {
                 echo json_encode(['error' => 'Enrollment record not found.']);
                 return;
@@ -234,10 +228,11 @@ public function mydeleteapi($id) {
                 'past_std' => $id,   
                 'Stu_id' => $rec[0]->Stu_id,
                 'Class_id' => $rec[0]->Class_id,
-                'Rem_Date' => $input['Rem_Date'],
+                'Rem_date' => date('Y-m-d'),
                 'Reason' => $input['Reason']
             ];
-            show($data);
+
+           
             $fetch = $delusermodel->insert($data);
             if ($fetch) {
             $enroll = $model->delete($id, 'Enrollment_id');

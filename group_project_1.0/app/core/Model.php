@@ -10,7 +10,7 @@ trait Model {
     public $errors = [];
 
     // Filter records with matching or non-matching conditions
-    public function where($data, $data_not = []) {
+    public function where($data, $data_not = []) {  
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
         $query = "SELECT * FROM $this->table WHERE ";
@@ -27,6 +27,21 @@ trait Model {
         $data = array_merge($data, $data_not);
         return $this->query($query, $data);
     }
+    //helping functions raheem
+    public function wherein($data, $colname) {
+        // Start building the query
+        $query = "SELECT * FROM {$this->table} WHERE {$colname} IN (";
+    
+        // Add placeholders: ?, ?, ?, ... based on number of items
+        $placeholders = implode(',', array_fill(0, count($data), '?'));
+        $query .= $placeholders . ")";
+    
+        // Now call the query function with full query and all values
+        return $this->query($query, $data);
+    }
+    
+
+    
 
     public function InnerJoinwhere($table1, $table2, $joinCondition, $data, $data_not = []){
         $keys = array_keys($data);

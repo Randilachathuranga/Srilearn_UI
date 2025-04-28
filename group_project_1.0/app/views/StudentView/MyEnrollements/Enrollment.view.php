@@ -80,7 +80,8 @@ function hasinstsubbed(id){
           .catch(error => {
             console.error('Error sending message:', error);
           });
-}
+
+        }
 
         // Fetch all enrolled classes initially
         document.addEventListener('DOMContentLoaded', fetchAllClasses);

@@ -1,10 +1,11 @@
 /* General Page Styles */
 body {
-    background-color: #e3f2fd; /* Light blue background */
+    background-color: #f0f4f8; /* Very light blue-gray */
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
+    color: #1e3a5f; /* Deep navy for text */
 }
 
 /* Page Container */
@@ -12,127 +13,119 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 50px;
 }
 
 /* Header Section */
 .header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0 20px 0;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .header-title {
     font-size: 2.5rem;
-    font-weight: bold;
-    color: #0d47a1; /* Darker blue for header */
+    font-weight: 600;
+    color: #0d47a1;
+    border-bottom: 3px solid #0d47a1;
+    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-/* Banner Image Section */
+/* Banner Section */
 .banner-container {
-    width: 80%;
+    width: 100%;
+    max-width: 1000px;
     height: 400px;
     overflow: hidden;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
 }
 
 .banner-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 
-/* Classes Display Section */
+/* Class Cards */
 .classes-container {
     width: 100%;
-    max-width: 1200px;
-    margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
 }
 
 .record {
-    background-color: #bbdefb; /* Light blue for cards */
+    background-color: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    border: 1px solid #90caf9; /* Blue border */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease-in-out;
 }
 
 .record:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .record h2, .record h3, .record p, .record h5 {
-    margin: 5px 0;
-    color: #1565c0; /* Medium blue text */
+    margin: 10px 0;
+    color: #0d47a1;
 }
 
+/* Buttons */
 .record button {
-    padding: 10px 20px;
-    background-color: #1565c0; /* Primary blue */
-    color: white;
+    background-color: #1976d2;
+    color: #ffffff;
+    padding: 10px 16px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 6px;
     font-size: 1rem;
-    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .record button:hover {
-    background-color: #0d47a1; /* Lighter blue on hover */
-    transform: scale(1.05);
+    background-color: #0d47a1;
+    transform: scale(1.03);
 }
 
 .record button:active {
-    background-color: #0d47a1; /* Darker blue when active */
+    background-color: #0b3c91;
 }
 
+/* Free Card Message Button */
 .record .free-card-msg {
-    color: white; /* Change text color to white */
-    background-color: #4caf50; /* Green background for the button */
-    padding: 10px 20px; /* Add padding for better appearance */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add rounded corners */
-    font-size: 1rem; /* Ensure consistent font size */
-    text-align: center; /* Center the text */
-    display: inline-block; /* Ensure it behaves like a button */
-    cursor: pointer; /* Add pointer cursor for interactivity */
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
 }
 
 .record .free-card-msg:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    background-color: #388e3c;
 }
 
-/* Ensure all buttons have the same size */
-.record button {
-    width: 48%;
-    text-align: center;
-    padding: 10px 5px;
-    box-sizing: border-box;
-    margin: 10px 1%;
-    display: inline-block;
-}
-
+/* Button Container for Multiple Buttons */
 .record .button-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
 }
 
 .record .button-container button {
     flex: 1 1 calc(50% - 10px);
-    box-sizing: border-box;
     text-align: center;
-    margin: 5px 0;
 }

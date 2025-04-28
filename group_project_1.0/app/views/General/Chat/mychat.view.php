@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: #e6eef5; /* Light blue background */
+      background: #e6eef5; 
       margin: 0;
       padding: 0;
       height: 100vh;
@@ -33,7 +33,7 @@
     .chat-header {
       display: flex;
       align-items: center;
-      background: #1a75ff; /* Blue */
+      background: #1a75ff;
       color: white;
       padding: 16px 24px;
       height: 70px;
@@ -43,7 +43,7 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background-color: #005ce6; /* Darker blue */
+      background-color: #005ce6; 
       margin-right: 20px;
     }
 
@@ -75,12 +75,12 @@
       padding: 12px 16px;
       border-radius: 10px;
       box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-      width: 60%; /* Reduced width for desktop */
+      width: 60%; 
       max-width: 600px;
     }
 
     .record.sent {
-      background-color: #cce6ff; /* Light blue */
+      background-color: #cce6ff; 
       border-right: none;
       align-self: flex-end;
       margin-left: auto;
@@ -118,7 +118,7 @@
 
     .message-form {
       display: flex;
-      background: #e6eef5; /* Light blue */
+      background: #e6eef5; 
       padding: 16px 24px;
       margin-top: 0;
       border-top: none;
@@ -142,7 +142,7 @@
     .submit-btn {
       width: 50px;
       height: 50px;
-      background-color: #1a75ff; /* Blue */
+      background-color: #1a75ff; 
       color: white;
       border: none;
       border-radius: 50%;
@@ -156,14 +156,14 @@
     }
 
     .submit-btn:hover {
-      background-color: #005ce6; /* Darker blue */
+      background-color: #005ce6; 
     }
 
     .edit-btn {
       position: absolute;
       top: 12px;
       right: 12px;
-      background-color: #1a75ff; /* Blue */
+      background-color: #1a75ff; 
       color: white;
       border: none;
       border-radius: 4px;
@@ -173,7 +173,7 @@
     }
 
     .edit-btn:hover {
-      background-color: #005ce6; /* Darker blue */
+      background-color: #005ce6; 
     }
 
     .modal {
@@ -206,7 +206,7 @@
 
     .modal-header h3 {
       margin: 0;
-      color: #1a75ff; /* Blue */
+      color: #1a75ff; 
       font-size: 20px;
     }
 
@@ -235,12 +235,12 @@
 
     .edit-input:focus {
       outline: none;
-      border-color: #1a75ff; /* Blue */
+      border-color: #1a75ff; 
     }
 
     .edit-submit {
       padding: 12px 24px;
-      background-color: #1a75ff; /* Blue */
+      background-color: #1a75ff; 
       color: white;
       border: none;
       border-radius: 6px;
@@ -250,10 +250,10 @@
     }
 
     .edit-submit:hover {
-      background-color: #005ce6; /* Darker blue */
+      background-color: #005ce6; 
     }
 
-    /* Add send icon to button */
+    
     .submit-btn::after {
       content: "➤";
       transform: rotate(90deg);
@@ -349,10 +349,10 @@
         let newMessage = document.getElementById('edit-message-input').value.trim();
 const tag = '(edited)';
 
-// Remove all instances of (edited), then trim
+
 newMessage = newMessage.replace(/\(edited\)/gi, '').trim();
 
-// Append a single (edited)
+
 newMessage += ' (edited)';
 
 
@@ -425,7 +425,7 @@ newMessage += ' (edited)';
     function openEditModal(messageId, messageText) {
   document.getElementById('edit-message-id').value = messageId;
 
-  // Remove (edited) from the message shown in the modal
+  
   const cleanMessage = messageText.replace(/\(edited\)/gi, '').trim();
   document.getElementById('edit-message-input').value = cleanMessage;
 

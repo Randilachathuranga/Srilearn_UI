@@ -8,7 +8,7 @@ class Announcement extends Controller {
 
         // Check if form is submitted
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if ($Ann->validate($_POST)) {
+            if ($Ann->validate($_POST)) { 
                 $Ann->insert($_POST);
                 redirect('Announcement/viewann');  // Redirect to the 'view' page after successful insertion
             } else {

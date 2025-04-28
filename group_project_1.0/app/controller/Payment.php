@@ -93,68 +93,112 @@ class Payment extends Controller
     }
 
     public function checkClassFee($classid) {
-        $paymentmodel = new Paymentmodel();
-        $enrollmodel = new Enrollmodel();
-        $userId = $_SESSION['User_id'] ?? null;
-    
-        header('Content-Type: application/json');
-    
-        if (!$userId) {
-            http_response_code(401);
-            echo json_encode(['error' => 'User not logged in.']);
-            return;
-        }
-    
-        // Check enrollment date
-        $enrollment = $enrollmodel->first(['Stu_id' => $userId, 'Class_id' => $classid]);
-        if (!$enrollment) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Enrollment not found.']);
-            return;
-        }
-    
-        $enrollDate = new DateTime($enrollment->Date);
-        $currentDate = new DateTime();
-        $previousMonthDate = (clone $currentDate)->modify('-1 month');
-        $twoMonthsAgoDate = (clone $currentDate)->modify('-2 months');
-    
-        // Fetch payments
-        $payments = $paymentmodel->where([
-            'User_id' => $userId,
-            'classID' => $classid,
-            'Type' => 'Classfee'
-        ]);
-    
-        $paidMonths = [];
-        foreach ($payments as $payment) {
-            $paidMonth = date('Y-m', strtotime($payment->Date));
-            $paidMonths[] = $paidMonth;
-        }
-    
-        $currentMonth = $currentDate->format('Y-m');
-        $previousMonth = $previousMonthDate->format('Y-m');
-        $twoMonthsAgo = $twoMonthsAgoDate->format('Y-m');
-    
-        $enrolledBeforePrevMonth = $enrollDate < $previousMonthDate;
-    
-        // Logic
-        if (in_array($currentMonth, $paidMonths)) {
-            echo json_encode(['message' => 'You have already paid the class fee for this month.']);
-            return;
-        }
-    
-        if ($enrolledBeforePrevMonth && !in_array($previousMonth, $paidMonths)) {
-            if (!in_array($twoMonthsAgo, $paidMonths)) {
-                echo json_encode(['error' => 'You have missed more than one month of payment. Please contact your institute or teacher.']);
-                return;
-            } else {
-                echo json_encode(['warning' => 'Previous month fee is also due. You need to pay for both months.']);
-                return;
-            }
-        }
-    
-        echo json_encode(['status' => 'ok']); // Eligible to proceed with payment
+    header('Content-Type: application/json');
+
+    $paymentModel = new Paymentmodel();
+    $enrollModel = new Enrollmodel();
+    $userId = $_SESSION['User_id'] ?? null;
+
+    // Check user session
+    if (!$userId) {
+        http_response_code(401);
+        echo json_encode(['error' => 'User not logged in.']);
+        return;
     }
+
+    // Check enrollment
+    $enrollment = $enrollModel->first([
+        'Stu_id' => $userId,
+        'Class_id' => $classid
+    ]);
+
+    if (!$enrollment) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Enrollment not found.']);
+        return;
+    }
+
+    // Date setup
+    $enrollDate = new DateTime($enrollment->Date);
+    $currentDate = new DateTime();
+    $previousMonthDate = (clone $currentDate)->modify('-1 month');
+    $twoMonthsAgoDate = (clone $currentDate)->modify('-2 months');
+
+    $currentMonth = $currentDate->format('Y-m');
+    $previousMonth = $previousMonthDate->format('Y-m');
+    $twoMonthsAgo = $twoMonthsAgoDate->format('Y-m');
+
+    // Fetch payments
+    $payments = $paymentModel->where([
+        'User_id' => $userId,
+        'classID' => $classid,
+        'Type'    => 'Classfee'
+    ]);
+
+    $paidMonths = array_map(function ($payment) {
+        return date('Y-m', strtotime($payment->Date));
+    }, $payments);
+
+    // Already paid this month
+    if (in_array($currentMonth, $paidMonths)) {
+        echo json_encode(['message' => 'You have already paid the class fee for this month.']);
+        return;
+    }
+    if (
+        $enrollDate->format('Y-m') === $previousMonth &&
+        (int)$enrollDate->format('d') > 20
+    
+    ) {
+        echo json_encode([
+            'warning' => 'free period expired'
+        ]);
+        return;
+    }
+
+    // Missed more than one month of payment
+    $enrolledBeforePrevMonth = $enrollDate < $previousMonthDate;
+    if ($enrolledBeforePrevMonth && !in_array($previousMonth, $paidMonths)) {
+        if (!in_array($twoMonthsAgo, $paidMonths)) {
+            echo json_encode(['error' => 'You have missed more than one month of payment. Please contact your institute or teacher.']);
+            return;
+        } else {
+            echo json_encode(['warning' => 'Previous month fee is also due. You need to pay for both months.']);
+            return;
+        }
+    }
+
+    // 🔔 New condition: enrolled last month after 20th, and not paid
+   
+
+    // Enrolled this month after the 20th — no payment needed
+    if (
+        $enrollDate->format('Y-m') === $currentMonth &&
+        (int)$enrollDate->format('d') > 20
+    ) {
+        echo json_encode([
+            'message' => 'You joined this class late in the month. You do not need to pay the class fee for this month.'
+        ]);
+        return;
+    }
+
+    // Enrolled this month before the 20th — soft warning
+    if (
+        $enrollDate->format('Y-m') === $currentMonth &&
+        (int)$enrollDate->format('d') < 20
+    ) {
+        echo json_encode([
+            'warning' => 'You joined earlier this month. You may still need to pay this month\'s class fee.',
+            'status' => 'ok'
+        ]);
+        return;
+    }
+
+    // All checks passed
+    echo json_encode(['status' => 'ok']);
+}
+
+    
+    
     
 
     

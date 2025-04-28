@@ -186,7 +186,7 @@
     const Isadavail = <?= json_encode($_SESSION['Isadavail']) ?>;
     console.log("ad:", Isadavail);
     const ischatavail = <?= json_encode($_SESSION['ischatavail']) ?>;
-    console.log("cjat:", ischatavail);
+    console.log("chat:", ischatavail);
     console.log('thoperole eka:', <?= json_encode($_SESSION['Role']) ?>);
     
     console.log('hasinst:', <?= json_encode($_SESSION['hasinst']) ?>);

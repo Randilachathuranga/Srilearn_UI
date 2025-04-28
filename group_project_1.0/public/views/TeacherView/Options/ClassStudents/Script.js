@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       console.error("Error fetching students:", error);
-      updateTableMessage("An error occurred while fetching students.");
+      updateTableMessage("No students found for this class.");
     });
 
   // Live search functionality
@@ -208,10 +208,10 @@ function showdeletedstd() {
 }
 
 function removeStudent(id, Reason) {
-  if (!confirm("Are you sure you want to leave this class?")) return;
+  if (!confirm("Are you sure you want to remove this studnet?")) return;
 
   console.log("Removing student with ID:", id, Reason);
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date()
 
   fetch(
     `http://localhost/group_project_1.0/public/Enrollment/mydeleteapi/${id}`,

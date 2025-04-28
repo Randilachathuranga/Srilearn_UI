@@ -27,7 +27,7 @@ class Signin extends Controller {
     
                 // Fetch joined data
                 $result = $Submodel->InnerJoinwhereMultiple($tables, $joinConditions, $filter, $notConditions);
-                echo json_encode($result);
+                //echo json_encode($result);
                 $instmodel=new Normalteacher();
                 $count=$instmodel->where(['N_id'=>$row->User_id]);
                 if($count){

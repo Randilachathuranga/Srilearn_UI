@@ -30,7 +30,7 @@
     <img src="../../../../../group_project_1.0/public/views/General/Announcements/Ann.png" alt="Class Image" class="class-image">
 </div>
     <!-- Container for Announcements -->
-    <div id="container" class="container"></div>
+    <div id="container" class="container">  </div>
 
     <!-- JavaScript to Handle Fetching and Displaying Announcements -->
     <script>

@@ -47,6 +47,10 @@
                 <label for="phone_number">Phone Number:</label>
                 <input type="tel" id="phone_number" name="Phone_number" disabled>
                 </div>
+                <div class="input-wrapper">
+                <label for="User_id">User Id:</label>
+                <input type="tel" id="User_id" name="User_id" disabled>
+                </div>
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>
@@ -112,14 +116,6 @@
     </div>
 </div>
 
-<div class="popup-overlay hidden" id="popupOverlay"></div>
-<div class="popup hidden" id="popupBox">
-    <p class="popup-message" id="popupMessage"></p>
-    <div class="popup-buttons">
-        <button class="ok-btn" id="popupOkBtn">OK</button>
-        <button class="cancel-btn" id="popup_CancelBtn" onclick="Popupclose()">Cancel</button>
-    </div>
-</div>
 
 <div class="popup-overlay hidden" id="popupOverlay"></div>
 <div class="popup hidden" id="popupBox">
@@ -151,6 +147,7 @@
                 document.getElementById('phone_number').value = data.Phone_number || '';
                 document.getElementById('address').value = data.Address || '';
                 document.getElementById('district').value = data.District || '';
+                document.getElementById('User_id').value = data.User_id || '';
             })
             .catch(error => console.error('Error fetching profile data:', error));
     });
@@ -159,6 +156,7 @@
     document.getElementById('editButton').addEventListener('click', () => {
         const fields = document.querySelectorAll('#profileForm input, #profileForm select');
         fields.forEach(field => field.disabled = false);
+        document.getElementById('User_id').disabled = true;
         document.getElementById('updateButton').disabled = false;
     });
 

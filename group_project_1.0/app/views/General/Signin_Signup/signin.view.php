@@ -15,7 +15,7 @@
                 <?php if (!empty($data['errors'])): ?>
                     <div class="error-messages">
                         <?php 
-                            foreach ($data['errors'] as $error) {
+                           foreach ($data['errors'] as $error) {
                                 echo "<p>$error</p>";
                             }
                         ?>
