@@ -1,7 +1,7 @@
 /* Base Styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f0f7ff;
   margin: 0;
   padding: 0;
   color: #333;
@@ -11,16 +11,16 @@ body {
 /* Header Styles */
 .header {
   margin-top: 130px;
-  background-color: #fff;
+  background-color: #f0f7ff; /* Added light blue background */
   padding: 20px;
   margin-bottom: 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
   text-align: center;
   position: relative;
 }
 
 .header h1 {
-  color: #2c3e50;
+  color: #1e56a0;
   margin: 0 0 20px 0;
   font-size: 2.2rem;
 }
@@ -34,25 +34,25 @@ body {
 
 /* Jobroll Row Styles */
 .jobroll-row {
-  background-color: #fff;
+  background-color: #90caf9; /* Changed to requested color */
   border-radius: 8px;
   margin-bottom: 20px;
   padding: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(30, 86, 160, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .jobroll-row:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(30, 86, 160, 0.15);
 }
 
 .jobroll-row.Active {
-  border-left: 4px solid #28a745;
+  border-left: 4px solid #3498db;
 }
 
 .jobroll-row.Inactive {
-  border-left: 4px solid #6c757d;
+  border-left: 4px solid #90a4ae;
 }
 
 .jobroll-subject, .jobroll-date, .jobroll-status, .jobroll-discription {
@@ -60,22 +60,22 @@ body {
 }
 
 .jobroll-subject strong, .jobroll-date strong, .jobroll-status strong, .jobroll-discription strong {
-  color: #2c3e50;
+  color: #1e56a0;
   font-weight: 600;
 }
 
 .jobroll-subject {
   font-size: 1.2rem;
-  color: #2c3e50;
+  color: #1e56a0;
 }
 
 .jobroll-status .Active {
-  color: #28a745;
+  color: #3498db;
   font-weight: bold;
 }
 
 .jobroll-status .Inactive {
-  color: #6c757d;
+  color: #90a4ae;
   font-weight: bold;
 }
 
@@ -98,7 +98,7 @@ button {
 }
 
 .add-jobroll-btn {
-  background-color: #3498db;
+  background-color: #1e56a0;
   color: white;
   padding: 12px 20px;
   font-size: 1rem;
@@ -107,38 +107,38 @@ button {
 }
 
 .add-jobroll-btn:hover {
-  background-color: #2980b9;
+  background-color: #164785;
 }
 
 .view-applications-btn {
-  background-color: #17a2b8;
+  background-color: #3498db;
   color: white;
 }
 
 .view-applications-btn:hover {
-  background-color: #138496;
+  background-color: #2980b9;
 }
 
 .delete-jobroll-btn {
-  background-color: #dc3545;
+  background-color: #e74c3c;
   color: white;
 }
 
 .delete-jobroll-btn:hover {
-  background-color: #c82333;
+  background-color: #c0392b;
 }
 
 .change-state-btn {
-  background-color: #6c757d;
+  background-color: #90a4ae;
   color: white;
 }
 
 .change-state-btn:hover {
-  background-color: #5a6268;
+  background-color: #78909c;
 }
 
 .submit-btn {
-  background-color: #28a745;
+  background-color: #3498db;
   color: white;
   width: 100%;
   padding: 12px;
@@ -147,7 +147,7 @@ button {
 }
 
 .submit-btn:hover {
-  background-color: #218838;
+  background-color: #2980b9;
 }
 
 /* Popup Styles */
@@ -159,19 +159,20 @@ button {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
   overflow-y: auto;
 }
 
 .popup-content {
-  background: white;
+  background: white; /* Changed to white */
   margin: 5% auto;
   padding: 30px;
   width: 90%;
   max-width: 600px;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 .close-btn {
@@ -180,21 +181,21 @@ button {
   top: 15px;
   font-size: 28px;
   cursor: pointer;
-  color: #6c757d;
+  color: #90a4ae;
   transition: color 0.2s;
 }
 
 .close-btn:hover {
-  color: #343a40;
+  color: #1e56a0;
 }
 
 /* Application Styles */
 #applications div {
-  background-color: #f8f9fa;
+  background-color: #90caf9; /* Changed to requested color */
   margin-bottom: 15px;
   padding: 15px;
   border-radius: 6px;
-  border-left: 3px solid #17a2b8;
+  border-left: 3px solid #3498db;
 }
 
 #applications p {
@@ -202,25 +203,25 @@ button {
 }
 
 #applications strong {
-  color: #2c3e50;
+  color: #1e56a0;
 }
 
 #applications button[onclick*="acceptApplication"] {
-  background-color: #28a745;
+  background-color: #3498db;
   color: white;
 }
 
 #applications button[onclick*="acceptApplication"]:hover {
-  background-color: #218838;
+  background-color: #2980b9;
 }
 
 #applications button[onclick*="rejectApplication"] {
-  background-color: #dc3545;
+  background-color: #e74c3c;
   color: white;
 }
 
 #applications button[onclick*="rejectApplication"]:hover {
-  background-color: #c82333;
+  background-color: #c0392b;
 }
 
 /* Form Styles */
@@ -232,23 +233,24 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: #1e56a0;
 }
 
 input[type="text"], input[type="email"], input[type="date"], textarea, select {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #bbd8ff;
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1rem;
+  background-color: #f8faff; /* Added very light blue background */
 }
 
 input:focus, textarea:focus, select:focus {
   border-color: #3498db;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 textarea {
@@ -268,11 +270,11 @@ textarea {
 
 /* Active/Rejected Status Styles */
 .jobroll-status:contains("Active") {
-  color: #28a745;
+  color: #3498db;
 }
 
 .jobroll-status:contains("Inactive") {
-  color: #dc3545;
+  color: #90a4ae;
 }
 
 /* Media Queries for Responsiveness */

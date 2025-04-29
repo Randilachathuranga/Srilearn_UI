@@ -86,7 +86,53 @@ class ClassShcedules extends Controller
             echo json_encode(['status' => 'error', 'message' => 'Invalid input data.']);
         }
     }
+
+    public function post() {
+        $model = new Classannmodel();
     
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Method Not Allowed'
+            ]);
+            return;
+        }
+    
+        // Read raw JSON input
+        $input = json_decode(file_get_contents("php://input"), true);
+    
+        try {
+            // Insert directly
+            $model->insert($input);
+    
+            http_response_code(200);
+            echo json_encode([
+                'success' => true,
+                'message' => 'Announcement created successfully.'
+            ]);
+        } catch (Exception $e) {
+            // Log error if needed: error_log($e->getMessage());
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Internal Server Error',
+                'error' => $e->getMessage() // Optional: remove in production
+            ]);
+        }
+    }
+    
+        public function viewclsann($id){
+           
+            $model = new Classannmodel();
+    
+        // Fetch messages sent and received
+            $rec = $model->where(["classid" => $id]);
+            header('Content-Type: application/json');
+            echo json_encode($rec);
+        }
+    
+
     
     // Create class schedule
     public function createScheduleAPI($Class_id) {
@@ -115,6 +161,7 @@ class ClassShcedules extends Controller
             }
 
     }
+
     
     
 

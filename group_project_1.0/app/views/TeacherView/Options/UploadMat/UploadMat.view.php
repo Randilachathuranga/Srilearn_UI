@@ -10,7 +10,12 @@
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php" ?>
     
     <h1>Class Materials</h1>
-    
+    <!-- Replace the existing image div with this: -->
+<div class="image-container">
+  <img src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/mat.jpg" 
+       alt="Class Materials" 
+       class="featured-image">
+</div>
     <?php if ($_SESSION['Role'] == 'teacher') { ?>
         <div id="uploadMat" onclick="showUploadForm()">Upload Material</div>
         <div id="ShowRequests" onclick="showRequests()">Old Material Requests</div>

@@ -78,10 +78,30 @@
 
                 // Collect features
                 const features = [];
-                if (plan.Isjobavail == 1) features.push("Job Hiring");
-                features.push("Message System");
-                if (plan.Ispayavail == 1) features.push("Payment Handling");
-                if (plan.Isadavail == 1) features.push("Ad Posting");
+
+if (plan.Isjobavail === 1) {
+  features.push("✔️ Job Hiring");
+} else {
+  features.push("❌ Job Hiring");
+}
+
+if (plan.Ispayavail === 1) {
+  features.push("✔️ Payment Handling");
+} else {
+  features.push("❌ Payment Handling");
+}
+
+if (plan.Isadavail === 1) {
+  features.push("✔️ Ad Posting");
+} else {
+  features.push("❌ Ad Posting");
+}
+
+if (plan.ischatavail === 1) {
+  features.push("✔️ Chat Option For Teachers");
+} else {
+  features.push("❌ Chat Option For Teachers");
+}
 
                 planCard.innerHTML = `
                     <h2 class="plan-title">${title}</h2>
@@ -91,7 +111,7 @@
                     <ul class="plan-features">
                         ${features.map(f => `<li>${f}</li>`).join("")}
                     </ul>
-                     <h2 class="plan-title">${plan.Type}</h2>
+                     
                     <button class="subscribe-btn" onclick="handlepayment(${plan.Type})">Subscribe Now</button>
                     <div class="plan-description">
                     </div>
@@ -102,8 +122,25 @@
         }
 
         function handlepayment(planType) {
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkSubscription/${planType}`)
+        .then(response => {
+            if (response.status === 403) {
+                return response.json().then(data => {
+                    alert(data.error); // Show alert if already subscribed
+                    throw new Error(data.error);
+                });
+            }
+            return response.json(); // or just continue
+        })
+        .then(() => {
+            // Now proceed to subscription if no error
             window.location.href = `http://localhost/group_project_1.0/public/Payment/subscibe/${planType}`;
-        }
+        })
+        .catch(error => {
+            console.error('Subscription check failed:', error);
+        });
+}
+
     </script>
 </body>
 </html>

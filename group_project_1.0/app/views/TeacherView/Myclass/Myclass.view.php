@@ -33,8 +33,15 @@
     </div>
 
 </form>
-<button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
-<button onclick="reqpaymentind()">Request Payment</button>
+<?php if ((isset($_SESSION['hasinst']) && $_SESSION['hasinst'] == 1) || (isset($_SESSION['Subtype']))): ?>
+    <!-- Show the button if both conditions are true -->
+    <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['Ispayavail']) && $_SESSION['Ispayavail'] != 0): ?>
+    <button class="create-blog-button" onclick="reqpaymentind()">Request Payment</button>
+<?php endif; ?>
+
 
 </div>
 
@@ -259,8 +266,8 @@
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>Hall no:</strong> <span id="Hall_no"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
-            <p><strong>Date:</strong> <span id="Date"></span></p>
-            <p><strong>Time:</strong> <span id="Time"></span></p>
+            <!-- <p><strong>Date:</strong> <span id="Date"></span></p>
+            <p><strong>Time:</strong> <span id="Time"></span></p> -->
             <p><span id="classid" style="display: none;"></span></p>
         </div>
         <div class="button-container">
@@ -277,36 +284,61 @@
 
 <script>
      var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
-    function reqpaymentind(){
-       
-
-      fetch(`http://localhost/group_project_1.0/public/Payment/reqpaymentind`, {
+     function reqpaymentind() {
+    // First check if a payment request already exists for this month
+    fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userID })
-      })
-      .then(response => {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
         return response.json();
-      })
-        .then(data => {
-            if (data.success) {
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            // Payment request already exists for this month
+            alert(data.message);
+        } else {
+
+            // No payment request for this month, proceed with creating one
+            createPaymentRequest();
+        }
+    })
+    .catch(error => {
+        console.error('There was an error checking payment request status!', error);
+    });
+}
+
+function createPaymentRequest() {
+    fetch(`http://localhost/group_project_1.0/public/Payment/reqpaymentind`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userID })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
             alert('Monthly payment request sent successfully!');
             location.reload(); // Reload the page to see updated data
-          
-       } else {
+        } else {
             alert('Failed to send monthly payment request.');
-            }
-        })  
-        .catch(error => {
-          console.error('There was an error!', error);
+        }
+    })
+    .catch(error => {
+        console.error('There was an error creating payment request!', error);
     });
-    
-    }
+}
 </script>
 
 

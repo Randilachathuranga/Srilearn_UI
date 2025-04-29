@@ -10,28 +10,55 @@ async function Updateclass(event, Class_id) {
   const form = event.target;
   const formData = new FormData(form);
 
-  // Prepare data
+  // Validate inputs before preparing data
+  const grade = parseInt(formData.get("classGrade"), 10);
+  const maxStd = parseInt(formData.get("classMax_std"), 10);
+  const fee = parseFloat(formData.get("classfee"));
+
+  let isValid = true;
+
+  if (isNaN(grade) || grade < 1 || grade > 13) {
+    alert("Grade must be a number between 1 and 13.");
+    isValid = false;
+  }
+
+  if (isNaN(maxStd) || maxStd <= 0) {
+    alert("Max students must be a positive number.");
+    isValid = false;
+  }
+
+  if (isNaN(fee) || fee < 0) {
+    alert("Fee cannot be a negative value.");
+    isValid = false;
+  }
+
+  // If not valid, stop the update
+  if (!isValid) {
+    return;
+  }
+
+  // Prepare data after validation passes
   const table1 = {
     Subject: formData.get("classSubject"),
-    Grade: formData.get("classGrade"),
-    fee: parseInt(formData.get("classfee"), 10),
-    Max_std: parseInt(formData.get("classMax_std"), 10),
+    Grade: grade,
+    fee: fee,
+    Max_std: maxStd,
     Date: formData.get("Date_"),
-    Time: formData.get("Time_")
+    Time: formData.get("Time_"),
   };
 
   const table2 = {
     Location: formData.get("classLocation"),
     Start_date: formData.get("classStart_date"),
     End_date: formData.get("classEnd_date"),
-    Hall_number: formData.get("Hall_number"), 
+    Hall_number: formData.get("Hall_number"),
   };
 
   const data = { table1, table2 };
   console.log("ClassData being sent:", data);
   console.log("Class ID:", Class_id);
 
-  // Optional: validate date range
+  // Validate Start Date and End Date
   if (
     table2.Start_date &&
     table2.End_date &&
@@ -66,9 +93,9 @@ async function Updateclass(event, Class_id) {
       throw new Error("One or more update requests failed.");
     }
 
-    const result = JSON.parse(rawResponses[0]); // Assume similar response structure
+    const result = JSON.parse(rawResponses[0]);
     if (result.status === "success") {
-      alert("Schedule updated successfully!");
+      alert("Updated successfully!");
     } else {
       alert(`Update failed: ${result.message}`);
     }
@@ -83,7 +110,7 @@ async function Updateclass(event, Class_id) {
 
 // Function to delete a Class
 function deleteclass(Class_id) {
-  if (window.confirm("Are you sure you want to delete this schedule?")) {
+  if (window.confirm("Are you sure you want to delete this Class?")) {
     fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {
       method: "DELETE",
       headers: {

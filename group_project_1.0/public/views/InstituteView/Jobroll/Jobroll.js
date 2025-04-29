@@ -236,7 +236,7 @@ function acceptApplication(id, Teacher_id) {
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
-          alert("This teacher is already joined for this institute");
+          alert("This teacher is already joined");
           window.location.href =
           "http://localhost/group_project_1.0/public/Jobrollcontroller";
         } else {

@@ -72,7 +72,7 @@
     <!-- Popup form for institute details details -->
     <div id="popupForm" class="popup-form" style="display: none;">
   <div class="form-container">
-    <form id="blogForm">
+    <form id="blogForm" onclick="closePopup()">
       <div class="teacher-details">
         <img src="../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg" alt="Teacher Image" id="institute-image" class="teacher-image">
     
@@ -84,7 +84,7 @@
         <p><strong>District:</strong> <span id="institute-district"></span></p>
       </div>
     </form>
-    <button type="button" class="close-button" onclick="closePopup()"></button>
+    <button type="button" class="close-button" onclick="closePopup()">✕</button>
   </div>
 </div>
 
@@ -92,44 +92,81 @@
 
 <!-- popun apply institute -->
 <div id="popupApply" class="popup-form" style="display: none;">
-    <div class="form-container">
-        <h2 id="all_subjects"></h2>
+  <div class="form-container">
+    <h2 id="all_subjects"></h2>
 
-        <br><br>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="Full_name">Full Name</label>
-                <input type="text" id="Full_name" name="Full_name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="text" id="email" name="email" required>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="subject">Subject</label>
-                <select id="subject" name="subject" required>
-                    <option value="" disabled selected hidden>Select Subject</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone number</label>
-                <input type="text" id="phone" name="phone" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="qualifications">Qualifications</label>
-            <textarea id="qualifications" name="qualifications" rows="4" required placeholder="Enter your qualifications, description, and any relevant links"></textarea>
-        </div>
-
-        <p id="inst_id" style="display: none;"></p>
-
-        <button onclick="submitApply()" class="submit-button">Submit</button>
-        <button onclick="closeApply()" class="close-button"></button>
+    <br><br>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="Full_name">Full Name</label>
+        <input type="text" id="Full_name" name="Full_name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="text" id="email" name="email" required>
+        <span id="email-error" class="error-message" style="color: red; display: none;">Invalid email format</span>
+      </div>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject" required>
+          <option value="" disabled selected hidden>Select Subject</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone number</label>
+        <input type="text" id="phone" name="phone" required>
+        <span id="phone-error" class="error-message" style="color: red; display: none;">Phone number must be 10 digits</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="qualifications">Qualifications</label>
+      <textarea id="qualifications" name="qualifications" rows="4" required placeholder="Enter your qualifications, description, and any relevant links"></textarea>
+    </div>
+
+    <p id="inst_id" style="display: none;"></p>
+
+    <button onclick="validateAndSubmit()" class="submit-button">Submit</button>
+            <button onclick="closeApply()" class="close-button">✕</button>
+
+  </div>
 </div>
+
+<script>
+  function validateAndSubmit() {
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+
+    let isValid = true;
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      emailError.style.display = 'block';
+      isValid = false;
+    } else {
+      emailError.style.display = 'none';
+    }
+
+    // Validate phone number (10 digits)
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+      phoneError.style.display = 'block';
+      isValid = false;
+    } else {
+      phoneError.style.display = 'none';
+    }
+
+    // If valid, submit the form
+    if (isValid) {
+      submitApply();
+    }
+  }
+</script>
 
 
 <script>

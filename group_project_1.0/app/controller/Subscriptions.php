@@ -6,8 +6,9 @@
         if($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute'){
             $this->view('General/Subscriptions/Subscriptions');
         }
-        $this->view('Error');
-
+        else{
+        $this->view('General/Errorpage/Error404');
+        }
     }
 
     public function viewallsubdetails(){
@@ -23,6 +24,109 @@
             echo json_encode(['message' => 'no teachers found']);
         }
     }
+
+    public function hassubbedinst($id){
+          // Load the model
+        $model=new Subscriptionmodel();
+        $tables = ['instituteteacher_class', 'subscription','subdetails'];
+
+        $joinConditions = [
+        'instituteteacher_class.inst_id = subscription.P_id',
+        'subscription.Type = subdetails.Type'
+        ];
+
+    $data = [
+    'instituteteacher_class.InstClass_id' => $id
+    ];
+
+    $data_not = []; // if you have any != conditions
+
+    $result = $model->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
+    $currentDate = date('Y-m-d');
+    
+    // Filter to find a valid subscription
+    $validRecords = array_filter($result, function($record) use ($currentDate) {
+        return isset($record->End_data) && $record->End_data > $currentDate;
+    });
+    if (!empty($validRecords)) {
+        $activeRecord = reset($validRecords);
+    }
+        $ischatavail=$activeRecord->ischatavail;
+    if($ischatavail===1){
+        echo json_encode(true);
+    }
+    else{
+        echo json_encode(false);
+    }
+    }
+    public function hassubbedteach($id){
+        // Load the model
+        $model=new Subscriptionmodel();
+        $tables = ['individual_class', 'subscription','subdetails'];
+
+        $joinConditions = [
+        'individual_class.P_id = subscription.P_id',
+        'subscription.Type = subdetails.Type'
+        ];
+
+    $data = [
+    'individual_class.IndClass_id' => $id
+    ];
+
+    $data_not = []; // if you have any != conditions
+
+    $result = $model->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
+    $currentDate = date('Y-m-d');
+    
+    // Filter to find a valid subscription
+    $validRecords = array_filter($result, function($record) use ($currentDate) {
+        return isset($record->End_data) && $record->End_data > $currentDate;
+    });
+    if (!empty($validRecords)) {
+        $activeRecord = reset($validRecords);
+    }
+        $ischatavail=$activeRecord->ischatavail;
+    if($ischatavail===1){
+        echo json_encode(true);
+    }
+    else{
+        echo json_encode(false);
+    }
+}
+public function hassubbedteachpayment($id){
+    // Load the model
+    $model=new Subscriptionmodel();
+    $tables = ['individual_class', 'subscription','subdetails'];
+
+    $joinConditions = [
+    'individual_class.P_id = subscription.P_id',
+    'subscription.Type = subdetails.Type'
+    ];
+
+$data = [
+'individual_class.IndClass_id' => $id
+];
+
+$data_not = []; // if you have any != conditions
+
+$result = $model->InnerJoinwhereMultiple($tables, $joinConditions, $data, $data_not);
+$currentDate = date('Y-m-d');
+
+// Filter to find a valid subscription
+$validRecords = array_filter($result, function($record) use ($currentDate) {
+    return isset($record->End_data) && $record->End_data > $currentDate;
+});
+if (!empty($validRecords)) {
+    $activeRecord = reset($validRecords);
+}
+    $Ispayavail=$activeRecord->Ispayavail;
+if($Ispayavail===1){
+    echo json_encode(true);
+}
+else{
+    echo json_encode(false);
+}
+}
 
     public function postsub($type)
 {

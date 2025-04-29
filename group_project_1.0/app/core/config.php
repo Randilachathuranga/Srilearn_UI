@@ -3,14 +3,14 @@
 if($_SERVER['SERVER_NAME']=='localhost'){
     define('ROOT','http://localhost/group_project_1.0/public');
     #db config
-    define('DBNAME','sl');
+    define('DBNAME','lastlastlast');
     define('DBHOST','localhost');
     define('DBUSER','root');
     define('DBPASS','');
 }
 
-ini_set('session.use_only_cookies', '1');  // Corrected 'sesiion' to 'session'
-ini_set('session.use_strict_mode', '1');   // Corrected 'sesiion' to 'session'
+ini_set('session.use_only_cookies', '1');  
+ini_set('session.use_strict_mode', '1');   
 session_set_cookie_params([
     'lifetime' => 1800,
     'domain' => 'localhost',

@@ -169,7 +169,68 @@
   <h2>Continue your learning with Srilearn</h2>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  // Debugging line to check the value of id
+  const date = new Date().toISOString(); // Store current date in a safe format
 
+    const teachid = <?= json_encode($_SESSION['User_id']) ?>;
+    const subbed = <?= json_encode($_SESSION['Issubbed']) ?>;
+    console.log("Subbed:", subbed);
+    const subtype = <?= json_encode($_SESSION['Subtype']) ?>;
+    console.log("subty:", subtype);
+    const Isjobavail = <?= json_encode($_SESSION['Isjobavail']) ?>;
+    console.log("job:", Isjobavail);
+    const Ispayavail = <?= json_encode($_SESSION['Ispayavail']) ?>;
+    console.log("pay:", Ispayavail);
+    const Isadavail = <?= json_encode($_SESSION['Isadavail']) ?>;
+    console.log("ad:", Isadavail);
+    const ischatavail = <?= json_encode($_SESSION['ischatavail']) ?>;
+    console.log("chat:", ischatavail);
+    console.log('thoperole eka:', <?= json_encode($_SESSION['Role']) ?>);
+    
+    console.log('hasinst:', <?= json_encode($_SESSION['hasinst']) ?>);
+
+    fetch(`http://localhost/group_project_1.0/public/Ind_Myclass/MyinstituteClass/${teachid}`)
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch class data');
+      return response.json();
+    })
+    .then(data => {
+      data.forEach(d => {
+        const Values = {
+          "Institute_ID": d.inst_id,
+          "N_id": d.N_id,
+          "InstClass_id": d.InstClass_id,
+          "current_date": date,
+          "bankdetails": "stored_in_db"
+        };
+
+        fetch('http://localhost/group_project_1.0/public/Requestpayroll_forteacher/insertpayrollrequest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },          body: JSON.stringify(Values),
+        })
+          .then(async (response) => {
+            const resData = await response.json();
+
+            if (!response.ok) {
+              throw new Error(resData.error || "Unexpected error occurred.");
+            }
+
+            console.log(resData.message || "Payroll request submitted successfully");
+          })
+          .catch((error) => {
+            console.error("Error submitting payroll request:", error.message || error);
+          });
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching institute class data:', error);
+    });
+});
+</script>
   <script src="../../../../../group_project_1.0/public/views/General/Home/Home.js"></script>
   </body>
 </html>

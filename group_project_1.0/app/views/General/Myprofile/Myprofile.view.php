@@ -31,53 +31,91 @@
         <!-- Right Side - User Data -->
         <div class="card-data">
             <!-- Profile Form -->
-            <form id="profileForm" action="#" method="POST">
-                <div class="form-group double-field">
-                    <div class="input-wrapper">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="F_name" disabled>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="L_name" disabled>
-                    </div>
+            <form id="profileForm" action="#" method="POST" onsubmit="return validateForm()">
+            <div class="form-group double-field">
+                <div class="input-wrapper">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="F_name" disabled>
                 </div>
-                <div class="form-group double-field">
-                    <!-- <div class="input-wrapper">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="Email" disabled>
-                    </div> -->
-                    <div class="input-wrapper">
-                        <label for="phone_number">Phone Number:</label>
-                        <input type="tel" id="phone_number" name="Phone_number" disabled>
-                    </div>
+                <div class="input-wrapper">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="L_name" disabled>
                 </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="Address" disabled>
+            </div>
+            <div class="form-group double-field">
+                <div class="input-wrapper">
+                <label for="phone_number">Phone Number:</label>
+                <input type="tel" id="phone_number" name="Phone_number" disabled>
                 </div>
-                <div class="form-group">
-                    <label for="district">District:</label>
-                    <select id="district" name="District" disabled>
-                        <!-- District Options -->
-                        <?php
-                        $districts = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
-                        foreach ($districts as $district) {
-                            echo "<option value='$district'>$district</option>";
-                        }
-                        ?>
-                    </select>
+                <div class="input-wrapper">
+                <label for="User_id">User Id:</label>
+                <input type="tel" id="User_id" name="User_id" disabled>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="Address" disabled>
+            </div>
+            <div class="form-group">
+                <label for="district">District:</label>
+                <select id="district" name="District" disabled>
+                <!-- District Options -->
+                <?php
+                $districts = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
+                foreach ($districts as $district) {
+                    echo "<option value='$district'>$district</option>";
+                }
+                ?>
+                </select>
+            </div>
 
-                <!-- Buttons -->
-                <div class="form-buttons">
-                    <button type="button" id="editButton">Edit</button>
-                    <button type="submit" id="updateButton" disabled>Update</button>
-                </div>
+            <!-- Buttons -->
+            <div class="form-buttons">
+                <button type="button" id="editButton">Edit</button>
+                <button type="submit" id="updateButton" disabled>Update</button>
+            </div>
             </form>
         </div>
+
+        <script>
+            function validateForm() {
+                const phoneNumber = document.getElementById('phone_number').value;
+                const firstName = document.getElementById('first_name').value.trim();
+                const lastName = document.getElementById('last_name').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const district = document.getElementById('district').value;
+
+                if (!firstName) {
+                    alert('First name cannot be empty.');
+                    return false;
+                }
+
+                if (!lastName) {
+                    alert('Last name cannot be empty.');
+                    return false;
+                }
+
+                if (!address) {
+                    alert('Address cannot be empty.');
+                    return false;
+                }
+
+                if (!district) {
+                    alert('Please select a district.');
+                    return false;
+                }
+
+                if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+                    alert('Phone number must be exactly 10 digits.');
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
     </div>
 </div>
+
 
 <div class="popup-overlay hidden" id="popupOverlay"></div>
 <div class="popup hidden" id="popupBox">
@@ -109,6 +147,7 @@
                 document.getElementById('phone_number').value = data.Phone_number || '';
                 document.getElementById('address').value = data.Address || '';
                 document.getElementById('district').value = data.District || '';
+                document.getElementById('User_id').value = data.User_id || '';
             })
             .catch(error => console.error('Error fetching profile data:', error));
     });
@@ -117,6 +156,7 @@
     document.getElementById('editButton').addEventListener('click', () => {
         const fields = document.querySelectorAll('#profileForm input, #profileForm select');
         fields.forEach(field => field.disabled = false);
+        document.getElementById('User_id').disabled = true;
         document.getElementById('updateButton').disabled = false;
     });
 

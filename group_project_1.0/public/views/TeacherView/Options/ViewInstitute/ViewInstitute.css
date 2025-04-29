@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: #e6e6e6;
+    background: #e6f0ff;
     margin: 0;
     padding: 0;
     display: flex;
@@ -23,7 +23,7 @@ body {
   h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #333;
+    color: #1a237e;
   }
   
   .info {
@@ -33,19 +33,19 @@ body {
   }
   
   .info div {
-    background: #f5f5f5;
+    background: #e3f2fd;
     padding: 14px;
     border-radius: 8px;
-    border-left: 5px solid #4CAF50;
+    border-left: 5px solid #1976d2;
   }
   
   .label {
     font-weight: bold;
-    color: #222;
+    color: #0d47a1;
   }
   
   .error {
-    color: red;
+    color: #d32f2f;
     text-align: center;
     margin-top: 20px;
   }
@@ -57,7 +57,7 @@ body {
   }
   
   .payroll-button {
-    background-color: #4CAF50;
+    background-color: #1976d2;
     color: white;
     padding: 12px 25px;
     font-size: 16px;
@@ -68,7 +68,7 @@ body {
   }
   
   .payroll-button:hover {
-    background-color: #45a049;
+    background-color: #1565c0;
   }
   
   .popup-overlay {
@@ -96,6 +96,7 @@ body {
   .popup-form h3 {
     text-align: center;
     margin-bottom: 15px;
+    color: #1a237e;
   }
   
   .form-group {
@@ -106,13 +107,14 @@ body {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: #0d47a1;
   }
   
   .form-group input {
     width: 100%;
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #90caf9;
   }
   
   .popup-buttons {
@@ -123,14 +125,14 @@ body {
   .popup-buttons button {
     padding: 8px 16px;
     border: none;
-    background-color: #4CAF50;
+    background-color: #1976d2;
     color: white;
     border-radius: 5px;
     cursor: pointer;
   }
   
   .popup-buttons button[type="button"] {
-    background-color: #f44336;
+    background-color: #d32f2f;
   }
   
   

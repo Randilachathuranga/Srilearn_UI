@@ -8,15 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((data) => {
       const container = document.getElementById("class-container");
-      
+
       data.forEach((institute) => {
         // Create a unique ID for each card and image
         const cardId = `card-${institute.User_id}`;
         const imageId = `institute-image-${institute.User_id}`;
-        
+
         // Initialize applyButton as empty - will be populated after checking user role
-        let applyButton = '';
-        
+        let applyButton = "";
+
         // Create card first with placeholder image
         const card = document.createElement("div");
         card.className = "card";
@@ -33,32 +33,43 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
         container.appendChild(card);
-        
+
         // Fetch subjects to determine if apply button should be displayed
-        fetch(`http://localhost/group_project_1.0/public/Jobrollcontroller/viewallsubjects/${institute.User_id}`)
+        fetch(
+          `http://localhost/group_project_1.0/public/Jobrollcontroller/viewallsubjects/${institute.User_id}`
+        )
           .then((response) => {
             if (!response.ok) throw new Error("Network response was not ok");
             return response.json();
           })
           .then((data1) => {
             // Check if we have data and user is a teacher
-            if (data1.length > 0 && typeof userRole !== 'undefined' && userRole === "teacher") {
+            if (
+              data1.length > 0 &&
+              typeof userRole !== "undefined" &&
+              userRole === "teacher"
+            ) {
               applyButton = `<button class="card-button" onclick="Applyinstitute('${institute.User_id}')">Apply</button>`;
-            } 
-            
+            }
+
             // Update the button container with the apply button if needed
             if (applyButton) {
-              const buttonContainer = document.querySelector(`#${cardId} .button-container`);
+              const buttonContainer = document.querySelector(
+                `#${cardId} .button-container`
+              );
               if (buttonContainer) {
                 buttonContainer.innerHTML += applyButton;
               }
             }
           })
           .catch((error) => {
-            console.error(`Failed to fetch subjects for institute ${institute.User_id}:`, error);
+            console.error(
+              `Failed to fetch subjects for institute ${institute.User_id}:`,
+              error
+            );
             // Optional: Add a fallback button or message when subject fetch fails
           });
-        
+
         // Fetch the profile image for this institute
         fetch(
           `http://localhost/group_project_1.0/public/Profile/view_image/${institute.User_id}`
@@ -189,13 +200,21 @@ function search() {
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-          <img id="${imageId}" src="../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg" alt="${institute.Name}" class="card-image">
+          <img id="${imageId}" src="../../../../../group_project_1.0/public/views/General/Myprofile/user.jpg" alt="${
+          institute.Name
+        }" class="card-image">
           <div class="card-content">
             <h3>${institute.F_name} ${institute.L_name}</h3>
             <p>Phone: ${institute.Phone_number}</p>
             <p>District: ${institute.District}</p>
-            <button class="card-button" onclick="ViewInstitute('${institute.User_id}')">View</button>
-            <button class="card-button" onclick="Applyinstitute('${institute.User_id}')">Apply</button>
+            <button class="card-button" onclick="ViewInstitute('${
+              institute.User_id
+            }')">View</button>
+            ${
+              userRole === "teacher"
+                ? `<button class="card-button" onclick="Applyinstitute('${institute.User_id}')">Apply</button>`
+                : ""
+            }
           </div>
         `;
         container.appendChild(card);

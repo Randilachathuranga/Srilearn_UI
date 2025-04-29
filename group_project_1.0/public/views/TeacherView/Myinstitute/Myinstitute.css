@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    background-color: #f8f9fa;
+    background-color: #e8f1ff;
     margin: 0;
     padding: 0;
   }
@@ -30,20 +30,19 @@ body {
     font-size: 4rem;
     font-weight: bold;
     margin: 0 20px;
-    color: #030457;
+    color: #1a237e;
   }
   
   /* Card Styles */
   .card {
     width: 300px;
     margin: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(13, 71, 161, 0.1);
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: #e3f2fd;
     transition: transform 0.2s, box-shadow 0.2s;
-    color: #030457;
+    color: #1a237e;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,22 +51,22 @@ body {
   
   .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(13, 71, 161, 0.2);
   }
   
   /* Center Image in Card */
   .card img {
     width: 100%;
-    height: auto; /* Adjust height automatically */
-    max-height: 180px; /* Limit max height */
-    object-fit: contain; /* Ensure the whole image fits within */
-    background-color: #f0f0f0; /* Add background color for padding */
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+    background-color: #e3f2fd;
   }
   
   .card-content {
     padding: 15px;
     width: 100%;
-    text-align: center; /* Center align text */
+    text-align: center;
   }
   
   .card-title {
@@ -81,7 +80,7 @@ body {
   }
   
   .card-button {
-    background-color: #030457;
+    background-color: #1a237e;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -91,7 +90,7 @@ body {
   }
   
   .card-button:hover {
-    background-color: #07098e;
+    background-color: #283593;
   }
   
   /* Container for label, dropdown, and button */
@@ -106,19 +105,19 @@ body {
   /* Label styling */
   .dropdown-label {
     font-size: 1rem;
-    color: #333;
+    color: #1a237e;
     margin-bottom: 5px;
   }
   
   /* Wrapper for dropdown and button to align them horizontally */
   .dropdown-button-wrapper {
     display: flex;
-    gap: 10px; /* Space between dropdown and button */
+    gap: 10px;
   }
   
   /* Dropdown styling */
   .dropdown {
-    flex: 1; /* Takes up remaining space */
+    flex: 1;
     padding: 10px;
     font-size: 1rem;
     border-radius: 5px;
@@ -128,14 +127,14 @@ body {
   
   /* Style for dropdown placeholder option */
   .dropdown option[disabled] {
-    color: #888;
+    color: #90caf9;
   }
   
   /* Search button styling */
   .search-button {
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #030457;
+    background-color: #1a237e;
     color: white;
     border: none;
     border-radius: 5px;
@@ -144,10 +143,8 @@ body {
   }
   
   .search-button:hover {
-    background-color: #060883;
+    background-color: #283593;
   }
-  
-  
   
   /* Media Query for Tablets */
   @media (max-width: 768px) {
@@ -213,12 +210,11 @@ body {
     }
   }
   
-  
   /* Layout for rows */
   .form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 12px; /* Space between columns */
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     margin-bottom: 12px;
   }
   
@@ -234,12 +230,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(236, 231, 231, 0.85);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    color: #030457;
+    color: #1a237e;
   }
   
   /* Form container styling */
@@ -249,7 +246,7 @@ body {
     border-radius: 15px;
     width: 90%;
     max-width: 400px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px rgba(13, 71, 161, 0.2);
     text-align: center;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
@@ -273,11 +270,11 @@ body {
     width: 100%;
     padding: 12px;
     margin-top: 4px;
-    border: 1.5px solid #030457;
+    border: 1.5px solid #1a237e;
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    resize: vertical; /* Allows resizing of textarea */
+    resize: vertical;
   }
   
   /* Submit and close button styling */
@@ -288,7 +285,7 @@ body {
     border: none;
     border-radius: 25px;
     color: white;
-    background-color: #030457;
+    background-color: #1a237e;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
@@ -296,9 +293,8 @@ body {
   }
   
   .submit-button:hover {
-    background-color: #020347;
+    background-color: #283593;
   }
-  
   
   /* Responsive Styles */
   @media (min-width: 1024px) {
@@ -310,7 +306,7 @@ body {
   
   @media (max-width: 767px) {
     .form-row {
-        grid-template-columns: 1fr; /* Stack fields vertically on small screens */
+        grid-template-columns: 1fr;
     }
   
     input[type="text"], input[type="email"], input[type="tel"], textarea {
@@ -323,7 +319,6 @@ body {
     }
   }
   
-  
   /* Overlay for popup */
   .popup-form {
     position: fixed;
@@ -331,12 +326,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(31, 29, 29, 0.85);
+    backdrop-filter: blur(1px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    color: #030457;
+    color: #1a237e;
     opacity: 1;
     animation: fadeIn 0.3s ease;
   }
@@ -353,7 +349,7 @@ body {
     border-radius: 15px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 30px rgba(13, 71, 161, 0.2);
     text-align: center;
     transform: scale(1);
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -374,8 +370,8 @@ body {
     height: 100px;
     border-radius: 12px;
     margin-right: 15px;
-    border: 4px solid #030457;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border: 4px solid #1a237e;
+    box-shadow: 0px 4px 10px rgba(13, 71, 161, 0.15);
   }
   
   /* Institute Name beside Image */
@@ -386,7 +382,7 @@ body {
   
   .institute-info p {
     margin: 0;
-    color: #030457;
+    color: #1a237e;
     font-weight: 600;
   }
   
@@ -398,10 +394,9 @@ body {
   
   .teacher-details p {
     font-size: 15px;
-    color: #030457;
+    color: #1a237e;
     margin: 8px 0;
     font-weight: 500;
-    border-bottom: 1px solid #e0e0e0;
     padding-bottom: 5px;
   }
   
@@ -411,11 +406,11 @@ body {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border: 1.5px solid #030457;
+    border: 1.5px solid #1a237e;
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    resize: vertical; /* Allows resizing of textarea */
+    resize: vertical;
   }
   
   /* Close button with cross mark */
@@ -424,7 +419,7 @@ body {
     top: 10px;
     right: 10px;
     background: transparent;
-    color: #030457;
+    color: #1a237e;
     font-size: 24px;
     border: none;
     cursor: pointer;
@@ -432,11 +427,11 @@ body {
   }
   
   .close-button:hover {
-    color: #d32f2f;
+    color: #283593;
   }
   
   .close-button::before {
-    content: "✕"; /* Cross mark */
+    content: "✕";
   }
   
   /* Submit button styling */
@@ -447,7 +442,7 @@ body {
     border: none;
     border-radius: 25px;
     color: white;
-    background-color: #030457;
+    background-color: #1a237e;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -455,7 +450,7 @@ body {
   }
   
   .submit-button:hover {
-    background-color: #020347;
+    background-color: #283593;
   }
   
   /* Description textarea */
@@ -513,4 +508,3 @@ body {
         padding: 10px;
     }
   }
-  

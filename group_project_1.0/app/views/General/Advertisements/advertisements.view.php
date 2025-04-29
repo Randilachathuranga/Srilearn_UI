@@ -1,10 +1,10 @@
 <?php
-session_start();
+// session_start();
 
 // Load appropriate NavBar
 if ($_SESSION['User_id'] === 'Guest') {
     require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/Guest_NavBar/NavBar.view.php';
-} elseif (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
+} else if (!(isset($_SESSION['Role']) && $_SESSION['Role'] === 'sysadmin')) {
     require 'C:/xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php';
 }
 ?>
@@ -191,7 +191,7 @@ if ($_SESSION['User_id'] === 'Guest') {
         </select>
 
         <?php 
-        if (isset($_SESSION['Role']) && ($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')) {
+        if (isset($_SESSION['Role']) && (($_SESSION['Role'] === 'teacher' || $_SESSION['Role'] === 'institute')&&($_SESSION['Isadavail'] === 1))) { 
             echo '
             <div class="create-button">
                 <button onclick="handleClick()">Create Your Own Advertisement</button>
@@ -345,15 +345,9 @@ if ($_SESSION['User_id'] === 'Guest') {
             }
             
             const result = await response.json();
-            
-            if (result.success) {
-                showPopup('Advertisement created successfully!', true);
-                setTimeout(() => {
-                    window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
-                }, 2000);
-            } else {
-                showPopup(result.message || 'Failed to create advertisement', false);
-            }
+            alert('Advertisement submitted successfully!');
+            window.location.href = 'http://localhost/group_project_1.0/public/Advertisements';
+           
         } catch (error) {
             console.error('Error inserting advertisement:', error);
             document.querySelector('.submit-btn').disabled = false;
@@ -428,3 +422,6 @@ if ($_SESSION['User_id'] === 'Guest') {
 <script src="./../../../../../group_project_1.0/public/views/General/Popup.js"></script>
 </body>
 </html>
+<?php
+        require 'C:xampp/htdocs/group_project_1.0/app/views/General/Footer/Footer.php';
+        ?>
