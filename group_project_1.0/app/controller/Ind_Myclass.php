@@ -6,21 +6,14 @@ class Ind_Myclass extends Controller{
     
         $model = new Myclassmodel();
         checkAccess('teacher');
-        // echo $_SESSION['Role'];
         $this->View('TeacherView/Myclass/Myclass'); 
                 
 
     }
 
-    //view my individual classes
     public function MyclassApi($P_id) {
         $model = new Myclassmodel();
-        // $isPremium = $model->checkPremium($P_id);
-        // if (!$isPremium) {
-        //     http_response_code(403); // Forbidden
-        //     echo json_encode(['error' => 'Access denied. Not a premium teacher.']);
-        //     return;
-        // }
+
         $t1 = $model->table1;
         $t2 = $model->table2;
         $joinCondition = $model->joinCondition;
@@ -28,7 +21,7 @@ class Ind_Myclass extends Controller{
         $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['P_id' => $P_id]);
 
         if (empty($class)) {
-            http_response_code(404); // Not Found
+            http_response_code(404);
             echo json_encode(['error' => 'No classes found for the given P_id.']);
             return;
         }
@@ -37,7 +30,6 @@ class Ind_Myclass extends Controller{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //view my institute classes
     public function MyinstituteClass($N_id) {
         $model = new Myclassmodel();
 
@@ -48,7 +40,7 @@ class Ind_Myclass extends Controller{
         $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['N_id' => $N_id]);
 
         if (empty($class)) {
-            http_response_code(404); // Not Found
+            http_response_code(404); 
             echo json_encode(['error' => 'No classes found for the given P_id.']);
             return;
         }
@@ -57,7 +49,6 @@ class Ind_Myclass extends Controller{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //More details about individual class
     public function MoredetailsApi($Class_id) {
         $model = new Myclassmodel();
         $t1 = $model->table1;
@@ -65,7 +56,7 @@ class Ind_Myclass extends Controller{
         $joinCondition = $model->joinCondition;
         $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['class_id' => $Class_id]);
         if (empty($class)) {
-            http_response_code(404); // Not Found
+            http_response_code(404); 
             echo json_encode(['error' => 'No classes found for the given P_id.']);
             return;
         }
@@ -73,7 +64,6 @@ class Ind_Myclass extends Controller{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //More details about individual class
     public function Moredetailsinstitute($Class_id) {
         $model = new Myclassmodel();
         $t1 = $model->table1;
@@ -81,7 +71,7 @@ class Ind_Myclass extends Controller{
         $joinCondition = $model->joinCondition3;
         $class = $model->InnerJoinwhere($t1,$t2,$joinCondition,['InstClass_id' => $Class_id]);
         if (empty($class)) {
-            http_response_code(404); // Not Found
+            http_response_code(404); 
             echo json_encode(['error' => 'No classes found for the given P_id.']);
             return;
         }
@@ -89,12 +79,11 @@ class Ind_Myclass extends Controller{
         echo json_encode($class, JSON_PRETTY_PRINT);
     }
 
-    //delete a classe
     public function DeleteclassApi($Class_id) {
         $model = new Myclassmodel();
 
         try {
-            if ($model->deleteclass($Class_id)) {  // Use $userId here, as it's passed from the route
+            if ($model->deleteclass($Class_id)) {  
                 echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
                 redirect('Ind_Myclass');
             } else {
@@ -107,7 +96,6 @@ class Ind_Myclass extends Controller{
         }
      }
 
-     //update a class
      public function UpdateclassApi($Class_id) {
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
@@ -150,7 +138,6 @@ class Ind_Myclass extends Controller{
         $result2 = $model->updateclass($Class_id, $table2_data, 'IndClass_id', $model->table2);
         $result3 = $model->updateclass($Class_id, $table3_data, 'InstClass_id', $model->table3);
             
-            // Only return success if both updates were successful
             if ($result1 || $result2 || $result3) {
                 echo json_encode(['status' => 'success', 'message' => 'Class updated successfully']);
             } else {
@@ -161,7 +148,6 @@ class Ind_Myclass extends Controller{
             }
         } 
         
-        //create a individual class
         public function CreateclassApi($P_id) {
             $jsonData = file_get_contents('php://input');
             $data = json_decode($jsonData, true);
@@ -181,6 +167,7 @@ class Ind_Myclass extends Controller{
                 'fee' => $data['table1']['fee'] ?? null,
                 'Def_Date' => $data['table1']['Def_Date'] ?? null,
                 'Def_Time' => $data['table1']['Def_Time'] ?? null,
+                'Stream' => $data['table1']['Stream'] ?? null,
             ];
             $table2_data = [
                 'P_id' => $P_id,
@@ -206,8 +193,6 @@ class Ind_Myclass extends Controller{
         }
 
 
-        //create a institute class
-    //create a institute class
 public function CreateinstituteclassApi($N_id) {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
@@ -230,6 +215,8 @@ public function CreateinstituteclassApi($N_id) {
         'fee' => $data['table1']['fee'] ?? null,
         'Def_Date' => $data['table1']['Def_Date'] ?? null,
         'Def_Time' => $data['table1']['Def_Time'] ?? null,
+        'Stream' => $data['table1']['Stream'] ?? null,
+
     ];
     
     $table2_data = [

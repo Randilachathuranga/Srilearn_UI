@@ -8,7 +8,6 @@ class Learning_mat extends Controller
         $this->view('TeacherView/Options/UploadMat/UploadMat');
     }
 
-    // View Materials for a Class
     public function viewMat($Class_id)
     {
         $model = new Learning_matmodel();
@@ -28,14 +27,11 @@ class Learning_mat extends Controller
     }
     
 
-    // Insert Learning Material with PDF upload
     public function insertLearningMat($classId)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Directory to save the uploaded materials
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/materials/';
             
-            // Ensure the directory exists
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -45,30 +41,24 @@ class Learning_mat extends Controller
                 $fileName = basename($_FILES['pdf']['name']);
                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
     
-                // Check if the uploaded file is a PDF
                 if ($fileExt === 'pdf') {
-                    // Create a unique file name
                     $newFileName = uniqid() . '-' . $fileName;
-                    $destPath = $uploadDir . $newFileName; // File system path for saving
-                    $fileUrl = 'http://localhost/group_project_1.0/public/uploads/materials/' . $newFileName; // URL for accessing the file
+                    $destPath = $uploadDir . $newFileName; 
+                    $fileUrl = 'http://localhost/group_project_1.0/public/uploads/materials/' . $newFileName; 
     
-                    // Move the uploaded file to the destination directory
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
-                        // Prepare data for insertion
                         $data = [
                             'Class_id'   => $classId,
                             'topic'      => $_POST['topic'],
                             'sub_topic'  => $_POST['sub_topic'],
                             'Description' => $_POST['Description'],
-                            'Url'        => $fileUrl, // Use URL to access the file
+                            'Url'        => $fileUrl, 
                             'Date'       => date('Y-m-d H:i:s') 
                         ];
     
-                        // Insert data into the database using the model
                         $model = new Learning_matmodel();
                         $model->insert($data);
     
-                        // Respond with success message and data
                         echo json_encode(['message' => 'Learning material uploaded successfully.', 'material' => $data]);
                     } else {
                         echo json_encode(['error' => 'Failed to move the uploaded file.']);
@@ -85,19 +75,16 @@ class Learning_mat extends Controller
     }
     
 
-    //delete mat
     public function deleteMat($Mat_id) {
         $model = new Learning_matmodel();
         $model->delete($Mat_id, 'Mat_id');
         echo json_encode(['message' => 'Mat deleted successfully']);
     }
 
-    // Update Learning Material
     public function updateMat($Mat_id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/group_project_1.0/public/uploads/materials/';
             
-            // Ensure the directory exists
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -110,7 +97,6 @@ class Learning_mat extends Controller
                 return;
             }
     
-            // Prepare update data with existing values as defaults
             $updateData = [
                 'topic'       => $_POST['topic'] ?? $existingMat['topic'],
                 'sub_topic'   => $_POST['sub_topic'] ?? $existingMat['sub_topic'],
@@ -118,30 +104,25 @@ class Learning_mat extends Controller
                 'Date'        => date('Y-m-d H:i:s'),
             ];
     
-            // Handle PDF upload if a new file is provided
             if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['pdf']['tmp_name'];
                 $fileName = basename($_FILES['pdf']['name']);
                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
     
-                // Validate file type
                 if ($fileExt !== 'pdf') {
                     echo json_encode(['error' => 'Only PDF files are allowed.']);
                     return;
                 }
     
-                // Create a unique filename
                 $newFileName = uniqid() . '-' . $fileName;
                 $destPath = $uploadDir . $newFileName;
                 $fileUrl = 'http://localhost/group_project_1.0/public/uploads/materials/' . $newFileName;
     
-                // Attempt to move the uploaded file
                 if (!move_uploaded_file($fileTmpPath, $destPath)) {
                     echo json_encode(['error' => 'Failed to upload the new file.']);
                     return;
                 }
     
-                // Remove the old file if it exists
                 if (!empty($existingMat['Url'])) {
                     $oldFilePath = $_SERVER['DOCUMENT_ROOT'] . parse_url($existingMat['Url'], PHP_URL_PATH);
                     if (file_exists($oldFilePath)) {
@@ -149,7 +130,6 @@ class Learning_mat extends Controller
                     }
                 }
     
-                // Update URL with the new file
                 $updateData['Url'] = $fileUrl;
             }
     

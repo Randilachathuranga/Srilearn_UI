@@ -32,6 +32,11 @@ $today = date("Y-m-d");
         </div>
 
         <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="kk" name="l" placeholder="Enter the title" required>
+        </div>
+
+        <div class="form-group">
             <label for="announcement">Post Announcement:</label>
             <textarea id="announcement" name="announcement" rows="8" placeholder="Write your announcement here..." required></textarea>
         </div>

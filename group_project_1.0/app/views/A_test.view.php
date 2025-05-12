@@ -57,6 +57,57 @@
         </div>
     </form>
 </div>
+<form id="myForm">
+  <label for="myDropdown">Choose a fruit:</label>
+  <select id="myDropdown" name="fruit">
+    <option value="">-- Select --</option>
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="orange">Orange</option>
+    <option value="mango">Mango</option>
+  </select>
+
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<form>
+  <label>
+    <input type="radio" name="option" value="option1" onclick="handleRadioClick(this)">
+    Option 1
+  </label><br>
+
+  <label>
+    <input type="radio" name="option" value="option2" onclick="handleRadioClick(this)">
+    Option 2
+  </label><br>
+
+  <label>
+    <input type="radio" name="option" value="option3" onclick="handleRadioClick(this)">
+    Option 3
+  </label>
+</form>
+
+<script>
+function handleRadioClick(radio) {
+  const selectedValue = radio.value;
+  console.log("Selected Value:", selectedValue);
+
+
+  document.getElementById('output').innerText = "You selected: " + selectedValue;
+}
+
+
+
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // prevent default form submission
+    const selectedValue = document.getElementById("myDropdown").value;
+    console.log("Selected fruit:", selectedValue);
+  });
+</script>
+
+<p id="output"></p>
+
 
 </body>
 <script src="./../../../group_project_1.0/app/views/A_test.js"></script>

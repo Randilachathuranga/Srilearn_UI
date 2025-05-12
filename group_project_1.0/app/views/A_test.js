@@ -188,3 +188,6 @@ function Update() {
       alert("Update failed. Please try again.");
     });
 }
+
+card.style.backgroundColor = "red";
+<div class="card-content" style="background-color: ${classItem.Grade > 9 ? 'red' : 'white'};">

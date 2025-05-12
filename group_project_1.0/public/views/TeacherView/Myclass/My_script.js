@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Get the user ID from the data attribute
   const P_id = userDataElement.dataset.userId;
   const N_id = userDataElement.dataset.userId;
   const formElement = document.getElementById("filter");
@@ -28,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (result.status === "fulfilled" && result.value.ok) {
             return result.value.json();
           }
-          return Promise.resolve([]); // Treat rejected or non-ok fetches as empty data
+          return Promise.resolve([]);
         });
 
         return Promise.all(jsonPromises);
@@ -44,14 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        container.innerHTML = ""; // Clear previous results
+        container.innerHTML = "";
 
         if (combinedData.length === 0) {
           container.innerHTML = "<p>No classes found for this teacher.</p>";
           return;
         }
 
-        // Filter data by class type if needed
         const filteredData =
           filterType === "All"
             ? combinedData
@@ -62,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Subject images map
         const subjectImages = {
           Accounting:
             "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Accwebp.webp",
@@ -110,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "../../../../../group_project_1.0/public/views/TeacherView/Myclass/Class_images/Sinhala.jpeg",
         };
 
-        // Render each class card
         filteredData.forEach((classItem) => {
           const card = document.createElement("div");
           card.className = "card";
@@ -122,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
           card.innerHTML = `
             <div class="card-content">
               <img src="${imageUrl}" alt="${classItem.Subject}">
-              <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>
+              <h3>${classItem.Subject} - Grade ${classItem.Grade}</h3>          
               <br>
               <p><h3>Address:</h3> ${classItem.Location}</p>
               <br>
@@ -138,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <button class="button" onclick="editclass(${classItem.Class_id})">
                 <img src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/icon/pencil.png" alt="Edit" class="icon"> Edit
               </button>
-            </div>
+            
           `;
 
           container.appendChild(card);
@@ -153,18 +149,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  // Fetch and render classes on dropdown selection change
   selectElement.addEventListener("change", () => {
     const selectedType = selectElement.value;
-    console.log("Selected item: ", selectedType); // Log selected value
+    console.log("Selected item: ", selectedType);
     fetchAndRenderClasses(selectedType);
   });
 
-  // Initial fetch with default dropdown value
   fetchAndRenderClasses(selectElement.value);
 
-  //fetch institute for spesific class
-  let instituteDataMap = {}; // To store name -> address mapping (or the full object if needed)
+  let instituteDataMap = {};
 
   async function fetchInstitutes(P_id) {
     try {
@@ -184,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
         option.textContent = fullName;
         instituteSelect.appendChild(option);
 
-        // Save full data keyed by fullName
         instituteDataMap[fullName] = institute;
       });
     } catch (error) {
@@ -199,10 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("sss", instituteDataMap[selectedName]);
       if (selectedName !== "None" && instituteDataMap[selectedName]) {
         const selectedInstitute = instituteDataMap[selectedName];
-        const address = selectedInstitute.Address; // Adjust this if your backend returns it under another key
+        const address = selectedInstitute.Address;
         document.getElementById("Location").value = address;
       } else {
-        document.getElementById("Location").value = ""; // Clear address if None selected
+        document.getElementById("Location").value = "";
       }
     });
 
@@ -213,21 +205,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (selectedName !== "None" && instituteDataMap[selectedName]) {
         const selectedInstitute = instituteDataMap[selectedName];
-        const inst_id = selectedInstitute.Institute_ID; // Adjust this if your backend returns it under another key
+        const inst_id = selectedInstitute.Institute_ID;
         document.getElementById("inst_id").value = inst_id;
       }
     });
 
   fetchInstitutes(P_id);
 
-  // Show the popup form
   document
     .getElementById("editScheduleForm")
     .addEventListener("submit", (event) => createSchedule(event, P_id));
 
   async function createSchedule(event, P_id) {
     console.log("createSchedule called with P_id:", P_id);
-    event.preventDefault(); // Prevent form submission and page reload
+    event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
@@ -253,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isValid = false;
     }
 
-    // If not valid, stop the update
     if (!isValid) {
       return;
     }
@@ -266,6 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fee: parseFloat(formData.get("Fee")),
       Def_Date: formData.get("Date"),
       Def_Time: formData.get("Time"),
+      Stream: formData.get("Stream"),
     };
     const table2 = {
       P_id: P_id,
@@ -275,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const table3 = {
-      N_id: N_id, // Changed from N_id to P_id since that's what you're passing
+      N_id: N_id,
       Location: formData.get("Location"),
       Start_date: formData.get("Start_date"),
       End_date: formData.get("End_date"),
@@ -283,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inst_id: formData.get("inst_id"),
     };
 
-    console.log("date and time", table1.Def_Date, table1.Def_Time);
+    console.log("sssssssssssssssss", table1.Stream);
     const institute = formData.get("Institute_name");
     console.log("id ekd = ", table3);
     if (
@@ -316,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!contentType || !contentType.includes("application/json")) {
             const text = await response.text();
             console.warn("Unexpected response format:", text);
-            return { message: text }; // Return text for unexpected formats
+            return { message: text };
           }
           return response.json();
         })
@@ -333,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (
       institute !== "None" &&
       table1.Type == "Institute" &&
-      table3.Start_date < table3.End_date // Changed from table2.Start_date to table3.Start_date
+      table3.Start_date < table3.End_date
     ) {
       const data2 = { table1, table3 };
       console.log("ClassData being sent:", data2);
@@ -360,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!contentType || !contentType.includes("application/json")) {
             const text = await response.text();
             console.warn("Unexpected response format:", text);
-            return { message: text }; // Return text for unexpected formats
+            return { message: text };
           }
           return response.json();
         })
@@ -382,7 +373,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-//More Details
 function showDetails(Class_id) {
   const individualUrl = `Ind_Myclass/MoredetailsApi/${Class_id}`;
   const instituteUrl = `Ind_Myclass/Moredetailsinstitute/${Class_id}`;
@@ -496,12 +486,10 @@ function showDetails(Class_id) {
     });
 }
 
-// Function to close the modal
 function closeModal() {
   document.getElementById("modalBackground").style.display = "none";
 }
 
-// Function to show the edit Class popup form
 function editclass(class_id) {
   currentClassId = class_id;
   console.log(`Editing schedule for Class ID: ${class_id}`);
@@ -513,17 +501,14 @@ function editclass(class_id) {
 
   Promise.all(allfetch)
     .then((responses) => {
-      // Check for response status
       for (const response of responses) {
         if (!response.ok) {
           console.warn("Some data might be missing. Status:", response.status);
         }
       }
 
-      // Convert all responses to JSON
       return Promise.all(
         responses.map((response) => {
-          // If not OK, return empty array to avoid breaking the chain
           return response.ok ? response.json() : [];
         })
       );
@@ -532,7 +517,6 @@ function editclass(class_id) {
       const individualClassData = dataArrays[0];
       const instituteClassData = dataArrays[1];
 
-      // Prefer individual data, fallback to institute
       let classDetail = null;
       if (individualClassData && individualClassData.length > 0) {
         classDetail = individualClassData[0];
@@ -548,7 +532,6 @@ function editclass(class_id) {
 
       console.log("Class Detail Object:", classDetail);
 
-      // Fill form fields
       document.getElementById("classSubject").value = classDetail.Subject || "";
       document.getElementById("classGrade").value = classDetail.Grade || "";
       if (classDetail.Type === "Institute") {
@@ -573,7 +556,6 @@ function editclass(class_id) {
       document.getElementById("Time_").value =
         classDetail.Def_Time || classDetail.Def_Time || "";
 
-      // Show the popup form
       document.getElementById("popupEditForm").style.display = "flex";
     })
     .catch((error) => {

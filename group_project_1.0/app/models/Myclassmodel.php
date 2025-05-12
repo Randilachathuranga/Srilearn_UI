@@ -4,27 +4,18 @@ class Myclassmodel{
 
     use Model;
 
-    public $premiumtable = 'premium_teacher';
-    public $allowedColumnspre=[
-        'P_id','Payment_details','Issubbed'
-    ];
 
     public $table1='class';
-    public $allowedColumns1=[
-        'Subject','Grade','Max_std','fee'
-    ];
 
     public $table2='individual_class';
 
-    //for institute class
     public $table3 = 'instituteteacher_class';
     public $joinCondition3 = "class.class_id = instituteteacher_class.InstClass_id";
 
     public $table4 = 'normal_teacher';
 
-    //columns for insert into class table and individual class table
     public $ColumnsforT1=[
-        'Type','Subject','Grade','Max_std','fee','Def_Date','Def_Time'
+        'Type','Subject','Grade','Max_std','fee','Def_Date','Def_Time','Stream'
     ];
 
     protected $ColumnsforT2 = [
@@ -37,15 +28,6 @@ class Myclassmodel{
 
     public $joinCondition = "class.class_id = individual_class.IndClass_id";
 
-    public function checkPremium($id)
-    {
-        $query = "SELECT P_id FROM {$this->premiumtable} WHERE P_id = :P_id LIMIT 1";
-        $params = ['P_id' => $id];
-        $result = $this->query($query, $params);
-        return !empty($result);
-    }
-
-    //delete model
     public function deleteclass($id,$id_column='Class_id'){
         try{
         $data[$id_column]=$id;
@@ -59,9 +41,7 @@ class Myclassmodel{
       }  
     }
 
-    //update model
     public function updateclass($id, $data, $id_column = 'Class_id', $table = '') {
-        // List all valid tables you want to allow for update
         $allowedTables = ['class', 'individual_class', 'instituteteacher_class', 'normal_teacher']; 
     
         if (!in_array($table, $allowedTables)) {
@@ -69,9 +49,8 @@ class Myclassmodel{
             return false;
         }
     
-        // Filter only allowed columns in $data
         $filteredData = array_filter($data, function ($value) {
-            return $value !== null && $value !== ''; // Skip null/empty values
+            return $value !== null && $value !== ''; 
         });
     
         if (empty($filteredData)) {
@@ -79,7 +58,6 @@ class Myclassmodel{
             return false;
         }
     
-        // Build dynamic SQL update query
         $keys = array_keys($filteredData);
         $query = "UPDATE $table SET ";
         foreach ($keys as $key) {
@@ -88,7 +66,6 @@ class Myclassmodel{
         $query = rtrim($query, ', ');
         $query .= " WHERE $id_column = :$id_column";
     
-        // Add ID to the bound data
         $filteredData[$id_column] = $id;
     
         try {
@@ -102,7 +79,6 @@ class Myclassmodel{
     }
     
 
-    // Get the Class_id
     public function getLastInsertId($data, $data_not = []) {
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
@@ -124,11 +100,9 @@ class Myclassmodel{
     }
     
 
-// Insert a class and associated individual_class data
 public function insertclass($data1, $data2) {
     $filteredData1 = [];
 
-    // Filter data for the `class` table
     if (!empty($this->ColumnsforT1)) {
         foreach ($data1 as $key => $value) {
             if (in_array($key, $this->ColumnsforT1)) {
@@ -137,13 +111,11 @@ public function insertclass($data1, $data2) {
         }
     }
 
-    // If no valid data for `class` table, log and exit
     if (empty($filteredData1)) {
         error_log("No valid data to insert for table: class");
         return false;
     }
 
-    // Build and execute the query for the `class` table
     $keys1 = array_keys($filteredData1);
     $query1 = "INSERT INTO class (" . implode(", ", $keys1) . ") VALUES (:" . implode(", :", $keys1) . ")";
     try {
@@ -153,17 +125,15 @@ public function insertclass($data1, $data2) {
         return false;
     }
 
-    // Get the `class_id` of the newly inserted record using MySQL's LAST_INSERT_ID()
 
     $data_not1 = [];
-    $class_id = $this->getLastInsertId($filteredData1,$data_not1);  // Method to fetch last inserted ID
+    $class_id = $this->getLastInsertId($filteredData1,$data_not1);  
     $class_ID = (int)$class_id;
     if (!$class_ID) {
         error_log("Error retrieving `class_id` after insert");
         return false;
     }
 
-    // Prepare data for the `individual_class` table
     $filteredData2 = [
         'IndClass_id' => $class_ID,
     ];
@@ -176,13 +146,11 @@ public function insertclass($data1, $data2) {
         }
     }
 
-    // If no valid data for `individual_class` table, log and exit
     if (empty($filteredData2)) {
         error_log("No valid data to insert for table: individual_class");
         return false;
     }
 
-    // Build and execute the query for the `individual_class` table
     $keys2 = array_keys($filteredData2);
     $query2 = "INSERT INTO individual_class (" . implode(", ", $keys2) . ") VALUES (:" . implode(", :", $keys2) . ")";
     try {
@@ -195,7 +163,6 @@ public function insertclass($data1, $data2) {
 }
 
 
-// Insert a class and associated institute class data
 public function insertinstituteclass($data1, $data2) {
     $filteredData1 = [];
     if (!empty($this->ColumnsforT1)) {

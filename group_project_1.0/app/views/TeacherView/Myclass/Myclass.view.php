@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Class</title>
-    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Mystyle.css"> <!-- Link your CSS file -->
+    <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Mystyle.css"> 
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/Scheduleclass/Scheduleclass.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/EditShedules.css">
     <link rel="stylesheet" href="../../../../../group_project_1.0/public/views/TeacherView/Myclass/More_details/Moredetailss.css">
@@ -34,7 +34,6 @@
 
 </form>
 <?php if ((isset($_SESSION['hasinst']) && $_SESSION['hasinst'] == 1) || (isset($_SESSION['Subtype']))): ?>
-    <!-- Show the button if both conditions are true -->
     <button id="create-class-btn" class="create-blog-button" onclick="createclass()">Create a class</button>
 <?php endif; ?>
 
@@ -46,11 +45,9 @@
 </div>
 
 
-<!-- my class details will be displayed -->
     <div class="container" id="class-container">
     </div>
 
-<!-- Popup Form for Creating a CLASS -->
 <div id="popupForm" class="popup-form" style="display: none;">
     <div class="form-container">
         <h2>Create a classs</h2>
@@ -88,7 +85,6 @@
                      <select id="Institute_name" name="Institute_name" required>
                     <option value="" disabled selected>Select Institute</option>
                     <option value="None">None</option>
-                     <!-- Dynamically populated institutes will go here -->
                     </select>
                     </div>
 
@@ -142,6 +138,14 @@
                 </div>
             </div>
 
+            <label for="Stream">Stream</label>
+                    <select id="Stream" name="Stream" required>
+                        <option value="" disabled selected>Select Stream</option>
+                        <option value="Maths">Maths</option>
+                        <option value="Science">Science</option>
+                    </select>
+
+
             <div class="create-row">
                 <div>
                     <label for="Date">Class Date</label>
@@ -159,7 +163,6 @@
     </div>
 </div>
 
-<!-- Popup Form for Editing a class -->
 <div id="popupEditForm" class="popup-form" style="display: none;">
   <div class="form-container">
     <form id="editScheduleForm" onsubmit="Updateclass(event, currentClassId)">
@@ -251,7 +254,6 @@
 
 
 
-<!-- Modal for showing class details -->
 <div class="modal-background" id="modalBackground" style="display: none;">
     <div class="modal-content">
         <span class="closebutton" onclick="closeModal()">×</span>
@@ -266,8 +268,6 @@
             <p><strong>Max-Student:</strong> <span id="maxstu"></span></p>
             <p><strong>Hall no:</strong> <span id="Hall_no"></span></p>
             <p><strong>Address:</strong> <span id="locat"></span></p>
-            <!-- <p><strong>Date:</strong> <span id="Date"></span></p>
-            <p><strong>Time:</strong> <span id="Time"></span></p> -->
             <p><span id="classid" style="display: none;"></span></p>
         </div>
         <div class="button-container">
@@ -276,7 +276,6 @@
             <button onclick="viewinst(getClassId())" class="buttons">View Institute</button>
             <button onclick="viewschedule(getClassId())" class="buttons">View Class schedule</button>
             <button onclick="freeCard(getClassId())" class="buttons">Issue free cards</button>
-            <!-- <button onclick="reqPay()" class="buttons">Request payrolls</button> -->
             <button onclick="viewStudents(getClassId())" class="buttons">View all students</button>
         </div>
     </div>
@@ -285,7 +284,6 @@
 <script>
      var userID = "<?php echo $_SESSION['User_id'] ?? ''; ?>";
      function reqpaymentind() {
-    // First check if a payment request already exists for this month
     fetch(`http://localhost/group_project_1.0/public/Payment/checkinstpayreq`, {
         method: 'POST',
         headers: {
@@ -300,11 +298,9 @@
     })
     .then(data => {
         if (data.status === 'success') {
-            // Payment request already exists for this month
             alert(data.message);
         } else {
 
-            // No payment request for this month, proceed with creating one
             createPaymentRequest();
         }
     })
@@ -330,7 +326,7 @@ function createPaymentRequest() {
     .then(data => {
         if (data.success) {
             alert('Monthly payment request sent successfully!');
-            location.reload(); // Reload the page to see updated data
+            location.reload();
         } else {
             alert('Failed to send monthly payment request.');
         }
@@ -342,7 +338,7 @@ function createPaymentRequest() {
 </script>
 
 
-    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> <!-- Link your JavaScript file -->
+    <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/My_script.js"></script> 
     <script src="../../../../../group_project_1.0/public/views/TeacherView/Myclass/EditShedule/UDS.js"></script>
 </body>
 </html>

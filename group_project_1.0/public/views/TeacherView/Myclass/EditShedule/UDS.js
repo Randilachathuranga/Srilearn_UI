@@ -1,16 +1,13 @@
-// Close the edit schedule form
 function closeedit() {
   document.getElementById("popupEditForm").style.display = "none";
 }
 
-// Function to update the Class
 async function Updateclass(event, Class_id) {
   event.preventDefault();
 
   const form = event.target;
   const formData = new FormData(form);
 
-  // Validate inputs before preparing data
   const grade = parseInt(formData.get("classGrade"), 10);
   const maxStd = parseInt(formData.get("classMax_std"), 10);
   const fee = parseFloat(formData.get("classfee"));
@@ -32,12 +29,10 @@ async function Updateclass(event, Class_id) {
     isValid = false;
   }
 
-  // If not valid, stop the update
   if (!isValid) {
     return;
   }
 
-  // Prepare data after validation passes
   const table1 = {
     Subject: formData.get("classSubject"),
     Grade: grade,
@@ -58,7 +53,6 @@ async function Updateclass(event, Class_id) {
   console.log("ClassData being sent:", data);
   console.log("Class ID:", Class_id);
 
-  // Validate Start Date and End Date
   if (
     table2.Start_date &&
     table2.End_date &&
@@ -108,7 +102,6 @@ async function Updateclass(event, Class_id) {
   }
 }
 
-// Function to delete a Class
 function deleteclass(Class_id) {
   if (window.confirm("Are you sure you want to delete this Class?")) {
     fetch(`Ind_Myclass/DeleteclassApi/${Class_id}`, {

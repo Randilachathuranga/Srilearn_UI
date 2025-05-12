@@ -10,7 +10,6 @@
     <?php include "C:xampp/htdocs/group_project_1.0/app/views/General/NavBar/User_NavBar/UserNavBar.view.php" ?>
     
     <h1>Class Materials</h1>
-    <!-- Replace the existing image div with this: -->
 <div class="image-container">
   <img src="../../../../../../group_project_1.0/public/views/TeacherView/Options/UploadMat/mat.jpg" 
        alt="Class Materials" 
@@ -28,7 +27,10 @@
     <div id="overlay" onclick="hideOverlay()"></div>
     <input type="hidden" id="user_role" value="<?php echo $_SESSION['Role']; ?>">
     
-    <!-- Upload Form -->
+
+
+
+
     <form id="uploadForm" enctype="multipart/form-data" method="POST">
         <input type="hidden" name="Class_id" value="123">
         <label for="topic">Topic:</label>
@@ -47,7 +49,8 @@
         <button type="button" onclick="hideUploadForm()">Cancel</button>
     </form>
     
-    <!-- Update Form -->
+
+
     <form id="updateForm" enctype="multipart/form-data" method="POST">
         <input type="hidden" id="update_mat_id" name="Mat_id">
         <label for="update_topic">Topic:</label>
@@ -66,8 +69,9 @@
         <button type="button" onclick="hideUpdateForm()">Cancel</button>
     </form>
     
+
+
     <div id="materialsList">
-        <!-- Materials will be loaded here -->
     </div>
 
 
