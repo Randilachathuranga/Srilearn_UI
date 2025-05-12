@@ -1,7 +1,8 @@
 📘 Project Description
 
-SriLearn is a role-based educational management system that connects students, teachers, institutes, and administrators through a unified web platform. The system allows students to enroll in classes, access learning materials, and manage payments, while teachers and institutions can handle class schedules, advertisements, subscriptions, and communication. Admins oversee the entire platform, ensuring smooth operations and user management.
+SriLearn is a role-based educational management system that connects students, teachers, institutes, and administrators through a unified web platform. The system allows students to enroll in classes, access learning materials, manage fee payments, and communicate with teachers and institutes. Teachers and institutions can schedule classes, upload materials, post advertisements, manage subscriptions, and interact with students.
 
+SriLearn is especially useful for individual class teachers, offering them the ability to post advertisements and promote their classes effectively to attract students. The platform supports both normal and premium teachers, with premium features like scheduling personalized sessions and issuing discounts.
 🛠 Tech Stack
 Frontend: HTML, CSS, JavaScript
 
